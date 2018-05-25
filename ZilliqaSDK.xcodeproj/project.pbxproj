@@ -17,7 +17,9 @@
 		48F70A5420B7FFC10027B72D /* GasPriceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A5320B7FFC10027B72D /* GasPriceTests.swift */; };
 		48F70A5620B7FFDE0027B72D /* GasLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A5520B7FFDE0027B72D /* GasLimitTests.swift */; };
 		48F70A5820B801A90027B72D /* PaymentModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A5720B801A90027B72D /* PaymentModelTests.swift */; };
-		48F70A5A20B802E70027B72D /* PaymentAmountModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A5920B802E70027B72D /* PaymentAmountModelTests.swift */; };
+		48F70A5A20B802E70027B72D /* AmountModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A5920B802E70027B72D /* AmountModelTests.swift */; };
+		48F70A7A20B811370027B72D /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7820B811330027B72D /* Wallet.swift */; };
+		48F70A7D20B812080027B72D /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7B20B811A00027B72D /* Amount.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +52,9 @@
 		48F70A5320B7FFC10027B72D /* GasPriceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceTests.swift; sourceTree = "<group>"; };
 		48F70A5520B7FFDE0027B72D /* GasLimitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasLimitTests.swift; sourceTree = "<group>"; };
 		48F70A5720B801A90027B72D /* PaymentModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModelTests.swift; sourceTree = "<group>"; };
-		48F70A5920B802E70027B72D /* PaymentAmountModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentAmountModelTests.swift; sourceTree = "<group>"; };
+		48F70A5920B802E70027B72D /* AmountModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountModelTests.swift; sourceTree = "<group>"; };
+		48F70A7820B811330027B72D /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		48F70A7B20B811A00027B72D /* Amount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				48F70A3620B72E930027B72D /* AddressTests.swift */,
-				48F70A5920B802E70027B72D /* PaymentAmountModelTests.swift */,
+				48F70A5920B802E70027B72D /* AmountModelTests.swift */,
 				48F70A5020B7FE590027B72D /* GasTests.swift */,
 				48F70A5320B7FFC10027B72D /* GasPriceTests.swift */,
 				48F70A5520B7FFDE0027B72D /* GasLimitTests.swift */,
@@ -163,11 +167,29 @@
 		48F70A4920B7F52B0027B72D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				48F70A7720B811290027B72D /* Wallet */,
+				48F70A7620B811150027B72D /* Payment */,
+				48F70A7B20B811A00027B72D /* Amount.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		48F70A7620B811150027B72D /* Payment */ = {
+			isa = PBXGroup;
+			children = (
 				48F70A4A20B7F55B0027B72D /* Payment.swift */,
 				48F70A4C20B7F9940027B72D /* Gas.swift */,
 				48F70A4E20B7F9B40027B72D /* Address.swift */,
 			);
-			path = Models;
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		48F70A7720B811290027B72D /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				48F70A7820B811330027B72D /* Wallet.swift */,
+			);
+			path = Wallet;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,6 +301,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48F70A7D20B812080027B72D /* Amount.swift in Sources */,
+				48F70A7A20B811370027B72D /* Wallet.swift in Sources */,
 				48F70A4F20B7F9B40027B72D /* Address.swift in Sources */,
 				48F70A4B20B7F55B0027B72D /* Payment.swift in Sources */,
 				48F70A4D20B7F9940027B72D /* Gas.swift in Sources */,
@@ -289,7 +313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48F70A5A20B802E70027B72D /* PaymentAmountModelTests.swift in Sources */,
+				48F70A5A20B802E70027B72D /* AmountModelTests.swift in Sources */,
 				48F70A3920B72E980027B72D /* AddressTests.swift in Sources */,
 				48F70A5420B7FFC10027B72D /* GasPriceTests.swift in Sources */,
 				48F70A5220B7FE9B0027B72D /* GasTests.swift in Sources */,
