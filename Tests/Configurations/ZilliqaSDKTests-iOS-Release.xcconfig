@@ -1,2 +1,2 @@
-#include "ZilliqaSDKTests-Common.xcconfig"
+#include "ZilliqaSDKTests-iOS-Common.xcconfig"
 #include "../../Configurations/base_release.xcconfig"

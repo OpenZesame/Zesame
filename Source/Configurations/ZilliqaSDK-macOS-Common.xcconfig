@@ -1,0 +1,4 @@
+#include "../../Configurations/macos_framework.xcconfig"
+
+INFOPLIST_FILE = Source/SupportingFiles/ZilliqaSDK-macOS-Info.plist
+PRODUCT_BUNDLE_IDENTIFIER = org.openzesame.ZilliqaSDK.macOS

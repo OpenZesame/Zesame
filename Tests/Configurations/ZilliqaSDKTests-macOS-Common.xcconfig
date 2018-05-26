@@ -1,0 +1,3 @@
+#include "../../Configurations/mac_framework.xcconfig"
+#include "../../Configurations/base_tests.xcconfig"
+INFOPLIST_FILE = Tests/SupportingFiles/ZilliqaSDKTests-macOS-Info.plist

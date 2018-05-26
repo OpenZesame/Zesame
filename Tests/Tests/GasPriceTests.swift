@@ -7,8 +7,7 @@
 //
 
 import XCTest
-@testable import ZilliqaSDK
-
+@testable import ZilliqaSDK_iOS
 class GasPriceTests: XCTestCase {
 
     func testCreatingInvalidGasPriceWithNegativeValue() {

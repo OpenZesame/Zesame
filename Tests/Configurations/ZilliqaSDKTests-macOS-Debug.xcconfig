@@ -1,2 +1,2 @@
-#include "ZilliqaSDKTests-Common.xcconfig"
+#include "ZilliqaSDKTests-macOS-Common.xcconfig"
 #include "../../Configurations/base_debug.xcconfig"

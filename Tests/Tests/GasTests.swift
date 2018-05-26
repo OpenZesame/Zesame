@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import ZilliqaSDK
+@testable import ZilliqaSDK_iOS
 
 class GasTests: XCTestCase {
 

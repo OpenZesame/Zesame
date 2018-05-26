@@ -1,0 +1,3 @@
+#include "ZilliqaSDK-iOS-Common.xcconfig"
+#include "../../Configurations/base_debug.xcconfig"
+#include "../../Pods/Target Support Files/Pods-ZilliqaSDK-iOS/Pods-ZilliqaSDK-iOS.debug.xcconfig"
