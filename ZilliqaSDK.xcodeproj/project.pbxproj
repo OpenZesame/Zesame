@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4820459D20C17B6E00955EB1 /* WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4820459C20C17B6E00955EB1 /* WalletTests.swift */; };
 		48F70A1F20B72DD00027B72D /* ZilliqaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F70A1520B72DD00027B72D /* ZilliqaSDK.framework */; };
 		48F70A3920B72E980027B72D /* AddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A3620B72E930027B72D /* AddressTests.swift */; };
 		48F70A4820B7F4D00027B72D /* ZilliqaSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4820459C20C17B6E00955EB1 /* WalletTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTests.swift; sourceTree = "<group>"; };
 		48F70A1520B72DD00027B72D /* ZilliqaSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZilliqaSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A1E20B72DD00027B72D /* ZilliqaSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZilliqaSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A3220B72E8A0027B72D /* ZilliqaSDK-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-Info.plist"; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		48F70A3520B72E930027B72D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				4820459C20C17B6E00955EB1 /* WalletTests.swift */,
 				48F70A3620B72E930027B72D /* AddressTests.swift */,
 				48F70A5920B802E70027B72D /* AmountModelTests.swift */,
 				48F70A5020B7FE590027B72D /* GasTests.swift */,
@@ -321,6 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4820459D20C17B6E00955EB1 /* WalletTests.swift in Sources */,
 				48F70A5A20B802E70027B72D /* AmountModelTests.swift in Sources */,
 				48F70A3920B72E980027B72D /* AddressTests.swift in Sources */,
 				48F70A5420B7FFC10027B72D /* GasPriceTests.swift in Sources */,
@@ -367,7 +371,6 @@
 					"@loader_path/Frameworks",
 				);
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -382,7 +385,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

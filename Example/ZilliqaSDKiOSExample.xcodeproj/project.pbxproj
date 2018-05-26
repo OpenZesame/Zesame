@@ -1,0 +1,721 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B068520BA0D8800C4E50A /* AppDelegate.swift */; };
+		484B068820BA0D9C00C4E50A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B068320BA0D8800C4E50A /* ViewController.swift */; };
+		484B06AB20BA107A00C4E50A /* ZilliqaSDK_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 484B06A120BA105B00C4E50A /* ZilliqaSDK_iOS.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		484B064B20BA0C2F00C4E50A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 484B062E20BA0C2D00C4E50A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 484B063520BA0C2D00C4E50A;
+			remoteInfo = ZilliqaSDKiOSExample;
+		};
+		484B065620BA0C2F00C4E50A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 484B062E20BA0C2D00C4E50A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 484B063520BA0C2D00C4E50A;
+			remoteInfo = ZilliqaSDKiOSExample;
+		};
+		484B06A020BA105B00C4E50A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 48F70A1520B72DD00027B72D;
+			remoteInfo = "ZilliqaSDK-iOS";
+		};
+		484B06A220BA105B00C4E50A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 48F70A1E20B72DD00027B72D;
+			remoteInfo = "ZilliqaSDKTests-iOS";
+		};
+		484B06A420BA105B00C4E50A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 48ED060520B8618F00C639E5;
+			remoteInfo = "ZilliqaSDK-macOS";
+		};
+		484B06A620BA105B00C4E50A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 48ED060D20B8618F00C639E5;
+			remoteInfo = "ZilliqaSDKTests-macOS";
+		};
+		484B06A820BA106F00C4E50A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 48F70A1420B72DD00027B72D;
+			remoteInfo = "ZilliqaSDK-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		484B063620BA0C2D00C4E50A /* ZilliqaSDKiOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZilliqaSDKiOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		484B064A20BA0C2F00C4E50A /* ZilliqaSDKiOSExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZilliqaSDKiOSExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		484B065520BA0C2F00C4E50A /* ZilliqaSDKiOSExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZilliqaSDKiOSExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		484B067520BA0D2100C4E50A /* ZilliqaSDKiOSExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaSDKiOSExampleUITests.swift; sourceTree = "<group>"; };
+		484B067720BA0D2100C4E50A /* ZilliqaSDK-iOS-Example-UITests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Example-UITests-Info.plist"; sourceTree = "<group>"; };
+		484B067A20BA0D2C00C4E50A /* ZilliqaSDK-iOS-Example-Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Example-Tests-Info.plist"; sourceTree = "<group>"; };
+		484B067B20BA0D2C00C4E50A /* ZilliqaSDKiOSExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaSDKiOSExampleTests.swift; sourceTree = "<group>"; };
+		484B067D20BA0D8800C4E50A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		484B067F20BA0D8800C4E50A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		484B068320BA0D8800C4E50A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		484B068520BA0D8800C4E50A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		484B068620BA0D8800C4E50A /* ZilliqaSDK-iOS-Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Example-Info.plist"; sourceTree = "<group>"; };
+		484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZilliqaSDK.xcodeproj; path = ../ZilliqaSDK.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		484B063320BA0C2D00C4E50A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				484B06AB20BA107A00C4E50A /* ZilliqaSDK_iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		484B064720BA0C2F00C4E50A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		484B065220BA0C2F00C4E50A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		484B062D20BA0C2D00C4E50A = {
+			isa = PBXGroup;
+			children = (
+				484B069820BA104500C4E50A /* Dependencies */,
+				484B067C20BA0D8800C4E50A /* Source */,
+				484B067820BA0D2C00C4E50A /* Tests */,
+				484B067420BA0D2100C4E50A /* UITests */,
+				484B063720BA0C2D00C4E50A /* Products */,
+				484B06AA20BA107A00C4E50A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		484B063720BA0C2D00C4E50A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				484B063620BA0C2D00C4E50A /* ZilliqaSDKiOSExample.app */,
+				484B064A20BA0C2F00C4E50A /* ZilliqaSDKiOSExampleTests.xctest */,
+				484B065520BA0C2F00C4E50A /* ZilliqaSDKiOSExampleUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		484B067420BA0D2100C4E50A /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				484B067520BA0D2100C4E50A /* ZilliqaSDKiOSExampleUITests.swift */,
+				484B067620BA0D2100C4E50A /* SupportingFiles */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		484B067620BA0D2100C4E50A /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				484B067720BA0D2100C4E50A /* ZilliqaSDK-iOS-Example-UITests-Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		484B067820BA0D2C00C4E50A /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				484B067920BA0D2C00C4E50A /* SupportingFiles */,
+				484B067B20BA0D2C00C4E50A /* ZilliqaSDKiOSExampleTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		484B067920BA0D2C00C4E50A /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				484B067A20BA0D2C00C4E50A /* ZilliqaSDK-iOS-Example-Tests-Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		484B067C20BA0D8800C4E50A /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				484B067D20BA0D8800C4E50A /* Assets.xcassets */,
+				484B067E20BA0D8800C4E50A /* LaunchScreen.storyboard */,
+				484B068220BA0D8800C4E50A /* ViewControllers */,
+				484B068420BA0D8800C4E50A /* SupportingFiles */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		484B068220BA0D8800C4E50A /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				484B068320BA0D8800C4E50A /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		484B068420BA0D8800C4E50A /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				484B068520BA0D8800C4E50A /* AppDelegate.swift */,
+				484B068620BA0D8800C4E50A /* ZilliqaSDK-iOS-Example-Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		484B069820BA104500C4E50A /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */,
+			);
+			name = Dependencies;
+			sourceTree = "<group>";
+		};
+		484B069A20BA105B00C4E50A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				484B06A120BA105B00C4E50A /* ZilliqaSDK_iOS.framework */,
+				484B06A320BA105B00C4E50A /* ZilliqaSDKTests_iOS.xctest */,
+				484B06A520BA105B00C4E50A /* ZilliqaSDK_macOS.framework */,
+				484B06A720BA105B00C4E50A /* .xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		484B06AA20BA107A00C4E50A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 484B065E20BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExample" */;
+			buildPhases = (
+				484B063220BA0C2D00C4E50A /* Sources */,
+				484B063320BA0C2D00C4E50A /* Frameworks */,
+				484B063420BA0C2D00C4E50A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				484B06A920BA106F00C4E50A /* PBXTargetDependency */,
+			);
+			name = ZilliqaSDKiOSExample;
+			productName = ZilliqaSDKiOSExample;
+			productReference = 484B063620BA0C2D00C4E50A /* ZilliqaSDKiOSExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		484B064920BA0C2F00C4E50A /* ZilliqaSDKiOSExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 484B066120BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExampleTests" */;
+			buildPhases = (
+				484B064620BA0C2F00C4E50A /* Sources */,
+				484B064720BA0C2F00C4E50A /* Frameworks */,
+				484B064820BA0C2F00C4E50A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				484B064C20BA0C2F00C4E50A /* PBXTargetDependency */,
+			);
+			name = ZilliqaSDKiOSExampleTests;
+			productName = ZilliqaSDKiOSExampleTests;
+			productReference = 484B064A20BA0C2F00C4E50A /* ZilliqaSDKiOSExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		484B065420BA0C2F00C4E50A /* ZilliqaSDKiOSExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 484B066420BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExampleUITests" */;
+			buildPhases = (
+				484B065120BA0C2F00C4E50A /* Sources */,
+				484B065220BA0C2F00C4E50A /* Frameworks */,
+				484B065320BA0C2F00C4E50A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				484B065720BA0C2F00C4E50A /* PBXTargetDependency */,
+			);
+			name = ZilliqaSDKiOSExampleUITests;
+			productName = ZilliqaSDKiOSExampleUITests;
+			productReference = 484B065520BA0C2F00C4E50A /* ZilliqaSDKiOSExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		484B062E20BA0C2D00C4E50A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Open Zesame";
+				TargetAttributes = {
+					484B063520BA0C2D00C4E50A = {
+						CreatedOnToolsVersion = 9.4;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+					484B064920BA0C2F00C4E50A = {
+						CreatedOnToolsVersion = 9.4;
+						TestTargetID = 484B063520BA0C2D00C4E50A;
+					};
+					484B065420BA0C2F00C4E50A = {
+						CreatedOnToolsVersion = 9.4;
+						TestTargetID = 484B063520BA0C2D00C4E50A;
+					};
+				};
+			};
+			buildConfigurationList = 484B063120BA0C2D00C4E50A /* Build configuration list for PBXProject "ZilliqaSDKiOSExample" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 484B062D20BA0C2D00C4E50A;
+			productRefGroup = 484B063720BA0C2D00C4E50A /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 484B069A20BA105B00C4E50A /* Products */;
+					ProjectRef = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */,
+				484B064920BA0C2F00C4E50A /* ZilliqaSDKiOSExampleTests */,
+				484B065420BA0C2F00C4E50A /* ZilliqaSDKiOSExampleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		484B06A120BA105B00C4E50A /* ZilliqaSDK_iOS.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ZilliqaSDK_iOS.framework;
+			remoteRef = 484B06A020BA105B00C4E50A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		484B06A320BA105B00C4E50A /* ZilliqaSDKTests_iOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ZilliqaSDKTests_iOS.xctest;
+			remoteRef = 484B06A220BA105B00C4E50A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		484B06A520BA105B00C4E50A /* ZilliqaSDK_macOS.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ZilliqaSDK_macOS.framework;
+			remoteRef = 484B06A420BA105B00C4E50A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		484B06A720BA105B00C4E50A /* .xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = .xctest;
+			remoteRef = 484B06A620BA105B00C4E50A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		484B063420BA0C2D00C4E50A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		484B064820BA0C2F00C4E50A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		484B065320BA0C2F00C4E50A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		484B063220BA0C2D00C4E50A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				484B068820BA0D9C00C4E50A /* ViewController.swift in Sources */,
+				484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		484B064620BA0C2F00C4E50A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		484B065120BA0C2F00C4E50A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		484B064C20BA0C2F00C4E50A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */;
+			targetProxy = 484B064B20BA0C2F00C4E50A /* PBXContainerItemProxy */;
+		};
+		484B065720BA0C2F00C4E50A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */;
+			targetProxy = 484B065620BA0C2F00C4E50A /* PBXContainerItemProxy */;
+		};
+		484B06A920BA106F00C4E50A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ZilliqaSDK-iOS";
+			targetProxy = 484B06A820BA106F00C4E50A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		484B067E20BA0D8800C4E50A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				484B067F20BA0D8800C4E50A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		484B065C20BA0C2F00C4E50A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		484B065D20BA0C2F00C4E50A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		484B065F20BA0C2F00C4E50A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Source/SupportingFiles/ZilliqaSDK-iOS-Example-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.openzesame.ZilliqaSDKiOSExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		484B066020BA0C2F00C4E50A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Source/SupportingFiles/ZilliqaSDK-iOS-Example-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.openzesame.ZilliqaSDKiOSExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		484B066220BA0C2F00C4E50A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Tests/SupportingFiles/ZilliqaSDK-iOS-Example-Tests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.openzesame.ZilliqaSDKiOSExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZilliqaSDKiOSExample.app/ZilliqaSDKiOSExample";
+			};
+			name = Debug;
+		};
+		484B066320BA0C2F00C4E50A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "Tests/SupportingFiles/ZilliqaSDK-iOS-Example-Tests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.openzesame.ZilliqaSDKiOSExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZilliqaSDKiOSExample.app/ZilliqaSDKiOSExample";
+			};
+			name = Release;
+		};
+		484B066520BA0C2F00C4E50A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "UITests/SupportingFiles/ZilliqaSDK-iOS-Example-UITests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.openzesame.ZilliqaSDKiOSExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ZilliqaSDKiOSExample;
+			};
+			name = Debug;
+		};
+		484B066620BA0C2F00C4E50A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "UITests/SupportingFiles/ZilliqaSDK-iOS-Example-UITests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.openzesame.ZilliqaSDKiOSExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ZilliqaSDKiOSExample;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		484B063120BA0C2D00C4E50A /* Build configuration list for PBXProject "ZilliqaSDKiOSExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				484B065C20BA0C2F00C4E50A /* Debug */,
+				484B065D20BA0C2F00C4E50A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		484B065E20BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				484B065F20BA0C2F00C4E50A /* Debug */,
+				484B066020BA0C2F00C4E50A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		484B066120BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				484B066220BA0C2F00C4E50A /* Debug */,
+				484B066320BA0C2F00C4E50A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		484B066420BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				484B066520BA0C2F00C4E50A /* Debug */,
+				484B066620BA0C2F00C4E50A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 484B062E20BA0C2D00C4E50A /* Project object */;
+}

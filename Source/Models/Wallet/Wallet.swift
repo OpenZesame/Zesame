@@ -8,11 +8,11 @@
 
 import Foundation
 
+
 public struct Wallet {
     public let address: Address
     public let privateKey: PrivateKey
     public let balance: Amount
     public let nonce: Nonce
-
 }
 
