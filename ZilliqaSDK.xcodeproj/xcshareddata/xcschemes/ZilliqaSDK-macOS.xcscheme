@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "48F70A1420B72DD00027B72D"
-               BuildableName = "ZilliqaSDK_iOS.framework"
-               BlueprintName = "ZilliqaSDK-iOS"
+               BlueprintIdentifier = "48ED060420B8618F00C639E5"
+               BuildableName = "ZilliqaSDK_macOS.framework"
+               BlueprintName = "ZilliqaSDK-macOS"
                ReferencedContainer = "container:ZilliqaSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "48F70A1D20B72DD00027B72D"
-               BuildableName = "ZilliqaSDKTests_iOS.xctest"
-               BlueprintName = "ZilliqaSDKTests-iOS"
+               BlueprintIdentifier = "48ED060C20B8618F00C639E5"
+               BuildableName = ".xctest"
+               BlueprintName = "ZilliqaSDKTests-macOS"
                ReferencedContainer = "container:ZilliqaSDK.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "48F70A1420B72DD00027B72D"
-            BuildableName = "ZilliqaSDK_iOS.framework"
-            BlueprintName = "ZilliqaSDK-iOS"
+            BlueprintIdentifier = "48ED060420B8618F00C639E5"
+            BuildableName = "ZilliqaSDK_macOS.framework"
+            BlueprintName = "ZilliqaSDK-macOS"
             ReferencedContainer = "container:ZilliqaSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "48F70A1420B72DD00027B72D"
-            BuildableName = "ZilliqaSDK_iOS.framework"
-            BlueprintName = "ZilliqaSDK-iOS"
+            BlueprintIdentifier = "48ED060420B8618F00C639E5"
+            BuildableName = "ZilliqaSDK_macOS.framework"
+            BlueprintName = "ZilliqaSDK-macOS"
             ReferencedContainer = "container:ZilliqaSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +82,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "48F70A1420B72DD00027B72D"
-            BuildableName = "ZilliqaSDK_iOS.framework"
-            BlueprintName = "ZilliqaSDK-iOS"
+            BlueprintIdentifier = "48ED060420B8618F00C639E5"
+            BuildableName = "ZilliqaSDK_macOS.framework"
+            BlueprintName = "ZilliqaSDK-macOS"
             ReferencedContainer = "container:ZilliqaSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

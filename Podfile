@@ -1,5 +1,6 @@
 def shared_pods
 	pod 'secp256k1'
+  pod 'EllipticCurveKeyPair', :git => 'https://github.com/agens-no/EllipticCurveKeyPair'
 end
 
 target 'ZilliqaSDK-iOS' do

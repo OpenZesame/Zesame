@@ -1,9 +1,11 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) ${PODS_ROOT}/secp256k1 "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/secp256k1"
-LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/secp256k1-macOS"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/secp256k1"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"c++" -l"secp256k1-macOS"
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/EllipticCurveKeyPair-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/secp256k1-macOS"
+OTHER_CFLAGS = $(inherited) -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/EllipticCurveKeyPair-macOS/EllipticCurveKeyPair.modulemap" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/secp256k1"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"EllipticCurveKeyPair-macOS" -l"c++" -l"secp256k1-macOS" -framework "Foundation" -framework "LocalAuthentication" -framework "Security"
+OTHER_SWIFT_FLAGS = $(inherited) -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/EllipticCurveKeyPair-macOS/EllipticCurveKeyPair.modulemap" $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods
+SWIFT_INCLUDE_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/EllipticCurveKeyPair-macOS"

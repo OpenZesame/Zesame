@@ -8,4 +8,4 @@
 
 import Foundation
 
-public struct PrivateKey {}
+//public struct PrivateKey {}

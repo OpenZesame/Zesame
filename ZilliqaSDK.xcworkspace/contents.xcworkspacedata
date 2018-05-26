@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Example/ZilliqaSDKiOSExample.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:ZilliqaSDK.xcodeproj">
    </FileRef>
    <FileRef

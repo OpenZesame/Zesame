@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		285F625FB878368FA71B4C81 /* libPods-ZilliqaSDK-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F914D94B11BC144389718DBD /* libPods-ZilliqaSDK-macOS.a */; };
+		48838C9520B9F64800C18DC2 /* WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48838C9420B9F64800C18DC2 /* WalletTests.swift */; };
+		48E76FB420B9D6210027A3FE /* ZilliqaSDK_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48ED060E20B8618F00C639E5 /* ZilliqaSDK_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48ED060520B8618F00C639E5 /* ZilliqaSDK_macOS.framework */; };
 		48F70A1F20B72DD00027B72D /* ZilliqaSDK_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F70A1520B72DD00027B72D /* ZilliqaSDK_iOS.framework */; };
 		48F70A3920B72E980027B72D /* AddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A3620B72E930027B72D /* AddressTests.swift */; };
@@ -23,6 +26,9 @@
 		48F70A7D20B812080027B72D /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7B20B811A00027B72D /* Amount.swift */; };
 		48F70A8220B812F30027B72D /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A8020B812A90027B72D /* PrivateKey.swift */; };
 		48F70A8320B812F70027B72D /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7E20B812990027B72D /* Nonce.swift */; };
+		70274DB6A9A5954C04FF19B7 /* libPods-ZilliqaSDKTests-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0040F8B58C094EEFF72B9011 /* libPods-ZilliqaSDKTests-iOS.a */; };
+		C1C95ED6235804D01F178681 /* libPods-ZilliqaSDK-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 926E46A95FC0F9A26C1905EC /* libPods-ZilliqaSDK-iOS.a */; };
+		F88018C5D27B904854BF65CE /* libPods-ZilliqaSDKTests-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E377E7036DE435A39229E /* libPods-ZilliqaSDKTests-macOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +49,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0040F8B58C094EEFF72B9011 /* libPods-ZilliqaSDKTests-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZilliqaSDKTests-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		484B068A20BA0EF700C4E50A /* SimulatorMockedEntitlements.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimulatorMockedEntitlements.entitlements; sourceTree = "<group>"; };
+		48838C9420B9F64800C18DC2 /* WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTests.swift; sourceTree = "<group>"; };
+		48838CB120BA084F00C18DC2 /* ZilliqaSDKTests-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDKTests-macOS-Info.plist"; sourceTree = "<group>"; };
+		48838CB220BA084F00C18DC2 /* ZilliqaSDKTests-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDKTests-iOS-Info.plist"; sourceTree = "<group>"; };
+		48E76FB020B9D6160027A3FE /* ZilliqaSDK-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-macOS-Info.plist"; sourceTree = "<group>"; };
+		48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZilliqaSDK_macOS.h; sourceTree = "<group>"; };
+		48E76FB220B9D6160027A3FE /* ZilliqaSDK-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Info.plist"; sourceTree = "<group>"; };
+		48E76FB520B9D68C0027A3FE /* ZilliqaSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDK-Bridging-Header.h"; sourceTree = "<group>"; };
 		48ED060520B8618F00C639E5 /* ZilliqaSDK_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZilliqaSDK_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ED060D20B8618F00C639E5 /* .xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = .xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ED061C20B86B1200C639E5 /* ZilliqaSDK-iOS-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDK-iOS-Common.xcconfig"; sourceTree = "<group>"; };
@@ -57,10 +72,8 @@
 		48ED062520B86C1D00C639E5 /* ZilliqaSDKTests-iOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDKTests-iOS-Release.xcconfig"; sourceTree = "<group>"; };
 		48F70A1520B72DD00027B72D /* ZilliqaSDK_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZilliqaSDK_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A1E20B72DD00027B72D /* ZilliqaSDKTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZilliqaSDKTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		48F70A3220B72E8A0027B72D /* ZilliqaSDK-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-Info.plist"; sourceTree = "<group>"; };
 		48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZilliqaSDK.h; sourceTree = "<group>"; };
 		48F70A3620B72E930027B72D /* AddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressTests.swift; sourceTree = "<group>"; };
-		48F70A3820B72E930027B72D /* ZilliqaSDKTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDKTests-Info.plist"; sourceTree = "<group>"; };
 		48F70A4A20B7F55B0027B72D /* Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payment.swift; sourceTree = "<group>"; };
 		48F70A4C20B7F9940027B72D /* Gas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gas.swift; sourceTree = "<group>"; };
 		48F70A4E20B7F9B40027B72D /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
@@ -75,6 +88,9 @@
 		48F70A8020B812A90027B72D /* PrivateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
 		48F70A8420B825960027B72D /* ZilliqaSDK-iOS-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDK-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
 		48F70A8520B825970027B72D /* ZilliqaSDK-iOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDK-iOS-Release.xcconfig"; sourceTree = "<group>"; };
+		926E46A95FC0F9A26C1905EC /* libPods-ZilliqaSDK-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZilliqaSDK-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D98E377E7036DE435A39229E /* libPods-ZilliqaSDKTests-macOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZilliqaSDKTests-macOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F914D94B11BC144389718DBD /* libPods-ZilliqaSDK-macOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZilliqaSDK-macOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				285F625FB878368FA71B4C81 /* libPods-ZilliqaSDK-macOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +107,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48ED060E20B8618F00C639E5 /* ZilliqaSDK_macOS.framework in Frameworks */,
+				F88018C5D27B904854BF65CE /* libPods-ZilliqaSDKTests-macOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1C95ED6235804D01F178681 /* libPods-ZilliqaSDK-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +124,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48F70A1F20B72DD00027B72D /* ZilliqaSDK_iOS.framework in Frameworks */,
+				70274DB6A9A5954C04FF19B7 /* libPods-ZilliqaSDKTests-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,9 +134,12 @@
 		48F70A0B20B72DCF0027B72D = {
 			isa = PBXGroup;
 			children = (
+				484B068A20BA0EF700C4E50A /* SimulatorMockedEntitlements.entitlements */,
 				48F70A1620B72DD00027B72D /* Products */,
 				48F70A3020B72E8A0027B72D /* Source */,
 				48F70A3420B72E930027B72D /* Tests */,
+				CCBD72F7E2AFBDE58FF31BB2 /* Pods */,
+				81F8283D76A0BBCB3F41FE47 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -144,8 +167,11 @@
 		48F70A3120B72E8A0027B72D /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				48F70A3220B72E8A0027B72D /* ZilliqaSDK-Info.plist */,
+				48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */,
+				48E76FB220B9D6160027A3FE /* ZilliqaSDK-iOS-Info.plist */,
+				48E76FB020B9D6160027A3FE /* ZilliqaSDK-macOS-Info.plist */,
 				48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */,
+				48E76FB520B9D68C0027A3FE /* ZilliqaSDK-Bridging-Header.h */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -169,6 +195,7 @@
 				48F70A5320B7FFC10027B72D /* GasPriceTests.swift */,
 				48F70A5520B7FFDE0027B72D /* GasLimitTests.swift */,
 				48F70A5720B801A90027B72D /* PaymentModelTests.swift */,
+				48838C9420B9F64800C18DC2 /* WalletTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -176,7 +203,8 @@
 		48F70A3720B72E930027B72D /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				48F70A3820B72E930027B72D /* ZilliqaSDKTests-Info.plist */,
+				48838CB220BA084F00C18DC2 /* ZilliqaSDKTests-iOS-Info.plist */,
+				48838CB120BA084F00C18DC2 /* ZilliqaSDKTests-macOS-Info.plist */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -237,6 +265,24 @@
 			path = Wallet;
 			sourceTree = "<group>";
 		};
+		81F8283D76A0BBCB3F41FE47 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				926E46A95FC0F9A26C1905EC /* libPods-ZilliqaSDK-iOS.a */,
+				F914D94B11BC144389718DBD /* libPods-ZilliqaSDK-macOS.a */,
+				0040F8B58C094EEFF72B9011 /* libPods-ZilliqaSDKTests-iOS.a */,
+				D98E377E7036DE435A39229E /* libPods-ZilliqaSDKTests-macOS.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CCBD72F7E2AFBDE58FF31BB2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -244,6 +290,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48E76FB420B9D6210027A3FE /* ZilliqaSDK_macOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +309,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48ED061620B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDK-macOS" */;
 			buildPhases = (
+				00B3A38C11CF9D1783A8FA07 /* [CP] Check Pods Manifest.lock */,
 				48ED060020B8618F00C639E5 /* Sources */,
 				48ED060120B8618F00C639E5 /* Frameworks */,
 				48ED060220B8618F00C639E5 /* Headers */,
@@ -280,6 +328,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48ED061920B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDKTests-macOS" */;
 			buildPhases = (
+				182DFAD199B09D6A1B7AB3A3 /* [CP] Check Pods Manifest.lock */,
 				48ED060920B8618F00C639E5 /* Sources */,
 				48ED060A20B8618F00C639E5 /* Frameworks */,
 				48ED060B20B8618F00C639E5 /* Resources */,
@@ -298,6 +347,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48F70A2920B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDK-iOS" */;
 			buildPhases = (
+				E1DD634A11AC2CB2772823C1 /* [CP] Check Pods Manifest.lock */,
 				48F70A1020B72DD00027B72D /* Sources */,
 				48F70A1120B72DD00027B72D /* Frameworks */,
 				48F70A1220B72DD00027B72D /* Headers */,
@@ -316,6 +366,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48F70A2C20B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDKTests-iOS" */;
 			buildPhases = (
+				D0A976A7AA953FDB4F6A4D46 /* [CP] Check Pods Manifest.lock */,
 				48F70A1A20B72DD00027B72D /* Sources */,
 				48F70A1B20B72DD00027B72D /* Frameworks */,
 				48F70A1C20B72DD00027B72D /* Resources */,
@@ -406,6 +457,81 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		00B3A38C11CF9D1783A8FA07 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZilliqaSDK-macOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		182DFAD199B09D6A1B7AB3A3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZilliqaSDKTests-macOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D0A976A7AA953FDB4F6A4D46 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZilliqaSDKTests-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E1DD634A11AC2CB2772823C1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZilliqaSDK-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		48ED060020B8618F00C639E5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -441,6 +567,7 @@
 			files = (
 				48F70A5A20B802E70027B72D /* AmountModelTests.swift in Sources */,
 				48F70A3920B72E980027B72D /* AddressTests.swift in Sources */,
+				48838C9520B9F64800C18DC2 /* WalletTests.swift in Sources */,
 				48F70A5420B7FFC10027B72D /* GasPriceTests.swift in Sources */,
 				48F70A5220B7FE9B0027B72D /* GasTests.swift in Sources */,
 				48F70A5620B7FFDE0027B72D /* GasLimitTests.swift in Sources */,
@@ -495,12 +622,14 @@
 		48F70A2720B72DD00027B72D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SimulatorMockedEntitlements.entitlements;
 			};
 			name = Debug;
 		};
 		48F70A2820B72DD00027B72D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SimulatorMockedEntitlements.entitlements;
 			};
 			name = Release;
 		};
@@ -508,6 +637,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48F70A8420B825960027B72D /* ZilliqaSDK-iOS-Debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SimulatorMockedEntitlements.entitlements;
+				DEFINES_MODULE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/SupportingFiles/ZilliqaSDK-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -515,6 +655,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48F70A8520B825970027B72D /* ZilliqaSDK-iOS-Release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SimulatorMockedEntitlements.entitlements;
+				DEFINES_MODULE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/SupportingFiles/ZilliqaSDK-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -522,6 +672,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48ED062020B86C1C00C639E5 /* ZilliqaSDKTests-iOS-Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SimulatorMockedEntitlements.entitlements;
 			};
 			name = Debug;
 		};
@@ -529,6 +680,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48ED062520B86C1D00C639E5 /* ZilliqaSDKTests-iOS-Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SimulatorMockedEntitlements.entitlements;
 			};
 			name = Release;
 		};
