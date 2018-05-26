@@ -1,0 +1,6 @@
+module Pods_ZilliqaSDKTests_iOS {
+  umbrella header "Pods-ZilliqaSDKTests-iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

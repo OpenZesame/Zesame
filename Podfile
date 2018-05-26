@@ -1,6 +1,5 @@
 def shared_pods
 	pod 'secp256k1'
-  pod 'BigNumber'
 end
 
 target 'ZilliqaSDK-iOS' do

@@ -1,0 +1,16 @@
+PODS:
+  - secp256k1 (0.3.0)
+
+DEPENDENCIES:
+  - secp256k1
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - secp256k1
+
+SPEC CHECKSUMS:
+  secp256k1: 0fecfb4fa051ee04edffa2094264e666fb3f5fbf
+
+PODFILE CHECKSUM: f45e450e526a2096bdac587394fbc7e20b2ce263
+
+COCOAPODS: 1.5.3
