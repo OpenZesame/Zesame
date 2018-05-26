@@ -20,6 +20,8 @@
 		48F70A5A20B802E70027B72D /* AmountModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A5920B802E70027B72D /* AmountModelTests.swift */; };
 		48F70A7A20B811370027B72D /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7820B811330027B72D /* Wallet.swift */; };
 		48F70A7D20B812080027B72D /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7B20B811A00027B72D /* Amount.swift */; };
+		48F70A8220B812F30027B72D /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A8020B812A90027B72D /* PrivateKey.swift */; };
+		48F70A8320B812F70027B72D /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7E20B812990027B72D /* Nonce.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		48F70A5920B802E70027B72D /* AmountModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountModelTests.swift; sourceTree = "<group>"; };
 		48F70A7820B811330027B72D /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		48F70A7B20B811A00027B72D /* Amount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amount.swift; sourceTree = "<group>"; };
+		48F70A7E20B812990027B72D /* Nonce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nonce.swift; sourceTree = "<group>"; };
+		48F70A8020B812A90027B72D /* PrivateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +192,8 @@
 			isa = PBXGroup;
 			children = (
 				48F70A7820B811330027B72D /* Wallet.swift */,
+				48F70A8020B812A90027B72D /* PrivateKey.swift */,
+				48F70A7E20B812990027B72D /* Nonce.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -306,6 +312,8 @@
 				48F70A4F20B7F9B40027B72D /* Address.swift in Sources */,
 				48F70A4B20B7F55B0027B72D /* Payment.swift in Sources */,
 				48F70A4D20B7F9940027B72D /* Gas.swift in Sources */,
+				48F70A8320B812F70027B72D /* Nonce.swift in Sources */,
+				48F70A8220B812F30027B72D /* PrivateKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

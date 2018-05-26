@@ -13,10 +13,10 @@ class PaymentModelTests: XCTestCase {
 
     private let addressAsDouble: Double = 0xABCDEF0123456789ABCDEF0123456789ABCDEF01p0
     func testCreatingValidPaymentUsingDesignatedInitializer() {
-        let address = Address(double: addressAsDouble)
         guard
-            let amount = Amount(double: 1),
-            let gas = Gas(rawPrice: 1, rawLimit: 1)
+            let address = try? Address(double: addressAsDouble),
+            let amount = try? Amount(double: 1),
+            let gas = try? Gas(rawPrice: 1, rawLimit: 1)
             else {
                 XCTFail("Should have been possible to create address, amount of gas using valid values")
                 return
@@ -37,7 +37,7 @@ class PaymentModelTests: XCTestCase {
     }
 
     func testCreatingValidPaymentUsingConvenienceInitializer() {
-        let payment = Payment(addressDouble: 0xABCDEF0123456789ABCDEF0123456789ABCDEF01p0, amountDouble: 1, priceDouble: 1, limitDouble: 1)
+        let payment = try? Payment(addressDouble: 0xABCDEF0123456789ABCDEF0123456789ABCDEF01p0, amountDouble: 1, priceDouble: 1, limitDouble: 1)
         XCTAssertTrue(payment?.recipient.address == addressAsDouble)
         XCTAssertTrue(payment?.amount.amount == 1)
         XCTAssertTrue(payment?.gas.limit.limit == 1)
@@ -45,7 +45,7 @@ class PaymentModelTests: XCTestCase {
     }
 
     func testCreatingValidPaymentUsingConvenienceInitializerAddressAsString() {
-        let payment = Payment(addressString: "0xABCDEF0123456789ABCDEF0123456789ABCDEF01", amountDouble: 1, priceDouble: 1, limitDouble: 1)
+        let payment = try? Payment(addressString: "0xABCDEF0123456789ABCDEF0123456789ABCDEF01", amountDouble: 1, priceDouble: 1, limitDouble: 1)
         XCTAssertTrue(payment?.recipient.address == addressAsDouble)
         XCTAssertTrue(payment?.amount.amount == 1)
         XCTAssertTrue(payment?.gas.limit.limit == 1)

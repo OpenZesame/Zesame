@@ -12,17 +12,17 @@ import XCTest
 class GasLimitTests: XCTestCase {
 
     func testCreatingInvalidGasLimitWithNegativeValue() {
-        let limit = Gas.Limit(double: -1)
+        let limit = try? Gas.Limit(double: -1)
         XCTAssertNil(limit, "Should not be possible to create limit with negative value")
     }
 
     func testCreatingInvalidGasLimitWithZero() {
-        let limit = Gas.Limit(double: 0)
+        let limit = try? Gas.Limit(double: 0)
         XCTAssertNil(limit, "Should not be possible to create limit with negative value")
     }
 
     func testCreatingValidGasLimitUsingDesignatedInitializer() {
-        let limit = Gas.Limit(double: 1)
+        let limit = try? Gas.Limit(double: 1)
         XCTAssertTrue(limit?.limit == 1)
     }
 

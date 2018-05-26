@@ -12,17 +12,17 @@ import XCTest
 class GasPriceTests: XCTestCase {
 
     func testCreatingInvalidGasPriceWithNegativeValue() {
-        let price = Gas.Price(double: -1)
+        let price = try? Gas.Price(double: -1)
         XCTAssertNil(price, "Should not be possible to create price with negative value")
     }
 
     func testCreatingInvalidGasPriceWithZero() {
-        let price = Gas.Price(double: 0)
+        let price = try? Gas.Price(double: 0)
         XCTAssertNil(price, "Should not be possible to create price with a value of zero")
     }
 
     func testCreatingValidGasPriceUsingDesignatedInitializer() {
-        let price = Gas.Price(double: 1)
+        let price = try? Gas.Price(double: 1)
         XCTAssertTrue(price?.price == 1)
     }
 

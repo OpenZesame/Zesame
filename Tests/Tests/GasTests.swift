@@ -13,8 +13,8 @@ class GasTests: XCTestCase {
 
     func testValidGasUsingDesignatedInitializer() {
         guard
-            let price = Gas.Price(double: 1),
-            let limit = Gas.Limit(double: 1)
+            let price = try? Gas.Price(double: 1),
+            let limit = try? Gas.Limit(double: 1)
             else {
                 XCTFail("Price and limit should both be non nil")
                 return
@@ -25,7 +25,7 @@ class GasTests: XCTestCase {
     }
 
     func testValidGasUsingConvenienceInitializer() {
-        guard let gas = Gas(rawPrice: 1, rawLimit: 1) else {
+        guard let gas = try? Gas(rawPrice: 1, rawLimit: 1) else {
             XCTFail("It should be possible to instantiate Gas using conveniene initializer by passing non negative raw values for price and limit")
             return
         }
