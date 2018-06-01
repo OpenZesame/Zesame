@@ -20,7 +20,6 @@ private extension Amount {
     }
 }
 
-
 public struct Amount {
     public static let totalSupply: Double = 21000000000 // 21 billion Zillings is the total supply
     public static let decimals: Int = 12
