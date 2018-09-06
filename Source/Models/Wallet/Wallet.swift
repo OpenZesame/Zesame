@@ -6,103 +6,152 @@
 //  Copyright © 2018 Open Zesame. All rights reserved.
 //
 
-import Foundation
+import EllipticCurve
 
-import EllipticCurveKeyPair
+//public typealias PublicKey = Secp256k1
+
+public extension BigUInt {
+    func toHexString() -> String {
+        return String(self, radix: 16)
+    }
+}
+
+func uint8ArrayToData(_ array: [UInt8]) -> Data {
+    fatalError()
+}
+
+public struct PublicKey {
+
+    public enum Format {
+        case compressed
+        case uncompressed
+
+        public var prefixByte: UInt8 {
+            switch self {
+            case .uncompressed: return 0x4
+            case .compressed: return 0x2
+            }
+        }
+    }
+
+    public let publicKey: [UInt8]
+    public let format: Format
+
+    public init(privateKey: PrivateKey, format: Format = .uncompressed) {
+        fatalError()
+//        let publicKeyCurvePoint = privateKey.randomBigNumber * Secp256k1.Generator
+//        guard let publicKeyCurvePointYWrapper = publicKeyCurvePoint.y else { fatalError("should have Y value") }
+//        let publicKeyCurvePointY: BigNumber = publicKeyCurvePointYWrapper.value
+//        let publicKeyCurvePointX: BigNumber = publicKeyCurvePoint.x.value
+//
+//        let xAsUInt8Array = publicKeyCurvePointX.exportToUInt8Array()
+//        let yAsUInt8Array = publicKeyCurvePointY.exportToUInt8Array()
+//
+//        guard xAsUInt8Array.count == 32, yAsUInt8Array.count == xAsUInt8Array.count else { fatalError("wrong length, should be 32") }
+//
+//        let keyData: [UInt8]
+//
+//        switch format {
+//        case .compressed:
+//            // TODO: VERIFY use `last` instead of `first`?? LSB or MSB? :S
+//            let relevantByteFromPointY: UInt8 = publicKeyCurvePointY.exportToUInt8Array().first!
+//            let one = UInt8(1)
+//            let logicalAndResult: UInt8 = relevantByteFromPointY & one
+//            let prefix: UInt8 = 0x2 + logicalAndResult
+//            keyData = [prefix] + xAsUInt8Array
+//            guard keyData.count == 33 else { fatalError("incorrect length, should be 33") }
+//        case .uncompressed:
+//            keyData = [UInt8(4)] + xAsUInt8Array + yAsUInt8Array
+//            guard keyData.count == 65 else { fatalError("incorrect length, should be 65") }
+//        }
+//
+//        self.publicKey = keyData
+//        self.format = format
+    }
+}
+
+func sizeof<T:FixedWidthInteger>(_ int: T) -> Int {
+    return int.bitWidth/UInt8.bitWidth
+}
+
+func sizeof<T:FixedWidthInteger>(_ intType: T.Type) -> Int {
+    return intType.bitWidth/UInt8.bitWidth
+}
+
+func integerWithBytes<T: UnsignedInteger & FixedWidthInteger>(bytes: [UInt8]) -> T? {
+
+    let size = sizeof(T.self)
+
+    if bytes.count < size {
+        return nil
+    }
+
+    var acc: UIntMax = 0
+    for i in 0..<size {
+        acc |= bytes[i].toUIntMax() << UIntMax(i * 8)
+
+    }
+    // UnsignedInteger defines init(_: UIntMax)
+    return T(acc)
+}
+
+public extension PublicKey {
+
+    func as8array() -> [UInt8] {
+        return publicKey
+    }
+
+    func as64array() -> [UInt] {
+        let as8Array = as8array()
+
+        let uint8PerUint64 = 4
+
+        guard as8Array.count % uint8PerUint64 == 0 else { fatalError("bad length") }
+
+        let newCount = as8Array.count / uint8PerUint64
+
+        var array = Array<UInt>(reserveCapacity: newCount)
+
+        for i in 0..<newCount {
+            let subrange = Array<UInt8>(as8Array[i...i+uint8PerUint64])
+            let element: UInt = integerWithBytes(bytes: subrange)!
+            array[i] = element
+        }
+        return array
+    }
+
+    func asBigNumber() -> BigNumber {
+        let array = as64array()
+        return BigNumber(words: array)
+    }
+
+    func toHexString() -> String {
+        let bigNumber = asBigNumber()
+        return bigNumber.toHexString()
+    }
+}
+
+public struct KeyPair {
+    public let privateKey: PrivateKey
+    public let publicKey: PublicKey
+
+    public init(privateKey: PrivateKey, publicKeyFormat: PublicKey.Format = .uncompressed) {
+        self.privateKey = privateKey
+        self.publicKey = PublicKey(privateKey: privateKey, format: publicKeyFormat)
+    }
+}
 
 public struct Wallet {
-//    public let address: Address
-//    public let privateKey: EllipticCurveKeyPair.PrivateKey
-//    public let balance: Amount
-//    public let nonce: Nonce
+    public let keyPair: KeyPair
+    public let address: Address // calculated from public key
+    public let balance: Amount
+    public let nonce: Nonce
 
-    init() {}
-
-    public enum KeyGenerationResult {
-        case success(EllipticCurveKeyPair.PrivateKey)
-        case error(Swift.Error)
-    }
-
-    func createPrivateKeyAndValidate(done: @escaping (KeyGenerationResult) -> Void) {
-        DispatchQueue.global(qos: .background).async {
-            do {
-            print("APA")
-            let keys = try Wallet.createKeyPair()
-            print("BANAN")
-            let isValid = try Wallet.verify(privateKey: keys.private)
-            guard isValid else {
-                throw Error.verificationFailed
-            }
-            let publicKeyAttributes = try keys.public.attributes()
-            print(publicKeyAttributes)
-                DispatchQueue.main.async {
-                    done(.success(keys.private))
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    done(.error(error))
-                }
-            }
-
-
-
-        }
-
-    }
-
-    public enum Error: Int, Swift.Error {
-        case failedToCreateVerificationContext
-        case verificationFailed
-    }
-
-    private static func verify(privateKey: EllipticCurveKeyPair.PrivateKey) throws -> Bool {
-        print("verifying key")
-        guard let verifyContext = secp256k1_context_create(UInt32(SECP256K1_FLAGS_TYPE_CONTEXT | SECP256K1_FLAGS_BIT_CONTEXT_VERIFY)) else {
-            throw Error.failedToCreateVerificationContext
-        }
-        let attributes = try privateKey.attributes()
-        print(attributes)
-        fatalError()
-        //        return true
-        //        let verificationResult: Int32 = secp256k1_ec_seckey_verify(verifyContext, secretKey)
-        //        let isValid = verificationResult == 1
-        //        return isValid
-    }
-
-    private static func createKeyPair() throws -> (`public`: EllipticCurveKeyPair.PublicKey, `private`: EllipticCurveKeyPair.PrivateKey)  {
-        print("Creating Config")
-        let group = "org.openzesame.zilliqasdk"
-
-//        let publicKeyAccessControl = EllipticCurveKeyPair.AccessControl(protection: kSecAttrAccessibleAlways, flags: [])
-//
-//        let privateKeyAccessControlFlags: SecAccessControlCreateFlags = []
-//
-////        #if targetEnvironment(simulator)
-////        privateKeyAccessControlFlags = [.userPresence]
-////        #else
-////        privateKeyAccessControlFlags = [.userPresence, .privateKeyUsage]
-////        #endif
-//        let privateKeyAccessControl = EllipticCurveKeyPair.AccessControl(protection:  kSecAttrAccessibleWhenUnlockedThisDeviceOnly, flags: privateKeyAccessControlFlags)
-
-        let publicKeyAccessControl = EllipticCurveKeyPair.AccessControl(protection: kSecAttrAccessibleAlwaysThisDeviceOnly, flags: [])
-
-        let privateKeyAccessControl = EllipticCurveKeyPair.AccessControl(protection: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly, flags: {
-            return EllipticCurveKeyPair.Device.hasSecureEnclave ? [.userPresence, .privateKeyUsage] : [.userPresence]
-        }())
-
-        let config = EllipticCurveKeyPair.Config(
-            publicLabel: "publicKey",
-            privateLabel: "privateKey",
-            operationPrompt: "You must unlock your private key",
-            publicKeyAccessControl: publicKeyAccessControl,
-            privateKeyAccessControl: privateKeyAccessControl,
-            publicKeyAccessGroup: group,
-            privateKeyAccessGroup: group,
-            token: .secureEnclaveIfAvailable)
-        print("Created Config, creating manager...")
-        let manager = EllipticCurveKeyPair.Manager(config: config)
-        print("Created Manager, creating keys...")
-        return try manager.keys()
+    init(keyPair: KeyPair, balance: Amount = .zero, nonce: Nonce = .zero) {
+        self.keyPair = keyPair
+        self.address = Address(publicKey: keyPair.publicKey)
+        self.balance = balance
+        self.nonce = nonce
     }
 }
 

@@ -65,6 +65,12 @@ public struct Amount {
     }
 }
 
+public extension Amount {
+    static var zero: Amount {
+        return try! Amount(double: 0)
+    }
+}
+
 extension Amount: ExpressibleByFloatLiteral {}
 public extension Amount {
     /// This `ExpressibleByFloatLiteral` init can result in runtime crash if passed invalid values (since the protocol requires the initializer to be non failable, but the designated initializer is).

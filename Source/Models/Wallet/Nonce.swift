@@ -14,3 +14,9 @@ public struct Nonce {
         self.nonce = nonce
     }
 }
+
+public extension Nonce {
+    static var zero: Nonce {
+        return Nonce()
+    }
+}

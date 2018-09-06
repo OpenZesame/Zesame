@@ -7,15 +7,47 @@
 //
 
 import Foundation
+import EllipticCurve
+import CryptoSwift
+
+public extension BigUInt {
+    func exportToUInt8Array() -> [UInt8] {
+        fatalError()
+    }
+}
+
+/// Version = 1 byte of 0 (zero); on the test network, this is 1 byte of 111
+/// Key hash = Version concatenated with RIPEMD-160(SHA-256(public key))
+/// Checksum = 1st 4 bytes of SHA-256(SHA-256(Key hash))
+/// Bitcoin Address = Base58Encode(Key hash concatenated with Checksum)
+func publicKeyHashToAddress(_ hash: Data) -> String {
+    let checksum = Crypto.sha256_sha256(hash).prefix(4)
+    let address = Base58.encode(hash + checksum)
+    return address
+}
 
 public struct Address {
+
+    public enum Network {
+        case testnet
+        case mainnet
+
+        public var publicKeyHash: UInt8 {
+            switch self {
+            case .mainnet: return 0
+            case .testnet: return 0x6f // = 111 dec
+            }
+        }
+    }
+
     public static var length: Int { return 40 }
     public static var biggest: Double = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFp0
 
-    public let address: Double
+    public let address: String
 
-    public init(double: Double) throws {
-        self.address = double
+    public init(publicKey: PublicKey, network: Network = .testnet) {
+        let hash = uint8ArrayToData([network.publicKeyHash]) + Crypto.sha256_ripemd160(uint8ArrayToData(publicKey.publicKey))
+        self.address = publicKeyHashToAddress(hash)
     }
 
     public enum Error: Int, Swift.Error, Equatable {
@@ -25,7 +57,7 @@ public struct Address {
         case stringNotHex
     }
 }
-
+/**
 // MARK: - ExpressibleByFloatLiteral
 extension Address: ExpressibleByFloatLiteral {}
 public extension Address {
@@ -64,3 +96,4 @@ public extension Address {
         }
     }
 }
+*/

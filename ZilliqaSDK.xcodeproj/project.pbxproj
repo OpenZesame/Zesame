@@ -8,20 +8,36 @@
 
 /* Begin PBXBuildFile section */
 		285F625FB878368FA71B4C81 /* libPods-ZilliqaSDK-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F914D94B11BC144389718DBD /* libPods-ZilliqaSDK-macOS.a */; };
-		48838C9520B9F64800C18DC2 /* WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48838C9420B9F64800C18DC2 /* WalletTests.swift */; };
 		48E76FB420B9D6210027A3FE /* ZilliqaSDK_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48ED060E20B8618F00C639E5 /* ZilliqaSDK_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48ED060520B8618F00C639E5 /* ZilliqaSDK_macOS.framework */; };
+		48ED0E4E20E7F147005DA19C /* RIPEMD160.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E4D20E7F147005DA19C /* RIPEMD160.swift */; };
+		48ED0E4F20E7F147005DA19C /* RIPEMD160.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E4D20E7F147005DA19C /* RIPEMD160.swift */; };
+		48ED0E5020E7F150005DA19C /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7820B811330027B72D /* Wallet.swift */; };
+		48ED0E5120E7F153005DA19C /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A8020B812A90027B72D /* PrivateKey.swift */; };
+		48ED0E5220E7F155005DA19C /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7E20B812990027B72D /* Nonce.swift */; };
+		48ED0E5320E7F158005DA19C /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7B20B811A00027B72D /* Amount.swift */; };
+		48ED0E5420E7F15D005DA19C /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A4A20B7F55B0027B72D /* Payment.swift */; };
+		48ED0E5520E7F15D005DA19C /* Gas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A4C20B7F9940027B72D /* Gas.swift */; };
+		48ED0E5620E7F15D005DA19C /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A4E20B7F9B40027B72D /* Address.swift */; };
+		48ED0E5820E7F41D005DA19C /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E5720E7F41D005DA19C /* Base58.swift */; };
+		48ED0E5920E7F41D005DA19C /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E5720E7F41D005DA19C /* Base58.swift */; };
+		48ED0E5B20E7FFE1005DA19C /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E5A20E7FFE1005DA19C /* Crypto.swift */; };
+		48ED0E5C20E7FFE1005DA19C /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E5A20E7FFE1005DA19C /* Crypto.swift */; };
+		48ED0E5F20E8008F005DA19C /* RIPEMD160+Compress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E5E20E8008F005DA19C /* RIPEMD160+Compress.swift */; };
+		48ED0E6020E8008F005DA19C /* RIPEMD160+Compress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E5E20E8008F005DA19C /* RIPEMD160+Compress.swift */; };
+		48ED0E6820E805AA005DA19C /* PrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6720E805AA005DA19C /* PrivateKeyTests.swift */; };
+		48ED0E6920E805AA005DA19C /* PrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6720E805AA005DA19C /* PrivateKeyTests.swift */; };
+		48ED0E6C20E80731005DA19C /* BigNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6B20E80731005DA19C /* BigNumber.swift */; };
+		48ED0E6D20E80731005DA19C /* BigNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6B20E80731005DA19C /* BigNumber.swift */; };
+		48ED0E6F20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */; };
+		48ED0E7020E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */; };
+		48ED0E7120E80D84005DA19C /* KeyGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6320E8047E005DA19C /* KeyGenerationTests.swift */; };
+		48ED0E7220E80D85005DA19C /* KeyGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6320E8047E005DA19C /* KeyGenerationTests.swift */; };
 		48F70A1F20B72DD00027B72D /* ZilliqaSDK_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F70A1520B72DD00027B72D /* ZilliqaSDK_iOS.framework */; };
-		48F70A3920B72E980027B72D /* AddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A3620B72E930027B72D /* AddressTests.swift */; };
 		48F70A4820B7F4D00027B72D /* ZilliqaSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48F70A4B20B7F55B0027B72D /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A4A20B7F55B0027B72D /* Payment.swift */; };
 		48F70A4D20B7F9940027B72D /* Gas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A4C20B7F9940027B72D /* Gas.swift */; };
 		48F70A4F20B7F9B40027B72D /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A4E20B7F9B40027B72D /* Address.swift */; };
-		48F70A5220B7FE9B0027B72D /* GasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A5020B7FE590027B72D /* GasTests.swift */; };
-		48F70A5420B7FFC10027B72D /* GasPriceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A5320B7FFC10027B72D /* GasPriceTests.swift */; };
-		48F70A5620B7FFDE0027B72D /* GasLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A5520B7FFDE0027B72D /* GasLimitTests.swift */; };
-		48F70A5820B801A90027B72D /* PaymentModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A5720B801A90027B72D /* PaymentModelTests.swift */; };
-		48F70A5A20B802E70027B72D /* AmountModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A5920B802E70027B72D /* AmountModelTests.swift */; };
 		48F70A7A20B811370027B72D /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7820B811330027B72D /* Wallet.swift */; };
 		48F70A7D20B812080027B72D /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7B20B811A00027B72D /* Amount.swift */; };
 		48F70A8220B812F30027B72D /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A8020B812A90027B72D /* PrivateKey.swift */; };
@@ -57,7 +73,6 @@
 		48E76FB020B9D6160027A3FE /* ZilliqaSDK-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-macOS-Info.plist"; sourceTree = "<group>"; };
 		48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZilliqaSDK_macOS.h; sourceTree = "<group>"; };
 		48E76FB220B9D6160027A3FE /* ZilliqaSDK-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Info.plist"; sourceTree = "<group>"; };
-		48E76FB520B9D68C0027A3FE /* ZilliqaSDK-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDK-Bridging-Header.h"; sourceTree = "<group>"; };
 		48ED060520B8618F00C639E5 /* ZilliqaSDK_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZilliqaSDK_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ED060D20B8618F00C639E5 /* .xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = .xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ED061C20B86B1200C639E5 /* ZilliqaSDK-iOS-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDK-iOS-Common.xcconfig"; sourceTree = "<group>"; };
@@ -70,6 +85,16 @@
 		48ED062320B86C1D00C639E5 /* ZilliqaSDKTests-macOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDKTests-macOS-Release.xcconfig"; sourceTree = "<group>"; };
 		48ED062420B86C1D00C639E5 /* ZilliqaSDKTests-iOS-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDKTests-iOS-Common.xcconfig"; sourceTree = "<group>"; };
 		48ED062520B86C1D00C639E5 /* ZilliqaSDKTests-iOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDKTests-iOS-Release.xcconfig"; sourceTree = "<group>"; };
+		48ED0E4D20E7F147005DA19C /* RIPEMD160.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RIPEMD160.swift; sourceTree = "<group>"; };
+		48ED0E5720E7F41D005DA19C /* Base58.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
+		48ED0E5A20E7FFE1005DA19C /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
+		48ED0E5E20E8008F005DA19C /* RIPEMD160+Compress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RIPEMD160+Compress.swift"; sourceTree = "<group>"; };
+		48ED0E6120E8047D005DA19C /* ZilliqaSDKTests-iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDKTests-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		48ED0E6220E8047D005DA19C /* ZilliqaSDKTests-macOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDKTests-macOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		48ED0E6320E8047E005DA19C /* KeyGenerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyGenerationTests.swift; sourceTree = "<group>"; };
+		48ED0E6720E805AA005DA19C /* PrivateKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyTests.swift; sourceTree = "<group>"; };
+		48ED0E6B20E80731005DA19C /* BigNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigNumber.swift; sourceTree = "<group>"; };
+		48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt256+ExpressibleByStringLiteral.swift"; sourceTree = "<group>"; };
 		48F70A1520B72DD00027B72D /* ZilliqaSDK_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZilliqaSDK_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A1E20B72DD00027B72D /* ZilliqaSDKTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZilliqaSDKTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZilliqaSDK.h; sourceTree = "<group>"; };
@@ -131,6 +156,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		48ED0E4C20E7F147005DA19C /* Cryptography */ = {
+			isa = PBXGroup;
+			children = (
+				48ED0E5D20E80067005DA19C /* RIPEMD160 */,
+				48ED0E5A20E7FFE1005DA19C /* Crypto.swift */,
+				48ED0E5720E7F41D005DA19C /* Base58.swift */,
+			);
+			path = Cryptography;
+			sourceTree = "<group>";
+		};
+		48ED0E5D20E80067005DA19C /* RIPEMD160 */ = {
+			isa = PBXGroup;
+			children = (
+				48ED0E4D20E7F147005DA19C /* RIPEMD160.swift */,
+				48ED0E5E20E8008F005DA19C /* RIPEMD160+Compress.swift */,
+			);
+			path = RIPEMD160;
+			sourceTree = "<group>";
+		};
+		48ED0E6620E80588005DA19C /* OLD */ = {
+			isa = PBXGroup;
+			children = (
+				48F70A3620B72E930027B72D /* AddressTests.swift */,
+				48F70A5920B802E70027B72D /* AmountModelTests.swift */,
+				48F70A5020B7FE590027B72D /* GasTests.swift */,
+				48F70A5320B7FFC10027B72D /* GasPriceTests.swift */,
+				48F70A5520B7FFDE0027B72D /* GasLimitTests.swift */,
+				48F70A5720B801A90027B72D /* PaymentModelTests.swift */,
+				48838C9420B9F64800C18DC2 /* WalletTests.swift */,
+			);
+			path = OLD;
+			sourceTree = "<group>";
+		};
+		48ED0E6A20E80720005DA19C /* BigNumber */ = {
+			isa = PBXGroup;
+			children = (
+				48ED0E6B20E80731005DA19C /* BigNumber.swift */,
+				48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */,
+			);
+			path = BigNumber;
+			sourceTree = "<group>";
+		};
 		48F70A0B20B72DCF0027B72D = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +224,8 @@
 		48F70A3020B72E8A0027B72D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				48ED0E6A20E80720005DA19C /* BigNumber */,
+				48ED0E4C20E7F147005DA19C /* Cryptography */,
 				48F70A4920B7F52B0027B72D /* Models */,
 				48F70A4020B730070027B72D /* Configurations */,
 				48F70A3120B72E8A0027B72D /* SupportingFiles */,
@@ -171,7 +240,6 @@
 				48E76FB220B9D6160027A3FE /* ZilliqaSDK-iOS-Info.plist */,
 				48E76FB020B9D6160027A3FE /* ZilliqaSDK-macOS-Info.plist */,
 				48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */,
-				48E76FB520B9D68C0027A3FE /* ZilliqaSDK-Bridging-Header.h */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -189,13 +257,11 @@
 		48F70A3520B72E930027B72D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				48F70A3620B72E930027B72D /* AddressTests.swift */,
-				48F70A5920B802E70027B72D /* AmountModelTests.swift */,
-				48F70A5020B7FE590027B72D /* GasTests.swift */,
-				48F70A5320B7FFC10027B72D /* GasPriceTests.swift */,
-				48F70A5520B7FFDE0027B72D /* GasLimitTests.swift */,
-				48F70A5720B801A90027B72D /* PaymentModelTests.swift */,
-				48838C9420B9F64800C18DC2 /* WalletTests.swift */,
+				48ED0E6620E80588005DA19C /* OLD */,
+				48ED0E6320E8047E005DA19C /* KeyGenerationTests.swift */,
+				48ED0E6120E8047D005DA19C /* ZilliqaSDKTests-iOS-Bridging-Header.h */,
+				48ED0E6220E8047D005DA19C /* ZilliqaSDKTests-macOS-Bridging-Header.h */,
+				48ED0E6720E805AA005DA19C /* PrivateKeyTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -396,6 +462,7 @@
 					};
 					48ED060C20B8618F00C639E5 = {
 						CreatedOnToolsVersion = 9.4;
+						LastSwiftMigration = 0940;
 					};
 					48F70A1420B72DD00027B72D = {
 						CreatedOnToolsVersion = 9.3;
@@ -403,6 +470,7 @@
 					};
 					48F70A1D20B72DD00027B72D = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 0940;
 					};
 				};
 			};
@@ -537,6 +605,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48ED0E6020E8008F005DA19C /* RIPEMD160+Compress.swift in Sources */,
+				48ED0E6D20E80731005DA19C /* BigNumber.swift in Sources */,
+				48ED0E5320E7F158005DA19C /* Amount.swift in Sources */,
+				48ED0E5020E7F150005DA19C /* Wallet.swift in Sources */,
+				48ED0E5C20E7FFE1005DA19C /* Crypto.swift in Sources */,
+				48ED0E5220E7F155005DA19C /* Nonce.swift in Sources */,
+				48ED0E5520E7F15D005DA19C /* Gas.swift in Sources */,
+				48ED0E5920E7F41D005DA19C /* Base58.swift in Sources */,
+				48ED0E4F20E7F147005DA19C /* RIPEMD160.swift in Sources */,
+				48ED0E5420E7F15D005DA19C /* Payment.swift in Sources */,
+				48ED0E5620E7F15D005DA19C /* Address.swift in Sources */,
+				48ED0E5120E7F153005DA19C /* PrivateKey.swift in Sources */,
+				48ED0E7020E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +625,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48ED0E6920E805AA005DA19C /* PrivateKeyTests.swift in Sources */,
+				48ED0E7220E80D85005DA19C /* KeyGenerationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,13 +634,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48ED0E5F20E8008F005DA19C /* RIPEMD160+Compress.swift in Sources */,
+				48ED0E6C20E80731005DA19C /* BigNumber.swift in Sources */,
 				48F70A7D20B812080027B72D /* Amount.swift in Sources */,
 				48F70A7A20B811370027B72D /* Wallet.swift in Sources */,
+				48ED0E5B20E7FFE1005DA19C /* Crypto.swift in Sources */,
+				48ED0E4E20E7F147005DA19C /* RIPEMD160.swift in Sources */,
 				48F70A4F20B7F9B40027B72D /* Address.swift in Sources */,
+				48ED0E5820E7F41D005DA19C /* Base58.swift in Sources */,
 				48F70A4B20B7F55B0027B72D /* Payment.swift in Sources */,
 				48F70A4D20B7F9940027B72D /* Gas.swift in Sources */,
 				48F70A8320B812F70027B72D /* Nonce.swift in Sources */,
 				48F70A8220B812F30027B72D /* PrivateKey.swift in Sources */,
+				48ED0E6F20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,13 +654,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48F70A5A20B802E70027B72D /* AmountModelTests.swift in Sources */,
-				48F70A3920B72E980027B72D /* AddressTests.swift in Sources */,
-				48838C9520B9F64800C18DC2 /* WalletTests.swift in Sources */,
-				48F70A5420B7FFC10027B72D /* GasPriceTests.swift in Sources */,
-				48F70A5220B7FE9B0027B72D /* GasTests.swift in Sources */,
-				48F70A5620B7FFDE0027B72D /* GasLimitTests.swift in Sources */,
-				48F70A5820B801A90027B72D /* PaymentModelTests.swift in Sources */,
+				48ED0E6820E805AA005DA19C /* PrivateKeyTests.swift in Sources */,
+				48ED0E7120E80D84005DA19C /* KeyGenerationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,6 +693,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48ED062220B86C1C00C639E5 /* ZilliqaSDKTests-macOS-Debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests/ZilliqaSDKTests-macOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -616,6 +710,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48ED062320B86C1D00C639E5 /* ZilliqaSDKTests-macOS-Release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests/ZilliqaSDKTests-macOS-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -645,7 +748,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				SWIFT_OBJC_BRIDGING_HEADER = "Source/SupportingFiles/ZilliqaSDK-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -663,7 +765,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				SWIFT_OBJC_BRIDGING_HEADER = "Source/SupportingFiles/ZilliqaSDK-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -672,7 +773,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48ED062020B86C1C00C639E5 /* ZilliqaSDKTests-iOS-Debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SimulatorMockedEntitlements.entitlements;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests/ZilliqaSDKTests-iOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -680,7 +790,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48ED062520B86C1D00C639E5 /* ZilliqaSDKTests-iOS-Release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SimulatorMockedEntitlements.entitlements;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests/ZilliqaSDKTests-iOS-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
