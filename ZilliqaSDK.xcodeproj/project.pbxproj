@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		285F625FB878368FA71B4C81 /* libPods-ZilliqaSDK-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F914D94B11BC144389718DBD /* libPods-ZilliqaSDK-macOS.a */; };
 		48E76FB420B9D6210027A3FE /* ZilliqaSDK_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48ED060E20B8618F00C639E5 /* ZilliqaSDK_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48ED060520B8618F00C639E5 /* ZilliqaSDK_macOS.framework */; };
 		48ED0E4E20E7F147005DA19C /* RIPEMD160.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E4D20E7F147005DA19C /* RIPEMD160.swift */; };
@@ -23,8 +22,6 @@
 		48ED0E5920E7F41D005DA19C /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E5720E7F41D005DA19C /* Base58.swift */; };
 		48ED0E5B20E7FFE1005DA19C /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E5A20E7FFE1005DA19C /* Crypto.swift */; };
 		48ED0E5C20E7FFE1005DA19C /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E5A20E7FFE1005DA19C /* Crypto.swift */; };
-		48ED0E5F20E8008F005DA19C /* RIPEMD160+Compress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E5E20E8008F005DA19C /* RIPEMD160+Compress.swift */; };
-		48ED0E6020E8008F005DA19C /* RIPEMD160+Compress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E5E20E8008F005DA19C /* RIPEMD160+Compress.swift */; };
 		48ED0E6820E805AA005DA19C /* PrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6720E805AA005DA19C /* PrivateKeyTests.swift */; };
 		48ED0E6920E805AA005DA19C /* PrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6720E805AA005DA19C /* PrivateKeyTests.swift */; };
 		48ED0E6C20E80731005DA19C /* BigNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6B20E80731005DA19C /* BigNumber.swift */; };
@@ -42,9 +39,6 @@
 		48F70A7D20B812080027B72D /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7B20B811A00027B72D /* Amount.swift */; };
 		48F70A8220B812F30027B72D /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A8020B812A90027B72D /* PrivateKey.swift */; };
 		48F70A8320B812F70027B72D /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7E20B812990027B72D /* Nonce.swift */; };
-		70274DB6A9A5954C04FF19B7 /* libPods-ZilliqaSDKTests-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0040F8B58C094EEFF72B9011 /* libPods-ZilliqaSDKTests-iOS.a */; };
-		C1C95ED6235804D01F178681 /* libPods-ZilliqaSDK-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 926E46A95FC0F9A26C1905EC /* libPods-ZilliqaSDK-iOS.a */; };
-		F88018C5D27B904854BF65CE /* libPods-ZilliqaSDKTests-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D98E377E7036DE435A39229E /* libPods-ZilliqaSDKTests-macOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +59,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0040F8B58C094EEFF72B9011 /* libPods-ZilliqaSDKTests-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZilliqaSDKTests-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		484B068A20BA0EF700C4E50A /* SimulatorMockedEntitlements.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimulatorMockedEntitlements.entitlements; sourceTree = "<group>"; };
 		48838C9420B9F64800C18DC2 /* WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTests.swift; sourceTree = "<group>"; };
 		48838CB120BA084F00C18DC2 /* ZilliqaSDKTests-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDKTests-macOS-Info.plist"; sourceTree = "<group>"; };
 		48838CB220BA084F00C18DC2 /* ZilliqaSDKTests-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDKTests-iOS-Info.plist"; sourceTree = "<group>"; };
@@ -88,7 +80,6 @@
 		48ED0E4D20E7F147005DA19C /* RIPEMD160.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RIPEMD160.swift; sourceTree = "<group>"; };
 		48ED0E5720E7F41D005DA19C /* Base58.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
 		48ED0E5A20E7FFE1005DA19C /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
-		48ED0E5E20E8008F005DA19C /* RIPEMD160+Compress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RIPEMD160+Compress.swift"; sourceTree = "<group>"; };
 		48ED0E6120E8047D005DA19C /* ZilliqaSDKTests-iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDKTests-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		48ED0E6220E8047D005DA19C /* ZilliqaSDKTests-macOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDKTests-macOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		48ED0E6320E8047E005DA19C /* KeyGenerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyGenerationTests.swift; sourceTree = "<group>"; };
@@ -113,9 +104,6 @@
 		48F70A8020B812A90027B72D /* PrivateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
 		48F70A8420B825960027B72D /* ZilliqaSDK-iOS-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDK-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
 		48F70A8520B825970027B72D /* ZilliqaSDK-iOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDK-iOS-Release.xcconfig"; sourceTree = "<group>"; };
-		926E46A95FC0F9A26C1905EC /* libPods-ZilliqaSDK-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZilliqaSDK-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D98E377E7036DE435A39229E /* libPods-ZilliqaSDKTests-macOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZilliqaSDKTests-macOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F914D94B11BC144389718DBD /* libPods-ZilliqaSDK-macOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZilliqaSDK-macOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +111,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				285F625FB878368FA71B4C81 /* libPods-ZilliqaSDK-macOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,7 +119,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				48ED060E20B8618F00C639E5 /* ZilliqaSDK_macOS.framework in Frameworks */,
-				F88018C5D27B904854BF65CE /* libPods-ZilliqaSDKTests-macOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,7 +126,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1C95ED6235804D01F178681 /* libPods-ZilliqaSDK-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,7 +134,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				48F70A1F20B72DD00027B72D /* ZilliqaSDK_iOS.framework in Frameworks */,
-				70274DB6A9A5954C04FF19B7 /* libPods-ZilliqaSDKTests-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,7 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				48ED0E4D20E7F147005DA19C /* RIPEMD160.swift */,
-				48ED0E5E20E8008F005DA19C /* RIPEMD160+Compress.swift */,
 			);
 			path = RIPEMD160;
 			sourceTree = "<group>";
@@ -201,12 +184,9 @@
 		48F70A0B20B72DCF0027B72D = {
 			isa = PBXGroup;
 			children = (
-				484B068A20BA0EF700C4E50A /* SimulatorMockedEntitlements.entitlements */,
 				48F70A1620B72DD00027B72D /* Products */,
 				48F70A3020B72E8A0027B72D /* Source */,
 				48F70A3420B72E930027B72D /* Tests */,
-				CCBD72F7E2AFBDE58FF31BB2 /* Pods */,
-				81F8283D76A0BBCB3F41FE47 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -331,24 +311,6 @@
 			path = Wallet;
 			sourceTree = "<group>";
 		};
-		81F8283D76A0BBCB3F41FE47 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				926E46A95FC0F9A26C1905EC /* libPods-ZilliqaSDK-iOS.a */,
-				F914D94B11BC144389718DBD /* libPods-ZilliqaSDK-macOS.a */,
-				0040F8B58C094EEFF72B9011 /* libPods-ZilliqaSDKTests-iOS.a */,
-				D98E377E7036DE435A39229E /* libPods-ZilliqaSDKTests-macOS.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		CCBD72F7E2AFBDE58FF31BB2 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -375,7 +337,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48ED061620B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDK-macOS" */;
 			buildPhases = (
-				00B3A38C11CF9D1783A8FA07 /* [CP] Check Pods Manifest.lock */,
 				48ED060020B8618F00C639E5 /* Sources */,
 				48ED060120B8618F00C639E5 /* Frameworks */,
 				48ED060220B8618F00C639E5 /* Headers */,
@@ -394,7 +355,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48ED061920B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDKTests-macOS" */;
 			buildPhases = (
-				182DFAD199B09D6A1B7AB3A3 /* [CP] Check Pods Manifest.lock */,
 				48ED060920B8618F00C639E5 /* Sources */,
 				48ED060A20B8618F00C639E5 /* Frameworks */,
 				48ED060B20B8618F00C639E5 /* Resources */,
@@ -413,7 +373,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48F70A2920B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDK-iOS" */;
 			buildPhases = (
-				E1DD634A11AC2CB2772823C1 /* [CP] Check Pods Manifest.lock */,
 				48F70A1020B72DD00027B72D /* Sources */,
 				48F70A1120B72DD00027B72D /* Frameworks */,
 				48F70A1220B72DD00027B72D /* Headers */,
@@ -432,7 +391,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48F70A2C20B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDKTests-iOS" */;
 			buildPhases = (
-				D0A976A7AA953FDB4F6A4D46 /* [CP] Check Pods Manifest.lock */,
 				48F70A1A20B72DD00027B72D /* Sources */,
 				48F70A1B20B72DD00027B72D /* Frameworks */,
 				48F70A1C20B72DD00027B72D /* Resources */,
@@ -525,87 +483,11 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		00B3A38C11CF9D1783A8FA07 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ZilliqaSDK-macOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		182DFAD199B09D6A1B7AB3A3 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ZilliqaSDKTests-macOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D0A976A7AA953FDB4F6A4D46 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ZilliqaSDKTests-iOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1DD634A11AC2CB2772823C1 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ZilliqaSDK-iOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		48ED060020B8618F00C639E5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48ED0E6020E8008F005DA19C /* RIPEMD160+Compress.swift in Sources */,
 				48ED0E6D20E80731005DA19C /* BigNumber.swift in Sources */,
 				48ED0E5320E7F158005DA19C /* Amount.swift in Sources */,
 				48ED0E5020E7F150005DA19C /* Wallet.swift in Sources */,
@@ -634,7 +516,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48ED0E5F20E8008F005DA19C /* RIPEMD160+Compress.swift in Sources */,
 				48ED0E6C20E80731005DA19C /* BigNumber.swift in Sources */,
 				48F70A7D20B812080027B72D /* Amount.swift in Sources */,
 				48F70A7A20B811370027B72D /* Wallet.swift in Sources */,
