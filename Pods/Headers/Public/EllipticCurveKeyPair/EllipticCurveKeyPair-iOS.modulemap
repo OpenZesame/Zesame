@@ -1,7 +1,0 @@
-module EllipticCurveKeyPair {
-  umbrella header "EllipticCurveKeyPair-iOS-umbrella.h"
-  exclude header "EllipticCurveKeyPair-macOS-umbrella.h"
-
-  export *
-  module * { export * }
-}

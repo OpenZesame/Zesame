@@ -1,28 +1,24 @@
 PODS:
-  - EllipticCurveKeyPair (2.0-beta1)
-  - secp256k1 (0.3.0)
+  - CryptoSwift (0.10.0)
+  - EllipticCurve (0.3.3):
+    - UInt256 (~> 0.2.2)
+  - UInt256 (0.2.2)
 
 DEPENDENCIES:
-  - EllipticCurveKeyPair (from `https://github.com/agens-no/EllipticCurveKeyPair`)
-  - secp256k1
+  - CryptoSwift
+  - EllipticCurve
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - secp256k1
-
-EXTERNAL SOURCES:
-  EllipticCurveKeyPair:
-    :git: https://github.com/agens-no/EllipticCurveKeyPair
-
-CHECKOUT OPTIONS:
-  EllipticCurveKeyPair:
-    :commit: a339b41428e0be9cb63291f7216645608a7c8605
-    :git: https://github.com/agens-no/EllipticCurveKeyPair
+    - CryptoSwift
+    - EllipticCurve
+    - UInt256
 
 SPEC CHECKSUMS:
-  EllipticCurveKeyPair: 74c4c02087041d25e6ff17fb11412b163be80198
-  secp256k1: 0fecfb4fa051ee04edffa2094264e666fb3f5fbf
+  CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
+  EllipticCurve: a045c4e97e005a1309e79162f738c028c109174d
+  UInt256: e88c8706e35e1e29fd5459be4dbc0488c8f7ea60
 
-PODFILE CHECKSUM: 7b4153f0294174192e433be01725ef3f0845f1e1
+PODFILE CHECKSUM: dc449438744ad2ce02f02cdf91510456618fddc6
 
 COCOAPODS: 1.5.3

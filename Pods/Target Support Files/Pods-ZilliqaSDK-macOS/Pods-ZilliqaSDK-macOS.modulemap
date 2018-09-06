@@ -1,6 +1,0 @@
-module Pods_ZilliqaSDK_macOS {
-  umbrella header "Pods-ZilliqaSDK-macOS-umbrella.h"
-
-  export *
-  module * { export * }
-}
