@@ -15,8 +15,8 @@ public struct Nonce {
     }
 }
 
-public extension Nonce {
-    static var zero: Nonce {
-        return Nonce()
+extension Nonce: ExpressibleByIntegerLiteral {
+    public init(integerLiteral value: Int) {
+        self.init(nonce: value)
     }
 }

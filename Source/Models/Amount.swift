@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BigInt
 
 extension Double {
     var decimal: Double {
@@ -62,12 +63,6 @@ public struct Amount {
         case amountWasNegative
         case amountExceededTotalSupply
         case amountContainsTooSmallFractions
-    }
-}
-
-public extension Amount {
-    static var zero: Amount {
-        return try! Amount(double: 0)
     }
 }
 

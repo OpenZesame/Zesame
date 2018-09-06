@@ -1,0 +1,3 @@
+github "Sajjon/EllipticCurveKit" "d96f339779dd42d1dcdcc4fbe6c275a98e0d8196"
+github "attaswift/BigInt" "v3.1.0"
+github "attaswift/SipHash" "v1.2.2"

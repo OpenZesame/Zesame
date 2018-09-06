@@ -1,3 +1,2 @@
 #include "ZilliqaSDK-iOS-Common.xcconfig"
 #include "../../Configurations/base_release.xcconfig"
-#include "../../Pods/Target Support Files/Pods-ZilliqaSDK-iOS/Pods-ZilliqaSDK-iOS.release.xcconfig"

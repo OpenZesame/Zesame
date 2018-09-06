@@ -77,7 +77,6 @@
 		484B068320BA0D8800C4E50A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		484B068520BA0D8800C4E50A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		484B068620BA0D8800C4E50A /* ZilliqaSDK-iOS-Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Example-Info.plist"; sourceTree = "<group>"; };
-		484B068920BA0DFC00C4E50A /* ZilliqaSDKiOSExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZilliqaSDKiOSExample.entitlements; sourceTree = "<group>"; };
 		484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZilliqaSDK.xcodeproj; path = ../ZilliqaSDK.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				484B069820BA104500C4E50A /* Dependencies */,
-				484B068920BA0DFC00C4E50A /* ZilliqaSDKiOSExample.entitlements */,
 				484B067C20BA0D8800C4E50A /* Source */,
 				484B067820BA0D2C00C4E50A /* Tests */,
 				484B067420BA0D2100C4E50A /* UITests */,
@@ -558,7 +556,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ZilliqaSDKiOSExample.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Source/SupportingFiles/ZilliqaSDK-iOS-Example-Info.plist";
@@ -578,7 +575,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ZilliqaSDKiOSExample.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Source/SupportingFiles/ZilliqaSDK-iOS-Example-Info.plist";
