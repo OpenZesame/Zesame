@@ -8,8 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B068520BA0D8800C4E50A /* AppDelegate.swift */; };
-		484B068820BA0D9C00C4E50A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B068320BA0D8800C4E50A /* ViewController.swift */; };
-		484B06AB20BA107A00C4E50A /* ZilliqaSDK_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 484B06A120BA105B00C4E50A /* ZilliqaSDK_iOS.framework */; };
+		48C89FB82142BBF40063B0FA /* OpenWalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B068320BA0D8800C4E50A /* OpenWalletController.swift */; };
+		48C89FBD2142BCF70063B0FA /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FB92142BCF70063B0FA /* RxCocoa.framework */; };
+		48C89FBE2142BCF70063B0FA /* TinyConstraints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */; };
+		48C89FBF2142BCF70063B0FA /* ViewComposer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBB2142BCF70063B0FA /* ViewComposer.framework */; };
+		48C89FC02142BCF70063B0FA /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBC2142BCF70063B0FA /* RxSwift.framework */; };
+		48F03F9A2142683D00A13E5E /* ZilliqaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F03F932142682F00A13E5E /* ZilliqaSDK.framework */; };
+		48F03F9B2142684200A13E5E /* ZilliqaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48F03F932142682F00A13E5E /* ZilliqaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,42 +32,49 @@
 			remoteGlobalIDString = 484B063520BA0C2D00C4E50A;
 			remoteInfo = ZilliqaSDKiOSExample;
 		};
-		484B06A020BA105B00C4E50A /* PBXContainerItemProxy */ = {
+		48F03F922142682F00A13E5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
+			containerPortal = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 48F70A1520B72DD00027B72D;
 			remoteInfo = "ZilliqaSDK-iOS";
 		};
-		484B06A220BA105B00C4E50A /* PBXContainerItemProxy */ = {
+		48F03F942142682F00A13E5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
+			containerPortal = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 48F70A1E20B72DD00027B72D;
 			remoteInfo = "ZilliqaSDKTests-iOS";
 		};
-		484B06A420BA105B00C4E50A /* PBXContainerItemProxy */ = {
+		48F03F962142682F00A13E5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
+			containerPortal = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 48ED060520B8618F00C639E5;
 			remoteInfo = "ZilliqaSDK-macOS";
 		};
-		484B06A620BA105B00C4E50A /* PBXContainerItemProxy */ = {
+		48F03F982142682F00A13E5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
+			containerPortal = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 48ED060D20B8618F00C639E5;
 			remoteInfo = "ZilliqaSDKTests-macOS";
 		};
-		484B06A820BA106F00C4E50A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 48F70A1420B72DD00027B72D;
-			remoteInfo = "ZilliqaSDK-iOS";
-		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		48F03F862142680300A13E5E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				48F03F9B2142684200A13E5E /* ZilliqaSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		484B063620BA0C2D00C4E50A /* ZilliqaSDKiOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZilliqaSDKiOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,10 +86,17 @@
 		484B067B20BA0D2C00C4E50A /* ZilliqaSDKiOSExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaSDKiOSExampleTests.swift; sourceTree = "<group>"; };
 		484B067D20BA0D8800C4E50A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		484B067F20BA0D8800C4E50A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		484B068320BA0D8800C4E50A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		484B068320BA0D8800C4E50A /* OpenWalletController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWalletController.swift; sourceTree = "<group>"; };
 		484B068520BA0D8800C4E50A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		484B068620BA0D8800C4E50A /* ZilliqaSDK-iOS-Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Example-Info.plist"; sourceTree = "<group>"; };
-		484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZilliqaSDK.xcodeproj; path = ../ZilliqaSDK.xcodeproj; sourceTree = "<group>"; };
+		48C89FB92142BCF70063B0FA /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
+		48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TinyConstraints.framework; path = Carthage/Build/iOS/TinyConstraints.framework; sourceTree = "<group>"; };
+		48C89FBB2142BCF70063B0FA /* ViewComposer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ViewComposer.framework; path = Carthage/Build/iOS/ViewComposer.framework; sourceTree = "<group>"; };
+		48C89FBC2142BCF70063B0FA /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZilliqaSDK.xcodeproj; path = ../ZilliqaSDK.xcodeproj; sourceTree = "<group>"; };
+		48F03F9C2142686900A13E5E /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = ../Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
+		48F03F9D2142686A00A13E5E /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = ../Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
+		48F03F9E2142686A00A13E5E /* SwiftCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCrypto.framework; path = ../Carthage/Build/iOS/SwiftCrypto.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +104,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				484B06AB20BA107A00C4E50A /* ZilliqaSDK_iOS.framework in Frameworks */,
+				48C89FBD2142BCF70063B0FA /* RxCocoa.framework in Frameworks */,
+				48C89FBE2142BCF70063B0FA /* TinyConstraints.framework in Frameworks */,
+				48C89FBF2142BCF70063B0FA /* ViewComposer.framework in Frameworks */,
+				48C89FC02142BCF70063B0FA /* RxSwift.framework in Frameworks */,
+				48F03F9A2142683D00A13E5E /* ZilliqaSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,7 +199,7 @@
 		484B068220BA0D8800C4E50A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				484B068320BA0D8800C4E50A /* ViewController.swift */,
+				484B068320BA0D8800C4E50A /* OpenWalletController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -193,27 +216,34 @@
 		484B069820BA104500C4E50A /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */,
+				48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */,
 			);
 			name = Dependencies;
-			sourceTree = "<group>";
-		};
-		484B069A20BA105B00C4E50A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				484B06A120BA105B00C4E50A /* ZilliqaSDK_iOS.framework */,
-				484B06A320BA105B00C4E50A /* ZilliqaSDKTests_iOS.xctest */,
-				484B06A520BA105B00C4E50A /* ZilliqaSDK_macOS.framework */,
-				484B06A720BA105B00C4E50A /* .xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		484B06AA20BA107A00C4E50A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				48C89FB92142BCF70063B0FA /* RxCocoa.framework */,
+				48C89FBC2142BCF70063B0FA /* RxSwift.framework */,
+				48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */,
+				48C89FBB2142BCF70063B0FA /* ViewComposer.framework */,
+				48F03F9D2142686A00A13E5E /* BigInt.framework */,
+				48F03F9C2142686900A13E5E /* SipHash.framework */,
+				48F03F9E2142686A00A13E5E /* SwiftCrypto.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		48F03F8C2142682F00A13E5E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				48F03F932142682F00A13E5E /* ZilliqaSDK.framework */,
+				48F03F952142682F00A13E5E /* .xctest */,
+				48F03F972142682F00A13E5E /* ZilliqaSDK.framework */,
+				48F03F992142682F00A13E5E /* .xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,11 +256,12 @@
 				484B063220BA0C2D00C4E50A /* Sources */,
 				484B063320BA0C2D00C4E50A /* Frameworks */,
 				484B063420BA0C2D00C4E50A /* Resources */,
+				48F03F862142680300A13E5E /* Embed Frameworks */,
+				48F03FA22142690800A13E5E /* Carthage */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				484B06A920BA106F00C4E50A /* PBXTargetDependency */,
 			);
 			name = ZilliqaSDKiOSExample;
 			productName = ZilliqaSDKiOSExample;
@@ -314,8 +345,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 484B069A20BA105B00C4E50A /* Products */;
-					ProjectRef = 484B069920BA105B00C4E50A /* ZilliqaSDK.xcodeproj */;
+					ProductGroup = 48F03F8C2142682F00A13E5E /* Products */;
+					ProjectRef = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -328,32 +359,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		484B06A120BA105B00C4E50A /* ZilliqaSDK_iOS.framework */ = {
+		48F03F932142682F00A13E5E /* ZilliqaSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = ZilliqaSDK_iOS.framework;
-			remoteRef = 484B06A020BA105B00C4E50A /* PBXContainerItemProxy */;
+			path = ZilliqaSDK.framework;
+			remoteRef = 48F03F922142682F00A13E5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		484B06A320BA105B00C4E50A /* ZilliqaSDKTests_iOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ZilliqaSDKTests_iOS.xctest;
-			remoteRef = 484B06A220BA105B00C4E50A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		484B06A520BA105B00C4E50A /* ZilliqaSDK_macOS.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ZilliqaSDK_macOS.framework;
-			remoteRef = 484B06A420BA105B00C4E50A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		484B06A720BA105B00C4E50A /* .xctest */ = {
+		48F03F952142682F00A13E5E /* .xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = .xctest;
-			remoteRef = 484B06A620BA105B00C4E50A /* PBXContainerItemProxy */;
+			remoteRef = 48F03F942142682F00A13E5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		48F03F972142682F00A13E5E /* ZilliqaSDK.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ZilliqaSDK.framework;
+			remoteRef = 48F03F962142682F00A13E5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		48F03F992142682F00A13E5E /* .xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = .xctest;
+			remoteRef = 48F03F982142682F00A13E5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -382,12 +413,49 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		48F03FA22142690800A13E5E /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/TinyConstraints.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ViewComposer.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/SipHash.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/BigInt.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/CryptoSwift.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/SwiftCrypto.framework",
+			);
+			name = Carthage;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TinyConstraints.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxSwift.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxCocoa.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ViewComposer.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SipHash.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BigInt.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CryptoSwift.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftCrypto.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		484B063220BA0C2D00C4E50A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				484B068820BA0D9C00C4E50A /* ViewController.swift in Sources */,
+				48C89FB82142BBF40063B0FA /* OpenWalletController.swift in Sources */,
 				484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,11 +486,6 @@
 			isa = PBXTargetDependency;
 			target = 484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */;
 			targetProxy = 484B065620BA0C2F00C4E50A /* PBXContainerItemProxy */;
-		};
-		484B06A920BA106F00C4E50A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ZilliqaSDK-iOS";
-			targetProxy = 484B06A820BA106F00C4E50A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -558,6 +621,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "Source/SupportingFiles/ZilliqaSDK-iOS-Example-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -577,6 +644,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "Source/SupportingFiles/ZilliqaSDK-iOS-Example-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

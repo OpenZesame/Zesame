@@ -1,4 +1,3 @@
+#include "Zilliqa-Shared.xcconfig"
 #include "../../Configurations/macos_framework.xcconfig"
-
-INFOPLIST_FILE = Source/SupportingFiles/ZilliqaSDK-macOS-Info.plist
-PRODUCT_BUNDLE_IDENTIFIER = org.openzesame.ZilliqaSDK.macOS
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Carthage/Build/macOS

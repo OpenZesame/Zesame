@@ -11,7 +11,7 @@
 		4871665B2141ADEA00F0B413 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166582141ADEA00F0B413 /* BigInt.framework */; };
 		4871665C2141ADEA00F0B413 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166592141ADEA00F0B413 /* SipHash.framework */; };
 		48E76FB420B9D6210027A3FE /* ZilliqaSDK_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		48ED060E20B8618F00C639E5 /* ZilliqaSDK_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48ED060520B8618F00C639E5 /* ZilliqaSDK_macOS.framework */; };
+		48ED060E20B8618F00C639E5 /* ZilliqaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48ED060520B8618F00C639E5 /* ZilliqaSDK.framework */; };
 		48ED0E5020E7F150005DA19C /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7820B811330027B72D /* Wallet.swift */; };
 		48ED0E5220E7F155005DA19C /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7E20B812990027B72D /* Nonce.swift */; };
 		48ED0E5320E7F158005DA19C /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7B20B811A00027B72D /* Amount.swift */; };
@@ -25,7 +25,7 @@
 		48ED0E7020E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */; };
 		48ED0E7120E80D84005DA19C /* KeyGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6320E8047E005DA19C /* KeyGenerationTests.swift */; };
 		48ED0E7220E80D85005DA19C /* KeyGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6320E8047E005DA19C /* KeyGenerationTests.swift */; };
-		48F70A1F20B72DD00027B72D /* ZilliqaSDK_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F70A1520B72DD00027B72D /* ZilliqaSDK_iOS.framework */; };
+		48F70A1F20B72DD00027B72D /* ZilliqaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F70A1520B72DD00027B72D /* ZilliqaSDK.framework */; };
 		48F70A4820B7F4D00027B72D /* ZilliqaSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48F70A4B20B7F55B0027B72D /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A4A20B7F55B0027B72D /* Payment.swift */; };
 		48F70A4D20B7F9940027B72D /* Gas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A4C20B7F9940027B72D /* Gas.swift */; };
@@ -58,10 +58,9 @@
 		48838C9420B9F64800C18DC2 /* WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTests.swift; sourceTree = "<group>"; };
 		48838CB120BA084F00C18DC2 /* ZilliqaSDKTests-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDKTests-macOS-Info.plist"; sourceTree = "<group>"; };
 		48838CB220BA084F00C18DC2 /* ZilliqaSDKTests-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDKTests-iOS-Info.plist"; sourceTree = "<group>"; };
-		48E76FB020B9D6160027A3FE /* ZilliqaSDK-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-macOS-Info.plist"; sourceTree = "<group>"; };
+		48C89FC42142C4F10063B0FA /* ZilliqaSDK-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-Info.plist"; sourceTree = "<group>"; };
 		48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZilliqaSDK_macOS.h; sourceTree = "<group>"; };
-		48E76FB220B9D6160027A3FE /* ZilliqaSDK-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Info.plist"; sourceTree = "<group>"; };
-		48ED060520B8618F00C639E5 /* ZilliqaSDK_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZilliqaSDK_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		48ED060520B8618F00C639E5 /* ZilliqaSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZilliqaSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ED060D20B8618F00C639E5 /* .xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = .xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ED061C20B86B1200C639E5 /* ZilliqaSDK-iOS-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDK-iOS-Common.xcconfig"; sourceTree = "<group>"; };
 		48ED061D20B86B8900C639E5 /* ZilliqaSDK-macOS-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZilliqaSDK-macOS-Debug.xcconfig"; sourceTree = "<group>"; };
@@ -79,8 +78,8 @@
 		48ED0E6720E805AA005DA19C /* PrivateKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyTests.swift; sourceTree = "<group>"; };
 		48ED0E6B20E80731005DA19C /* BigNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigNumber.swift; sourceTree = "<group>"; };
 		48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt256+ExpressibleByStringLiteral.swift"; sourceTree = "<group>"; };
-		48F70A1520B72DD00027B72D /* ZilliqaSDK_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZilliqaSDK_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		48F70A1E20B72DD00027B72D /* ZilliqaSDKTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZilliqaSDKTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		48F70A1520B72DD00027B72D /* ZilliqaSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZilliqaSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		48F70A1E20B72DD00027B72D /* .xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = .xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZilliqaSDK.h; sourceTree = "<group>"; };
 		48F70A3620B72E930027B72D /* AddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressTests.swift; sourceTree = "<group>"; };
 		48F70A4A20B7F55B0027B72D /* Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payment.swift; sourceTree = "<group>"; };
@@ -109,7 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48ED060E20B8618F00C639E5 /* ZilliqaSDK_macOS.framework in Frameworks */,
+				48ED060E20B8618F00C639E5 /* ZilliqaSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,7 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48F70A1F20B72DD00027B72D /* ZilliqaSDK_iOS.framework in Frameworks */,
+				48F70A1F20B72DD00027B72D /* ZilliqaSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,9 +179,9 @@
 		48F70A1620B72DD00027B72D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				48F70A1520B72DD00027B72D /* ZilliqaSDK_iOS.framework */,
-				48F70A1E20B72DD00027B72D /* ZilliqaSDKTests_iOS.xctest */,
-				48ED060520B8618F00C639E5 /* ZilliqaSDK_macOS.framework */,
+				48F70A1520B72DD00027B72D /* ZilliqaSDK.framework */,
+				48F70A1E20B72DD00027B72D /* .xctest */,
+				48ED060520B8618F00C639E5 /* ZilliqaSDK.framework */,
 				48ED060D20B8618F00C639E5 /* .xctest */,
 			);
 			name = Products;
@@ -203,8 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */,
-				48E76FB220B9D6160027A3FE /* ZilliqaSDK-iOS-Info.plist */,
-				48E76FB020B9D6160027A3FE /* ZilliqaSDK-macOS-Info.plist */,
+				48C89FC42142C4F10063B0FA /* ZilliqaSDK-Info.plist */,
 				48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */,
 			);
 			path = SupportingFiles;
@@ -317,9 +315,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		48ED060420B8618F00C639E5 /* ZilliqaSDK-macOS */ = {
+		48ED060420B8618F00C639E5 /* ZilliqaSDK macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 48ED061620B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDK-macOS" */;
+			buildConfigurationList = 48ED061620B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDK macOS" */;
 			buildPhases = (
 				48ED060020B8618F00C639E5 /* Sources */,
 				48ED060120B8618F00C639E5 /* Frameworks */,
@@ -330,14 +328,14 @@
 			);
 			dependencies = (
 			);
-			name = "ZilliqaSDK-macOS";
+			name = "ZilliqaSDK macOS";
 			productName = "ZilliqaSDK-macOS";
-			productReference = 48ED060520B8618F00C639E5 /* ZilliqaSDK_macOS.framework */;
+			productReference = 48ED060520B8618F00C639E5 /* ZilliqaSDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		48ED060C20B8618F00C639E5 /* ZilliqaSDKTests-macOS */ = {
+		48ED060C20B8618F00C639E5 /* ZilliqaSDK macOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 48ED061920B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDKTests-macOS" */;
+			buildConfigurationList = 48ED061920B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDK macOS Tests" */;
 			buildPhases = (
 				48ED060920B8618F00C639E5 /* Sources */,
 				48ED060A20B8618F00C639E5 /* Frameworks */,
@@ -348,14 +346,14 @@
 			dependencies = (
 				48ED061020B8618F00C639E5 /* PBXTargetDependency */,
 			);
-			name = "ZilliqaSDKTests-macOS";
+			name = "ZilliqaSDK macOS Tests";
 			productName = "ZilliqaSDK-macOSTests";
 			productReference = 48ED060D20B8618F00C639E5 /* .xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		48F70A1420B72DD00027B72D /* ZilliqaSDK-iOS */ = {
+		48F70A1420B72DD00027B72D /* ZilliqaSDK iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 48F70A2920B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDK-iOS" */;
+			buildConfigurationList = 48F70A2920B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDK iOS" */;
 			buildPhases = (
 				48F70A1020B72DD00027B72D /* Sources */,
 				48F70A1120B72DD00027B72D /* Frameworks */,
@@ -366,14 +364,14 @@
 			);
 			dependencies = (
 			);
-			name = "ZilliqaSDK-iOS";
+			name = "ZilliqaSDK iOS";
 			productName = ZilliqaSDK;
-			productReference = 48F70A1520B72DD00027B72D /* ZilliqaSDK_iOS.framework */;
+			productReference = 48F70A1520B72DD00027B72D /* ZilliqaSDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		48F70A1D20B72DD00027B72D /* ZilliqaSDKTests-iOS */ = {
+		48F70A1D20B72DD00027B72D /* ZilliqaSDK iOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 48F70A2C20B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDKTests-iOS" */;
+			buildConfigurationList = 48F70A2C20B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDK iOS Tests" */;
 			buildPhases = (
 				48F70A1A20B72DD00027B72D /* Sources */,
 				48F70A1B20B72DD00027B72D /* Frameworks */,
@@ -384,9 +382,9 @@
 			dependencies = (
 				48F70A2120B72DD00027B72D /* PBXTargetDependency */,
 			);
-			name = "ZilliqaSDKTests-iOS";
+			name = "ZilliqaSDK iOS Tests";
 			productName = ZilliqaSDKTests;
-			productReference = 48F70A1E20B72DD00027B72D /* ZilliqaSDKTests_iOS.xctest */;
+			productReference = 48F70A1E20B72DD00027B72D /* .xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -428,10 +426,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				48F70A1420B72DD00027B72D /* ZilliqaSDK-iOS */,
-				48F70A1D20B72DD00027B72D /* ZilliqaSDKTests-iOS */,
-				48ED060420B8618F00C639E5 /* ZilliqaSDK-macOS */,
-				48ED060C20B8618F00C639E5 /* ZilliqaSDKTests-macOS */,
+				48F70A1420B72DD00027B72D /* ZilliqaSDK iOS */,
+				48F70A1D20B72DD00027B72D /* ZilliqaSDK iOS Tests */,
+				48ED060420B8618F00C639E5 /* ZilliqaSDK macOS */,
+				48ED060C20B8618F00C639E5 /* ZilliqaSDK macOS Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -519,12 +517,12 @@
 /* Begin PBXTargetDependency section */
 		48ED061020B8618F00C639E5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 48ED060420B8618F00C639E5 /* ZilliqaSDK-macOS */;
+			target = 48ED060420B8618F00C639E5 /* ZilliqaSDK macOS */;
 			targetProxy = 48ED060F20B8618F00C639E5 /* PBXContainerItemProxy */;
 		};
 		48F70A2120B72DD00027B72D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 48F70A1420B72DD00027B72D /* ZilliqaSDK-iOS */;
+			target = 48F70A1420B72DD00027B72D /* ZilliqaSDK iOS */;
 			targetProxy = 48F70A2020B72DD00027B72D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -561,12 +559,14 @@
 		48F70A2720B72DD00027B72D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = APA;
 			};
 			name = Debug;
 		};
 		48F70A2820B72DD00027B72D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = APA;
 			};
 			name = Release;
 		};
@@ -574,10 +574,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48F70A8420B825960027B72D /* ZilliqaSDK-iOS-Debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 			};
 			name = Debug;
 		};
@@ -585,10 +581,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48F70A8520B825970027B72D /* ZilliqaSDK-iOS-Release.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 			};
 			name = Release;
 		};
@@ -609,7 +601,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		48ED061620B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDK-macOS" */ = {
+		48ED061620B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDK macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				48ED061720B8618F00C639E5 /* Debug */,
@@ -618,7 +610,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		48ED061920B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDKTests-macOS" */ = {
+		48ED061920B8618F00C639E5 /* Build configuration list for PBXNativeTarget "ZilliqaSDK macOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				48ED061A20B8618F00C639E5 /* Debug */,
@@ -636,7 +628,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		48F70A2920B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDK-iOS" */ = {
+		48F70A2920B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDK iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				48F70A2A20B72DD00027B72D /* Debug */,
@@ -645,7 +637,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		48F70A2C20B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDKTests-iOS" */ = {
+		48F70A2C20B72DD00027B72D /* Build configuration list for PBXNativeTarget "ZilliqaSDK iOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				48F70A2D20B72DD00027B72D /* Debug */,

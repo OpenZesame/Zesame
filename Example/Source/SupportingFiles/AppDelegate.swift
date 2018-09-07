@@ -15,10 +15,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = ViewController()
-        window.makeKeyAndVisible()
-        self.window = window
+        Application.shared.configureMainInterface(in: window)
+        self.window = window.keyedAndVisible()
         return true
     }
 }
 
+
+final class Application {
+    static let shared = Application()
+
+    private init() {}
+
+    func configureMainInterface(in window: UIWindow) {
+        let navigationController = UINavigationController()
+        let openWalletNavigator = DefaultOpenWalletNavigator(navigationController: navigationController)
+        window.rootViewController = navigationController
+
+        openWalletNavigator.toOpenWallet()
+    }
+}
+
+extension UIWindow {
+    func keyedAndVisible() -> UIWindow {
+        makeKeyAndVisible()
+        return self
+    }
+}
