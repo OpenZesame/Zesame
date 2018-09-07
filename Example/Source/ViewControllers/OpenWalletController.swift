@@ -38,6 +38,16 @@ public class SingleContentViewController<View, ViewModel>: UIViewController wher
         bind()
     }
 
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .red
+        contentView.backgroundColor = .white
+    }
+
     public func input() -> Input {
         fatalError("Abstract, override me please")
     }
@@ -52,9 +62,7 @@ public class SingleContentViewController<View, ViewModel>: UIViewController wher
         fatalError("Abstract, override me")
     }
 
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
+
 }
 
 public final class OpenWalletController: SingleContentViewController<OpenWalletView, OpenWalletViewModel> {
@@ -177,7 +185,7 @@ public extension CreateNewWalletViewModel {
     struct Input {}
     struct Output {}
     public func transform(input: Input) -> Output {
-        fatalError()
+        return Output()
     }
 }
 
@@ -193,19 +201,24 @@ public final class CreateNewWalletController: SingleContentViewController<Create
     }
 
     public override func input() -> Input {
-        fatalError()
+        return Input()
     }
+
+    public override func bound(output: Output) {
+        print("nothing to do")
+    }
+
 }
 
 public final class CreateNewWalletView: StackViewOwningView {
     lazy var createNewWalletButton: UIButton = .make("New Wallet")
-    lazy var stackViewStyle = Style.StackView([createNewWalletButton])
+    override func makeStackView() -> UIStackView { return .make([createNewWalletButton, .spacer]) }
 }
 extension CreateNewWalletView: SingleContentView {}
 public extension CreateNewWalletView {
     typealias ViewModel = CreateNewWalletViewModel
     func populate(with viewModel: ViewModel.Output) -> [Disposable] {
-        fatalError()
+        return []
     }
 }
 
@@ -246,7 +259,7 @@ public final class OpenWalletView: StackViewOwningView {
 
     lazy var createNewWalletButton: UIButton = .make("New Wallet")
     lazy var restoreWalletButton: UIButton = .make("Restore Wallet")
-    override func makeStackView() -> UIStackView { return .make([createNewWalletButton, restoreWalletButton]) }
+    override func makeStackView() -> UIStackView { return .make([createNewWalletButton, restoreWalletButton, .spacer]) }
 }
 extension OpenWalletView: SingleContentView {}
 public extension OpenWalletView {
@@ -267,7 +280,7 @@ public extension UIFont {
 public extension UIColor {
     enum `default` {
         static var text: UIColor {
-            return .black
+            return .white
         }
     }
 }
@@ -293,7 +306,7 @@ public enum Style {
         let alignment: UIStackView.Alignment
         let distribution: UIStackView.Distribution
         let views: [UIView]
-        init(_ views: [UIView], axis: NSLayoutConstraint.Axis = .vertical, alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fill) {
+        init(_ views: [UIView], axis: NSLayoutConstraint.Axis = .vertical, alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fillProportionally) {
             self.views = views
             self.axis = axis
             self.alignment = alignment
@@ -304,28 +317,41 @@ public enum Style {
 
 public extension UIButton {
 
-    convenience init(style: Style.Title) {
+    convenience init(style: Style.Title, color: UIColor) {
         self.init(type: .custom)
         setTitle(style.text, for: UIControlState())
         setTitleColor(style.color, for: UIControlState())
         titleLabel?.font = style.font
+        backgroundColor = color
+        translatesAutoresizingMaskIntoConstraints = false
     }
 
-    static func make(_ title: String) -> UIButton {
-        return UIButton(style: .button(title))
+    static func make(_ title: String, color: UIColor = .brown) -> UIButton {
+        return UIButton(style: .button(title), color: color)
     }
 }
 
 public extension UIStackView {
     convenience init(style: Style.StackView) {
         self.init(arrangedSubviews: style.views)
-        self.axis = style.axis
-        self.alignment = style.alignment
-        self.distribution = style.distribution
+        axis = style.axis
+        alignment = style.alignment
+        distribution = style.distribution
+        translatesAutoresizingMaskIntoConstraints = false
     }
 
     static func make(_ views: [UIView], axis: NSLayoutConstraint.Axis = .vertical) -> UIStackView {
         return UIStackView(style: Style.StackView(views, axis: axis))
+    }
+}
+
+extension UIView {
+    static var spacer: UIView {
+        let spacer = UIView()
+        spacer.translatesAutoresizingMaskIntoConstraints = false
+        spacer.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        spacer.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        return spacer
     }
 }
 
