@@ -8,8 +8,22 @@
 
 import UIKit
 
+public protocol ViewStyling {
+    var height: CGFloat? { get }
+    var backgroundColor: UIColor { get }
+}
+
+public class ViewStyle: ViewStyling {
+    public let height: CGFloat?
+    public let backgroundColor: UIColor
+    public init(height: CGFloat? = CGFloat.defaultHeight, backgroundColor: UIColor) {
+        self.height = height
+        self.backgroundColor = backgroundColor
+    }
+}
+
 public protocol Styling {
-    associatedtype Style
+    associatedtype Style: ViewStyling
     func apply(style: Style)
 }
 
@@ -17,8 +31,12 @@ extension Styling where Self: UIView, Self: StaticEmptyInitializable, Self.Empty
 
     init(style: Style) {
         self = Self.createEmpty()
-        apply(style: style)
         translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = style.backgroundColor
+        if let height = style.height {
+            self.height(height)
+        }
+        apply(style: style)
     }
 }
 

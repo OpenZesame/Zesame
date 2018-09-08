@@ -10,34 +10,42 @@ import UIKit
 
 
 
-extension UIStackView: Styling {
+extension UIStackView: Styling, StaticEmptyInitializable {
 
-    public struct Style: ExpressibleByArrayLiteral {
+    public static func createEmpty() -> UIStackView {
+        return UIStackView(arrangedSubviews: [])
+    }
+
+    public final class Style: ViewStyle, ExpressibleByArrayLiteral {
         let axis: NSLayoutConstraint.Axis
         let alignment: UIStackView.Alignment
         let distribution: UIStackView.Distribution
         let views: [UIView]
-        init(_ views: [UIView], axis: NSLayoutConstraint.Axis = .vertical, alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fillProportionally) {
+
+        init(
+            _ views: [UIView],
+            axis: NSLayoutConstraint.Axis = .vertical,
+            alignment: UIStackView.Alignment = .fill,
+            distribution: UIStackView.Distribution = .fill
+        ) {
             self.views = views
             self.axis = axis
             self.alignment = alignment
             self.distribution = distribution
+
+            // background color is irrelevant for stackviews
+            super.init(height: nil, backgroundColor: .red)
         }
 
-        public init(arrayLiteral views: UIView...) {
+        public convenience init(arrayLiteral views: UIView...) {
             self.init(views)
         }
     }
 
     public func apply(style: Style) {
+        style.views.reversed().forEach { self.insertArrangedSubview($0, at: 0) }
         axis = style.axis
         alignment = style.alignment
         distribution = style.distribution
-    }
-
-    convenience init(style: Style) {
-        self.init(arrangedSubviews: style.views)
-        apply(style: style)
-        translatesAutoresizingMaskIntoConstraints = false
     }
 }

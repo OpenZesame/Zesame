@@ -34,15 +34,13 @@ extension DefaultOpenWalletNavigator: OpenWalletNavigator {
         let navigator = DefaultCreateNewWalletNavigator(navigationController: navigationController)
         let viewModel = CreateNewWalletViewModel(navigator: navigator)
         let vc = CreateNewWalletController(viewModel: viewModel)
-        let nc = UINavigationController(rootViewController: vc)
-        navigationController.present(nc, animated: true, completion: nil)
+        navigationController.pushViewController(vc, animated: true)
     }
 
     func toRestoreWallet() {
         let navigator = DefaultRestoreWalletNavigator(navigationController: navigationController)
         let viewModel = RestoreWalletViewModel(navigator: navigator)
         let vc = RestoreWalletController(viewModel: viewModel)
-        let nc = UINavigationController(rootViewController: vc)
-        navigationController.present(nc, animated: true, completion: nil)
+        navigationController.pushViewController(vc, animated: true)
     }
 }
