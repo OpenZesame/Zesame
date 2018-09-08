@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ZilliqaSDK
 
 protocol CreateNewWalletNavigator {
     func toOpenWallet()
@@ -14,9 +15,11 @@ protocol CreateNewWalletNavigator {
 
 final class DefaultCreateNewWalletNavigator {
     private let navigationController: UINavigationController
+    private let walletOpened: (Wallet) -> Void
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, walletOpened: @escaping (Wallet) -> Void) {
         self.navigationController = navigationController
+        self.walletOpened = walletOpened
     }
 }
 

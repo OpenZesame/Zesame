@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import ZilliqaSDK
 
 protocol OpenWalletNavigator {
     func toOpenWallet()
@@ -16,9 +18,11 @@ protocol OpenWalletNavigator {
 
 final class DefaultOpenWalletNavigator {
     private let navigationController: UINavigationController
+    private let walletOpened: (Wallet) -> Void
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, walletOpened: @escaping (Wallet) -> Void) {
         self.navigationController = navigationController
+        self.walletOpened = walletOpened
     }
 }
 
@@ -31,14 +35,14 @@ extension DefaultOpenWalletNavigator: OpenWalletNavigator {
     }
 
     func toCreateNewWallet() {
-        let navigator = DefaultCreateNewWalletNavigator(navigationController: navigationController)
+        let navigator = DefaultCreateNewWalletNavigator(navigationController: navigationController, walletOpened: walletOpened)
         let viewModel = CreateNewWalletViewModel(navigator: navigator)
         let vc = CreateNewWalletController(viewModel: viewModel)
         navigationController.pushViewController(vc, animated: true)
     }
 
     func toRestoreWallet() {
-        let navigator = DefaultRestoreWalletNavigator(navigationController: navigationController)
+        let navigator = DefaultRestoreWalletNavigator(navigationController: navigationController, walletOpened: walletOpened)
         let viewModel = RestoreWalletViewModel(navigator: navigator)
         let vc = RestoreWalletController(viewModel: viewModel)
         navigationController.pushViewController(vc, animated: true)

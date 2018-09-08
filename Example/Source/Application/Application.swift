@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ZilliqaSDK
 
 final class Application {
     static let shared = Application()
@@ -19,7 +20,17 @@ final class Application {
 
         window.rootViewController = navigationController
 
-        let openWalletNavigator = DefaultOpenWalletNavigator(navigationController: navigationController)
+        let openWalletNavigator = DefaultOpenWalletNavigator(navigationController: navigationController) { [goHome] openedWallet in
+            goHome(window, openedWallet)
+        }
+
         openWalletNavigator.toOpenWallet()
+    }
+}
+
+private extension Application {
+    /// Configures TabBarController
+    func goHome(in window: UIWindow, wallet: Wallet) {
+        print("Opened wallet, `\(wallet)`, configure tabs in window: `\(window)`")
     }
 }

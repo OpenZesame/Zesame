@@ -7,17 +7,20 @@
 //
 
 import UIKit
+import ZilliqaSDK
 
 protocol RestoreWalletNavigator {
     func toOpenWallet()
-    func toHome()
+    func toHome(_ wallet: Wallet)
 }
 
 final class DefaultRestoreWalletNavigator {
     private let navigationController: UINavigationController
+    private let walletOpened: (Wallet) -> Void
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, walletOpened: @escaping (Wallet) -> Void) {
         self.navigationController = navigationController
+        self.walletOpened = walletOpened
     }
 }
 
@@ -27,6 +30,8 @@ extension DefaultRestoreWalletNavigator: RestoreWalletNavigator {
         navigationController.dismiss(animated: true)
     }
 
-    func toHome() {}
+    func toHome(_ wallet: Wallet) {
+        walletOpened(wallet)
+    }
 }
 
