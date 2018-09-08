@@ -19,10 +19,4 @@ final class OpenWalletView: StackViewOwningView, StackViewStyling {
 
 extension OpenWalletView: SingleContentView {
     typealias ViewModel = OpenWalletViewModel
-    func populate(with viewModel: ViewModel.Output) -> [Disposable] {
-        return [
-            viewModel.createNew.drive(),
-            viewModel.restore.drive()
-        ]
-    }
 }

@@ -20,7 +20,4 @@ final class CreateNewWalletView: StackViewOwningView, StackViewStyling {
 extension CreateNewWalletView: SingleContentView {}
 extension CreateNewWalletView {
     typealias ViewModel = CreateNewWalletViewModel
-    func populate(with viewModel: ViewModel.Output) -> [Disposable] {
-        return []
-    }
 }

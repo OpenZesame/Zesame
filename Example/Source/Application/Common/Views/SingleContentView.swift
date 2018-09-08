@@ -12,3 +12,6 @@ protocol SingleContentView: EmptyInitializable, AnyObject {
     associatedtype ViewModel: ViewModelled
     func populate(with viewModel: ViewModel.Output) -> [Disposable]
 }
+extension SingleContentView {
+    func populate(with viewModel: ViewModel.Output) -> [Disposable] { return [] }
+}

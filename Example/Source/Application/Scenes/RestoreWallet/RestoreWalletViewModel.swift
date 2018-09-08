@@ -11,6 +11,7 @@ import RxSwift
 import ZilliqaSDK
 
 struct RestoreWalletViewModel {
+    private let bag = DisposeBag()
     private let navigator: RestoreWalletNavigator
     init(navigator: RestoreWalletNavigator) {
         self.navigator = navigator
@@ -24,9 +25,7 @@ extension RestoreWalletViewModel: ViewModelled {
         let restoreTrigger: Driver<Void>
     }
 
-    struct Output {
-        let restoredWallet: Driver<Wallet>
-    }
+    struct Output {}
 
     func transform(input: Input) -> Output {
 
@@ -35,11 +34,10 @@ extension RestoreWalletViewModel: ViewModelled {
             .filterNil()
             .map { Wallet(keyPair: $0) }
 
-        let restoredWallet: Driver<Wallet> = input.restoreTrigger.withLatestFrom(wallet)
+        input.restoreTrigger.withLatestFrom(wallet)
             .do(onNext: { [navigator] in navigator.toHome($0) })
+            .drive().disposed(by: bag)
 
-        return Output(
-            restoredWallet: restoredWallet
-        )
+        return Output()
     }
 }

@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B068520BA0D8800C4E50A /* AppDelegate.swift */; };
+		484F7D7721441BF20023C6D4 /* SendNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7321441BF20023C6D4 /* SendNavigator.swift */; };
+		484F7D7821441BF20023C6D4 /* SendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7421441BF20023C6D4 /* SendView.swift */; };
+		484F7D7921441BF20023C6D4 /* SendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7521441BF20023C6D4 /* SendController.swift */; };
+		484F7D7A21441BF20023C6D4 /* SendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7621441BF20023C6D4 /* SendViewModel.swift */; };
+		484F7D7D21441C210023C6D4 /* Never.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7C21441C210023C6D4 /* Never.swift */; };
 		489CDB9A2143E0CC00318450 /* ZilliqaSDKiOSExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B067B20BA0D2C00C4E50A /* ZilliqaSDKiOSExampleTests.swift */; };
 		489CDB9B2143E0D300318450 /* ZilliqaSDKiOSExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B067520BA0D2100C4E50A /* ZilliqaSDKiOSExampleUITests.swift */; };
 		489CDBCF2143FF3E00318450 /* FilterNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489CDBCE2143FF3E00318450 /* FilterNil.swift */; };
@@ -125,6 +130,11 @@
 		484B067F20BA0D8800C4E50A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		484B068520BA0D8800C4E50A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		484B068620BA0D8800C4E50A /* ZilliqaSDK-iOS-Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Example-Info.plist"; sourceTree = "<group>"; };
+		484F7D7321441BF20023C6D4 /* SendNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNavigator.swift; sourceTree = "<group>"; };
+		484F7D7421441BF20023C6D4 /* SendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendView.swift; sourceTree = "<group>"; };
+		484F7D7521441BF20023C6D4 /* SendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendController.swift; sourceTree = "<group>"; };
+		484F7D7621441BF20023C6D4 /* SendViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
+		484F7D7C21441C210023C6D4 /* Never.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Never.swift; sourceTree = "<group>"; };
 		489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Debug.xcconfig"; sourceTree = "<group>"; };
 		489CDB9E2143E26C00318450 /* Example-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Common.xcconfig"; sourceTree = "<group>"; };
 		489CDB9F2143E26C00318450 /* Example-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Release.xcconfig"; sourceTree = "<group>"; };
@@ -265,6 +275,7 @@
 		484B067C20BA0D8800C4E50A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				484F7D7B21441C110023C6D4 /* Utils */,
 				489CDB9C2143E26C00318450 /* Configurations */,
 				48C89FFA214335160063B0FA /* Extensions */,
 				48C89FD221432FAC0063B0FA /* Application */,
@@ -307,12 +318,31 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		484F7D7221441BF20023C6D4 /* Send */ = {
+			isa = PBXGroup;
+			children = (
+				484F7D7321441BF20023C6D4 /* SendNavigator.swift */,
+				484F7D7421441BF20023C6D4 /* SendView.swift */,
+				484F7D7521441BF20023C6D4 /* SendController.swift */,
+				484F7D7621441BF20023C6D4 /* SendViewModel.swift */,
+			);
+			path = Send;
+			sourceTree = "<group>";
+		};
+		484F7D7B21441C110023C6D4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		489CDB9C2143E26C00318450 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
 				489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */,
 				489CDB9E2143E26C00318450 /* Example-Common.xcconfig */,
 				489CDB9F2143E26C00318450 /* Example-Release.xcconfig */,
+				484F7D7C21441C210023C6D4 /* Never.swift */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -376,6 +406,7 @@
 		48C89FD32143308A0063B0FA /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				484F7D7221441BF20023C6D4 /* Send */,
 				48C89FD7214330B30063B0FA /* RestoreWallet */,
 				48C89FD6214330AB0063B0FA /* CreateNewWallet */,
 				48C89FD4214330910063B0FA /* OpenWallet */,
@@ -711,15 +742,20 @@
 				48C8A0132143CF6C0063B0FA /* RestoreWalletController.swift in Sources */,
 				48C8A0112143CE8F0063B0FA /* UIColor_Extension.swift in Sources */,
 				48C89FF12143321E0063B0FA /* StackViewOwningView.swift in Sources */,
+				484F7D7921441BF20023C6D4 /* SendController.swift in Sources */,
 				48C89FE6214331AD0063B0FA /* CreateNewWalletNavigator.swift in Sources */,
 				48C8A00D2143CE3E0063B0FA /* StaticEmptyInitializable.swift in Sources */,
+				484F7D7D21441C210023C6D4 /* Never.swift in Sources */,
 				484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */,
 				48C89FE8214331CB0063B0FA /* CreateNewWalletController.swift in Sources */,
 				48C89FE42143318E0063B0FA /* OpenWalletNavigator.swift in Sources */,
 				48C8A0092143CD8D0063B0FA /* RestoreWalletViewModel.swift in Sources */,
 				48C89FE22143316B0063B0FA /* OpenWalletController.swift in Sources */,
 				48C89FF32143322C0063B0FA /* OpenWalletView.swift in Sources */,
+				484F7D7821441BF20023C6D4 /* SendView.swift in Sources */,
+				484F7D7721441BF20023C6D4 /* SendNavigator.swift in Sources */,
 				48C89FEA214331DA0063B0FA /* CreateNewWalletView.swift in Sources */,
+				484F7D7A21441BF20023C6D4 /* SendViewModel.swift in Sources */,
 				489CDBCF2143FF3E00318450 /* FilterNil.swift in Sources */,
 				48C8A0072143CD6F0063B0FA /* RestoreWalletView.swift in Sources */,
 				48C89FCB21432E220063B0FA /* ViewModelled.swift in Sources */,

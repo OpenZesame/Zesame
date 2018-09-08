@@ -6,9 +6,11 @@
 //  Copyright © 2018 Open Zesame. All rights reserved.
 //
 
+import RxSwift
 import RxCocoa
 
 struct OpenWalletViewModel {
+    private let bag = DisposeBag()
     private let navigator: OpenWalletNavigator
     init(navigator: OpenWalletNavigator) {
         self.navigator = navigator
@@ -22,21 +24,18 @@ extension OpenWalletViewModel: ViewModelled {
         let restoreTrigger: Driver<Void>
     }
 
-    struct Output {
-        let createNew: Driver<Void>
-        let restore: Driver<Void>
-    }
+    struct Output {}
 
     func transform(input: Input) -> Output {
 
-        let createNewWallet = input.createNewTrigger.do(onNext: { [navigator] in
+        input.createNewTrigger.do(onNext: { [navigator] in
             navigator.toCreateNewWallet()
-        })
+        }).drive().disposed(by: bag)
 
-        let restoreWallet = input.restoreTrigger.do(onNext: { [navigator] in
+        input.restoreTrigger.do(onNext: { [navigator] in
             navigator.toRestoreWallet()
-        })
+        }).drive().disposed(by: bag)
 
-        return Output(createNew: createNewWallet, restore: restoreWallet)
+        return Output()
     }
 }

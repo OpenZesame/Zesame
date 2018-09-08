@@ -28,3 +28,13 @@ public struct Wallet {
     }
 }
 
+extension Wallet: CustomStringConvertible {}
+public extension Wallet {
+    public var description: String {
+        return """
+        address: '\(address.address)'
+        """
+    }
+}
+
+
