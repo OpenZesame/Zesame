@@ -1,0 +1,3 @@
+github "attaswift/BigInt"
+github "Sajjon/EllipticCurveKit" "master"
+github "krzyzanowskim/CryptoSwift"

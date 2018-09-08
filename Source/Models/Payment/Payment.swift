@@ -21,18 +21,18 @@ public struct Payment {
 }
 
 // MARK: - Convenience Initializer
-public extension Payment {
-    init(addressDouble address: Double, amountDouble amount: Double, priceDouble price: Double, limitDouble limit: Double) throws {
-        let address = try Address(double: address)
-        let amount = try Amount(double: amount)
-        let gas = try Gas(rawPrice: price, rawLimit: limit)
-        self.init(to: address, amount: amount, gas: gas)
-    }
-
-    init(addressString address: String, amountDouble amount: Double, priceDouble price: Double, limitDouble limit: Double) throws {
-        let address = try Address(string: address)
-        let amount = try Amount(double: amount)
-        let gas = try Gas(rawPrice: price, rawLimit: limit)
-        self.init(to: address, amount: amount, gas: gas)
-    }
-}
+//public extension Payment {
+//    init(addressDouble address: Double, amountDouble amount: Double, priceDouble price: Double, limitDouble limit: Double) throws {
+//        let address = try Address(double: address)
+//        let amount = try Amount(double: amount)
+//        let gas = try Gas(rawPrice: price, rawLimit: limit)
+//        self.init(to: address, amount: amount, gas: gas)
+//    }
+//
+//    init(addressString address: String, amountDouble amount: Double, priceDouble price: Double, limitDouble limit: Double) throws {
+//        let address = try Address(string: address)
+//        let amount = try Amount(double: amount)
+//        let gas = try Gas(rawPrice: price, rawLimit: limit)
+//        self.init(to: address, amount: amount, gas: gas)
+//    }
+//}

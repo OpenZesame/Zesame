@@ -14,3 +14,9 @@ public struct Nonce {
         self.nonce = nonce
     }
 }
+
+extension Nonce: ExpressibleByIntegerLiteral {
+    public init(integerLiteral value: Int) {
+        self.init(nonce: value)
+    }
+}

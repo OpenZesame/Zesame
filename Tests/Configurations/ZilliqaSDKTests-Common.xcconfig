@@ -1,3 +1,0 @@
-#include "../../Configurations/base_framework.xcconfig"
-#include "../../Configurations/base_tests.xcconfig"
-INFOPLIST_FILE = Tests/SupportingFiles/ZilliqaSDKTests-Info.plist

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BigInt
 
 extension Double {
     var decimal: Double {
