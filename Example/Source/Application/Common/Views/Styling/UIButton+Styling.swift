@@ -34,8 +34,8 @@ extension UIButton: EmptyInitializable, Styling, StaticEmptyInitializable, Expre
     }
 
     public func apply(style: Style) {
-        setTitle(style.text, for: UIControlState())
-        setTitleColor(style.textColor, for: UIControlState())
+        setTitle(style.text, for: UIControl.State())
+        setTitleColor(style.textColor, for: UIControl.State())
         titleLabel?.font = style.font
         backgroundColor = style.backgroundColor
     }
