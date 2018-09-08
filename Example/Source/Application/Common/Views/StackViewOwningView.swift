@@ -8,23 +8,24 @@
 
 import UIKit
 
-public class StackViewOwningView: UIView {
-    //    var stackViewStyle: Style.StackView { fatalError("Abstract, override me please") }
-    func makeStackView() -> UIStackView {
-        fatalError("override me")
-    }
+protocol StackViewStyling {
+    var stackViewStyle: UIStackView.Style { get }
+}
+
+class StackViewOwningView: UIView {
 
     lazy var stackView: UIStackView = {
-        return makeStackView()
+        guard let styling = self as? StackViewStyling else { fatalError("Your subclass of `StackViewOwningView` should conform to protocol `StackViewStyling`") }
+        return UIStackView(style: styling.stackViewStyle)
     }()
 
-    public init() {
+    init() {
         super.init(frame: .zero)
         addSubview(stackView)
         stackView.edgesToSuperview()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
 }

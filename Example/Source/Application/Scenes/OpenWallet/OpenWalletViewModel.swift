@@ -8,15 +8,14 @@
 
 import RxCocoa
 
-public struct OpenWalletViewModel {
+struct OpenWalletViewModel {
     private let navigator: OpenWalletNavigator
-    public init(navigator: OpenWalletNavigator) {
+    init(navigator: OpenWalletNavigator) {
         self.navigator = navigator
     }
 }
 
-extension OpenWalletViewModel: ViewModelled {}
-public extension OpenWalletViewModel {
+extension OpenWalletViewModel: ViewModelled {
 
     struct Input {
         let createNewTrigger: Driver<Void>
@@ -29,6 +28,7 @@ public extension OpenWalletViewModel {
     }
 
     func transform(input: Input) -> Output {
+
         let createNewWallet = input.createNewTrigger.do(onNext: { [navigator] in
             navigator.toCreateNewWallet()
         })

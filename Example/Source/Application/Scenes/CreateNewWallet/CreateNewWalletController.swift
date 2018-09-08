@@ -8,23 +8,19 @@
 
 import Foundation
 
-public final class CreateNewWalletController: SingleContentViewController<CreateNewWalletView, CreateNewWalletViewModel> {
+final class CreateNewWalletController: SingleContentViewController<CreateNewWalletView, CreateNewWalletViewModel> {
 
-    public init(viewModel: CreateNewWalletViewModel) {
+    // MARK: - Initializers
+    init(viewModel: CreateNewWalletViewModel) {
         let contentView = CreateNewWalletView()
         super.init(view: contentView, viewModel: viewModel)
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
 
-    public override func input() -> Input {
+    override func input() -> Input {
         return Input()
     }
-
-    public override func bound(output: Output) {
-        print("nothing to do")
-    }
-
 }

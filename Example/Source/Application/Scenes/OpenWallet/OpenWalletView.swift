@@ -9,15 +9,15 @@
 import UIKit
 import RxSwift
 
-public final class OpenWalletView: StackViewOwningView {
+final class OpenWalletView: StackViewOwningView, StackViewStyling {
 
-    lazy var createNewWalletButton: UIButton = .make("New Wallet")
-    lazy var restoreWalletButton: UIButton = .make("Restore Wallet")
-    override func makeStackView() -> UIStackView { return .make([createNewWalletButton, restoreWalletButton, .spacer]) }
+    lazy var createNewWalletButton: UIButton = "New Wallet"
+    lazy var restoreWalletButton: UIButton = "Restore Wallet"
+
+    lazy var stackViewStyle: UIStackView.Style = [createNewWalletButton, restoreWalletButton, .spacer]
 }
 
-extension OpenWalletView: SingleContentView {}
-public extension OpenWalletView {
+extension OpenWalletView: SingleContentView {
     typealias ViewModel = OpenWalletViewModel
     func populate(with viewModel: ViewModel.Output) -> [Disposable] {
         return [

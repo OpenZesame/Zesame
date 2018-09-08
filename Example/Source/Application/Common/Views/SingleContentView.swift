@@ -8,7 +8,7 @@
 
 import RxSwift
 
-public protocol SingleContentView: EmptyInitializable, AnyObject {
+protocol SingleContentView: EmptyInitializable, AnyObject {
     associatedtype ViewModel: ViewModelled
     func populate(with viewModel: ViewModel.Output) -> [Disposable]
 }

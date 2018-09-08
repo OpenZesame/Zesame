@@ -8,22 +8,18 @@
 
 import UIKit
 
-public final class OpenWalletController: SingleContentViewController<OpenWalletView, OpenWalletViewModel> {
+final class OpenWalletController: SingleContentViewController<OpenWalletView, OpenWalletViewModel> {
 
-    public init(viewModel: OpenWalletViewModel) {
+    init(viewModel: OpenWalletViewModel) {
         let contentView = OpenWalletView()
         super.init(view: contentView, viewModel: viewModel)
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
 
-    public override func input() -> Input {
+    override func input() -> Input {
         return Input(createNewTrigger: contentView.createNewWalletButton.rx.tap.asDriver(), restoreTrigger: contentView.restoreWalletButton.rx.tap.asDriver())
-    }
-
-    public override func bound(output: Output) {
-        print("nothing to do with bound")
     }
 }

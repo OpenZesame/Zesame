@@ -1,5 +1,5 @@
 //
-//  EmptyInitializable.swift
+//  StaticEmptyInitializable.swift
 //  ZilliqaSDKiOSExample
 //
 //  Created by Alexander Cyon on 2018-09-08.
@@ -8,6 +8,7 @@
 
 import Foundation
 
-protocol EmptyInitializable {
-    init()
+public protocol StaticEmptyInitializable {
+    associatedtype Empty
+    static func createEmpty() -> Empty
 }

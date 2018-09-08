@@ -8,15 +8,18 @@
 
 import UIKit
 
-public extension UIButton {
+extension UIButton: EmptyInitializable, Styling, StaticEmptyInitializable, ExpressibleByStringLiteral {
 
-    public struct Style {
+    public static func createEmpty() -> UIButton {
+        return UIButton(type: .custom)
+    }
+
+    public struct Style: ExpressibleByStringLiteral {
 
         let text: String
         let textColor: UIColor
         let backgroundColor: UIColor
         let font: UIFont
-
 
         init(_ text: String, font: UIFont = .default, textColor: UIColor = .black, backgroundColor: UIColor = .green) {
             self.text = text
@@ -25,25 +28,15 @@ public extension UIButton {
             self.backgroundColor = backgroundColor
         }
 
-        static func button(_ text: String) -> Style {
-            return Style(text)
+        public init(stringLiteral title: String) {
+            self.init(title)
         }
     }
 
-    func apply(style: Style) {
+    public func apply(style: Style) {
         setTitle(style.text, for: UIControlState())
         setTitleColor(style.textColor, for: UIControlState())
         titleLabel?.font = style.font
         backgroundColor = style.backgroundColor
-    }
-
-    convenience init(style: Style) {
-        self.init(type: .custom)
-        apply(style: style)
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    static func make(_ title: String) -> UIButton {
-        return UIButton(style: Style(title))
     }
 }

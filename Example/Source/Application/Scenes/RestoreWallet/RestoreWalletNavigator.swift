@@ -1,5 +1,5 @@
 //
-//  CreateNewWalletNavigator.swift
+//  RestoreWalletNavigator.swift
 //  ZilliqaSDKiOSExample
 //
 //  Created by Alexander Cyon on 2018-09-08.
@@ -8,11 +8,12 @@
 
 import UIKit
 
-protocol CreateNewWalletNavigator {
+protocol RestoreWalletNavigator {
     func toOpenWallet()
+    func toHome()
 }
 
-final class DefaultCreateNewWalletNavigator {
+final class DefaultRestoreWalletNavigator {
     private let navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {
@@ -21,9 +22,11 @@ final class DefaultCreateNewWalletNavigator {
 }
 
 // MARK: - CreateNewWalletNavigator
-extension DefaultCreateNewWalletNavigator: CreateNewWalletNavigator {}
-extension DefaultCreateNewWalletNavigator {
+extension DefaultRestoreWalletNavigator: RestoreWalletNavigator {
     func toOpenWallet() {
         navigationController.dismiss(animated: true)
     }
+
+    func toHome() {}
 }
+

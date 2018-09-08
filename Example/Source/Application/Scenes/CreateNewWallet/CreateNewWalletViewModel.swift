@@ -8,18 +8,18 @@
 
 import Foundation
 
-public struct CreateNewWalletViewModel {
+struct CreateNewWalletViewModel {
     private let navigator: CreateNewWalletNavigator
-    public init(navigator: CreateNewWalletNavigator) {
+    init(navigator: CreateNewWalletNavigator) {
         self.navigator = navigator
     }
 }
 
 extension CreateNewWalletViewModel: ViewModelled {}
-public extension CreateNewWalletViewModel {
+extension CreateNewWalletViewModel {
     struct Input {}
     struct Output {}
-    public func transform(input: Input) -> Output {
+    func transform(input: Input) -> Output {
         return Output()
     }
 }

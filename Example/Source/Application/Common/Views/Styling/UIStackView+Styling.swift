@@ -8,9 +8,11 @@
 
 import UIKit
 
-public extension UIStackView {
 
-    public struct Style {
+
+extension UIStackView: Styling {
+
+    public struct Style: ExpressibleByArrayLiteral {
         let axis: NSLayoutConstraint.Axis
         let alignment: UIStackView.Alignment
         let distribution: UIStackView.Distribution
@@ -21,17 +23,21 @@ public extension UIStackView {
             self.alignment = alignment
             self.distribution = distribution
         }
+
+        public init(arrayLiteral views: UIView...) {
+            self.init(views)
+        }
+    }
+
+    public func apply(style: Style) {
+        axis = style.axis
+        alignment = style.alignment
+        distribution = style.distribution
     }
 
     convenience init(style: Style) {
         self.init(arrangedSubviews: style.views)
-        axis = style.axis
-        alignment = style.alignment
-        distribution = style.distribution
+        apply(style: style)
         translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    static func make(_ views: [UIView], axis: NSLayoutConstraint.Axis = .vertical) -> UIStackView {
-        return UIStackView(style: Style(views, axis: axis))
     }
 }

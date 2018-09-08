@@ -14,10 +14,12 @@ final class Application {
     private init() {}
 
     func configureMainInterface(in window: UIWindow) {
+
         let navigationController = UINavigationController()
-        let openWalletNavigator = DefaultOpenWalletNavigator(navigationController: navigationController)
+
         window.rootViewController = navigationController
 
+        let openWalletNavigator = DefaultOpenWalletNavigator(navigationController: navigationController)
         openWalletNavigator.toOpenWallet()
     }
 }

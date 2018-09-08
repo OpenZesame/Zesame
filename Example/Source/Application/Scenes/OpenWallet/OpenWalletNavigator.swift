@@ -8,13 +8,13 @@
 
 import UIKit
 
-public protocol OpenWalletNavigator {
+protocol OpenWalletNavigator {
     func toOpenWallet()
     func toCreateNewWallet()
     func toRestoreWallet()
 }
 
-public final class DefaultOpenWalletNavigator {
+final class DefaultOpenWalletNavigator {
     private let navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {
@@ -22,13 +22,14 @@ public final class DefaultOpenWalletNavigator {
     }
 }
 
-extension DefaultOpenWalletNavigator: OpenWalletNavigator {}
-public extension DefaultOpenWalletNavigator {
+extension DefaultOpenWalletNavigator: OpenWalletNavigator {
+
     func toOpenWallet() {
         let viewModel = OpenWalletViewModel(navigator: self)
         let vc = OpenWalletController(viewModel: viewModel)
         navigationController.pushViewController(vc, animated: true)
     }
+
     func toCreateNewWallet() {
         let navigator = DefaultCreateNewWalletNavigator(navigationController: navigationController)
         let viewModel = CreateNewWalletViewModel(navigator: navigator)
@@ -37,5 +38,11 @@ public extension DefaultOpenWalletNavigator {
         navigationController.present(nc, animated: true, completion: nil)
     }
 
-    func toRestoreWallet() {}
+    func toRestoreWallet() {
+        let navigator = DefaultRestoreWalletNavigator(navigationController: navigationController)
+        let viewModel = RestoreWalletViewModel(navigator: navigator)
+        let vc = RestoreWalletController(viewModel: viewModel)
+        let nc = UINavigationController(rootViewController: vc)
+        navigationController.present(nc, animated: true, completion: nil)
+    }
 }

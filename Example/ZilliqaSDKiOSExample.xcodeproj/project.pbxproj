@@ -32,6 +32,14 @@
 		48C89FFD2143353C0063B0FA /* UIFont_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FFC2143353C0063B0FA /* UIFont_Extension.swift */; };
 		48C89FFF2143355A0063B0FA /* UIView+Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FFE2143355A0063B0FA /* UIView+Spacer.swift */; };
 		48C8A001214335E70063B0FA /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A000214335E70063B0FA /* Application.swift */; };
+		48C8A0032143C5B20063B0FA /* UITextField+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0022143C5B20063B0FA /* UITextField+Styling.swift */; };
+		48C8A0072143CD6F0063B0FA /* RestoreWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0062143CD6F0063B0FA /* RestoreWalletView.swift */; };
+		48C8A0092143CD8D0063B0FA /* RestoreWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0082143CD8D0063B0FA /* RestoreWalletViewModel.swift */; };
+		48C8A00B2143CDB50063B0FA /* RestoreWalletNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A00A2143CDB50063B0FA /* RestoreWalletNavigator.swift */; };
+		48C8A00D2143CE3E0063B0FA /* StaticEmptyInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A00C2143CE3E0063B0FA /* StaticEmptyInitializable.swift */; };
+		48C8A00F2143CE490063B0FA /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A00E2143CE490063B0FA /* Styling.swift */; };
+		48C8A0112143CE8F0063B0FA /* UIColor_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0102143CE8F0063B0FA /* UIColor_Extension.swift */; };
+		48C8A0132143CF6C0063B0FA /* RestoreWalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0122143CF6C0063B0FA /* RestoreWalletController.swift */; };
 		48F03F9A2142683D00A13E5E /* ZilliqaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F03F932142682F00A13E5E /* ZilliqaSDK.framework */; };
 		48F03F9B2142684200A13E5E /* ZilliqaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48F03F932142682F00A13E5E /* ZilliqaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -50,6 +58,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 484B063520BA0C2D00C4E50A;
 			remoteInfo = ZilliqaSDKiOSExample;
+		};
+		487077D32143D3F20011D429 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 48F70A1420B72DD00027B72D;
+			remoteInfo = "ZilliqaSDK iOS";
 		};
 		48F03F922142682F00A13E5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -131,6 +146,15 @@
 		48C89FFC2143353C0063B0FA /* UIFont_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont_Extension.swift; sourceTree = "<group>"; };
 		48C89FFE2143355A0063B0FA /* UIView+Spacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Spacer.swift"; sourceTree = "<group>"; };
 		48C8A000214335E70063B0FA /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		48C8A0022143C5B20063B0FA /* UITextField+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Styling.swift"; sourceTree = "<group>"; };
+		48C8A0062143CD6F0063B0FA /* RestoreWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreWalletView.swift; sourceTree = "<group>"; };
+		48C8A0082143CD8D0063B0FA /* RestoreWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreWalletViewModel.swift; sourceTree = "<group>"; };
+		48C8A00A2143CDB50063B0FA /* RestoreWalletNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreWalletNavigator.swift; sourceTree = "<group>"; };
+		48C8A00C2143CE3E0063B0FA /* StaticEmptyInitializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticEmptyInitializable.swift; sourceTree = "<group>"; };
+		48C8A00E2143CE490063B0FA /* Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styling.swift; sourceTree = "<group>"; };
+		48C8A0102143CE8F0063B0FA /* UIColor_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_Extension.swift; sourceTree = "<group>"; };
+		48C8A0122143CF6C0063B0FA /* RestoreWalletController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreWalletController.swift; sourceTree = "<group>"; };
+		48C8A0172143D33E0063B0FA /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = ../Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 		48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZilliqaSDK.xcodeproj; path = ../ZilliqaSDK.xcodeproj; sourceTree = "<group>"; };
 		48F03F9C2142686900A13E5E /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = ../Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
 		48F03F9D2142686A00A13E5E /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = ../Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
@@ -255,6 +279,7 @@
 		484B06AA20BA107A00C4E50A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				48C8A0172143D33E0063B0FA /* CryptoSwift.framework */,
 				48C89FB92142BCF70063B0FA /* RxCocoa.framework */,
 				48C89FBC2142BCF70063B0FA /* RxSwift.framework */,
 				48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */,
@@ -329,6 +354,10 @@
 		48C89FD7214330B30063B0FA /* RestoreWallet */ = {
 			isa = PBXGroup;
 			children = (
+				48C8A0062143CD6F0063B0FA /* RestoreWalletView.swift */,
+				48C8A0082143CD8D0063B0FA /* RestoreWalletViewModel.swift */,
+				48C8A0122143CF6C0063B0FA /* RestoreWalletController.swift */,
+				48C8A00A2143CDB50063B0FA /* RestoreWalletNavigator.swift */,
 			);
 			path = RestoreWallet;
 			sourceTree = "<group>";
@@ -363,6 +392,8 @@
 			isa = PBXGroup;
 			children = (
 				48C89FEB214331F00063B0FA /* EmptyInitializable.swift */,
+				48C8A00C2143CE3E0063B0FA /* StaticEmptyInitializable.swift */,
+				48C8A00E2143CE490063B0FA /* Styling.swift */,
 				48C89FF02143321E0063B0FA /* StackViewOwningView.swift */,
 				48C89FED214331FE0063B0FA /* SingleContentView.swift */,
 				48C89FF72143327A0063B0FA /* Styling */,
@@ -375,6 +406,7 @@
 			children = (
 				48C89FF52143326F0063B0FA /* UIButton+Styling.swift */,
 				48C89FF82143328E0063B0FA /* UIStackView+Styling.swift */,
+				48C8A0022143C5B20063B0FA /* UITextField+Styling.swift */,
 			);
 			path = Styling;
 			sourceTree = "<group>";
@@ -391,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				48C89FFC2143353C0063B0FA /* UIFont_Extension.swift */,
+				48C8A0102143CE8F0063B0FA /* UIColor_Extension.swift */,
 				48C89FFE2143355A0063B0FA /* UIView+Spacer.swift */,
 			);
 			path = UIKit;
@@ -417,12 +450,13 @@
 				484B063220BA0C2D00C4E50A /* Sources */,
 				484B063320BA0C2D00C4E50A /* Frameworks */,
 				484B063420BA0C2D00C4E50A /* Resources */,
-				48F03F862142680300A13E5E /* Embed Frameworks */,
 				48F03FA22142690800A13E5E /* Carthage */,
+				48F03F862142680300A13E5E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				487077D42143D3F20011D429 /* PBXTargetDependency */,
 			);
 			name = ZilliqaSDKiOSExample;
 			productName = ZilliqaSDKiOSExample;
@@ -618,17 +652,25 @@
 			files = (
 				48C89FE0214331590063B0FA /* SingleContentViewController.swift in Sources */,
 				48C89FDB214331050063B0FA /* OpenWalletUseCase.swift in Sources */,
+				48C8A0032143C5B20063B0FA /* UITextField+Styling.swift in Sources */,
+				48C8A0132143CF6C0063B0FA /* RestoreWalletController.swift in Sources */,
+				48C8A0112143CE8F0063B0FA /* UIColor_Extension.swift in Sources */,
 				48C89FF12143321E0063B0FA /* StackViewOwningView.swift in Sources */,
 				48C89FE6214331AD0063B0FA /* CreateNewWalletNavigator.swift in Sources */,
+				48C8A00D2143CE3E0063B0FA /* StaticEmptyInitializable.swift in Sources */,
 				484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */,
 				48C89FE8214331CB0063B0FA /* CreateNewWalletController.swift in Sources */,
 				48C89FE42143318E0063B0FA /* OpenWalletNavigator.swift in Sources */,
+				48C8A0092143CD8D0063B0FA /* RestoreWalletViewModel.swift in Sources */,
 				48C89FE22143316B0063B0FA /* OpenWalletController.swift in Sources */,
 				48C89FF32143322C0063B0FA /* OpenWalletView.swift in Sources */,
 				48C89FEA214331DA0063B0FA /* CreateNewWalletView.swift in Sources */,
+				48C8A0072143CD6F0063B0FA /* RestoreWalletView.swift in Sources */,
 				48C89FCB21432E220063B0FA /* ViewModelled.swift in Sources */,
+				48C8A00B2143CDB50063B0FA /* RestoreWalletNavigator.swift in Sources */,
 				48C89FDE2143313B0063B0FA /* KeyRestoration.swift in Sources */,
 				48C89FEE214331FE0063B0FA /* SingleContentView.swift in Sources */,
+				48C8A00F2143CE490063B0FA /* Styling.swift in Sources */,
 				48C89FFD2143353C0063B0FA /* UIFont_Extension.swift in Sources */,
 				48C89FF62143326F0063B0FA /* UIButton+Styling.swift in Sources */,
 				48C8A001214335E70063B0FA /* Application.swift in Sources */,
@@ -666,6 +708,11 @@
 			isa = PBXTargetDependency;
 			target = 484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */;
 			targetProxy = 484B065620BA0C2F00C4E50A /* PBXContainerItemProxy */;
+		};
+		487077D42143D3F20011D429 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ZilliqaSDK iOS";
+			targetProxy = 487077D32143D3F20011D429 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
