@@ -1,3 +1,4 @@
 github "attaswift/BigInt"
 github "Sajjon/EllipticCurveKit" "legacy"
 github "krzyzanowskim/CryptoSwift"
+github "bricklife/JSONRPCKit"
