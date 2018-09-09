@@ -1,5 +1,5 @@
 //
-//  OpenWalletView.swift
+//  ChooseWalletView.swift
 //  ZilliqaSDKiOSExample
 //
 //  Created by Alexander Cyon on 2018-09-08.
@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-final class OpenWalletView: StackViewOwningView, StackViewStyling {
+final class ChooseWalletView: StackViewOwningView, StackViewStyling {
 
     lazy var createNewWalletButton: UIButton = "New Wallet"
     lazy var restoreWalletButton: UIButton = "Restore Wallet"
@@ -17,6 +17,6 @@ final class OpenWalletView: StackViewOwningView, StackViewStyling {
     lazy var stackViewStyle: UIStackView.Style = [createNewWalletButton, restoreWalletButton, .spacer]
 }
 
-extension OpenWalletView: SingleContentView {
-    typealias ViewModel = OpenWalletViewModel
+extension ChooseWalletView: SingleContentView {
+    typealias ViewModel = ChooseWalletViewModel
 }

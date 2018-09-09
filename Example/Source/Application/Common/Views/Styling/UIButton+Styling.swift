@@ -16,6 +16,8 @@ extension UIButton: Styling, StaticEmptyInitializable, ExpressibleByStringLitera
 
     public final class Style: ViewStyle, ExpressibleByStringLiteral {
 
+        typealias View = UIButton
+
         let text: String
         let textColor: UIColor
         let font: UIFont

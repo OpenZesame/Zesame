@@ -1,5 +1,5 @@
 //
-//  OpenWalletController.swift
+//  ChooseWalletController.swift
 //  ZilliqaSDKiOSExample
 //
 //  Created by Alexander Cyon on 2018-09-08.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-final class OpenWalletController: SingleContentViewController<OpenWalletView, OpenWalletViewModel> {
+final class ChooseWalletController: SingleContentViewController<ChooseWalletView, ChooseWalletViewModel> {
 
-    init(viewModel: OpenWalletViewModel) {
-        let contentView = OpenWalletView()
+    init(viewModel: ChooseWalletViewModel) {
+        let contentView = ChooseWalletView()
         super.init(view: contentView, viewModel: viewModel)
     }
 

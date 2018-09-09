@@ -12,9 +12,12 @@ import ZilliqaSDK
 
 struct RestoreWalletViewModel {
     private let bag = DisposeBag()
-    private let navigator: RestoreWalletNavigator
-    init(navigator: RestoreWalletNavigator) {
-        self.navigator = navigator
+
+    typealias NavigationTo = Navigation<RestoreWalletNavigator>
+    private let navigateTo: NavigationTo
+
+    init(_ navigation: @escaping NavigationTo) {
+        self.navigateTo = navigation
     }
 }
 
@@ -25,9 +28,7 @@ extension RestoreWalletViewModel: ViewModelled {
         let restoreTrigger: Driver<Void>
     }
 
-    struct Output {
-        let wallet: Driver<Wallet>
-    }
+    struct Output {}
 
     func transform(input: Input) -> Output {
 
@@ -35,10 +36,10 @@ extension RestoreWalletViewModel: ViewModelled {
             .map { Wallet(privateKeyHex: $0) }
             .filterNil()
 
-        input.restoreTrigger.withLatestFrom(wallet)
-            .do(onNext: { [weak navigator] in navigator?.toHome($0) })
-            .drive().disposed(by: bag)
+        input.restoreTrigger.withLatestFrom(wallet).do(onNext: {
+            self.navigateTo(.restored($0))
+        }).drive().disposed(by: bag)
 
-        return Output(wallet: wallet)
+        return Output()
     }
 }

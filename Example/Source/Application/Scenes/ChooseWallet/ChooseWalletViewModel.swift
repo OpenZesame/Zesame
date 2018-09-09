@@ -1,5 +1,5 @@
 //
-//  OpenWalletViewModel.swift
+//  ChooseWalletViewModel.swift
 //  ZilliqaSDKiOSExample
 //
 //  Created by Alexander Cyon on 2018-09-08.
@@ -9,15 +9,18 @@
 import RxSwift
 import RxCocoa
 
-struct OpenWalletViewModel {
+struct ChooseWalletViewModel {
     private let bag = DisposeBag()
-    private let navigator: OpenWalletNavigator
-    init(navigator: OpenWalletNavigator) {
-        self.navigator = navigator
+
+    typealias NavigationTo = Navigation<ChooseWalletNavigator>
+    private let navigateTo: NavigationTo
+
+    init(_ navigation: @escaping NavigationTo) {
+        self.navigateTo = navigation
     }
 }
 
-extension OpenWalletViewModel: ViewModelled {
+extension ChooseWalletViewModel: ViewModelled {
 
     struct Input {
         let createNewTrigger: Driver<Void>
@@ -28,12 +31,12 @@ extension OpenWalletViewModel: ViewModelled {
 
     func transform(input: Input) -> Output {
 
-        input.createNewTrigger.do(onNext: { [weak navigator] in
-            navigator?.toCreateNewWallet()
+        input.createNewTrigger.do(onNext: {
+            self.navigateTo(.createNewWallet)
         }).drive().disposed(by: bag)
 
-        input.restoreTrigger.do(onNext: { [weak navigator] in
-            navigator?.toRestoreWallet()
+        input.restoreTrigger.do(onNext: {
+            self.navigateTo(.restoreWallet)
         }).drive().disposed(by: bag)
 
         return Output()

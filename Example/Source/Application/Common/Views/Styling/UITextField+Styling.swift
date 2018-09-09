@@ -16,6 +16,9 @@ extension UITextField: EmptyInitializable, Styling, StaticEmptyInitializable, Ex
     }
 
     public final class Style: ViewStyle, ExpressibleByStringLiteral {
+
+        typealias View = UITextField
+
         let placeholder: String
         let textColor: UIColor
         let font: UIFont

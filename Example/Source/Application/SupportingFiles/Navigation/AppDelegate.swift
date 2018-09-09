@@ -7,18 +7,23 @@
 //
 
 import UIKit
+import ZilliqaSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder {
     var window: UIWindow?
+
+    private lazy var appNavigator: AppNavigator = {
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = window
+        window.makeKeyAndVisible()
+        return AppNavigator(window: window)
+    }()
 }
 
 extension AppDelegate: UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        Application.shared.configureMainInterface(in: window)
-        self.window = window
-        window.makeKeyAndVisible()
+        appNavigator.start()
         return true
     }
 }

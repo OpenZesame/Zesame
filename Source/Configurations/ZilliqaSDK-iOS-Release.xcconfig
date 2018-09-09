@@ -1,2 +1,2 @@
-#include "ZilliqaSDK-Shared.xcconfig"
+#include "Zilliqa-Shared.xcconfig"
 #include "../../Configurations/base_release.xcconfig"

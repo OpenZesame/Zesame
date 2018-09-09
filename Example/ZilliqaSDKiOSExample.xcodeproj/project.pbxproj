@@ -15,6 +15,7 @@
 		489CDB9A2143E0CC00318450 /* ZilliqaSDKiOSExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B067B20BA0D2C00C4E50A /* ZilliqaSDKiOSExampleTests.swift */; };
 		489CDB9B2143E0D300318450 /* ZilliqaSDKiOSExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B067520BA0D2100C4E50A /* ZilliqaSDKiOSExampleUITests.swift */; };
 		489CDBCF2143FF3E00318450 /* FilterNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489CDBCE2143FF3E00318450 /* FilterNil.swift */; };
+		48AC6CB9214533C500B4D036 /* Unsafe︕！Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CB8214533C500B4D036 /* Unsafe︕！Cache.swift */; };
 		48B16E3021452A2600177434 /* Never.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B16E2F21452A2600177434 /* Never.swift */; };
 		48C469F1214450F0008D0DD7 /* ZilliqaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48F03F932142682F00A13E5E /* ZilliqaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		48C469F521445417008D0DD7 /* UILabel+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C469F421445417008D0DD7 /* UILabel+Styling.swift */; };
@@ -23,13 +24,13 @@
 		48C89FBF2142BCF70063B0FA /* ViewComposer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBB2142BCF70063B0FA /* ViewComposer.framework */; };
 		48C89FC02142BCF70063B0FA /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBC2142BCF70063B0FA /* RxSwift.framework */; };
 		48C89FCB21432E220063B0FA /* ViewModelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCA21432E220063B0FA /* ViewModelled.swift */; };
-		48C89FCD21432E2E0063B0FA /* OpenWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCC21432E2E0063B0FA /* OpenWalletViewModel.swift */; };
+		48C89FCD21432E2E0063B0FA /* ChooseWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCC21432E2E0063B0FA /* ChooseWalletViewModel.swift */; };
 		48C89FCF21432E440063B0FA /* CreateNewWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCE21432E440063B0FA /* CreateNewWalletViewModel.swift */; };
 		48C89FDB214331050063B0FA /* OpenWalletUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FDA214331050063B0FA /* OpenWalletUseCase.swift */; };
 		48C89FDE2143313B0063B0FA /* KeyRestoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FDD2143313B0063B0FA /* KeyRestoration.swift */; };
 		48C89FE0214331590063B0FA /* SingleContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FDF214331590063B0FA /* SingleContentViewController.swift */; };
-		48C89FE22143316B0063B0FA /* OpenWalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE12143316B0063B0FA /* OpenWalletController.swift */; };
-		48C89FE42143318E0063B0FA /* OpenWalletNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE32143318E0063B0FA /* OpenWalletNavigator.swift */; };
+		48C89FE22143316B0063B0FA /* ChooseWalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE12143316B0063B0FA /* ChooseWalletController.swift */; };
+		48C89FE42143318E0063B0FA /* ChooseWalletNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE32143318E0063B0FA /* ChooseWalletNavigator.swift */; };
 		48C89FE6214331AD0063B0FA /* CreateNewWalletNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE5214331AD0063B0FA /* CreateNewWalletNavigator.swift */; };
 		48C89FE8214331CB0063B0FA /* CreateNewWalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE7214331CB0063B0FA /* CreateNewWalletController.swift */; };
 		48C89FEA214331DA0063B0FA /* CreateNewWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE9214331DA0063B0FA /* CreateNewWalletView.swift */; };
@@ -41,7 +42,7 @@
 		48C89FF92143328E0063B0FA /* UIStackView+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF82143328E0063B0FA /* UIStackView+Styling.swift */; };
 		48C89FFD2143353C0063B0FA /* UIFont_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FFC2143353C0063B0FA /* UIFont_Extension.swift */; };
 		48C89FFF2143355A0063B0FA /* UIView+Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FFE2143355A0063B0FA /* UIView+Spacer.swift */; };
-		48C8A001214335E70063B0FA /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A000214335E70063B0FA /* Application.swift */; };
+		48C8A001214335E70063B0FA /* AppNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A000214335E70063B0FA /* AppNavigator.swift */; };
 		48C8A0032143C5B20063B0FA /* UITextField+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0022143C5B20063B0FA /* UITextField+Styling.swift */; };
 		48C8A0072143CD6F0063B0FA /* RestoreWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0062143CD6F0063B0FA /* RestoreWalletView.swift */; };
 		48C8A0092143CD8D0063B0FA /* RestoreWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0082143CD8D0063B0FA /* RestoreWalletViewModel.swift */; };
@@ -144,6 +145,7 @@
 		489CDBA62143E47300318450 /* ExampleUITests-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExampleUITests-Common.xcconfig"; sourceTree = "<group>"; };
 		489CDBA72143E47300318450 /* ExampleUITests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExampleUITests-Debug.xcconfig"; sourceTree = "<group>"; };
 		489CDBCE2143FF3E00318450 /* FilterNil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterNil.swift; sourceTree = "<group>"; };
+		48AC6CB8214533C500B4D036 /* Unsafe︕！Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Unsafe︕！Cache.swift"; sourceTree = "<group>"; };
 		48B16E2F21452A2600177434 /* Never.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Never.swift; sourceTree = "<group>"; };
 		48C469F421445417008D0DD7 /* UILabel+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Styling.swift"; sourceTree = "<group>"; };
 		48C89FB92142BCF70063B0FA /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
@@ -151,13 +153,13 @@
 		48C89FBB2142BCF70063B0FA /* ViewComposer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ViewComposer.framework; path = Carthage/Build/iOS/ViewComposer.framework; sourceTree = "<group>"; };
 		48C89FBC2142BCF70063B0FA /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		48C89FCA21432E220063B0FA /* ViewModelled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelled.swift; sourceTree = "<group>"; };
-		48C89FCC21432E2E0063B0FA /* OpenWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWalletViewModel.swift; sourceTree = "<group>"; };
+		48C89FCC21432E2E0063B0FA /* ChooseWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWalletViewModel.swift; sourceTree = "<group>"; };
 		48C89FCE21432E440063B0FA /* CreateNewWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletViewModel.swift; sourceTree = "<group>"; };
 		48C89FDA214331050063B0FA /* OpenWalletUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWalletUseCase.swift; sourceTree = "<group>"; };
 		48C89FDD2143313B0063B0FA /* KeyRestoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyRestoration.swift; sourceTree = "<group>"; };
 		48C89FDF214331590063B0FA /* SingleContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleContentViewController.swift; sourceTree = "<group>"; };
-		48C89FE12143316B0063B0FA /* OpenWalletController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWalletController.swift; sourceTree = "<group>"; };
-		48C89FE32143318E0063B0FA /* OpenWalletNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWalletNavigator.swift; sourceTree = "<group>"; };
+		48C89FE12143316B0063B0FA /* ChooseWalletController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWalletController.swift; sourceTree = "<group>"; };
+		48C89FE32143318E0063B0FA /* ChooseWalletNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWalletNavigator.swift; sourceTree = "<group>"; };
 		48C89FE5214331AD0063B0FA /* CreateNewWalletNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletNavigator.swift; sourceTree = "<group>"; };
 		48C89FE7214331CB0063B0FA /* CreateNewWalletController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletController.swift; sourceTree = "<group>"; };
 		48C89FE9214331DA0063B0FA /* CreateNewWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletView.swift; sourceTree = "<group>"; };
@@ -169,7 +171,7 @@
 		48C89FF82143328E0063B0FA /* UIStackView+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Styling.swift"; sourceTree = "<group>"; };
 		48C89FFC2143353C0063B0FA /* UIFont_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont_Extension.swift; sourceTree = "<group>"; };
 		48C89FFE2143355A0063B0FA /* UIView+Spacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Spacer.swift"; sourceTree = "<group>"; };
-		48C8A000214335E70063B0FA /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		48C8A000214335E70063B0FA /* AppNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigator.swift; sourceTree = "<group>"; };
 		48C8A0022143C5B20063B0FA /* UITextField+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Styling.swift"; sourceTree = "<group>"; };
 		48C8A0062143CD6F0063B0FA /* RestoreWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreWalletView.swift; sourceTree = "<group>"; };
 		48C8A0082143CD8D0063B0FA /* RestoreWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreWalletViewModel.swift; sourceTree = "<group>"; };
@@ -288,8 +290,8 @@
 		484B068420BA0D8800C4E50A /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				48AC6CBA214562DA00B4D036 /* Navigation */,
 				484B067E20BA0D8800C4E50A /* LaunchScreen.storyboard */,
-				484B068520BA0D8800C4E50A /* AppDelegate.swift */,
 				484B068620BA0D8800C4E50A /* ZilliqaSDK-iOS-Example-Info.plist */,
 			);
 			path = SupportingFiles;
@@ -333,6 +335,7 @@
 			isa = PBXGroup;
 			children = (
 				48B16E2F21452A2600177434 /* Never.swift */,
+				48AC6CB8214533C500B4D036 /* Unsafe︕！Cache.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -375,6 +378,15 @@
 			path = RxSwift;
 			sourceTree = "<group>";
 		};
+		48AC6CBA214562DA00B4D036 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				48C8A000214335E70063B0FA /* AppNavigator.swift */,
+				484B068520BA0D8800C4E50A /* AppDelegate.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 		48C89FD021432F980063B0FA /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,7 +410,6 @@
 				48C89FD32143308A0063B0FA /* Scenes */,
 				484B067D20BA0D8800C4E50A /* Assets.xcassets */,
 				484B068420BA0D8800C4E50A /* SupportingFiles */,
-				48C8A000214335E70063B0FA /* Application.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -409,20 +420,20 @@
 				484F7D7221441BF20023C6D4 /* Send */,
 				48C89FD7214330B30063B0FA /* RestoreWallet */,
 				48C89FD6214330AB0063B0FA /* CreateNewWallet */,
-				48C89FD4214330910063B0FA /* OpenWallet */,
+				48C89FD4214330910063B0FA /* ChooseWallet */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-		48C89FD4214330910063B0FA /* OpenWallet */ = {
+		48C89FD4214330910063B0FA /* ChooseWallet */ = {
 			isa = PBXGroup;
 			children = (
-				48C89FCC21432E2E0063B0FA /* OpenWalletViewModel.swift */,
-				48C89FE12143316B0063B0FA /* OpenWalletController.swift */,
-				48C89FE32143318E0063B0FA /* OpenWalletNavigator.swift */,
+				48C89FCC21432E2E0063B0FA /* ChooseWalletViewModel.swift */,
+				48C89FE12143316B0063B0FA /* ChooseWalletController.swift */,
+				48C89FE32143318E0063B0FA /* ChooseWalletNavigator.swift */,
 				48C89FF22143322C0063B0FA /* OpenWalletView.swift */,
 			);
-			path = OpenWallet;
+			path = ChooseWallet;
 			sourceTree = "<group>";
 		};
 		48C89FD6214330AB0063B0FA /* CreateNewWallet */ = {
@@ -748,9 +759,10 @@
 				48C8A00D2143CE3E0063B0FA /* StaticEmptyInitializable.swift in Sources */,
 				484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */,
 				48C89FE8214331CB0063B0FA /* CreateNewWalletController.swift in Sources */,
-				48C89FE42143318E0063B0FA /* OpenWalletNavigator.swift in Sources */,
+				48C89FE42143318E0063B0FA /* ChooseWalletNavigator.swift in Sources */,
 				48C8A0092143CD8D0063B0FA /* RestoreWalletViewModel.swift in Sources */,
-				48C89FE22143316B0063B0FA /* OpenWalletController.swift in Sources */,
+				48AC6CB9214533C500B4D036 /* Unsafe︕！Cache.swift in Sources */,
+				48C89FE22143316B0063B0FA /* ChooseWalletController.swift in Sources */,
 				48C89FF32143322C0063B0FA /* OpenWalletView.swift in Sources */,
 				484F7D7821441BF20023C6D4 /* SendView.swift in Sources */,
 				484F7D7721441BF20023C6D4 /* SendNavigator.swift in Sources */,
@@ -766,11 +778,11 @@
 				48C8A00F2143CE490063B0FA /* Styling.swift in Sources */,
 				48C89FFD2143353C0063B0FA /* UIFont_Extension.swift in Sources */,
 				48C89FF62143326F0063B0FA /* UIButton+Styling.swift in Sources */,
-				48C8A001214335E70063B0FA /* Application.swift in Sources */,
+				48C8A001214335E70063B0FA /* AppNavigator.swift in Sources */,
 				48C89FEC214331F00063B0FA /* EmptyInitializable.swift in Sources */,
 				48C469F521445417008D0DD7 /* UILabel+Styling.swift in Sources */,
 				48C89FFF2143355A0063B0FA /* UIView+Spacer.swift in Sources */,
-				48C89FCD21432E2E0063B0FA /* OpenWalletViewModel.swift in Sources */,
+				48C89FCD21432E2E0063B0FA /* ChooseWalletViewModel.swift in Sources */,
 				48C89FF92143328E0063B0FA /* UIStackView+Styling.swift in Sources */,
 				48C89FCF21432E440063B0FA /* CreateNewWalletViewModel.swift in Sources */,
 			);
@@ -842,6 +854,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */;
 			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 			};
 			name = Debug;
 		};

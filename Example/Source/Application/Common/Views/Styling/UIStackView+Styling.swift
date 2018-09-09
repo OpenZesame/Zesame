@@ -17,6 +17,9 @@ extension UIStackView: Styling, StaticEmptyInitializable {
     }
 
     public final class Style: ViewStyle, ExpressibleByArrayLiteral {
+
+        typealias View = UIStackView
+
         let axis: NSLayoutConstraint.Axis
         let alignment: UIStackView.Alignment
         let distribution: UIStackView.Distribution

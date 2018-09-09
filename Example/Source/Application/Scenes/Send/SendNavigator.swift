@@ -9,31 +9,40 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import ZilliqaSDK
 
 // MARK: - SendNavigator
-protocol SendNavigator {
-    func toSend()
-    func toContacts()
-}
+final class SendNavigator: Navigator {
+    enum Destination {
+        case send
+    }
 
-final class DefaultSendNavigator {
-    private let navigationController: UINavigationController
+    private weak var navigationController: UINavigationController?
 
-    init(navigationController: UINavigationController) {
+    private let wallet: Wallet
+
+    deinit {
+        print("💣 SendNavigator")
+    }
+
+    init(navigationController: UINavigationController, wallet: Wallet) {
         self.navigationController = navigationController
-    }
-}
-
-// MARK: - DefaultSendNavigator
-extension DefaultSendNavigator: SendNavigator {
-
-    func toSend() {
-        let viewModel = SendViewModel(navigator: self)
-        let vc = SendController(viewModel: viewModel)
-        navigationController.pushViewController(vc, animated: true)
+        self.wallet = wallet
     }
 
-    func toContacts() {
-        
+    func navigate(to destination: Destination) {
+        switch destination {
+        case .send:
+            navigationController?.pushViewController(
+                SendController(
+                    viewModel: SendViewModel(navigate(to:), wallet: wallet)
+                ),
+                animated: true
+            )
+        }
+    }
+
+    func start() {
+        navigate(to: .send)
     }
 }

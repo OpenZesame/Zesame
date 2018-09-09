@@ -14,16 +14,20 @@ extension UILabel: Styling, StaticEmptyInitializable, ExpressibleByStringLiteral
         return UILabel()
     }
 
-    public final class Style: ViewStyle, ExpressibleByStringLiteral {
+    public final class Style: ViewStyle, Makeable, ExpressibleByStringLiteral {
 
-        let text: String
+        typealias View = UILabel
+
+        let text: String?
         let textColor: UIColor
         let font: UIFont
+        let numberOfLines: Int
 
-        init(_ text: String, height: CGFloat? = CGFloat.defaultHeight, font: UIFont = .default, textColor: UIColor = .black, backgroundColor: UIColor = .white) {
+        init(_ text: String? = nil, height: CGFloat? = CGFloat.defaultHeight, font: UIFont = .default, textColor: UIColor = .black, numberOfLines: Int = 1, backgroundColor: UIColor = .white) {
             self.text = text
             self.textColor = textColor
             self.font = font
+            self.numberOfLines = numberOfLines
             super.init(height: height, backgroundColor: backgroundColor)
         }
 
@@ -37,5 +41,6 @@ extension UILabel: Styling, StaticEmptyInitializable, ExpressibleByStringLiteral
         font = style.font
         textColor = style.textColor
         backgroundColor = style.backgroundColor
+        numberOfLines = style.numberOfLines
     }
 }

@@ -9,29 +9,42 @@
 import UIKit
 import ZilliqaSDK
 
-protocol CreateNewWalletNavigator {
-    func toOpenWallet()
-    func toHome(_ wallet: Wallet)
-}
+final class CreateNewWalletNavigator: Navigator {
 
-final class DefaultCreateNewWalletNavigator {
-    private let navigationController: UINavigationController
-    private let walletOpened: (Wallet) -> Void
+    enum Destination {
+        case create
+        case displayBackupInfo(Wallet)
+        case created(Wallet)
+    }
 
-    init(navigationController: UINavigationController, walletOpened: @escaping (Wallet) -> Void) {
+    private weak var navigationController: UINavigationController?
+    private weak var chooseWalletNavigator: ChooseWalletNavigator?
+
+    init(chooseWalletNavigator: ChooseWalletNavigator, navigationController: UINavigationController?) {
         self.navigationController = navigationController
-        self.walletOpened = walletOpened
+        self.chooseWalletNavigator = chooseWalletNavigator
+    }
+
+    func navigate(to destination: Destination) {
+        if case let .created(newWallet) = destination {
+            chooseWalletNavigator?.navigate(to: ChooseWalletNavigator.Destination.chosen(wallet: newWallet))
+        } else {
+            navigationController?.pushViewController(makeViewController(for: destination), animated: true)
+        }
+    }
+
+    func start() {
+        navigate(to: .create)
     }
 }
 
-// MARK: - CreateNewWalletNavigator
-extension DefaultCreateNewWalletNavigator: CreateNewWalletNavigator {
-    func toOpenWallet() {
-        navigationController.dismiss(animated: true)
-    }
 
-    func toHome(_ wallet: Wallet) {
-        walletOpened(wallet)
-        navigationController.popToRootViewController(animated: false)
+private extension CreateNewWalletNavigator {
+    private func makeViewController(for destination: Destination) -> UIViewController {
+        switch destination {
+        case .create:
+            return CreateNewWalletController(viewModel: CreateNewWalletViewModel(navigator: self))
+        default: fatalError("No support for `\(String(reflecting: destination))` yet")
+        }
     }
 }
