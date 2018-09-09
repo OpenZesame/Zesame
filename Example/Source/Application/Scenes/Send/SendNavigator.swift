@@ -12,22 +12,26 @@ import RxCocoa
 import ZilliqaSDK
 
 // MARK: - SendNavigator
-final class SendNavigator: Navigator {
-    enum Destination {
-        case send
-    }
+final class SendNavigator {
 
     private weak var navigationController: UINavigationController?
-
     private let wallet: Wallet
+
+    init(navigationController: UINavigationController, wallet: Wallet) {
+        self.navigationController = navigationController
+        self.wallet = wallet
+    }
 
     deinit {
         print("💣 SendNavigator")
     }
 
-    init(navigationController: UINavigationController, wallet: Wallet) {
-        self.navigationController = navigationController
-        self.wallet = wallet
+}
+
+extension SendNavigator: Navigator {
+
+    enum Destination {
+        case send
     }
 
     func navigate(to destination: Destination) {
@@ -45,4 +49,5 @@ final class SendNavigator: Navigator {
     func start() {
         navigate(to: .send)
     }
+
 }

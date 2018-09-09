@@ -9,7 +9,22 @@
 import UIKit
 import ZilliqaSDK
 
-final class CreateNewWalletNavigator: Navigator {
+final class CreateNewWalletNavigator {
+
+    private weak var navigationController: UINavigationController?
+    private let didChooseWallet: (Wallet) -> Void
+
+    init(navigationController: UINavigationController?, didChooseWallet: @escaping (Wallet) -> Void) {
+        self.navigationController = navigationController
+        self.didChooseWallet = didChooseWallet
+    }
+
+    deinit {
+        print("💣 CreateNewWalletNavigator")
+    }
+}
+
+extension CreateNewWalletNavigator: Navigator {
 
     enum Destination {
         case create
@@ -17,17 +32,9 @@ final class CreateNewWalletNavigator: Navigator {
         case created(Wallet)
     }
 
-    private weak var navigationController: UINavigationController?
-    private weak var chooseWalletNavigator: ChooseWalletNavigator?
-
-    init(chooseWalletNavigator: ChooseWalletNavigator, navigationController: UINavigationController?) {
-        self.navigationController = navigationController
-        self.chooseWalletNavigator = chooseWalletNavigator
-    }
-
     func navigate(to destination: Destination) {
         if case let .created(newWallet) = destination {
-            chooseWalletNavigator?.navigate(to: ChooseWalletNavigator.Destination.chosen(wallet: newWallet))
+            didChooseWallet(newWallet)
         } else {
             navigationController?.pushViewController(makeViewController(for: destination), animated: true)
         }
@@ -36,6 +43,7 @@ final class CreateNewWalletNavigator: Navigator {
     func start() {
         navigate(to: .create)
     }
+
 }
 
 

@@ -11,12 +11,13 @@ import RxSwift
 import ZilliqaSDK
 
 final class ChooseWalletNavigator: Navigator {
-    private weak var navigationController: UINavigationController?
-    private weak var appNavigator: AppNavigator?
 
-    init(appNavigator: AppNavigator, navigationController: UINavigationController) {
+    private weak var navigationController: UINavigationController?
+    private let chosenWallet: (Wallet) -> Void
+
+    init(navigationController: UINavigationController, chosenWallet: @escaping (Wallet) -> Void) {
         self.navigationController = navigationController
-        self.appNavigator = appNavigator
+        self.chosenWallet = chosenWallet
     }
 
     deinit {
@@ -38,20 +39,22 @@ extension ChooseWalletNavigator {
 
     func navigate(to destination: Destination) {
         switch destination {
-        case .chosen(let chosenWallet):
-            appNavigator?.navigate(to: AppNavigator.Destination.chosen(wallet: chosenWallet))
+        case .chosen(let wallet): chosenWallet(wallet)
         case .chooseWallet:
             navigationController?.pushViewController(
                 ChooseWalletController(viewModel: ChooseWalletViewModel(navigate(to:))),
                 animated: true
             )
         case .createNewWallet:
-            let navigator = CreateNewWalletNavigator(chooseWalletNavigator: self, navigationController: navigationController)
+            let navigator = CreateNewWalletNavigator(navigationController: navigationController) { [weak self] in
+                self?.navigate(to: .chosen(wallet: $0))
+            }
             navigator.start()
         case .restoreWallet:
-            let navigator = RestoreWalletNavigator(chooseWalletNavigator: self, navigationController: navigationController)
+            let navigator = RestoreWalletNavigator(navigationController: navigationController) { [weak self] in
+                self?.navigate(to: .chosen(wallet: $0))
+            }
             navigator.start()
-            //            return RestoreWalletController(viewModel: RestoreWalletViewModel(navigate(to:)))
         }
     }
 }

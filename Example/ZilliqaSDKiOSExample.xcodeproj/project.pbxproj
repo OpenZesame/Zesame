@@ -16,6 +16,13 @@
 		489CDB9B2143E0D300318450 /* ZilliqaSDKiOSExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B067520BA0D2100C4E50A /* ZilliqaSDKiOSExampleUITests.swift */; };
 		489CDBCF2143FF3E00318450 /* FilterNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489CDBCE2143FF3E00318450 /* FilterNil.swift */; };
 		48AC6CB9214533C500B4D036 /* Unsafe︕！Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CB8214533C500B4D036 /* Unsafe︕！Cache.swift */; };
+		48AC6CC22145AC4A00B4D036 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CBE2145AC4A00B4D036 /* SettingsView.swift */; };
+		48AC6CC32145AC4A00B4D036 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CBF2145AC4A00B4D036 /* SettingsController.swift */; };
+		48AC6CC42145AC4A00B4D036 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CC02145AC4A00B4D036 /* SettingsViewModel.swift */; };
+		48AC6CC52145AC4A00B4D036 /* SettingsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CC12145AC4A00B4D036 /* SettingsNavigator.swift */; };
+		48AC6CC72145AF0A00B4D036 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CC62145AF0A00B4D036 /* Navigator.swift */; };
+		48AC6CC92145AF1B00B4D036 /* MainNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CC82145AF1B00B4D036 /* MainNavigator.swift */; };
+		48AC6CCB2145AF3E00B4D036 /* UITabBarItem_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CCA2145AF3E00B4D036 /* UITabBarItem_Extension.swift */; };
 		48B16E3021452A2600177434 /* Never.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B16E2F21452A2600177434 /* Never.swift */; };
 		48C469F1214450F0008D0DD7 /* ZilliqaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48F03F932142682F00A13E5E /* ZilliqaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		48C469F521445417008D0DD7 /* UILabel+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C469F421445417008D0DD7 /* UILabel+Styling.swift */; };
@@ -37,7 +44,7 @@
 		48C89FEC214331F00063B0FA /* EmptyInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FEB214331F00063B0FA /* EmptyInitializable.swift */; };
 		48C89FEE214331FE0063B0FA /* SingleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FED214331FE0063B0FA /* SingleContentView.swift */; };
 		48C89FF12143321E0063B0FA /* StackViewOwningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF02143321E0063B0FA /* StackViewOwningView.swift */; };
-		48C89FF32143322C0063B0FA /* OpenWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF22143322C0063B0FA /* OpenWalletView.swift */; };
+		48C89FF32143322C0063B0FA /* ChooseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF22143322C0063B0FA /* ChooseWalletView.swift */; };
 		48C89FF62143326F0063B0FA /* UIButton+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF52143326F0063B0FA /* UIButton+Styling.swift */; };
 		48C89FF92143328E0063B0FA /* UIStackView+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF82143328E0063B0FA /* UIStackView+Styling.swift */; };
 		48C89FFD2143353C0063B0FA /* UIFont_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FFC2143353C0063B0FA /* UIFont_Extension.swift */; };
@@ -146,6 +153,13 @@
 		489CDBA72143E47300318450 /* ExampleUITests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExampleUITests-Debug.xcconfig"; sourceTree = "<group>"; };
 		489CDBCE2143FF3E00318450 /* FilterNil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterNil.swift; sourceTree = "<group>"; };
 		48AC6CB8214533C500B4D036 /* Unsafe︕！Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Unsafe︕！Cache.swift"; sourceTree = "<group>"; };
+		48AC6CBE2145AC4A00B4D036 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		48AC6CBF2145AC4A00B4D036 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		48AC6CC02145AC4A00B4D036 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		48AC6CC12145AC4A00B4D036 /* SettingsNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNavigator.swift; sourceTree = "<group>"; };
+		48AC6CC62145AF0A00B4D036 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		48AC6CC82145AF1B00B4D036 /* MainNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigator.swift; sourceTree = "<group>"; };
+		48AC6CCA2145AF3E00B4D036 /* UITabBarItem_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabBarItem_Extension.swift; sourceTree = "<group>"; };
 		48B16E2F21452A2600177434 /* Never.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Never.swift; sourceTree = "<group>"; };
 		48C469F421445417008D0DD7 /* UILabel+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Styling.swift"; sourceTree = "<group>"; };
 		48C89FB92142BCF70063B0FA /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
@@ -166,7 +180,7 @@
 		48C89FEB214331F00063B0FA /* EmptyInitializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyInitializable.swift; sourceTree = "<group>"; };
 		48C89FED214331FE0063B0FA /* SingleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleContentView.swift; sourceTree = "<group>"; };
 		48C89FF02143321E0063B0FA /* StackViewOwningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewOwningView.swift; sourceTree = "<group>"; };
-		48C89FF22143322C0063B0FA /* OpenWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWalletView.swift; sourceTree = "<group>"; };
+		48C89FF22143322C0063B0FA /* ChooseWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWalletView.swift; sourceTree = "<group>"; };
 		48C89FF52143326F0063B0FA /* UIButton+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Styling.swift"; sourceTree = "<group>"; };
 		48C89FF82143328E0063B0FA /* UIStackView+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Styling.swift"; sourceTree = "<group>"; };
 		48C89FFC2143353C0063B0FA /* UIFont_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont_Extension.swift; sourceTree = "<group>"; };
@@ -382,9 +396,22 @@
 			isa = PBXGroup;
 			children = (
 				48C8A000214335E70063B0FA /* AppNavigator.swift */,
+				48AC6CC62145AF0A00B4D036 /* Navigator.swift */,
+				48AC6CC82145AF1B00B4D036 /* MainNavigator.swift */,
 				484B068520BA0D8800C4E50A /* AppDelegate.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		48AC6CBD2145AC4A00B4D036 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				48AC6CBE2145AC4A00B4D036 /* SettingsView.swift */,
+				48AC6CBF2145AC4A00B4D036 /* SettingsController.swift */,
+				48AC6CC02145AC4A00B4D036 /* SettingsViewModel.swift */,
+				48AC6CC12145AC4A00B4D036 /* SettingsNavigator.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		48C89FD021432F980063B0FA /* Domain */ = {
@@ -417,6 +444,7 @@
 		48C89FD32143308A0063B0FA /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				48AC6CBD2145AC4A00B4D036 /* Settings */,
 				484F7D7221441BF20023C6D4 /* Send */,
 				48C89FD7214330B30063B0FA /* RestoreWallet */,
 				48C89FD6214330AB0063B0FA /* CreateNewWallet */,
@@ -431,7 +459,7 @@
 				48C89FCC21432E2E0063B0FA /* ChooseWalletViewModel.swift */,
 				48C89FE12143316B0063B0FA /* ChooseWalletController.swift */,
 				48C89FE32143318E0063B0FA /* ChooseWalletNavigator.swift */,
-				48C89FF22143322C0063B0FA /* OpenWalletView.swift */,
+				48C89FF22143322C0063B0FA /* ChooseWalletView.swift */,
 			);
 			path = ChooseWallet;
 			sourceTree = "<group>";
@@ -523,6 +551,7 @@
 				48C89FFC2143353C0063B0FA /* UIFont_Extension.swift */,
 				48C8A0102143CE8F0063B0FA /* UIColor_Extension.swift */,
 				48C89FFE2143355A0063B0FA /* UIView+Spacer.swift */,
+				48AC6CCA2145AF3E00B4D036 /* UITabBarItem_Extension.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -763,28 +792,35 @@
 				48C8A0092143CD8D0063B0FA /* RestoreWalletViewModel.swift in Sources */,
 				48AC6CB9214533C500B4D036 /* Unsafe︕！Cache.swift in Sources */,
 				48C89FE22143316B0063B0FA /* ChooseWalletController.swift in Sources */,
-				48C89FF32143322C0063B0FA /* OpenWalletView.swift in Sources */,
+				48AC6CC42145AC4A00B4D036 /* SettingsViewModel.swift in Sources */,
+				48C89FF32143322C0063B0FA /* ChooseWalletView.swift in Sources */,
 				484F7D7821441BF20023C6D4 /* SendView.swift in Sources */,
 				484F7D7721441BF20023C6D4 /* SendNavigator.swift in Sources */,
 				48C89FEA214331DA0063B0FA /* CreateNewWalletView.swift in Sources */,
 				484F7D7A21441BF20023C6D4 /* SendViewModel.swift in Sources */,
 				489CDBCF2143FF3E00318450 /* FilterNil.swift in Sources */,
+				48AC6CC92145AF1B00B4D036 /* MainNavigator.swift in Sources */,
 				48C8A0072143CD6F0063B0FA /* RestoreWalletView.swift in Sources */,
 				48C89FCB21432E220063B0FA /* ViewModelled.swift in Sources */,
 				48B16E3021452A2600177434 /* Never.swift in Sources */,
 				48C8A00B2143CDB50063B0FA /* RestoreWalletNavigator.swift in Sources */,
 				48C89FDE2143313B0063B0FA /* KeyRestoration.swift in Sources */,
 				48C89FEE214331FE0063B0FA /* SingleContentView.swift in Sources */,
+				48AC6CC32145AC4A00B4D036 /* SettingsController.swift in Sources */,
 				48C8A00F2143CE490063B0FA /* Styling.swift in Sources */,
 				48C89FFD2143353C0063B0FA /* UIFont_Extension.swift in Sources */,
 				48C89FF62143326F0063B0FA /* UIButton+Styling.swift in Sources */,
+				48AC6CC52145AC4A00B4D036 /* SettingsNavigator.swift in Sources */,
 				48C8A001214335E70063B0FA /* AppNavigator.swift in Sources */,
 				48C89FEC214331F00063B0FA /* EmptyInitializable.swift in Sources */,
+				48AC6CCB2145AF3E00B4D036 /* UITabBarItem_Extension.swift in Sources */,
+				48AC6CC72145AF0A00B4D036 /* Navigator.swift in Sources */,
 				48C469F521445417008D0DD7 /* UILabel+Styling.swift in Sources */,
 				48C89FFF2143355A0063B0FA /* UIView+Spacer.swift in Sources */,
 				48C89FCD21432E2E0063B0FA /* ChooseWalletViewModel.swift in Sources */,
 				48C89FF92143328E0063B0FA /* UIStackView+Styling.swift in Sources */,
 				48C89FCF21432E440063B0FA /* CreateNewWalletViewModel.swift in Sources */,
+				48AC6CC22145AC4A00B4D036 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

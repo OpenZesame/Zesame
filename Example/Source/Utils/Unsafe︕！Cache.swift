@@ -44,6 +44,10 @@ struct Unsafe︕！Cache {
         unsafe︕！Store(value: wallet.keyPair.privateKey.asHexStringLength64(), forKey: .unsafePrivateKeyHex)
     }
 
+    static func deleteWallet() {
+        deleteValueFor(key: .unsafePrivateKeyHex)
+    }
+
     static func deleteValueFor(key: Key) {
         UserDefaults.standard.removeObject(forKey: key.rawValue)
     }
