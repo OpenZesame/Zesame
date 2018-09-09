@@ -752,6 +752,9 @@
 				"$(SRCROOT)/../Carthage/Build/iOS/BigInt.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/SipHash.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/CryptoSwift.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/APIKit.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/JSONRPCKit.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/Result.framework",
 			);
 			name = Carthage;
 			outputFileListPaths = (
@@ -765,6 +768,9 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BigInt.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SipHash.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CryptoSwift.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/APIKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/JSONRPCKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Result.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -890,7 +896,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 			};
 			name = Debug;
 		};
