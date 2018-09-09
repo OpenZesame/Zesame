@@ -1,3 +1,2 @@
 #include "ZilliqaSDKTests-iOS-Common.xcconfig"
 #include "../../Configurations/base_debug.xcconfig"
-#include "Pods/Target Support Files/Pods-ZilliqaSDKTests-iOS/Pods-ZilliqaSDKTests-iOS.debug.xcconfig"

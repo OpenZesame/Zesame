@@ -11,9 +11,13 @@ import RxSwift
 import ZilliqaSDK
 
 struct RestoreWalletViewModel {
-    private let navigator: RestoreWalletNavigator
-    init(navigator: RestoreWalletNavigator) {
-        self.navigator = navigator
+    private let bag = DisposeBag()
+
+    typealias NavigationTo = Navigation<RestoreWalletNavigator>
+    private let navigateTo: NavigationTo
+
+    init(_ navigation: @escaping NavigationTo) {
+        self.navigateTo = navigation
     }
 }
 
@@ -24,56 +28,18 @@ extension RestoreWalletViewModel: ViewModelled {
         let restoreTrigger: Driver<Void>
     }
 
-    struct Output {
-        let restoredWallet: Driver<Wallet>
-    }
+    struct Output {}
 
     func transform(input: Input) -> Output {
 
-        let restoredWallet: Driver<ZilliqaSDK.KeyPair> = input.privateKey.map { ZilliqaSDK.KeyPair(privateKeyHex: $0) }
+        let wallet: Driver<Wallet> = input.privateKey
+            .map { Wallet(privateKeyHex: $0) }
             .filterNil()
-        
 
-        return Output(
-            restoredWallet: .empty()
-        )
-    }
-}
+        input.restoreTrigger.withLatestFrom(wallet).do(onNext: {
+            self.navigateTo(.restored($0))
+        }).drive().disposed(by: bag)
 
-
-protocol OptionalType {
-    associatedtype Wrapped
-    var value: Wrapped? { get }
-}
-
-extension Optional: OptionalType {
-    var value: Wrapped? {
-        return self
-    }
-}
-
-extension Observable where Element: OptionalType {
-
-    func filterNil() -> Observable<Element.Wrapped> {
-        return flatMap { (element) -> Observable<Element.Wrapped> in
-            if let value = element.value {
-                return .just(value)
-            } else {
-                return .empty()
-            }
-        }
-    }
-}
-
-extension SharedSequence where S == DriverSharingStrategy, Element: OptionalType {
-
-    func filterNil() -> Driver<Element.Wrapped> {
-        return flatMap { (element) -> Driver<Element.Wrapped> in
-            if let value = element.value {
-                return .just(value)
-            } else {
-                return .empty()
-            }
-        }
+        return Output()
     }
 }

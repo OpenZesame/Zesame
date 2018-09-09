@@ -1,5 +1,5 @@
 //
-//  OpenWalletUseCase.swift
+//  ChooseWalletUseCase.swift
 //  ZilliqaSDKiOSExample
 //
 //  Created by Alexander Cyon on 2018-09-08.
@@ -9,7 +9,7 @@
 import RxSwift
 import ZilliqaSDK
 
-protocol OpenWalletUseCase {
+protocol ChooseWalletUseCase {
     func createNewWallet() -> Observable<Wallet>
     func restoreWallet(from restoration: KeyRestoration) -> Observable<Wallet>
 }

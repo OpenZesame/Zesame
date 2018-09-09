@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TinyConstraints
 
 extension UITextField: EmptyInitializable, Styling, StaticEmptyInitializable, ExpressibleByStringLiteral {
 
@@ -14,28 +15,24 @@ extension UITextField: EmptyInitializable, Styling, StaticEmptyInitializable, Ex
         return UITextField(frame: .zero)
     }
 
-    public struct Style: ExpressibleByStringLiteral {
+    public final class Style: ViewStyle, ExpressibleByStringLiteral {
+
+        typealias View = UITextField
+
         let placeholder: String
         let textColor: UIColor
-        let backgroundColor: UIColor
         let font: UIFont
 
-        init(_ placeholder: String, font: UIFont = .default, textColor: UIColor = .defaultText, backgroundColor: UIColor = .white) {
+        init(_ placeholder: String, height: CGFloat? = CGFloat.defaultHeight, font: UIFont = .default, textColor: UIColor = .defaultText, backgroundColor: UIColor = .white) {
             self.placeholder = placeholder
             self.font = font
             self.textColor = textColor
-            self.backgroundColor = backgroundColor
+            super.init(height: height, backgroundColor: backgroundColor)
         }
 
-        public init(stringLiteral placeholder: String) {
+        public convenience init(stringLiteral placeholder: String) {
             self.init(placeholder)
         }
-    }
-
-    convenience init(style: Style) {
-        self.init(frame: .zero)
-        apply(style: style)
-        translatesAutoresizingMaskIntoConstraints = false
     }
 
     public func apply(style: Style) {
@@ -44,4 +41,8 @@ extension UITextField: EmptyInitializable, Styling, StaticEmptyInitializable, Ex
         backgroundColor = style.backgroundColor
         font = style.font
     }
+}
+
+public extension CGFloat {
+    static var defaultHeight: CGFloat { return 44 }
 }

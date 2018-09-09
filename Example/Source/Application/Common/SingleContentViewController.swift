@@ -35,6 +35,7 @@ class SingleContentViewController<View, ViewModel>: UIViewController where View:
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        edgesForExtendedLayout = .bottom
         view.backgroundColor = .red
         contentView.backgroundColor = .white
     }

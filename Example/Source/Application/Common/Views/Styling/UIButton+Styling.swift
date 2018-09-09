@@ -8,27 +8,28 @@
 
 import UIKit
 
-extension UIButton: EmptyInitializable, Styling, StaticEmptyInitializable, ExpressibleByStringLiteral {
+extension UIButton: Styling, StaticEmptyInitializable, ExpressibleByStringLiteral {
 
     public static func createEmpty() -> UIButton {
         return UIButton(type: .custom)
     }
 
-    public struct Style: ExpressibleByStringLiteral {
+    public final class Style: ViewStyle, ExpressibleByStringLiteral {
+
+        typealias View = UIButton
 
         let text: String
         let textColor: UIColor
-        let backgroundColor: UIColor
         let font: UIFont
 
-        init(_ text: String, font: UIFont = .default, textColor: UIColor = .black, backgroundColor: UIColor = .green) {
+        init(_ text: String, height: CGFloat? = CGFloat.defaultHeight, font: UIFont = .default, textColor: UIColor = .black, backgroundColor: UIColor = .green) {
             self.text = text
             self.textColor = textColor
             self.font = font
-            self.backgroundColor = backgroundColor
+            super.init(height: height, backgroundColor: backgroundColor)
         }
 
-        public init(stringLiteral title: String) {
+        public convenience init(stringLiteral title: String) {
             self.init(title)
         }
     }

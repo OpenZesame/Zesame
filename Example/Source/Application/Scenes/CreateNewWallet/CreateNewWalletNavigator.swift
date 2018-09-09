@@ -7,23 +7,52 @@
 //
 
 import UIKit
+import ZilliqaSDK
 
-protocol CreateNewWalletNavigator {
-    func toOpenWallet()
-}
+final class CreateNewWalletNavigator {
 
-final class DefaultCreateNewWalletNavigator {
-    private let navigationController: UINavigationController
+    private weak var navigationController: UINavigationController?
+    private let didChooseWallet: (Wallet) -> Void
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController?, didChooseWallet: @escaping (Wallet) -> Void) {
         self.navigationController = navigationController
+        self.didChooseWallet = didChooseWallet
+    }
+
+    deinit {
+        print("💣 CreateNewWalletNavigator")
     }
 }
 
-// MARK: - CreateNewWalletNavigator
-extension DefaultCreateNewWalletNavigator: CreateNewWalletNavigator {}
-extension DefaultCreateNewWalletNavigator {
-    func toOpenWallet() {
-        navigationController.dismiss(animated: true)
+extension CreateNewWalletNavigator: Navigator {
+
+    enum Destination {
+        case create
+        case displayBackupInfo(Wallet)
+        case created(Wallet)
+    }
+
+    func navigate(to destination: Destination) {
+        if case let .created(newWallet) = destination {
+            didChooseWallet(newWallet)
+        } else {
+            navigationController?.pushViewController(makeViewController(for: destination), animated: true)
+        }
+    }
+
+    func start() {
+        navigate(to: .create)
+    }
+
+}
+
+
+private extension CreateNewWalletNavigator {
+    private func makeViewController(for destination: Destination) -> UIViewController {
+        switch destination {
+        case .create:
+            return CreateNewWalletController(viewModel: CreateNewWalletViewModel(navigator: self))
+        default: fatalError("No support for `\(String(reflecting: destination))` yet")
+        }
     }
 }

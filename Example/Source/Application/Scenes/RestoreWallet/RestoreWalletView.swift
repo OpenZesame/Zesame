@@ -19,7 +19,4 @@ final class RestoreWalletView: StackViewOwningView, StackViewStyling {
 
 extension RestoreWalletView: SingleContentView {
     typealias ViewModel = RestoreWalletViewModel
-    func populate(with viewModel: ViewModel.Output) -> [Disposable] {
-        return []
-    }
 }

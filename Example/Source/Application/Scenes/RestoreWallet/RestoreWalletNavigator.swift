@@ -7,26 +7,41 @@
 //
 
 import UIKit
+import ZilliqaSDK
 
-protocol RestoreWalletNavigator {
-    func toOpenWallet()
-    func toHome()
-}
+final class RestoreWalletNavigator {
 
-final class DefaultRestoreWalletNavigator {
-    private let navigationController: UINavigationController
+    private weak var navigationController: UINavigationController?
+    private let didChooseWallet: (Wallet) -> Void
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController?, didChooseWallet: @escaping (Wallet) -> Void) {
         self.navigationController = navigationController
+        self.didChooseWallet = didChooseWallet
+    }
+
+    deinit {
+        print("💣 RestoreWalletNavigator")
     }
 }
 
-// MARK: - CreateNewWalletNavigator
-extension DefaultRestoreWalletNavigator: RestoreWalletNavigator {
-    func toOpenWallet() {
-        navigationController.dismiss(animated: true)
+// MARK: - Navigator
+extension RestoreWalletNavigator: Navigator {
+    enum Destination {
+        case restore
+        case restored(Wallet)
     }
 
-    func toHome() {}
-}
+    func navigate(to destination: Destination) {
+        switch destination {
+        case .restored(let wallet): didChooseWallet(wallet)
+        case .restore:
+            let viewModel = RestoreWalletViewModel(navigate(to:))
+            let vc = RestoreWalletController(viewModel: viewModel)
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 
+    func start() {
+        navigate(to: .restore)
+    }
+}
