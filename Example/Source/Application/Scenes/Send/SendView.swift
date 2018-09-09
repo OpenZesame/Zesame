@@ -13,9 +13,11 @@ import RxCocoa
 // MARK: - SendView
 final class SendView: StackViewOwningView, StackViewStyling {
 
+    lazy var addressLabel: UILabel = ""
     lazy var sendButton: UIButton = "Send"
 
-    lazy var stackViewStyle: UIStackView.Style = [sendButton, .spacer]
+
+    lazy var stackViewStyle: UIStackView.Style = [addressLabel, sendButton, .spacer]
 }
 
 extension SendView: SingleContentView {

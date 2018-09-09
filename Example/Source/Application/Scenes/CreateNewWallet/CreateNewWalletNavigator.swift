@@ -11,6 +11,7 @@ import ZilliqaSDK
 
 protocol CreateNewWalletNavigator {
     func toOpenWallet()
+    func toHome(_ wallet: Wallet)
 }
 
 final class DefaultCreateNewWalletNavigator {
@@ -24,9 +25,13 @@ final class DefaultCreateNewWalletNavigator {
 }
 
 // MARK: - CreateNewWalletNavigator
-extension DefaultCreateNewWalletNavigator: CreateNewWalletNavigator {}
-extension DefaultCreateNewWalletNavigator {
+extension DefaultCreateNewWalletNavigator: CreateNewWalletNavigator {
     func toOpenWallet() {
         navigationController.dismiss(animated: true)
+    }
+
+    func toHome(_ wallet: Wallet) {
+        walletOpened(wallet)
+        navigationController.popToRootViewController(animated: false)
     }
 }

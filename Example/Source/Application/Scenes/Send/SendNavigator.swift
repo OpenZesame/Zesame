@@ -12,6 +12,7 @@ import RxCocoa
 
 // MARK: - SendNavigator
 protocol SendNavigator {
+    func toSend()
     func toContacts()
 }
 
@@ -25,6 +26,13 @@ final class DefaultSendNavigator {
 
 // MARK: - DefaultSendNavigator
 extension DefaultSendNavigator: SendNavigator {
+
+    func toSend() {
+        let viewModel = SendViewModel(navigator: self)
+        let vc = SendController(viewModel: viewModel)
+        navigationController.pushViewController(vc, animated: true)
+    }
+
     func toContacts() {
         
     }

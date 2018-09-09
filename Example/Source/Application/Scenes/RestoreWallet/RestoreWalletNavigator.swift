@@ -9,7 +9,7 @@
 import UIKit
 import ZilliqaSDK
 
-protocol RestoreWalletNavigator {
+protocol RestoreWalletNavigator: AnyObject {
     func toOpenWallet()
     func toHome(_ wallet: Wallet)
 }
@@ -32,6 +32,7 @@ extension DefaultRestoreWalletNavigator: RestoreWalletNavigator {
 
     func toHome(_ wallet: Wallet) {
         walletOpened(wallet)
+        navigationController.popToRootViewController(animated: false)
     }
 }
 

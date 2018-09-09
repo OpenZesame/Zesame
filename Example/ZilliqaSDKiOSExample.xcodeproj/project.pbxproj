@@ -12,10 +12,12 @@
 		484F7D7821441BF20023C6D4 /* SendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7421441BF20023C6D4 /* SendView.swift */; };
 		484F7D7921441BF20023C6D4 /* SendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7521441BF20023C6D4 /* SendController.swift */; };
 		484F7D7A21441BF20023C6D4 /* SendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7621441BF20023C6D4 /* SendViewModel.swift */; };
-		484F7D7D21441C210023C6D4 /* Never.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7C21441C210023C6D4 /* Never.swift */; };
 		489CDB9A2143E0CC00318450 /* ZilliqaSDKiOSExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B067B20BA0D2C00C4E50A /* ZilliqaSDKiOSExampleTests.swift */; };
 		489CDB9B2143E0D300318450 /* ZilliqaSDKiOSExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B067520BA0D2100C4E50A /* ZilliqaSDKiOSExampleUITests.swift */; };
 		489CDBCF2143FF3E00318450 /* FilterNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489CDBCE2143FF3E00318450 /* FilterNil.swift */; };
+		48B16E3021452A2600177434 /* Never.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B16E2F21452A2600177434 /* Never.swift */; };
+		48C469F1214450F0008D0DD7 /* ZilliqaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48F03F932142682F00A13E5E /* ZilliqaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48C469F521445417008D0DD7 /* UILabel+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C469F421445417008D0DD7 /* UILabel+Styling.swift */; };
 		48C89FBD2142BCF70063B0FA /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FB92142BCF70063B0FA /* RxCocoa.framework */; };
 		48C89FBE2142BCF70063B0FA /* TinyConstraints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */; };
 		48C89FBF2142BCF70063B0FA /* ViewComposer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBB2142BCF70063B0FA /* ViewComposer.framework */; };
@@ -48,8 +50,6 @@
 		48C8A00F2143CE490063B0FA /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A00E2143CE490063B0FA /* Styling.swift */; };
 		48C8A0112143CE8F0063B0FA /* UIColor_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0102143CE8F0063B0FA /* UIColor_Extension.swift */; };
 		48C8A0132143CF6C0063B0FA /* RestoreWalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0122143CF6C0063B0FA /* RestoreWalletController.swift */; };
-		48F03F9A2142683D00A13E5E /* ZilliqaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F03F932142682F00A13E5E /* ZilliqaSDK.framework */; };
-		48F03F9B2142684200A13E5E /* ZilliqaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48F03F932142682F00A13E5E /* ZilliqaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +67,7 @@
 			remoteGlobalIDString = 484B063520BA0C2D00C4E50A;
 			remoteInfo = ZilliqaSDKiOSExample;
 		};
-		487077D32143D3F20011D429 /* PBXContainerItemProxy */ = {
+		48C469F2214450F0008D0DD7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
 			proxyType = 1;
@@ -111,7 +111,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				48F03F9B2142684200A13E5E /* ZilliqaSDK.framework in Embed Frameworks */,
+				48C469F1214450F0008D0DD7 /* ZilliqaSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,7 +134,6 @@
 		484F7D7421441BF20023C6D4 /* SendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendView.swift; sourceTree = "<group>"; };
 		484F7D7521441BF20023C6D4 /* SendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendController.swift; sourceTree = "<group>"; };
 		484F7D7621441BF20023C6D4 /* SendViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
-		484F7D7C21441C210023C6D4 /* Never.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Never.swift; sourceTree = "<group>"; };
 		489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Debug.xcconfig"; sourceTree = "<group>"; };
 		489CDB9E2143E26C00318450 /* Example-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Common.xcconfig"; sourceTree = "<group>"; };
 		489CDB9F2143E26C00318450 /* Example-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Release.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +144,8 @@
 		489CDBA62143E47300318450 /* ExampleUITests-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExampleUITests-Common.xcconfig"; sourceTree = "<group>"; };
 		489CDBA72143E47300318450 /* ExampleUITests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExampleUITests-Debug.xcconfig"; sourceTree = "<group>"; };
 		489CDBCE2143FF3E00318450 /* FilterNil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterNil.swift; sourceTree = "<group>"; };
+		48B16E2F21452A2600177434 /* Never.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Never.swift; sourceTree = "<group>"; };
+		48C469F421445417008D0DD7 /* UILabel+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Styling.swift"; sourceTree = "<group>"; };
 		48C89FB92142BCF70063B0FA /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TinyConstraints.framework; path = Carthage/Build/iOS/TinyConstraints.framework; sourceTree = "<group>"; };
 		48C89FBB2142BCF70063B0FA /* ViewComposer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ViewComposer.framework; path = Carthage/Build/iOS/ViewComposer.framework; sourceTree = "<group>"; };
@@ -193,7 +194,6 @@
 				48C89FBE2142BCF70063B0FA /* TinyConstraints.framework in Frameworks */,
 				48C89FBF2142BCF70063B0FA /* ViewComposer.framework in Frameworks */,
 				48C89FC02142BCF70063B0FA /* RxSwift.framework in Frameworks */,
-				48F03F9A2142683D00A13E5E /* ZilliqaSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +332,7 @@
 		484F7D7B21441C110023C6D4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				48B16E2F21452A2600177434 /* Never.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -342,7 +343,6 @@
 				489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */,
 				489CDB9E2143E26C00318450 /* Example-Common.xcconfig */,
 				489CDB9F2143E26C00318450 /* Example-Release.xcconfig */,
-				484F7D7C21441C210023C6D4 /* Never.swift */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -490,6 +490,7 @@
 			isa = PBXGroup;
 			children = (
 				48C89FF52143326F0063B0FA /* UIButton+Styling.swift */,
+				48C469F421445417008D0DD7 /* UILabel+Styling.swift */,
 				48C89FF82143328E0063B0FA /* UIStackView+Styling.swift */,
 				48C8A0022143C5B20063B0FA /* UITextField+Styling.swift */,
 			);
@@ -519,9 +520,9 @@
 			isa = PBXGroup;
 			children = (
 				48F03F932142682F00A13E5E /* ZilliqaSDK.framework */,
-				48F03F952142682F00A13E5E /* .xctest */,
+				48F03F952142682F00A13E5E /* ZilliqaSDKTests.xctest */,
 				48F03F972142682F00A13E5E /* ZilliqaSDK.framework */,
-				48F03F992142682F00A13E5E /* .xctest */,
+				48F03F992142682F00A13E5E /* ZilliqaSDKTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -542,7 +543,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				487077D42143D3F20011D429 /* PBXTargetDependency */,
+				48C469F3214450F0008D0DD7 /* PBXTargetDependency */,
 			);
 			name = ZilliqaSDKiOSExample;
 			productName = ZilliqaSDKiOSExample;
@@ -647,10 +648,10 @@
 			remoteRef = 48F03F922142682F00A13E5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		48F03F952142682F00A13E5E /* .xctest */ = {
+		48F03F952142682F00A13E5E /* ZilliqaSDKTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = .xctest;
+			path = ZilliqaSDKTests.xctest;
 			remoteRef = 48F03F942142682F00A13E5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -661,10 +662,10 @@
 			remoteRef = 48F03F962142682F00A13E5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		48F03F992142682F00A13E5E /* .xctest */ = {
+		48F03F992142682F00A13E5E /* ZilliqaSDKTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = .xctest;
+			path = ZilliqaSDKTests.xctest;
 			remoteRef = 48F03F982142682F00A13E5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -707,10 +708,10 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ViewComposer.framework",
-				"$(SRCROOT)/../Carthage/Build/iOS/SipHash.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/EllipticCurveKit.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/BigInt.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/SipHash.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/CryptoSwift.framework",
-				"$(SRCROOT)/../Carthage/Build/iOS/SwiftCrypto.framework",
 			);
 			name = Carthage;
 			outputFileListPaths = (
@@ -720,10 +721,10 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxSwift.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxCocoa.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ViewComposer.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SipHash.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/EllipticCurveKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BigInt.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SipHash.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CryptoSwift.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftCrypto.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -745,7 +746,6 @@
 				484F7D7921441BF20023C6D4 /* SendController.swift in Sources */,
 				48C89FE6214331AD0063B0FA /* CreateNewWalletNavigator.swift in Sources */,
 				48C8A00D2143CE3E0063B0FA /* StaticEmptyInitializable.swift in Sources */,
-				484F7D7D21441C210023C6D4 /* Never.swift in Sources */,
 				484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */,
 				48C89FE8214331CB0063B0FA /* CreateNewWalletController.swift in Sources */,
 				48C89FE42143318E0063B0FA /* OpenWalletNavigator.swift in Sources */,
@@ -759,6 +759,7 @@
 				489CDBCF2143FF3E00318450 /* FilterNil.swift in Sources */,
 				48C8A0072143CD6F0063B0FA /* RestoreWalletView.swift in Sources */,
 				48C89FCB21432E220063B0FA /* ViewModelled.swift in Sources */,
+				48B16E3021452A2600177434 /* Never.swift in Sources */,
 				48C8A00B2143CDB50063B0FA /* RestoreWalletNavigator.swift in Sources */,
 				48C89FDE2143313B0063B0FA /* KeyRestoration.swift in Sources */,
 				48C89FEE214331FE0063B0FA /* SingleContentView.swift in Sources */,
@@ -767,6 +768,7 @@
 				48C89FF62143326F0063B0FA /* UIButton+Styling.swift in Sources */,
 				48C8A001214335E70063B0FA /* Application.swift in Sources */,
 				48C89FEC214331F00063B0FA /* EmptyInitializable.swift in Sources */,
+				48C469F521445417008D0DD7 /* UILabel+Styling.swift in Sources */,
 				48C89FFF2143355A0063B0FA /* UIView+Spacer.swift in Sources */,
 				48C89FCD21432E2E0063B0FA /* OpenWalletViewModel.swift in Sources */,
 				48C89FF92143328E0063B0FA /* UIStackView+Styling.swift in Sources */,
@@ -803,10 +805,10 @@
 			target = 484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */;
 			targetProxy = 484B065620BA0C2F00C4E50A /* PBXContainerItemProxy */;
 		};
-		487077D42143D3F20011D429 /* PBXTargetDependency */ = {
+		48C469F3214450F0008D0DD7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "ZilliqaSDK iOS";
-			targetProxy = 487077D32143D3F20011D429 /* PBXContainerItemProxy */;
+			targetProxy = 48C469F2214450F0008D0DD7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

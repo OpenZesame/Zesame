@@ -6,11 +6,11 @@
 //  Copyright © 2018 Open Zesame. All rights reserved.
 //
 
-import SwiftCrypto // renamed to EllipticCurveKit in next release
+import EllipticCurveKit
 
-public typealias KeyPair = SwiftCrypto.KeyPair<Secp256k1>
-public typealias Address = SwiftCrypto.PublicAddress<Zilliqa>
-public typealias Network = SwiftCrypto.Zilliqa.Network
+public typealias KeyPair = EllipticCurveKit.KeyPair<Secp256k1>
+public typealias Address = EllipticCurveKit.PublicAddress<Zilliqa>
+public typealias Network = EllipticCurveKit.Zilliqa.Network
 
 public struct Wallet {
     public let keyPair: KeyPair
@@ -28,13 +28,18 @@ public struct Wallet {
     }
 }
 
+public extension Wallet {
+    init?(privateKeyHex: String) {
+        guard let keyPair = KeyPair(privateKeyHex: privateKeyHex) else { return nil }
+        self.init(keyPair: keyPair)
+    }
+}
+
 extension Wallet: CustomStringConvertible {}
 public extension Wallet {
-    public var description: String {
+    var description: String {
         return """
         address: '\(address.address)'
         """
     }
 }
-
-

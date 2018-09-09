@@ -25,19 +25,20 @@ extension RestoreWalletViewModel: ViewModelled {
         let restoreTrigger: Driver<Void>
     }
 
-    struct Output {}
+    struct Output {
+        let wallet: Driver<Wallet>
+    }
 
     func transform(input: Input) -> Output {
 
         let wallet: Driver<Wallet> = input.privateKey
-            .map { KeyPair(privateKeyHex: $0) }
+            .map { Wallet(privateKeyHex: $0) }
             .filterNil()
-            .map { Wallet(keyPair: $0) }
 
         input.restoreTrigger.withLatestFrom(wallet)
-            .do(onNext: { [navigator] in navigator.toHome($0) })
+            .do(onNext: { [weak navigator] in navigator?.toHome($0) })
             .drive().disposed(by: bag)
 
-        return Output()
+        return Output(wallet: wallet)
     }
 }

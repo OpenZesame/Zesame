@@ -18,6 +18,11 @@ final class SendController: SingleContentViewController<SendView, SendViewModel>
 
     required init?(coder: NSCoder) { interfaceBuilderSucks }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .cyan
+    }
+
     override func input() -> Input {
         return Input(sendTrigger: contentView.sendButton.rx.tap.asDriver())
     }

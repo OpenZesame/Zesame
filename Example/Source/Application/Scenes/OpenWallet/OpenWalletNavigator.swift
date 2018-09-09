@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import ZilliqaSDK
 
-protocol OpenWalletNavigator {
+protocol OpenWalletNavigator: AnyObject {
     func toOpenWallet()
     func toCreateNewWallet()
     func toRestoreWallet()
@@ -31,7 +31,8 @@ extension DefaultOpenWalletNavigator: OpenWalletNavigator {
     func toOpenWallet() {
         let viewModel = OpenWalletViewModel(navigator: self)
         let vc = OpenWalletController(viewModel: viewModel)
-        navigationController.pushViewController(vc, animated: true)
+        vc.navigationItem.hidesBackButton = true
+        navigationController.pushViewController(vc, animated: false)
     }
 
     func toCreateNewWallet() {

@@ -28,12 +28,12 @@ extension OpenWalletViewModel: ViewModelled {
 
     func transform(input: Input) -> Output {
 
-        input.createNewTrigger.do(onNext: { [navigator] in
-            navigator.toCreateNewWallet()
+        input.createNewTrigger.do(onNext: { [weak navigator] in
+            navigator?.toCreateNewWallet()
         }).drive().disposed(by: bag)
 
-        input.restoreTrigger.do(onNext: { [navigator] in
-            navigator.toRestoreWallet()
+        input.restoreTrigger.do(onNext: { [weak navigator] in
+            navigator?.toRestoreWallet()
         }).drive().disposed(by: bag)
 
         return Output()

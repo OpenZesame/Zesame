@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "48F70A1D20B72DD00027B72D"
-               BuildableName = ".xctest"
+               BuildableName = "ZilliqaSDKTests.xctest"
                BlueprintName = "ZilliqaSDK iOS Tests"
                ReferencedContainer = "container:ZilliqaSDK.xcodeproj">
             </BuildableReference>
