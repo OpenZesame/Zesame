@@ -1,5 +1,5 @@
 //
-//  ViewModelled.swift
+//  ViewModelConvertible.swift
 //  ZilliqaSDKiOSExample
 //
 //  Created by Alexander Cyon on 2018-09-08.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ViewModelled {
+protocol ViewModelConvertible {
     associatedtype Input
     associatedtype Output
     func transform(input: Input) -> Output

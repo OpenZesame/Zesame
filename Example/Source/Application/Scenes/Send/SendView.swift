@@ -39,14 +39,3 @@ extension SendView: SingleContentView {
         ]
     }
 }
-
-infix operator -->
-func --> <E>(driver: Driver<E>, binder: Binder<E>) -> Disposable {
-    return driver.drive(binder)
-}
-func --> <E>(driver: Driver<E>, binder: Binder<E?>) -> Disposable {
-    return driver.drive(binder)
-}
-func --> (driver: Driver<String>, label: UILabel) -> Disposable {
-    return driver --> label.rx.text
-}
