@@ -83,14 +83,14 @@ struct SendViewModel {
 
 extension SendViewModel: ViewModelType {
 
-    struct Input: ViewModelInput {
-        struct ViewInput {
+    struct Input: InputType {
+        struct FromView {
             let sendTrigger: Driver<Void>
         }
-        let viewInput: ViewInput
+        let fromView: FromView
 
-        init(viewInput: ViewInput, controllerInput: NotUsed = nil) {
-            self.viewInput = viewInput
+        init(fromView: FromView, fromController: NotUsed = nil) {
+            self.fromView = fromView
         }
     }
 

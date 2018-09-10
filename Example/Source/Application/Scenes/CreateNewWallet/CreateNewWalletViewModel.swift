@@ -15,8 +15,14 @@ struct CreateNewWalletViewModel {
     }
 }
 
-extension CreateNewWalletViewModel: ViewModelConvertible {
-    struct Input {}
+extension CreateNewWalletViewModel: ViewModelType {
+    struct Input: InputType {
+        struct FromView {}
+        let fromView: FromView
+        init(fromView: FromView, fromController: NotUsed = nil) {
+            self.fromView = fromView
+        }
+    }
     struct Output {}
     func transform(input: Input) -> Output {
         return Output()

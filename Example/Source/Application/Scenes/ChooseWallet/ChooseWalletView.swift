@@ -17,6 +17,12 @@ final class ChooseWalletView: StackViewOwningView, StackViewStyling {
     lazy var stackViewStyle: UIStackView.Style = [createNewWalletButton, restoreWalletButton, .spacer]
 }
 
-extension ChooseWalletView: SingleContentView {
+extension ChooseWalletView: ViewModelled {
     typealias ViewModel = ChooseWalletViewModel
+    var inputFromView: InputFromView {
+        return InputFromView(
+            createNewTrigger: createNewWalletButton.rx.tap.asDriver(),
+            restoreTrigger: restoreWalletButton.rx.tap.asDriver()
+        )
+    }
 }

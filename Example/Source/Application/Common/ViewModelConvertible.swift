@@ -8,35 +8,34 @@
 
 import Foundation
 
-protocol ViewModelInput {
-    associatedtype ViewInput
-    associatedtype ControllerInput
-    var viewInput: ViewInput { get }
-    var controllerInput: ControllerInput { get }
-    init(viewInput: ViewInput, controllerInput: ControllerInput)
-}
-
-struct NotUsed: ExpressibleByNilLiteral {
-    init(nilLiteral: ()) {}
-}
-
-extension ViewModelInput {
-    var controllerInput: NotUsed {
-        return nil
-    }
-}
-
-extension ViewModelInput where ControllerInput == NotUsed {
-    init(viewInput: ViewInput) {
-        self.init(viewInput: viewInput, controllerInput: nil)
-    }
-}
-
-
 protocol ViewModelConvertible {
     associatedtype Input
     associatedtype Output
     func transform(input: Input) -> Output
 }
 
-protocol ViewModelType: ViewModelConvertible where Input: ViewModelInput {}
+protocol ViewModelType: ViewModelConvertible where Input: InputType {}
+
+protocol InputType {
+    associatedtype FromView
+    associatedtype FromController
+    var fromView: FromView { get }
+    var fromController: FromController { get }
+    init(fromView: FromView, fromController: FromController)
+}
+
+struct NotUsed: ExpressibleByNilLiteral {
+    init(nilLiteral: ()) {}
+}
+
+extension InputType {
+    var fromController: NotUsed {
+        return nil
+    }
+}
+
+extension InputType where FromController == NotUsed {
+    init(fromView: FromView) {
+        self.init(fromView: fromView, fromController: nil)
+    }
+}

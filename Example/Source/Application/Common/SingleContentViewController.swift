@@ -44,27 +44,23 @@ class SingleContentViewController<View, ViewModel>: UIViewController where View:
     func input() -> Input {
         fatalError("Abstract, override me please")
     }
-
-    func bound(output: Output) {}
 }
 
 private extension SingleContentViewController {
     func bind() {
         let output = viewModel.transform(input: input())
-        bound(output: output)
         contentView.populate(with: output).forEach { $0.disposed(by: bag) }
     }
 }
 
-class Scene<View, ViewModel>: SingleContentViewController<View, ViewModel> where View: UIView & ViewModelled, ViewModel == View.ViewModel, ViewModel.Input.ControllerInput == NotUsed {
+class Scene<View, ViewModel>: SingleContentViewController<View, ViewModel> where View: UIView & ViewModelled, ViewModel == View.ViewModel, ViewModel.Input.FromController == NotUsed {
 
     override func input() -> Input {
-        return Input(viewInput: contentView.inputFromView)
+        return Input(fromView: contentView.inputFromView)
     }
-    
 }
 
 protocol ViewModelled: SingleContentView where ViewModel: ViewModelType {
-    typealias InputFromView = ViewModel.Input.ViewInput
+    typealias InputFromView = ViewModel.Input.FromView
     var inputFromView: InputFromView { get }
 }

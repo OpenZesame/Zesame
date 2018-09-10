@@ -11,13 +11,16 @@ import RxSwift
 
 final class CreateNewWalletView: StackViewOwningView, StackViewStyling {
 
-    lazy var createNewWalletButton: UIButton = "New Wallet"
+    private lazy var createNewWalletButton: UIButton = "New Wallet"
 
+    // MARK: - StackViewStyling
     lazy var stackViewStyle: UIStackView.Style = [createNewWalletButton, .spacer]
 }
 
-// MARK: - SingleContentView
-extension CreateNewWalletView: SingleContentView {}
-extension CreateNewWalletView {
+// MARK: - ViewModelled
+extension CreateNewWalletView: ViewModelled {
     typealias ViewModel = CreateNewWalletViewModel
+    var inputFromView: InputFromView {
+        return InputFromView()
+    }
 }

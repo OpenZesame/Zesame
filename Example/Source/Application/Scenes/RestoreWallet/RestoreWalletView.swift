@@ -17,6 +17,12 @@ final class RestoreWalletView: StackViewOwningView, StackViewStyling {
     lazy var stackViewStyle: UIStackView.Style = [privateKeyField, restoreWalletButton, .spacer]
 }
 
-extension RestoreWalletView: SingleContentView {
+extension RestoreWalletView: ViewModelled {
     typealias ViewModel = RestoreWalletViewModel
+    var inputFromView: InputFromView {
+        return InputFromView(
+            privateKey: privateKeyField.rx.text.orEmpty.asDriver(),
+            restoreTrigger: restoreWalletButton.rx.tap.asDriver()
+        )
+    }
 }
