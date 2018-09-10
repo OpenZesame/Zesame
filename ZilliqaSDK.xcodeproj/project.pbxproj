@@ -13,8 +13,24 @@
 		483460A82145BD4A007E5D5C /* ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483460A72145BD4A007E5D5C /* ZilliqaService.swift */; };
 		483460A92145BD4C007E5D5C /* ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483460A72145BD4A007E5D5C /* ZilliqaService.swift */; };
 		483460AB2145C183007E5D5C /* APIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460AA2145C182007E5D5C /* APIKit.framework */; };
+		483F0F7C2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */; };
+		483F0F7D2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */; };
 		483F0F802146FB8D00E6EE08 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */; };
 		483F0F812146FB8D00E6EE08 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */; };
+		483F0F882146FC1400E6EE08 /* ObserverType_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F872146FC1400E6EE08 /* ObserverType_Extensions.swift */; };
+		483F0F892146FC1400E6EE08 /* ObserverType_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F872146FC1400E6EE08 /* ObserverType_Extensions.swift */; };
+		483F0F8B214704D700E6EE08 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F8A214704D700E6EE08 /* Error.swift */; };
+		483F0F8C214704D700E6EE08 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F8A214704D700E6EE08 /* Error.swift */; };
+		483F0F902147083800E6EE08 /* BalanceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F8F2147083800E6EE08 /* BalanceRequest.swift */; };
+		483F0F912147083800E6EE08 /* BalanceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F8F2147083800E6EE08 /* BalanceRequest.swift */; };
+		483F0F932147085500E6EE08 /* BalanceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F922147085500E6EE08 /* BalanceResponse.swift */; };
+		483F0F942147085500E6EE08 /* BalanceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F922147085500E6EE08 /* BalanceResponse.swift */; };
+		483F0F962147087700E6EE08 /* ZilliqaRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F952147087700E6EE08 /* ZilliqaRequest.swift */; };
+		483F0F972147087700E6EE08 /* ZilliqaRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F952147087700E6EE08 /* ZilliqaRequest.swift */; };
+		483F0F992147091900E6EE08 /* DefaultZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F982147091900E6EE08 /* DefaultZilliqaService.swift */; };
+		483F0F9A2147091900E6EE08 /* DefaultZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F982147091900E6EE08 /* DefaultZilliqaService.swift */; };
+		483F0F9C2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F9B2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift */; };
+		483F0F9D2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F9B2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift */; };
 		4871665B2141ADEA00F0B413 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166582141ADEA00F0B413 /* BigInt.framework */; };
 		4871665C2141ADEA00F0B413 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166592141ADEA00F0B413 /* SipHash.framework */; };
 		48E76FB420B9D6210027A3FE /* ZilliqaSDK_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -60,8 +76,16 @@
 		483460A32145BD28007E5D5C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		483460A72145BD4A007E5D5C /* ZilliqaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaService.swift; sourceTree = "<group>"; };
 		483460AA2145C182007E5D5C /* APIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = APIKit.framework; path = Carthage/Build/iOS/APIKit.framework; sourceTree = "<group>"; };
+		483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+ZilliqaService.swift"; sourceTree = "<group>"; };
 		483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		483F0F872146FC1400E6EE08 /* ObserverType_Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverType_Extensions.swift; sourceTree = "<group>"; };
+		483F0F8A214704D700E6EE08 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		483F0F8F2147083800E6EE08 /* BalanceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceRequest.swift; sourceTree = "<group>"; };
+		483F0F922147085500E6EE08 /* BalanceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceResponse.swift; sourceTree = "<group>"; };
+		483F0F952147087700E6EE08 /* ZilliqaRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaRequest.swift; sourceTree = "<group>"; };
+		483F0F982147091900E6EE08 /* DefaultZilliqaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultZilliqaService.swift; sourceTree = "<group>"; };
+		483F0F9B2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZilliqaService+APIKit+ErrorMapping.swift"; sourceTree = "<group>"; };
 		487166572141ADEA00F0B413 /* SwiftCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCrypto.framework; path = Carthage/Build/iOS/SwiftCrypto.framework; sourceTree = "<group>"; };
 		487166582141ADEA00F0B413 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
 		487166592141ADEA00F0B413 /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
@@ -146,9 +170,40 @@
 		483460A62145BD38007E5D5C /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				483F0F8D2147081500E6EE08 /* Balance */,
 				483460A72145BD4A007E5D5C /* ZilliqaService.swift */,
+				483F0F982147091900E6EE08 /* DefaultZilliqaService.swift */,
+				483F0F9B2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift */,
+				483F0F952147087700E6EE08 /* ZilliqaRequest.swift */,
+				483F0F8A214704D700E6EE08 /* Error.swift */,
+				483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		483F0F822146FBCA00E6EE08 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				483F0F832146FBD000E6EE08 /* RxSwift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		483F0F832146FBD000E6EE08 /* RxSwift */ = {
+			isa = PBXGroup;
+			children = (
+				483F0F872146FC1400E6EE08 /* ObserverType_Extensions.swift */,
+			);
+			path = RxSwift;
+			sourceTree = "<group>";
+		};
+		483F0F8D2147081500E6EE08 /* Balance */ = {
+			isa = PBXGroup;
+			children = (
+				483F0F8F2147083800E6EE08 /* BalanceRequest.swift */,
+				483F0F922147085500E6EE08 /* BalanceResponse.swift */,
+			);
+			path = Balance;
 			sourceTree = "<group>";
 		};
 		487166562141ADEA00F0B413 /* Frameworks */ = {
@@ -214,6 +269,7 @@
 		48F70A3020B72E8A0027B72D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				483F0F822146FBCA00E6EE08 /* Extensions */,
 				483460A62145BD38007E5D5C /* Services */,
 				48ED0E6A20E80720005DA19C /* BigNumber */,
 				48F70A4920B7F52B0027B72D /* Models */,
@@ -491,12 +547,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				48ED0E6D20E80731005DA19C /* BigNumber.swift in Sources */,
+				483F0F9A2147091900E6EE08 /* DefaultZilliqaService.swift in Sources */,
+				483F0F7D2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */,
+				483F0F912147083800E6EE08 /* BalanceRequest.swift in Sources */,
 				48ED0E5320E7F158005DA19C /* Amount.swift in Sources */,
+				483F0F942147085500E6EE08 /* BalanceResponse.swift in Sources */,
+				483F0F8C214704D700E6EE08 /* Error.swift in Sources */,
 				48ED0E5020E7F150005DA19C /* Wallet.swift in Sources */,
 				48ED0E5220E7F155005DA19C /* Nonce.swift in Sources */,
+				483F0F972147087700E6EE08 /* ZilliqaRequest.swift in Sources */,
+				483F0F892146FC1400E6EE08 /* ObserverType_Extensions.swift in Sources */,
 				48ED0E5520E7F15D005DA19C /* Gas.swift in Sources */,
 				48ED0E5420E7F15D005DA19C /* Payment.swift in Sources */,
 				483460A92145BD4C007E5D5C /* ZilliqaService.swift in Sources */,
+				483F0F9D2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift in Sources */,
 				48ED0E7020E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -513,12 +577,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				48ED0E6C20E80731005DA19C /* BigNumber.swift in Sources */,
+				483F0F992147091900E6EE08 /* DefaultZilliqaService.swift in Sources */,
+				483F0F7C2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */,
+				483F0F902147083800E6EE08 /* BalanceRequest.swift in Sources */,
 				48F70A7D20B812080027B72D /* Amount.swift in Sources */,
+				483F0F932147085500E6EE08 /* BalanceResponse.swift in Sources */,
+				483F0F8B214704D700E6EE08 /* Error.swift in Sources */,
 				48F70A7A20B811370027B72D /* Wallet.swift in Sources */,
 				48F70A4B20B7F55B0027B72D /* Payment.swift in Sources */,
+				483F0F962147087700E6EE08 /* ZilliqaRequest.swift in Sources */,
+				483F0F882146FC1400E6EE08 /* ObserverType_Extensions.swift in Sources */,
 				48F70A4D20B7F9940027B72D /* Gas.swift in Sources */,
 				48F70A8320B812F70027B72D /* Nonce.swift in Sources */,
 				483460A82145BD4A007E5D5C /* ZilliqaService.swift in Sources */,
+				483F0F9C2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift in Sources */,
 				48ED0E6F20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

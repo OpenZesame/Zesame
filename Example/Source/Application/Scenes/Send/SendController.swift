@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ZilliqaSDK
 
 final class SendController: Scene<SendView, SendViewModel> {
     /* This ⬆ single line ⬆ constitutes a fully working ViewController. Clean code 👌🏽 */
