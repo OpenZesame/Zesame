@@ -748,8 +748,8 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/TinyConstraints.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/RxCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ViewComposer.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/EllipticCurveKit.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/BigInt.framework",

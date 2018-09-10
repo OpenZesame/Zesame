@@ -1,3 +1,4 @@
+github "ReactiveX/RxSwift" "4.2.0"
 github "Sajjon/EllipticCurveKit" "567ba9dc7a2ea1c1cc98e44d51bbec14fdbd8280"
 github "antitypical/Result" "4.0.0"
 github "attaswift/BigInt" "v3.1.0"

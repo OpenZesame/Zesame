@@ -13,6 +13,8 @@
 		483460A82145BD4A007E5D5C /* ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483460A72145BD4A007E5D5C /* ZilliqaService.swift */; };
 		483460A92145BD4C007E5D5C /* ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483460A72145BD4A007E5D5C /* ZilliqaService.swift */; };
 		483460AB2145C183007E5D5C /* APIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460AA2145C182007E5D5C /* APIKit.framework */; };
+		483F0F802146FB8D00E6EE08 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */; };
+		483F0F812146FB8D00E6EE08 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */; };
 		4871665B2141ADEA00F0B413 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166582141ADEA00F0B413 /* BigInt.framework */; };
 		4871665C2141ADEA00F0B413 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166592141ADEA00F0B413 /* SipHash.framework */; };
 		48E76FB420B9D6210027A3FE /* ZilliqaSDK_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -58,6 +60,8 @@
 		483460A32145BD28007E5D5C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		483460A72145BD4A007E5D5C /* ZilliqaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaService.swift; sourceTree = "<group>"; };
 		483460AA2145C182007E5D5C /* APIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = APIKit.framework; path = Carthage/Build/iOS/APIKit.framework; sourceTree = "<group>"; };
+		483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
+		483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		487166572141ADEA00F0B413 /* SwiftCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCrypto.framework; path = Carthage/Build/iOS/SwiftCrypto.framework; sourceTree = "<group>"; };
 		487166582141ADEA00F0B413 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
 		487166592141ADEA00F0B413 /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
@@ -121,6 +125,8 @@
 				483460AB2145C183007E5D5C /* APIKit.framework in Frameworks */,
 				4871665C2141ADEA00F0B413 /* SipHash.framework in Frameworks */,
 				483460A42145BD28007E5D5C /* JSONRPCKit.framework in Frameworks */,
+				483F0F802146FB8D00E6EE08 /* RxCocoa.framework in Frameworks */,
+				483F0F812146FB8D00E6EE08 /* RxSwift.framework in Frameworks */,
 				483460A52145BD28007E5D5C /* Result.framework in Frameworks */,
 				482E31702144421F00D81A91 /* EllipticCurveKit.framework in Frameworks */,
 			);
@@ -148,6 +154,8 @@
 		487166562141ADEA00F0B413 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */,
+				483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */,
 				483460AA2145C182007E5D5C /* APIKit.framework */,
 				483460A22145BD28007E5D5C /* JSONRPCKit.framework */,
 				483460A32145BD28007E5D5C /* Result.framework */,
