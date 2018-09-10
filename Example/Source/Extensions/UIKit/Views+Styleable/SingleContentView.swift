@@ -9,9 +9,10 @@
 import RxSwift
 
 protocol SingleContentView: EmptyInitializable, AnyObject {
-    associatedtype ViewModel: ViewModelled
+    associatedtype ViewModel: ViewModelConvertible
     func populate(with viewModel: ViewModel.Output) -> [Disposable]
 }
+
 extension SingleContentView {
     func populate(with viewModel: ViewModel.Output) -> [Disposable] { return [] }
 }

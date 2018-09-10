@@ -20,7 +20,7 @@ class SingleContentViewController<View, ViewModel>: UIViewController where View:
     let contentView: View
     let viewModel: ViewModel
 
-    init(view contentView: View, viewModel: ViewModel) {
+    init(view contentView: View = View(), viewModel: ViewModel) {
         self.contentView = contentView
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -54,4 +54,17 @@ private extension SingleContentViewController {
         bound(output: output)
         contentView.populate(with: output).forEach { $0.disposed(by: bag) }
     }
+}
+
+class Scene<View, ViewModel>: SingleContentViewController<View, ViewModel> where View: UIView & ViewModelled, ViewModel == View.ViewModel, ViewModel.Input.ControllerInput == NotUsed {
+
+    override func input() -> Input {
+        return Input(viewInput: contentView.inputFromView)
+    }
+    
+}
+
+protocol ViewModelled: SingleContentView where ViewModel: ViewModelType {
+    typealias InputFromView = ViewModel.Input.ViewInput
+    var inputFromView: InputFromView { get }
 }

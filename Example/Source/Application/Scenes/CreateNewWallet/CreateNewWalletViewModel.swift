@@ -15,8 +15,7 @@ struct CreateNewWalletViewModel {
     }
 }
 
-extension CreateNewWalletViewModel: ViewModelled {}
-extension CreateNewWalletViewModel {
+extension CreateNewWalletViewModel: ViewModelConvertible {
     struct Input {}
     struct Output {}
     func transform(input: Input) -> Output {

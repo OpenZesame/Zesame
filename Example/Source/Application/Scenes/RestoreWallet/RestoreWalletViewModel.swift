@@ -21,7 +21,7 @@ struct RestoreWalletViewModel {
     }
 }
 
-extension RestoreWalletViewModel: ViewModelled {
+extension RestoreWalletViewModel: ViewModelConvertible {
 
     struct Input {
         let privateKey: Driver<String>

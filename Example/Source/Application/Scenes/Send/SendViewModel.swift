@@ -81,27 +81,33 @@ struct SendViewModel {
     }
 }
 
-extension SendViewModel: ViewModelled {
-    struct Input {
-        let sendTrigger: Driver<Void>
+extension SendViewModel: ViewModelType {
+
+    struct Input: ViewModelInput {
+        struct ViewInput {
+            let sendTrigger: Driver<Void>
+        }
+        let viewInput: ViewInput
+
+        init(viewInput: ViewInput, controllerInput: NotUsed = nil) {
+            self.viewInput = viewInput
+        }
     }
+
     struct Output {
         let address: Driver<String>
         let balance: Driver<String>
     }
+
     func transform(input: Input) -> Output {
 
         let wallet = Driver.just(self.wallet)
-
-//        let balance = Driver<String>.deferred { () -> SharedSequence<DriverSharingStrategy, String> in
-//            <#code#>
-//        }
 
         let balance = zilliqaService.getBalance().map { "\($0) ZILs" }
 
         return Output(
             address: wallet.map { $0.address.address },
-            balance: balance//wallet.map { String(describing: $0.balance.amount) }
+            balance: balance
         )
     }
 }

@@ -21,7 +21,7 @@ struct SettingsViewModel {
     }
 }
 
-extension SettingsViewModel: ViewModelled {
+extension SettingsViewModel: ViewModelConvertible {
     
     struct Input {
         let removeWalletTrigger: Driver<Void>

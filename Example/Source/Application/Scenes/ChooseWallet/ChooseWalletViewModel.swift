@@ -20,7 +20,7 @@ struct ChooseWalletViewModel {
     }
 }
 
-extension ChooseWalletViewModel: ViewModelled {
+extension ChooseWalletViewModel: ViewModelConvertible {
 
     struct Input {
         let createNewTrigger: Driver<Void>
