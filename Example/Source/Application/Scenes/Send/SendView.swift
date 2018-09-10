@@ -13,13 +13,13 @@ import RxCocoa
 // MARK: - SendView
 final class SendView: StackViewOwningView, StackViewStyling {
 
-    lazy var addressLabelTitle: UILabel = "Your Public Address"
-    lazy var addressLabelValue = UILabel.Style("", height: nil, numberOfLines: 0).make()
-    lazy var balanceLabelTitle: UILabel = "Balance"
-    lazy var balanceLabelValue: UILabel = "🤷‍♀️"
-    lazy var sendButton: UIButton = "Send"
+    private lazy var addressLabelTitle: UILabel = "Your Public Address"
+    private lazy var addressLabelValue = UILabel.Style("", height: nil, numberOfLines: 0).make()
+    private lazy var balanceLabelTitle: UILabel = "Balance"
+    private lazy var balanceLabelValue: UILabel = "🤷‍♀️"
+    private lazy var sendButton: UIButton = "Send"
 
-
+    // MARK: - StackViewStyling
     lazy var stackViewStyle: UIStackView.Style = [
         addressLabelTitle,
         addressLabelValue,
@@ -30,23 +30,18 @@ final class SendView: StackViewOwningView, StackViewStyling {
     ]
 }
 
-extension SendView: SingleContentView {
+// MARK: - SingleContentView
+extension SendView: ViewModelled {
     typealias ViewModel = SendViewModel
+
+    var inputFromView: InputFromView {
+        return InputFromView(sendTrigger: sendButton.rx.tap.asDriver())
+    }
+
     func populate(with viewModel: ViewModel.Output) -> [Disposable] {
         return [
             viewModel.address --> addressLabelValue,
             viewModel.balance --> balanceLabelValue
         ]
     }
-}
-
-infix operator -->
-func --> <E>(driver: Driver<E>, binder: Binder<E>) -> Disposable {
-    return driver.drive(binder)
-}
-func --> <E>(driver: Driver<E>, binder: Binder<E?>) -> Disposable {
-    return driver.drive(binder)
-}
-func --> (driver: Driver<String>, label: UILabel) -> Disposable {
-    return driver --> label.rx.text
 }

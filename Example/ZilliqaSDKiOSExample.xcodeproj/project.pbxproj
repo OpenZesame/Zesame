@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		483F0F752146E25400E6EE08 /* Driver+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F742146E25400E6EE08 /* Driver+Operator.swift */; };
 		484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B068520BA0D8800C4E50A /* AppDelegate.swift */; };
 		484F7D7721441BF20023C6D4 /* SendNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7321441BF20023C6D4 /* SendNavigator.swift */; };
 		484F7D7821441BF20023C6D4 /* SendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7421441BF20023C6D4 /* SendView.swift */; };
@@ -30,7 +31,7 @@
 		48C89FBE2142BCF70063B0FA /* TinyConstraints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */; };
 		48C89FBF2142BCF70063B0FA /* ViewComposer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBB2142BCF70063B0FA /* ViewComposer.framework */; };
 		48C89FC02142BCF70063B0FA /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBC2142BCF70063B0FA /* RxSwift.framework */; };
-		48C89FCB21432E220063B0FA /* ViewModelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCA21432E220063B0FA /* ViewModelled.swift */; };
+		48C89FCB21432E220063B0FA /* ViewModelConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCA21432E220063B0FA /* ViewModelConvertible.swift */; };
 		48C89FCD21432E2E0063B0FA /* ChooseWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCC21432E2E0063B0FA /* ChooseWalletViewModel.swift */; };
 		48C89FCF21432E440063B0FA /* CreateNewWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCE21432E440063B0FA /* CreateNewWalletViewModel.swift */; };
 		48C89FDB214331050063B0FA /* OpenWalletUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FDA214331050063B0FA /* OpenWalletUseCase.swift */; };
@@ -127,6 +128,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		483F0F742146E25400E6EE08 /* Driver+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Driver+Operator.swift"; sourceTree = "<group>"; };
 		484B063620BA0C2D00C4E50A /* ZilliqaSDKiOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZilliqaSDKiOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		484B064A20BA0C2F00C4E50A /* ZilliqaSDKiOSExample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZilliqaSDKiOSExample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		484B065520BA0C2F00C4E50A /* ZilliqaSDKiOSExample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZilliqaSDKiOSExample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,7 +168,7 @@
 		48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TinyConstraints.framework; path = Carthage/Build/iOS/TinyConstraints.framework; sourceTree = "<group>"; };
 		48C89FBB2142BCF70063B0FA /* ViewComposer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ViewComposer.framework; path = Carthage/Build/iOS/ViewComposer.framework; sourceTree = "<group>"; };
 		48C89FBC2142BCF70063B0FA /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
-		48C89FCA21432E220063B0FA /* ViewModelled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelled.swift; sourceTree = "<group>"; };
+		48C89FCA21432E220063B0FA /* ViewModelConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConvertible.swift; sourceTree = "<group>"; };
 		48C89FCC21432E2E0063B0FA /* ChooseWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWalletViewModel.swift; sourceTree = "<group>"; };
 		48C89FCE21432E440063B0FA /* CreateNewWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletViewModel.swift; sourceTree = "<group>"; };
 		48C89FDA214331050063B0FA /* OpenWalletUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWalletUseCase.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				489CDBCE2143FF3E00318450 /* FilterNil.swift */,
+				483F0F742146E25400E6EE08 /* Driver+Operator.swift */,
 			);
 			path = RxSwift;
 			sourceTree = "<group>";
@@ -489,8 +492,7 @@
 		48C89FD8214330C50063B0FA /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				48C89FEF2143320B0063B0FA /* Views */,
-				48C89FCA21432E220063B0FA /* ViewModelled.swift */,
+				48C89FCA21432E220063B0FA /* ViewModelConvertible.swift */,
 				48C89FDF214331590063B0FA /* SingleContentViewController.swift */,
 			);
 			path = Common;
@@ -512,7 +514,7 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
-		48C89FEF2143320B0063B0FA /* Views */ = {
+		48C89FEF2143320B0063B0FA /* Views+Styleable */ = {
 			isa = PBXGroup;
 			children = (
 				48C89FEB214331F00063B0FA /* EmptyInitializable.swift */,
@@ -522,7 +524,7 @@
 				48C89FED214331FE0063B0FA /* SingleContentView.swift */,
 				48C89FF72143327A0063B0FA /* Styling */,
 			);
-			path = Views;
+			path = "Views+Styleable";
 			sourceTree = "<group>";
 		};
 		48C89FF72143327A0063B0FA /* Styling */ = {
@@ -548,6 +550,7 @@
 		48C89FFB214335220063B0FA /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				48C89FEF2143320B0063B0FA /* Views+Styleable */,
 				48C89FFC2143353C0063B0FA /* UIFont_Extension.swift */,
 				48C8A0102143CE8F0063B0FA /* UIColor_Extension.swift */,
 				48C89FFE2143355A0063B0FA /* UIView+Spacer.swift */,
@@ -745,13 +748,16 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/TinyConstraints.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/RxCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ViewComposer.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/EllipticCurveKit.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/BigInt.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/SipHash.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/CryptoSwift.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/APIKit.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/JSONRPCKit.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/Result.framework",
 			);
 			name = Carthage;
 			outputFileListPaths = (
@@ -765,6 +771,9 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BigInt.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SipHash.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CryptoSwift.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/APIKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/JSONRPCKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Result.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -801,7 +810,7 @@
 				489CDBCF2143FF3E00318450 /* FilterNil.swift in Sources */,
 				48AC6CC92145AF1B00B4D036 /* MainNavigator.swift in Sources */,
 				48C8A0072143CD6F0063B0FA /* RestoreWalletView.swift in Sources */,
-				48C89FCB21432E220063B0FA /* ViewModelled.swift in Sources */,
+				48C89FCB21432E220063B0FA /* ViewModelConvertible.swift in Sources */,
 				48B16E3021452A2600177434 /* Never.swift in Sources */,
 				48C8A00B2143CDB50063B0FA /* RestoreWalletNavigator.swift in Sources */,
 				48C89FDE2143313B0063B0FA /* KeyRestoration.swift in Sources */,
@@ -817,6 +826,7 @@
 				48AC6CC72145AF0A00B4D036 /* Navigator.swift in Sources */,
 				48C469F521445417008D0DD7 /* UILabel+Styling.swift in Sources */,
 				48C89FFF2143355A0063B0FA /* UIView+Spacer.swift in Sources */,
+				483F0F752146E25400E6EE08 /* Driver+Operator.swift in Sources */,
 				48C89FCD21432E2E0063B0FA /* ChooseWalletViewModel.swift in Sources */,
 				48C89FF92143328E0063B0FA /* UIStackView+Styling.swift in Sources */,
 				48C89FCF21432E440063B0FA /* CreateNewWalletViewModel.swift in Sources */,
@@ -890,7 +900,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 			};
 			name = Debug;
 		};

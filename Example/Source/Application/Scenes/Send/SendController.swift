@@ -7,24 +7,9 @@
 //
 
 import UIKit
-import Foundation
+import ZilliqaSDK
 
-final class SendController: SingleContentViewController<SendView, SendViewModel> {
-
-    init(viewModel: SendViewModel) {
-        let contentView = SendView()
-        super.init(view: contentView, viewModel: viewModel)
-    }
-
-    required init?(coder: NSCoder) { interfaceBuilderSucks }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .cyan
-    }
-
-    override func input() -> Input {
-        return Input(sendTrigger: contentView.sendButton.rx.tap.asDriver())
-    }
+final class SendController: Scene<SendView, SendViewModel> {
+    /* This ⬆ single line ⬆ constitutes a fully working ViewController. Clean code 👌🏽 */
 }
 

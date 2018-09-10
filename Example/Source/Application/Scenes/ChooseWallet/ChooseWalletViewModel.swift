@@ -20,22 +20,28 @@ struct ChooseWalletViewModel {
     }
 }
 
-extension ChooseWalletViewModel: ViewModelled {
+extension ChooseWalletViewModel: ViewModelType {
 
-    struct Input {
-        let createNewTrigger: Driver<Void>
-        let restoreTrigger: Driver<Void>
+    struct Input: InputType {
+        struct FromView {
+            let createNewTrigger: Driver<Void>
+            let restoreTrigger: Driver<Void>
+        }
+        let fromView: FromView
+        init(fromView: FromView, fromController: NotUsed = nil) {
+            self.fromView = fromView
+        }
     }
 
     struct Output {}
 
     func transform(input: Input) -> Output {
 
-        input.createNewTrigger.do(onNext: {
+        input.fromView.createNewTrigger.do(onNext: {
             self.navigateTo(.createNewWallet)
         }).drive().disposed(by: bag)
 
-        input.restoreTrigger.do(onNext: {
+        input.fromView.restoreTrigger.do(onNext: {
             self.navigateTo(.restoreWallet)
         }).drive().disposed(by: bag)
 

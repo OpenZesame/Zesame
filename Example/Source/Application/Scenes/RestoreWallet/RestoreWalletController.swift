@@ -8,21 +8,6 @@
 
 import Foundation
 
-final class RestoreWalletController: SingleContentViewController<RestoreWalletView, RestoreWalletViewModel> {
-
-    init(viewModel: RestoreWalletViewModel) {
-        let contentView = RestoreWalletView()
-        super.init(view: contentView, viewModel: viewModel)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
-
-    override func input() -> Input {
-        return Input(
-            privateKey: contentView.privateKeyField.rx.text.orEmpty.asDriver(),
-            restoreTrigger: contentView.restoreWalletButton.rx.tap.asDriver()
-        )
-    }
+final class RestoreWalletController: Scene<RestoreWalletView, RestoreWalletViewModel> {
+    /* This ⬆ single line ⬆ constitutes a fully working ViewController. Clean code 👌🏽 */
 }

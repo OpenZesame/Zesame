@@ -8,19 +8,6 @@
 
 import Foundation
 
-final class CreateNewWalletController: SingleContentViewController<CreateNewWalletView, CreateNewWalletViewModel> {
-
-    // MARK: - Initializers
-    init(viewModel: CreateNewWalletViewModel) {
-        let contentView = CreateNewWalletView()
-        super.init(view: contentView, viewModel: viewModel)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
-
-    override func input() -> Input {
-        return Input()
-    }
+final class CreateNewWalletController: Scene<CreateNewWalletView, CreateNewWalletViewModel> {
+    /* This ⬆ single line ⬆ constitutes a fully working ViewController. Clean code 👌🏽 */
 }

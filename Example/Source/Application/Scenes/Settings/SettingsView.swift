@@ -25,11 +25,19 @@ final class SettingsView: StackViewOwningView, StackViewStyling {
     ]
 }
 
-extension SettingsView: SingleContentView {
+extension SettingsView: ViewModelled {
+    
     typealias ViewModel = SettingsViewModel
+
     func populate(with viewModel: ViewModel.Output) -> [Disposable] { 
         return [
         	viewModel.appVersion --> appVersionValueLabel
         ] 
+    }
+
+    var inputFromView: InputFromView {
+        return InputFromView(
+            removeWalletTrigger: removeWalletButton.rx.tap.asDriver()
+        )
     }
 }

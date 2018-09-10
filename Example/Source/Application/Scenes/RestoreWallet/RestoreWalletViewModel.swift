@@ -21,24 +21,31 @@ struct RestoreWalletViewModel {
     }
 }
 
-extension RestoreWalletViewModel: ViewModelled {
+extension RestoreWalletViewModel: ViewModelType {
 
-    struct Input {
-        let privateKey: Driver<String>
-        let restoreTrigger: Driver<Void>
+    struct Input: InputType {
+        struct FromView {
+            let privateKey: Driver<String>
+            let restoreTrigger: Driver<Void>
+        }
+        let fromView: FromView
+        init(fromView: FromView, fromController: NotUsed = nil) {
+            self.fromView = fromView
+        }
     }
 
     struct Output {}
 
     func transform(input: Input) -> Output {
 
-        let wallet: Driver<Wallet> = input.privateKey
+        let wallet = input.fromView.privateKey
             .map { Wallet(privateKeyHex: $0) }
             .filterNil()
 
-        input.restoreTrigger.withLatestFrom(wallet).do(onNext: {
-            self.navigateTo(.restored($0))
-        }).drive().disposed(by: bag)
+        input.fromView.restoreTrigger
+            .withLatestFrom(wallet).do(onNext: {
+                self.navigateTo(.restored($0))
+            }).drive().disposed(by: bag)
 
         return Output()
     }
