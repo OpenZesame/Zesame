@@ -46,6 +46,7 @@ extension SendViewModel: ViewModelType {
     struct Output {
         let address: Driver<String>
         let balance: Driver<String>
+        let transactionId: Driver<String>
     }
 
     func transform(input: Input) -> Output {
@@ -63,13 +64,18 @@ extension SendViewModel: ViewModelType {
             Payment(to: $0, amount: $1, gasLimit: $2, gasPrice: $3, from: self.wallet)
         }.filterNil()
 
-        input.fromView.sendTrigger.withLatestFrom(payment).flatMapLatest {
-            self.service.rx.
+        let transactionId: Driver<String> = input.fromView.sendTrigger//.flatMapLatest { _ in return wallet }
+            .withLatestFrom(payment)
+            .flatMapLatest {
+                self.service.rx.signAndMakeTransaction(payment: $0, using: self.wallet.keyPair).map {
+                $0.transactionId
+            }.asDriverOnErrorReturnEmpty()
         }
 
         return Output(
             address: wallet.map { $0.address.address },
-            balance: balance
+            balance: balance.asDriverOnErrorReturnEmpty(),
+            transactionId: transactionId
         )
     }
 }

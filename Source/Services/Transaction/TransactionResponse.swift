@@ -23,6 +23,6 @@ public struct TransactionResponse: Decodable {
 //    let jsonrpc: String
 
     /// E.g. `"ad28f2c63ba118134b45496454c0f1db05c214894848eab929381dbeeff91872"`
-    let transactionId: String
+    public let transactionId: String
 
 }

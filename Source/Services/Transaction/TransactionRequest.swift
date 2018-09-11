@@ -24,7 +24,9 @@ public extension TransactionRequest {
     }
 
     var parameters: Any? {
-        return [try! transaction.asDictionary()]
+        let parameters = try! transaction.asDictionary()
+        print(parameters)
+        return parameters
     }
 
     func response(from resultObject: Any) throws -> Response {

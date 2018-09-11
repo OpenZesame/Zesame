@@ -8,4 +8,6 @@
 
 import BigInt
 
-public typealias BigNumber = BigUInt
+import EllipticCurveKit
+
+public typealias BigNumber = EllipticCurveKit.Number

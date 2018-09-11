@@ -12,35 +12,49 @@ import RxSwift
 import JSONRPCKit
 import APIKit
 import Result
-
-private func single<R>(request: @escaping (Result<R, ZilliqaSDK.Error>) -> Void) -> Single<R> {
-    return Single.create { single in
-
-        let foo: (Result<R, ZilliqaSDK.Error>) -> Void = { (result: Result<R, ZilliqaSDK.Error>) -> Void in
-            
-//            switch result {
-//            case .failure(let error): single(.error(error))
-//            case .success(let model): single(.success(model))
-//            }
-        }
-
-        request(foo)
-        return Disposables.create {}
-    }
-}
+//
+//private func single<R>(request: @escaping (Result<R, ZilliqaSDK.Error>) -> Void) -> Single<R> {
+//    return Single.create { single in
+//
+//        let foo: (Result<R, ZilliqaSDK.Error>) -> Void = { (result: Result<R, ZilliqaSDK.Error>) -> Void in
+//
+////            switch result {
+////            case .failure(let error): single(.error(error))
+////            case .success(let model): single(.success(model))
+////            }
+//        }
+//
+//        request(foo)
+//        return Disposables.create {}
+//    }
+//}
 
 public extension Reactive where Base: (ZilliqaService & AnyObject) {
-    func getBalance() -> Single<BalanceResponse> {
+
+    func getBalance() -> Observable<BalanceResponse> {
         return Single.create { [weak base] single in
             base?.getBalalance() {
                 switch $0 {
                 case .failure(let error): single(.error(error))
-                case .success(let balance): single(.success(balance))
+                case .success(let result): single(.success(result))
                 }
             }
             return Disposables.create {}
-        }
+        }.asObservable()
     }
+
+    func signAndMakeTransaction(payment: Payment, using keyPair: KeyPair) -> Observable<TransactionResponse> {
+        return Single.create { [weak base] single in
+            base?.signAndMakeTransaction(payment: payment, using: keyPair) {
+                switch $0 {
+                case .failure(let error): single(.error(error))
+                case .success(let result): single(.success(result))
+                }
+            }
+            return Disposables.create {}
+        }.asObservable()
+    }
+
 }
 //
 //public extension Reactive where Base: (APIClient & ReactiveCompatible & AnyObject) {

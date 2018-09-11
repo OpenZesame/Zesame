@@ -46,6 +46,7 @@ public extension DefaultZilliqaService {
 
 
     func send(transaction: Transaction, done: @escaping RequestDone<TransactionResponse>) {
+        print("tx: `\(transaction)`")
         return apiClient.send(request: TransactionRequest(transaction: transaction), done: done)
     }
 }
@@ -70,6 +71,7 @@ public extension JsonRpcClient {
                 let model = try! JSONDecoder().decode(Response.self, from: jsonData)
                 handlerAPIKit(.success(model))
             case .failure(let error):
+                print("⚠️ \(error)")
                 handlerAPIKit(.failure(error))
             }
         }

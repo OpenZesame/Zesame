@@ -12,5 +12,3 @@ public struct BalanceResponse: Decodable {
     public let balance: String
     public let nonce: Int
 }
-
-public struct PaymentResponse: Decodable {}

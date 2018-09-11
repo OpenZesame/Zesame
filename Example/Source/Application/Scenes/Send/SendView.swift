@@ -17,11 +17,12 @@ final class SendView: StackViewOwningView, StackViewStyling {
     private lazy var addressLabelValue = UILabel.Style("", height: nil, numberOfLines: 0).make()
     private lazy var balanceLabelTitle: UILabel = "Balance"
     private lazy var balanceLabelValue: UILabel = "🤷‍♀️"
-    private lazy var recipientAddressField: UITextField = "Recipient Address"
-    private lazy var amountToSendField: UITextField = "Amount to send"
+    private lazy var recipientAddressField = UITextField.Style("To address", text: "74C544A11795905C2C9808F9E78D8156159D32E4").make()
+    private lazy var amountToSendField = UITextField.Style("Amount", text: "15").make()
     private lazy var gasLimitField = UITextField.Style("Gas limit", text: "10").make()
-      private lazy var gasPriceField = UITextField.Style("Gas price", text: "1").make()
+    private lazy var gasPriceField = UITextField.Style("Gas price", text: "1").make()
     private lazy var sendButton: UIButton = "Send"
+    private lazy var transactionIdentifierLabel: UILabel = "No tx"
 
     // MARK: - StackViewStyling
     lazy var stackViewStyle: UIStackView.Style = [
@@ -34,6 +35,7 @@ final class SendView: StackViewOwningView, StackViewStyling {
         gasLimitField,
         gasPriceField,
         sendButton,
+        transactionIdentifierLabel,
         .spacer
     ]
 }
@@ -55,7 +57,8 @@ extension SendView: ViewModelled {
     func populate(with viewModel: ViewModel.Output) -> [Disposable] {
         return [
             viewModel.address --> addressLabelValue,
-            viewModel.balance --> balanceLabelValue
+            viewModel.balance --> balanceLabelValue,
+            viewModel.transactionId --> transactionIdentifierLabel
         ]
     }
 }

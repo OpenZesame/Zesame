@@ -31,9 +31,11 @@ public extension ZilliqaService {
 
         let unsignedTransaction = UnsignedTransaction(payment: payment)
 
-        let message = messageFromUnsignedTransaction(unsignedTransaction)
+        let message = messageFromUnsignedTransaction(unsignedTransaction, publicKey: keyPair.publicKey)
 
         let signature = Signer.sign(message, using: keyPair)
+
+        print("signature: `\(signature)`")
 
         return Transaction(unsignedTransaction: unsignedTransaction, signedBy: keyPair.publicKey, signature: signature)
     }
@@ -71,6 +73,23 @@ public extension ZilliqaService {
  return new Buffer(encoded, 'hex');
  };
  */
-func messageFromUnsignedTransaction(_ transaction: UnsignedTransaction) -> Message {
-    fatalError()
+func messageFromUnsignedTransaction(_ tx: UnsignedTransaction, publicKey: PublicKey) -> Message {
+    func hex64(_ number: Double) -> String {
+        return BigNumber(number).asHexStringLength64()
+    }
+    func hex64I(_ number: Int) -> String {
+        return hex64(Double(number))
+    }
+
+    let hexString = [
+        hex64I(tx.version),
+        hex64I(tx.nonce),
+        tx.to,
+        publicKey.hex.compressed,
+        hex64(tx.amount),
+        hex64(tx.gasPrice),
+        hex64(tx.gasLimit)
+    ].joined()
+
+    return Message(hex: hexString)
 }
