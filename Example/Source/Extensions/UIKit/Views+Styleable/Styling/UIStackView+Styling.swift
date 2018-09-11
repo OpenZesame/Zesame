@@ -16,7 +16,7 @@ extension UIStackView: Styling, StaticEmptyInitializable {
         return UIStackView(arrangedSubviews: [])
     }
 
-    public final class Style: ViewStyle, ExpressibleByArrayLiteral {
+    public final class Style: ViewStyle, Makeable, ExpressibleByArrayLiteral {
 
         typealias View = UIStackView
 

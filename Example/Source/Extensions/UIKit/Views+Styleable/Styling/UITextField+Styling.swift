@@ -15,16 +15,18 @@ extension UITextField: EmptyInitializable, Styling, StaticEmptyInitializable, Ex
         return UITextField(frame: .zero)
     }
 
-    public final class Style: ViewStyle, ExpressibleByStringLiteral {
+    public final class Style: ViewStyle, Makeable, ExpressibleByStringLiteral {
 
         typealias View = UITextField
 
-        let placeholder: String
+        let placeholder: String?
+        let text: String?
         let textColor: UIColor
         let font: UIFont
 
-        init(_ placeholder: String, height: CGFloat? = CGFloat.defaultHeight, font: UIFont = .default, textColor: UIColor = .defaultText, backgroundColor: UIColor = .white) {
+        init(_ placeholder: String?, text: String? = nil, height: CGFloat? = CGFloat.defaultHeight, font: UIFont = .default, textColor: UIColor = .defaultText, backgroundColor: UIColor = .white) {
             self.placeholder = placeholder
+            self.text = text
             self.font = font
             self.textColor = textColor
             super.init(height: height, backgroundColor: backgroundColor)
@@ -40,6 +42,7 @@ extension UITextField: EmptyInitializable, Styling, StaticEmptyInitializable, Ex
         textColor = style.textColor
         backgroundColor = style.backgroundColor
         font = style.font
+        text = style.text
     }
 }
 

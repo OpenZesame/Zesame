@@ -13,25 +13,48 @@ import APIKit
 
 public typealias ZilliqaServiceReactive = ZilliqaService & ReactiveCompatible
 public final class DefaultZilliqaService: ZilliqaServiceReactive {
+
     public let wallet: Wallet
 
-    private let batchFactory = BatchFactory(version: "2.0", idGenerator: NumberIdGenerator())
+    public let apiClient: APIClient = JsonRpcClient()
 
     public init(wallet: Wallet) {
         self.wallet = wallet
     }
 }
 
+public protocol APIClient {
+    func send<Request, Response>(request: Request, done: @escaping RequestDone<Response>)
+        where
+        Request: JSONRPCKit.Request,
+        Response: Decodable,
+        /* This should hopefully be removed soon  */
+        Request.Response == Dictionary<String, Any>
+}
+
+public final class JsonRpcClient: APIClient {
+
+    private let batchFactory = BatchFactory(version: "2.0", idGenerator: NumberIdGenerator())
+
+    public init() {}
+}
+
 public extension DefaultZilliqaService {
-    func getBalalance(_ done: @escaping RequestDone<BalanceResponse>) -> Void {
-        return send(request: BalanceRequest(publicAddress: wallet.address.address), done: done)
+    func getBalalance(done: @escaping RequestDone<BalanceResponse>) -> Void {
+        return apiClient.send(request: BalanceRequest(publicAddress: wallet.address.address), done: done)
+    }
+
+
+    func send(transaction: Transaction, done: @escaping RequestDone<TransactionResponse>) {
+        return apiClient.send(request: TransactionRequest(transaction: transaction), done: done)
     }
 }
 
 // MARK: - DefaultZilliqaService APIKit
-public extension DefaultZilliqaService {
+public extension JsonRpcClient {
     func send<Request, Response>(request: Request, done: @escaping RequestDone<Response>)
-        where Request: JSONRPCKit.Request,
+        where
+        Request: JSONRPCKit.Request,
         Response: Decodable,
         /* This should hopefully be removed soon  */
         Request.Response == Dictionary<String, Any>

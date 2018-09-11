@@ -9,30 +9,47 @@
 import Foundation
 
 public struct Payment {
-    public let recipient: Address
-    public let amount: Amount
-    public let gas: Gas
+    public let recipient: Recipient
+    public let amount: Double
+    public let gasLimit: Double
+    public let gasPrice: Double
+    public let nonce: Int
 
-    public init(to recipient: Address, amount: Amount, gas: Gas) {
+    public init?(
+        to recipient: Recipient,
+        amount: Double,
+        gasLimit: Double = 10,
+        gasPrice: Double = 1,
+        from wallet: Wallet) {
+        guard
+            amount > 0,
+            gasLimit > 10,
+            gasPrice > 0,
+            amount + gasLimit > wallet.balance.amount
+            else { return nil }
         self.recipient = recipient
         self.amount = amount
-        self.gas = gas
+        self.gasLimit = gasLimit
+        self.gasPrice = gasPrice
+        self.nonce = wallet.nonce.nonce + 1
     }
 }
 
-// MARK: - Convenience Initializer
-//public extension Payment {
-//    init(addressDouble address: Double, amountDouble amount: Double, priceDouble price: Double, limitDouble limit: Double) throws {
-//        let address = try Address(double: address)
-//        let amount = try Amount(double: amount)
-//        let gas = try Gas(rawPrice: price, rawLimit: limit)
-//        self.init(to: address, amount: amount, gas: gas)
-//    }
-//
-//    init(addressString address: String, amountDouble amount: Double, priceDouble price: Double, limitDouble limit: Double) throws {
-//        let address = try Address(string: address)
-//        let amount = try Amount(double: amount)
-//        let gas = try Gas(rawPrice: price, rawLimit: limit)
-//        self.init(to: address, amount: amount, gas: gas)
-//    }
-//}
+
+public struct UnsignedTransaction: Encodable {
+    let version: Int
+    let nonce: Int
+    let to: String
+    let amount: Double
+    let gasPrice: Double
+    let gasLimit: Double
+
+    init(payment: Payment, version: Int = 0) {
+        self.to = payment.recipient.address
+        self.amount = payment.amount
+        self.gasPrice = payment.gasPrice
+        self.gasLimit = payment.gasLimit
+        self.nonce = payment.nonce
+        self.version = version
+    }
+}

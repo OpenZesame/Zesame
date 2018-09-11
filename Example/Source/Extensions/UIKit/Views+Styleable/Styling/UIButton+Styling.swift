@@ -14,7 +14,7 @@ extension UIButton: Styling, StaticEmptyInitializable, ExpressibleByStringLitera
         return UIButton(type: .custom)
     }
 
-    public final class Style: ViewStyle, ExpressibleByStringLiteral {
+    public final class Style: ViewStyle, Makeable, ExpressibleByStringLiteral {
 
         typealias View = UIButton
 
