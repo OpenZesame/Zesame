@@ -32,9 +32,9 @@ public struct Wallet {
 }
 
 public extension Wallet {
-    init?(privateKeyHex: String) {
+    init?(privateKeyHex: String, balance: Amount = 1000000, nonce: Nonce = 0) {
         guard let keyPair = KeyPair(privateKeyHex: privateKeyHex) else { return nil }
-        self.init(keyPair: keyPair)
+        self.init(keyPair: keyPair, balance: balance, nonce: nonce)
     }
 }
 

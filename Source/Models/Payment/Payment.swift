@@ -23,9 +23,9 @@ public struct Payment {
         from wallet: Wallet) {
         guard
             amount > 0,
-            gasLimit > 10,
+            gasLimit > 0,
             gasPrice > 0,
-            amount + gasLimit > wallet.balance.amount
+            amount + gasLimit < wallet.balance.amount
             else { return nil }
         self.recipient = recipient
         self.amount = amount
@@ -43,13 +43,17 @@ public struct UnsignedTransaction: Encodable {
     let amount: Double
     let gasPrice: Double
     let gasLimit: Double
+    let data: String
+    let code: String
 
-    init(payment: Payment, version: Int = 0) {
+    init(payment: Payment, version: Int = 0, data: String = "", code: String = "") {
         self.to = payment.recipient.address
         self.amount = payment.amount
         self.gasPrice = payment.gasPrice
         self.gasLimit = payment.gasLimit
         self.nonce = payment.nonce
         self.version = version
+        self.data = data
+        self.code = code
     }
 }

@@ -51,9 +51,15 @@ extension SendViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
 
-        let wallet = Driver.just(service.wallet)
+        let balanceAndNonce = service.rx.getBalance().asDriverOnErrorReturnEmpty()
 
-        let balance = service.rx.getBalance().map { "\($0.balance) ZILs" }
+        let _keyPair = service.wallet.keyPair
+        let wallet: Driver<Wallet> = balanceAndNonce.map { balance in
+            let amount = try! Amount(double: Double(balance.balance)!)
+            return Wallet(keyPair: _keyPair, balance: amount, nonce: Nonce(balance.nonce))
+        }
+
+        let balance = wallet.map { "\($0.balance.amount) ZILs" }
 
         let recipient = input.fromView.recepientAddress.map { Recipient(string: $0) }.filterNil()
         let amount = input.fromView.amountToSend.map { Double($0) }.filterNil()
@@ -64,17 +70,18 @@ extension SendViewModel: ViewModelType {
             Payment(to: $0, amount: $1, gasLimit: $2, gasPrice: $3, from: self.wallet)
         }.filterNil()
 
-        let transactionId: Driver<String> = input.fromView.sendTrigger//.flatMapLatest { _ in return wallet }
+        let transactionId: Driver<String> = input.fromView.sendTrigger
             .withLatestFrom(payment)
             .flatMapLatest {
-                self.service.rx.signAndMakeTransaction(payment: $0, using: self.wallet.keyPair).map {
-                $0.transactionId
-            }.asDriverOnErrorReturnEmpty()
+                self.service.rx.signAndMakeTransaction(payment: $0, using: self.wallet.keyPair)
+                .map {
+                    $0.transactionId
+                }.asDriverOnErrorReturnEmpty()
         }
 
         return Output(
             address: wallet.map { $0.address.address },
-            balance: balance.asDriverOnErrorReturnEmpty(),
+            balance: balance,
             transactionId: transactionId
         )
     }

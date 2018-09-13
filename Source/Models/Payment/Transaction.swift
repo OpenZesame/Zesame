@@ -11,50 +11,56 @@ import Foundation
 public struct Transaction: Encodable {
     public enum CodingKeys: String, CodingKey {
         case publicKeyCompressed = "pubKey"
-        case recipientAddressHex = "to"
 
-        case amount, gasPrice, gasLimit, nonce, signature, version
+        case to, amount, gasPrice, gasLimit, nonce, signature, version
     }
-
-    public let amount: Double
-
-    public let gasPrice: Double
-    public let gasLimit: Double
-    public let nonce: Int
-
-    public let publicKeyCompressed: String
-
-    public let signature: String
-
-    /// E.g. "0xF510333720C5DD3C3C08BC8E085E8C981CE74691"
-    public let recipientAddressHex: String
 
     public let version: Int
 
+    public let nonce: Int
+
+    /// The public address of the recipient as a hex string
+    /// E.g. "0xF510333720C5DD3C3C08BC8E085E8C981CE74691"
+    public let to: String
+
+    public let amount: Double
+
+    public let publicKeyCompressed: String
+
+    public let gasPrice: Double
+
+    public let gasLimit: Double
+
+    public let code: String
+
+    public let data: String
+
+    public let signature: String
+
     public init(
+        version: Int = 0,
+        nonce: Int,
+        to: String,
         amount: Double,
+        publicKeyCompressed: String,
         gasPrice: Double = 1,
         gasLimit: Double = 10,
-        nonce: Int,
-        publicKeyCompressed: String,
-        signature: String,
-        recipientAddressHex: String,
-        version: Int = 0
+        code: String = "",
+        data: String = "",
+        signature: String
         ) {
-        self.amount = amount
-        self.gasLimit = gasLimit
-        self.gasPrice = gasPrice
-        self.nonce = nonce
-        self.publicKeyCompressed = publicKeyCompressed
-        self.signature = signature
-        self.recipientAddressHex = recipientAddressHex
         self.version = version
+        self.nonce = nonce
+        self.to = to
+        self.amount = amount
+        self.publicKeyCompressed = publicKeyCompressed
+        self.gasPrice = gasPrice
+        self.gasLimit = gasLimit
+        self.code = code
+        self.data = data
+        self.signature = signature
     }
-//
-//    /// Smart contract support in the future
-//    public let code: String
-//    /// Smart contract support in the future
-//    public let data: String
+
 }
 
 import EllipticCurveKit
@@ -62,13 +68,14 @@ import EllipticCurveKit
 public extension Transaction {
     init(unsignedTransaction tx: UnsignedTransaction, signedBy publicKey: PublicKey, signature: Signature) {
         self.init(
+            version: tx.version,
+            nonce: tx.nonce,
+            to: tx.to,
             amount: tx.amount,
+            publicKeyCompressed: publicKey.data.compressed.toHexString(),
             gasPrice: tx.gasPrice,
             gasLimit: tx.gasLimit,
-            nonce: tx.nonce,
-            publicKeyCompressed: publicKey.data.compressed.toHexString(),
-            signature: signature.asHexString(),
-            recipientAddressHex: tx.to,
-            version: tx.version)
+            signature: signature.asHexString()
+        )
     }
 }

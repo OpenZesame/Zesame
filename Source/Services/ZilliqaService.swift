@@ -33,63 +33,71 @@ public extension ZilliqaService {
 
         let message = messageFromUnsignedTransaction(unsignedTransaction, publicKey: keyPair.publicKey)
 
-        let signature = Signer.sign(message, using: keyPair)
+        let signature = sign(message: message, using: keyPair)
 
         print("signature: `\(signature)`")
 
         return Transaction(unsignedTransaction: unsignedTransaction, signedBy: keyPair.publicKey, signature: signature)
     }
+
+    func sign(message: Message, using keyPair: KeyPair) -> Signature {
+        return Signer.sign(message, using: keyPair)
+    }
 }
 
+extension String {
+    enum Case {
+        case lower, upper
+    }
+    func `case`(_ `case`: Case) -> String {
+        switch `case` {
+        case .lower: return lowercased()
+        case .upper: return uppercased()
+        }
+    }
+}
 
-
-/*
- How Zilliqa web does it
- https://github.com/Zilliqa/Zilliqa-JavaScript-Library/blob/master/src/util.ts#L115-L139
-
- /**
- * encodeTransaction
- *
- * @param {any} txn
- * @returns {Buffer}
- */
- export const encodeTransaction = (txn: TxDetails) => {
- let codeHex = new Buffer(txn.code).toString('hex');
- let dataHex = new Buffer(txn.data).toString('hex');
-
- let encoded =
- intToByteArray(txn.version, 64).join('') +
- intToByteArray(txn.nonce, 64).join('') +
- txn.to +
- txn.pubKey +
- txn.amount.toString('hex', 64) +
- intToByteArray(txn.gasPrice, 64).join('') +
- intToByteArray(txn.gasLimit, 64).join('') +
- intToByteArray(txn.code.length, 8).join('') + // size of code
- codeHex +
- intToByteArray(txn.data.length, 8).join('') + // size of data
- dataHex;
-
- return new Buffer(encoded, 'hex');
- };
- */
 func messageFromUnsignedTransaction(_ tx: UnsignedTransaction, publicKey: PublicKey) -> Message {
-    func hex64(_ number: Double) -> String {
-        return BigNumber(number).asHexStringLength64()
-    }
-    func hex64I(_ number: Int) -> String {
-        return hex64(Double(number))
+        func hex64B(_ number: BigNumber) -> String {
+            let hex = number.asHexStringLength64()//.case(`case`)
+            assert(hex.count == 64)
+            return hex
+        }
+        func hex64D(_ number: Double) -> String {
+            return hex64B(BigNumber(number))
+        }
+        func hex64I(_ number: Int) -> String {
+            return hex64D(Double(number))
+        }
+
+    func eightChar(from int: Int) -> String {
+        return String(format: "%08d", int)
     }
 
-    let hexString = [
-        hex64I(tx.version),
-        hex64I(tx.nonce),
-        tx.to,
-        publicKey.hex.compressed,
-        hex64(tx.amount),
-        hex64(tx.gasPrice),
-        hex64(tx.gasLimit)
-    ].joined()
+    func formatCodeOrData(from string: String) -> String {
+        if let data = string.data(using: .utf8) {
+            return data.toHexString()
+        } else {
+            print("Failed to create Swift.Data from `code` or `data` having value: \n`\(string)`")
+            return ""
+        }
+    }
 
+    let codeHex = formatCodeOrData(from: tx.code)
+    let dataHex = formatCodeOrData(from: tx.data)
+
+        let hexString = [
+            hex64I(tx.version),
+            hex64I(tx.nonce),
+            tx.to.case(.upper),
+            publicKey.hex.compressed.case(.lower),
+            hex64D(tx.amount).case(.lower),
+            hex64D(tx.gasPrice),
+            hex64D(tx.gasLimit),
+            eightChar(from: tx.code.count),
+            codeHex,
+            eightChar(from: tx.data.count),
+            dataHex,
+            ].joined()
     return Message(hex: hexString)
 }

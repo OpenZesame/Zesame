@@ -33,6 +33,17 @@
 		483F0F9D2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F9B2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift */; };
 		4871665B2141ADEA00F0B413 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166582141ADEA00F0B413 /* BigInt.framework */; };
 		4871665C2141ADEA00F0B413 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166592141ADEA00F0B413 /* SipHash.framework */; };
+		48B5B2F121482EC600147005 /* TransactionSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B5B2F021482EC600147005 /* TransactionSigningTests.swift */; };
+		48B5B2F221482EC600147005 /* TransactionSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B5B2F021482EC600147005 /* TransactionSigningTests.swift */; };
+		48B5B2F32148321400147005 /* APIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460AA2145C182007E5D5C /* APIKit.framework */; };
+		48B5B2F42148321400147005 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166582141ADEA00F0B413 /* BigInt.framework */; };
+		48B5B2F52148321400147005 /* EllipticCurveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E849C62144404F00A06C40 /* EllipticCurveKit.framework */; };
+		48B5B2F62148321400147005 /* JSONRPCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460A22145BD28007E5D5C /* JSONRPCKit.framework */; };
+		48B5B2F72148321400147005 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460A32145BD28007E5D5C /* Result.framework */; };
+		48B5B2F82148321400147005 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */; };
+		48B5B2F92148321400147005 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */; };
+		48B5B2FA2148321400147005 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166592141ADEA00F0B413 /* SipHash.framework */; };
+		48B5B2FC2148321500147005 /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B5B2FB2148321500147005 /* RxTest.framework */; };
 		48D4114A2147200A00E2F207 /* Recipient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D411492147200A00E2F207 /* Recipient.swift */; };
 		48D4114C2147202500E2F207 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D4114B2147202500E2F207 /* Transaction.swift */; };
 		48D4114F2147205200E2F207 /* TransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D4114E2147205200E2F207 /* TransactionRequest.swift */; };
@@ -98,6 +109,10 @@
 		487166582141ADEA00F0B413 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
 		487166592141ADEA00F0B413 /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
 		48838C9420B9F64800C18DC2 /* WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTests.swift; sourceTree = "<group>"; };
+		48B5B2EE21482EC600147005 /* ZilliqaSDK iOS Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDK iOS Tests-Bridging-Header.h"; sourceTree = "<group>"; };
+		48B5B2EF21482EC600147005 /* ZilliqaSDK macOS Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDK macOS Tests-Bridging-Header.h"; sourceTree = "<group>"; };
+		48B5B2F021482EC600147005 /* TransactionSigningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSigningTests.swift; sourceTree = "<group>"; };
+		48B5B2FB2148321500147005 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
 		48C89FC42142C4F10063B0FA /* ZilliqaSDK-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-Info.plist"; sourceTree = "<group>"; };
 		48D411492147200A00E2F207 /* Recipient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipient.swift; sourceTree = "<group>"; };
 		48D4114B2147202500E2F207 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
@@ -173,6 +188,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				48F70A1F20B72DD00027B72D /* ZilliqaSDK.framework in Frameworks */,
+				48B5B2FC2148321500147005 /* RxTest.framework in Frameworks */,
+				48B5B2F32148321400147005 /* APIKit.framework in Frameworks */,
+				48B5B2F42148321400147005 /* BigInt.framework in Frameworks */,
+				48B5B2F52148321400147005 /* EllipticCurveKit.framework in Frameworks */,
+				48B5B2F62148321400147005 /* JSONRPCKit.framework in Frameworks */,
+				48B5B2F72148321400147005 /* Result.framework in Frameworks */,
+				48B5B2F82148321400147005 /* RxCocoa.framework in Frameworks */,
+				48B5B2F92148321400147005 /* RxSwift.framework in Frameworks */,
+				48B5B2FA2148321400147005 /* SipHash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +246,7 @@
 		487166562141ADEA00F0B413 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				48B5B2FB2148321500147005 /* RxTest.framework */,
 				483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */,
 				483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */,
 				483460AA2145C182007E5D5C /* APIKit.framework */,
@@ -325,6 +350,9 @@
 			isa = PBXGroup;
 			children = (
 				48ED0E6620E80588005DA19C /* OLD */,
+				48B5B2F021482EC600147005 /* TransactionSigningTests.swift */,
+				48B5B2EE21482EC600147005 /* ZilliqaSDK iOS Tests-Bridging-Header.h */,
+				48B5B2EF21482EC600147005 /* ZilliqaSDK macOS Tests-Bridging-Header.h */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -502,7 +530,7 @@
 					};
 					48ED060C20B8618F00C639E5 = {
 						CreatedOnToolsVersion = 9.4;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1000;
 					};
 					48F70A1420B72DD00027B72D = {
 						CreatedOnToolsVersion = 9.3;
@@ -510,7 +538,7 @@
 					};
 					48F70A1D20B72DD00027B72D = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -597,6 +625,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48B5B2F221482EC600147005 /* TransactionSigningTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,6 +660,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48B5B2F121482EC600147005 /* TransactionSigningTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +698,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48ED062220B86C1C00C639E5 /* ZilliqaSDKTests-macOS-Debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests/ZilliqaSDK macOS Tests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -675,6 +714,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48ED062320B86C1D00C639E5 /* ZilliqaSDKTests-macOS-Release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests/ZilliqaSDK macOS Tests-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -708,6 +755,26 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48ED062020B86C1C00C639E5 /* ZilliqaSDKTests-iOS-Debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = NO;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				DYLIB_INSTALL_NAME_BASE = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(FRAMEWORK_SEARCH_PATHS)",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -715,6 +782,25 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48ED062520B86C1D00C639E5 /* ZilliqaSDKTests-iOS-Release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = NO;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				DYLIB_INSTALL_NAME_BASE = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(FRAMEWORK_SEARCH_PATHS)",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

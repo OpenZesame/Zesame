@@ -25,14 +25,14 @@ public extension TransactionRequest {
 
     var parameters: Any? {
         let parameters = try! transaction.asDictionary()
-        print(parameters)
-        return parameters
+        return [parameters]
     }
 
     func response(from resultObject: Any) throws -> Response {
         if let response = resultObject as? Response {
             return response
         } else {
+            print("⚠️ Response: `\(resultObject)` (type: `\(type(of: resultObject))`)")
             throw Error.json(.cast(actualValue: resultObject, expectedType: Response.self))
         }
     }
