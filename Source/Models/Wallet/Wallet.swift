@@ -24,17 +24,17 @@ public struct Wallet {
 
     public init(keyPair: KeyPair, network: Network = .testnet, balance: Amount = 0, nonce: Nonce = 0) {
         self.keyPair = keyPair
-        self.address = Address(keyPair: keyPair, system: Zilliqa(network))
+        self.address = Address(keyPair: keyPair, system: Zilliqa(.mainnet))
         self.balance = balance
-        self.network = network
+        self.network = .mainnet
         self.nonce = nonce
     }
 }
 
 public extension Wallet {
-    init?(privateKeyHex: String, balance: Amount = 1000000, nonce: Nonce = 0) {
+    init?(privateKeyHex: String, network: Network = .testnet, balance: Amount = 1000000, nonce: Nonce = 0) {
         guard let keyPair = KeyPair(privateKeyHex: privateKeyHex) else { return nil }
-        self.init(keyPair: keyPair, balance: balance, nonce: nonce)
+        self.init(keyPair: keyPair, network: network, balance: balance, nonce: nonce)
     }
 }
 

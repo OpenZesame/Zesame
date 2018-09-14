@@ -20,3 +20,6 @@ func --> <E>(driver: Driver<E>, binder: Binder<E?>) -> Disposable {
 func --> (driver: Driver<String>, label: UILabel) -> Disposable {
     return driver --> label.rx.text
 }
+func --> (driver: Driver<String>, labels: LabelsView) -> Disposable {
+    return driver --> labels.rx.value
+}

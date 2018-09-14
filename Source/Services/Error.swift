@@ -10,10 +10,7 @@ import Foundation
 import APIKit
 
 public enum Error: Swift.Error {
-    indirect case json(JSON)
-    public enum JSON: Swift.Error {
-        case cast(actualValue: Any, expectedType: Any)
-    }
+
     indirect case api(API)
     public enum API: Swift.Error {
         /// Error of `URLSession`.

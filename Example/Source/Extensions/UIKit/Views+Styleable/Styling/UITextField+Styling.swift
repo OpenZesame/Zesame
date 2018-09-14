@@ -17,32 +17,55 @@ extension UITextField: EmptyInitializable, Styling, StaticEmptyInitializable, Ex
 
     public final class Style: ViewStyle, Makeable, ExpressibleByStringLiteral {
 
-        typealias View = UITextField
+        public typealias View = UITextField
 
-        let placeholder: String?
-        let text: String?
-        let textColor: UIColor
-        let font: UIFont
+        public let placeholder: String?
+        public let text: String?
+        public let textColor: UIColor?
+        public let font: UIFont?
 
-        init(_ placeholder: String?, text: String? = nil, height: CGFloat? = CGFloat.defaultHeight, font: UIFont = .default, textColor: UIColor = .defaultText, backgroundColor: UIColor = .white) {
+        public init(
+            _ placeholder: String? = nil,
+            text: String? = nil,
+            height: CGFloat? = nil,
+            font: UIFont? = nil,
+            textColor: UIColor? = nil,
+            backgroundColor: UIColor? = nil
+            ) {
             self.placeholder = placeholder
             self.text = text
             self.font = font
             self.textColor = textColor
-            super.init(height: height, backgroundColor: backgroundColor)
+            super.init(height: height ?? .defaultHeight, backgroundColor: backgroundColor)
         }
 
         public convenience init(stringLiteral placeholder: String) {
             self.init(placeholder)
         }
+
+        public func merged(other: Style, mode: MergeMode) -> Style {
+            func merge<T>(_ attributePath: KeyPath<Style, T?>) -> T? {
+                return mergeAttribute(other: other, path: attributePath, mode: mode)
+            }
+
+            return Style(
+                merge(\.placeholder),
+                text: merge(\.text),
+                height: merge(\.height),
+                font: merge(\.font),
+                textColor: merge(\.textColor),
+                backgroundColor: merge(\.backgroundColor)
+            )
+        }
     }
 
     public func apply(style: Style) {
         placeholder = style.placeholder
-        textColor = style.textColor
-        backgroundColor = style.backgroundColor
-        font = style.font
+        textColor = style.textColor ?? .defaultText
+        font = style.font ?? .default
         text = style.text
+        layer.borderColor = UIColor.gray.withAlphaComponent(0.3).cgColor
+        layer.borderWidth = 0.5
     }
 }
 

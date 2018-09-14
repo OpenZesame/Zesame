@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     static var defaultText: UIColor {
         return .black
     }

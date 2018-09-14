@@ -10,7 +10,7 @@ import Foundation
 import JSONRPCKit
 
 public struct TransactionRequest: JSONRPCKit.Request {
-    public typealias Response = Dictionary<String, Any>
+    public typealias Response = TransactionIdentifier
 
     public let transaction: Transaction
     public init(transaction: Transaction) {
@@ -23,27 +23,7 @@ public extension TransactionRequest {
         return "CreateTransaction"
     }
 
-    var parameters: Any? {
-        let parameters = try! transaction.asDictionary()
-        return [parameters]
-    }
-
-    func response(from resultObject: Any) throws -> Response {
-        if let response = resultObject as? Response {
-            return response
-        } else {
-            print("⚠️ Response: `\(resultObject)` (type: `\(type(of: resultObject))`)")
-            throw Error.json(.cast(actualValue: resultObject, expectedType: Response.self))
-        }
-    }
-}
-
-extension Encodable {
-    func asDictionary() throws -> [String: Any] {
-        let data = try JSONEncoder().encode(self)
-        guard let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
-            throw NSError()
-        }
-        return dictionary
+    var parameters: Encodable? {
+        return [transaction]
     }
 }

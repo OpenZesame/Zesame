@@ -13,23 +13,32 @@ import RxCocoa
 // MARK: - SendView
 final class SendView: StackViewOwningView, StackViewStyling {
 
-    private lazy var addressLabelTitle: UILabel = "Your Public Address"
-    private lazy var addressLabelValue = UILabel.Style("", height: nil, numberOfLines: 0).make()
-    private lazy var balanceLabelTitle: UILabel = "Balance"
-    private lazy var balanceLabelValue: UILabel = "🤷‍♀️"
-    private lazy var recipientAddressField = UITextField.Style("To address", text: "74C544A11795905C2C9808F9E78D8156159D32E4").make()
-    private lazy var amountToSendField = UITextField.Style("Amount", text: "15").make()
-    private lazy var gasLimitField = UITextField.Style("Gas limit", text: "10").make()
+    private lazy var addressLabels = LabelsView(
+        titleStyle: "Your Public Address",
+        valueStyle: UILabel.Style(numberOfLines: 0)
+    )
+
+    private lazy var publicKeyLabels = LabelsView(
+        titleStyle: "Your Public Key (compressed)",
+        valueStyle: UILabel.Style(numberOfLines: 0)
+    )
+
+    private lazy var balanceLabels = LabelsView(titleStyle: "Balance", valueStyle: "🤷‍♀️")
+    private lazy var nonceLabels = LabelsView(titleStyle: "Current wallet nonce", valueStyle: "🤷‍♀️")
+
+    private lazy var recipientAddressField = UITextField.Style("To address", text: "9CA91EB535FB92FDA5094110FDAEB752EDB9B039").make()
+    private lazy var amountToSendField = UITextField.Style("Amount", text: "11").make()
+    private lazy var gasLimitField = UITextField.Style("Gas limit", text: "1").make()
     private lazy var gasPriceField = UITextField.Style("Gas price", text: "1").make()
     private lazy var sendButton: UIButton = "Send"
     private lazy var transactionIdentifierLabel: UILabel = "No tx"
 
     // MARK: - StackViewStyling
-    lazy var stackViewStyle: UIStackView.Style = [
-        addressLabelTitle,
-        addressLabelValue,
-        balanceLabelTitle,
-        balanceLabelValue,
+    lazy var stackViewStyle = UIStackView.Style([
+        addressLabels,
+        publicKeyLabels,
+        balanceLabels,
+        nonceLabels,
         recipientAddressField,
         amountToSendField,
         gasLimitField,
@@ -37,7 +46,7 @@ final class SendView: StackViewOwningView, StackViewStyling {
         sendButton,
         transactionIdentifierLabel,
         .spacer
-    ]
+        ], spacing: 16, margin: 16)
 }
 
 // MARK: - SingleContentView
@@ -56,8 +65,10 @@ extension SendView: ViewModelled {
 
     func populate(with viewModel: ViewModel.Output) -> [Disposable] {
         return [
-            viewModel.address --> addressLabelValue,
-            viewModel.balance --> balanceLabelValue,
+            viewModel.address --> addressLabels,
+            viewModel.publicKey --> publicKeyLabels,
+            viewModel.balance --> balanceLabels,
+            viewModel.nonce --> nonceLabels,
             viewModel.transactionId --> transactionIdentifierLabel
         ]
     }

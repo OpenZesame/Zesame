@@ -24,12 +24,7 @@ public final class DefaultZilliqaService: ZilliqaServiceReactive {
 }
 
 public protocol APIClient {
-    func send<Request, Response>(request: Request, done: @escaping RequestDone<Response>)
-        where
-        Request: JSONRPCKit.Request,
-        Response: Decodable,
-        /* This should hopefully be removed soon  */
-        Request.Response == Dictionary<String, Any>
+    func send<Request, Response>(request: Request, done: @escaping RequestDone<Response>) where Request: JSONRPCKit.Request, Request.Response == Response
 }
 
 public final class JsonRpcClient: APIClient {
@@ -45,21 +40,14 @@ public extension DefaultZilliqaService {
     }
 
 
-    func send(transaction: Transaction, done: @escaping RequestDone<TransactionResponse>) {
-        print("tx: `\(transaction)`")
+    func send(transaction: Transaction, done: @escaping RequestDone<TransactionIdentifier>) {
         return apiClient.send(request: TransactionRequest(transaction: transaction), done: done)
     }
 }
 
 // MARK: - DefaultZilliqaService APIKit
 public extension JsonRpcClient {
-    func send<Request, Response>(request: Request, done: @escaping RequestDone<Response>)
-        where
-        Request: JSONRPCKit.Request,
-        Response: Decodable,
-        /* This should hopefully be removed soon  */
-        Request.Response == Dictionary<String, Any>
-    {
+    func send<Request, Response>(request: Request, done: @escaping RequestDone<Response>) where Request: JSONRPCKit.Request, Request.Response == Response {
         let batch = batchFactory.create(request)
         let httpRequest = ZilliqaRequest(batch: batch)
         let handlerAPIKit = mapHandler(done)
@@ -67,9 +55,7 @@ public extension JsonRpcClient {
         let _: SessionTask? = Session.send(httpRequest, callbackQueue: nil) { result in
             switch result {
             case .success(let response):
-                let jsonData = try! JSONSerialization.data(withJSONObject: response, options: [])
-                let model = try! JSONDecoder().decode(Response.self, from: jsonData)
-                handlerAPIKit(.success(model))
+                handlerAPIKit(.success(response))
             case .failure(let error):
                 print("⚠️ \(error)")
                 handlerAPIKit(.failure(error))

@@ -14,15 +14,17 @@ import APIKit
 import RxCocoa
 import RxSwift
 
+public typealias TransactionIdentifier = String
 public protocol ZilliqaService {
     var wallet: Wallet { get }
     var apiClient: APIClient { get }
     func getBalalance(done: @escaping RequestDone<BalanceResponse>)
-    func send(transaction: Transaction, done: @escaping RequestDone<TransactionResponse>)
+
+    func send(transaction: Transaction, done: @escaping RequestDone<TransactionIdentifier>)
 }
 
 public extension ZilliqaService {
-    func signAndMakeTransaction(payment: Payment, using keyPair: KeyPair, done: @escaping RequestDone<TransactionResponse>) {
+    func signAndMakeTransaction(payment: Payment, using keyPair: KeyPair, done: @escaping RequestDone<TransactionIdentifier>) {
         let transaction = sign(payment: payment, using: keyPair)
         send(transaction: transaction, done: done)
     }
@@ -35,7 +37,7 @@ public extension ZilliqaService {
 
         let signature = sign(message: message, using: keyPair)
 
-        print("signature: `\(signature)`")
+        assert(Signer.verify(message, wasSignedBy: signature, publicKey: keyPair.publicKey))
 
         return Transaction(unsignedTransaction: unsignedTransaction, signedBy: keyPair.publicKey, signature: signature)
     }

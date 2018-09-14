@@ -16,28 +16,48 @@ extension UIButton: Styling, StaticEmptyInitializable, ExpressibleByStringLitera
 
     public final class Style: ViewStyle, Makeable, ExpressibleByStringLiteral {
 
-        typealias View = UIButton
+        public typealias View = UIButton
 
-        let text: String
-        let textColor: UIColor
-        let font: UIFont
+        let text: String?
+        let textColor: UIColor?
+        let font: UIFont?
 
-        init(_ text: String, height: CGFloat? = CGFloat.defaultHeight, font: UIFont = .default, textColor: UIColor = .black, backgroundColor: UIColor = .green) {
+        init(
+            _ text: String? = nil,
+            height: CGFloat? = nil,
+            font: UIFont? = nil,
+            textColor: UIColor? = nil,
+            backgroundColor: UIColor? = nil
+            ) {
             self.text = text
             self.textColor = textColor
             self.font = font
-            super.init(height: height, backgroundColor: backgroundColor)
+            super.init(height: height ?? .defaultHeight, backgroundColor: backgroundColor)
         }
 
         public convenience init(stringLiteral title: String) {
             self.init(title)
         }
+
+        public func merged(other: Style, mode: MergeMode) -> Style {
+            func merge<T>(_ attributePath: KeyPath<Style, T?>) -> T? {
+                return mergeAttribute(other: other, path: attributePath, mode: mode)
+            }
+
+            return Style(
+                merge(\.text),
+                height: merge(\.height),
+                font: merge(\.font),
+                textColor: merge(\.textColor),
+                backgroundColor: merge(\.backgroundColor)
+            )
+        }
     }
 
     public func apply(style: Style) {
         setTitle(style.text, for: UIControl.State())
-        setTitleColor(style.textColor, for: UIControl.State())
-        titleLabel?.font = style.font
-        backgroundColor = style.backgroundColor
+        setTitleColor(style.textColor ?? .defaultText, for: UIControl.State())
+        titleLabel?.font = style.font ?? .default
+        backgroundColor = style.backgroundColor ?? .green
     }
 }

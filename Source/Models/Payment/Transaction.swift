@@ -9,11 +9,11 @@
 import Foundation
 
 public struct Transaction: Encodable {
-    public enum CodingKeys: String, CodingKey {
-        case publicKeyCompressed = "pubKey"
-
-        case to, amount, gasPrice, gasLimit, nonce, signature, version
-    }
+//    public enum CodingKeys: String, CodingKey {
+//        case publicKeyCompressed = "pubKey"
+//
+//        case to, amount, gasPrice, gasLimit, nonce, signature, version
+//    }
 
     public let version: Int
 
@@ -23,13 +23,13 @@ public struct Transaction: Encodable {
     /// E.g. "0xF510333720C5DD3C3C08BC8E085E8C981CE74691"
     public let to: String
 
-    public let amount: Double
+    public let amount: Int
 
-    public let publicKeyCompressed: String
+    public let pubKey: String
 
-    public let gasPrice: Double
+    public let gasPrice: Int
 
-    public let gasLimit: Double
+    public let gasLimit: Int
 
     public let code: String
 
@@ -41,24 +41,24 @@ public struct Transaction: Encodable {
         version: Int = 0,
         nonce: Int,
         to: String,
-        amount: Double,
+        amount: Int,
         publicKeyCompressed: String,
-        gasPrice: Double = 1,
-        gasLimit: Double = 10,
+        gasPrice: Int,
+        gasLimit: Int,
         code: String = "",
         data: String = "",
         signature: String
         ) {
         self.version = version
         self.nonce = nonce
-        self.to = to
+        self.to = to.lowercased()
         self.amount = amount
-        self.publicKeyCompressed = publicKeyCompressed
+        self.pubKey = publicKeyCompressed.lowercased()
         self.gasPrice = gasPrice
         self.gasLimit = gasLimit
         self.code = code
         self.data = data
-        self.signature = signature
+        self.signature = signature.lowercased()
     }
 
 }
@@ -71,10 +71,10 @@ public extension Transaction {
             version: tx.version,
             nonce: tx.nonce,
             to: tx.to,
-            amount: tx.amount,
+            amount: Int(tx.amount),
             publicKeyCompressed: publicKey.data.compressed.toHexString(),
-            gasPrice: tx.gasPrice,
-            gasLimit: tx.gasLimit,
+            gasPrice: Int(tx.gasPrice),
+            gasLimit: Int(tx.gasLimit),
             signature: signature.asHexString()
         )
     }
