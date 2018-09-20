@@ -31,6 +31,12 @@
 		483F0F9A2147091900E6EE08 /* DefaultZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F982147091900E6EE08 /* DefaultZilliqaService.swift */; };
 		483F0F9C2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F9B2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift */; };
 		483F0F9D2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F9B2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift */; };
+		484E09EA21543F3B003D928E /* MessageFromUnsignedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09E921543F3B003D928E /* MessageFromUnsignedTransaction.swift */; };
+		484E09EB21543F43003D928E /* MessageFromUnsignedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09E921543F3B003D928E /* MessageFromUnsignedTransaction.swift */; };
+		484E09ED215440B1003D928E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09EC215440B1003D928E /* APIClient.swift */; };
+		484E09EE215440B4003D928E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09EC215440B1003D928E /* APIClient.swift */; };
+		484E09F021544134003D928E /* DefaultAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09EF21544134003D928E /* DefaultAPIClient.swift */; };
+		484E09F121544134003D928E /* DefaultAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09EF21544134003D928E /* DefaultAPIClient.swift */; };
 		4871665B2141ADEA00F0B413 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166582141ADEA00F0B413 /* BigInt.framework */; };
 		4871665C2141ADEA00F0B413 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166592141ADEA00F0B413 /* SipHash.framework */; };
 		48B5B2F121482EC600147005 /* TransactionSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B5B2F021482EC600147005 /* TransactionSigningTests.swift */; };
@@ -105,6 +111,9 @@
 		483F0F952147087700E6EE08 /* ZilliqaRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaRequest.swift; sourceTree = "<group>"; };
 		483F0F982147091900E6EE08 /* DefaultZilliqaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultZilliqaService.swift; sourceTree = "<group>"; };
 		483F0F9B2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZilliqaService+APIKit+ErrorMapping.swift"; sourceTree = "<group>"; };
+		484E09E921543F3B003D928E /* MessageFromUnsignedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromUnsignedTransaction.swift; sourceTree = "<group>"; };
+		484E09EC215440B1003D928E /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		484E09EF21544134003D928E /* DefaultAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAPIClient.swift; sourceTree = "<group>"; };
 		487166572141ADEA00F0B413 /* SwiftCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCrypto.framework; path = Carthage/Build/iOS/SwiftCrypto.framework; sourceTree = "<group>"; };
 		487166582141ADEA00F0B413 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
 		487166592141ADEA00F0B413 /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
@@ -210,6 +219,8 @@
 				483F0F8D2147081500E6EE08 /* Balance */,
 				483460A72145BD4A007E5D5C /* ZilliqaService.swift */,
 				483F0F982147091900E6EE08 /* DefaultZilliqaService.swift */,
+				484E09EC215440B1003D928E /* APIClient.swift */,
+				484E09EF21544134003D928E /* DefaultAPIClient.swift */,
 				483F0F9B2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift */,
 				483F0F952147087700E6EE08 /* ZilliqaRequest.swift */,
 				483F0F8A214704D700E6EE08 /* Error.swift */,
@@ -265,6 +276,7 @@
 			children = (
 				48D4114E2147205200E2F207 /* TransactionRequest.swift */,
 				48D411532147208000E2F207 /* TransactionResponse.swift */,
+				484E09E921543F3B003D928E /* MessageFromUnsignedTransaction.swift */,
 			);
 			path = Transaction;
 			sourceTree = "<group>";
@@ -603,8 +615,10 @@
 				483F0F7D2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */,
 				483F0F912147083800E6EE08 /* BalanceRequest.swift in Sources */,
 				48ED0E5320E7F158005DA19C /* Amount.swift in Sources */,
+				484E09EE215440B4003D928E /* APIClient.swift in Sources */,
 				48D411552147208000E2F207 /* TransactionResponse.swift in Sources */,
 				48D411512147206300E2F207 /* Recipient.swift in Sources */,
+				484E09EB21543F43003D928E /* MessageFromUnsignedTransaction.swift in Sources */,
 				483F0F942147085500E6EE08 /* BalanceResponse.swift in Sources */,
 				483F0F8C214704D700E6EE08 /* Error.swift in Sources */,
 				48ED0E5020E7F150005DA19C /* Wallet.swift in Sources */,
@@ -613,6 +627,7 @@
 				48D411522147206600E2F207 /* Transaction.swift in Sources */,
 				483F0F892146FC1400E6EE08 /* ObserverType_Extensions.swift in Sources */,
 				48ED0E5520E7F15D005DA19C /* Gas.swift in Sources */,
+				484E09F121544134003D928E /* DefaultAPIClient.swift in Sources */,
 				48ED0E5420E7F15D005DA19C /* Payment.swift in Sources */,
 				483460A92145BD4C007E5D5C /* ZilliqaService.swift in Sources */,
 				483F0F9D2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift in Sources */,
@@ -638,8 +653,10 @@
 				48D4114F2147205200E2F207 /* TransactionRequest.swift in Sources */,
 				483F0F7C2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */,
 				483F0F902147083800E6EE08 /* BalanceRequest.swift in Sources */,
+				484E09ED215440B1003D928E /* APIClient.swift in Sources */,
 				48D411542147208000E2F207 /* TransactionResponse.swift in Sources */,
 				48F70A7D20B812080027B72D /* Amount.swift in Sources */,
+				484E09EA21543F3B003D928E /* MessageFromUnsignedTransaction.swift in Sources */,
 				483F0F932147085500E6EE08 /* BalanceResponse.swift in Sources */,
 				48D4114A2147200A00E2F207 /* Recipient.swift in Sources */,
 				483F0F8B214704D700E6EE08 /* Error.swift in Sources */,
@@ -648,6 +665,7 @@
 				48F70A4B20B7F55B0027B72D /* Payment.swift in Sources */,
 				483F0F962147087700E6EE08 /* ZilliqaRequest.swift in Sources */,
 				483F0F882146FC1400E6EE08 /* ObserverType_Extensions.swift in Sources */,
+				484E09F021544134003D928E /* DefaultAPIClient.swift in Sources */,
 				48F70A4D20B7F9940027B72D /* Gas.swift in Sources */,
 				48F70A8320B812F70027B72D /* Nonce.swift in Sources */,
 				483460A82145BD4A007E5D5C /* ZilliqaService.swift in Sources */,
