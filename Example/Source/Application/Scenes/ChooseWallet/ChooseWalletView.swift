@@ -14,12 +14,11 @@ final class ChooseWalletView: ScrollingStackView {
     private lazy var createNewWalletButton: UIButton = "New Wallet"
     private lazy var restoreWalletButton: UIButton = "Restore Wallet"
 
-    lazy var stackViewStyle = UIStackView.Style([
-        .spacer,
+    lazy var stackViewStyle: UIStackView.Style = [
         createNewWalletButton,
         restoreWalletButton,
         .spacer
-        ], spacing: 16, margin: 16)
+    ]
 }
 
 extension ChooseWalletView: ViewModelled {

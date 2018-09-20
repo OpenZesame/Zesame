@@ -34,7 +34,7 @@ final class SendView: ScrollingStackView {
     private lazy var transactionIdentifierLabel: UILabel = "No tx"
 
     // MARK: - StackViewStyling
-    lazy var stackViewStyle = UIStackView.Style([
+    lazy var stackViewStyle: UIStackView.Style = [
         addressLabels,
         publicKeyLabels,
         balanceLabels,
@@ -46,7 +46,7 @@ final class SendView: ScrollingStackView {
         sendButton,
         transactionIdentifierLabel,
         .spacer
-        ], spacing: 16, margin: 16)
+    ]
 }
 
 // MARK: - SingleContentView

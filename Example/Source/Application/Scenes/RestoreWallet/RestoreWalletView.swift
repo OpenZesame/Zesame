@@ -14,12 +14,11 @@ final class RestoreWalletView: ScrollingStackView {
     private lazy var privateKeyField: UITextField = "Private Key"
     private lazy var restoreWalletButton: UIButton = "Restore Wallet"
 
-    lazy var stackViewStyle = UIStackView.Style([
-        .spacer,
+    lazy var stackViewStyle: UIStackView.Style = [
         privateKeyField,
         restoreWalletButton,
         .spacer
-    ], spacing: 16, margin: 16)
+    ]
 }
 
 extension RestoreWalletView: ViewModelled {

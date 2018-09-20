@@ -42,7 +42,6 @@ extension UILabel: Styling, StaticEmptyInitializable, ExpressibleByStringLiteral
             self.init(title)
         }
 
-
         static var `default`: Style {
             return Style()
         }

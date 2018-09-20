@@ -20,30 +20,27 @@ class SceneController<View>: UIViewController where View: UIView & ViewModelled 
 
     private let bag = DisposeBag()
 
-    private let contentView: View
     private let viewModel: ViewModel
 
-    init(view contentView: View = View(), viewModel: ViewModel) {
-        self.contentView = contentView
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        setup()
+    override func loadView() {
+        view = View()
+        view.backgroundColor = .white
+        view.bounds = UIScreen.main.bounds
     }
 
-    required init?(coder aDecoder: NSCoder) { interfaceBuilderSucks }
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        bindViewToViewModel()
+        edgesForExtendedLayout = .bottom
+    }
+
+    required init?(coder: NSCoder) { interfaceBuilderSucks }
 }
 
 private extension Scene {
-
-    func setup() {
-        contentView.backgroundColor = .white
-        view.addSubview(contentView)
-        edgesForExtendedLayout = .bottom
-        contentView.edgesToSuperview()
-        bind()
-    }
-
-    func bind() {
+    func bindViewToViewModel() {
+        guard let contentView = view as? View else { return }
         let output = viewModel.transform(input: contentView.inputFromView)
         contentView.populate(with: output).forEach { $0.disposed(by: bag) }
     }

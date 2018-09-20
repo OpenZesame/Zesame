@@ -8,32 +8,33 @@
 
 import UIKit
 
-typealias ScrollingStackView = ScrollViewOwner & StackViewStyling
+typealias ScrollingStackView = ScrollView & StackViewStyling
 
-class ScrollViewOwner: UIView {
-
-    lazy var scrollView: UIScrollView = {
-        let contentView = makeView()
-        let scrollView = UIScrollView(frame: .zero)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(contentView)
-        contentView.edgesToSuperview()
-        contentView.widthToSuperview()
-        return scrollView
-    }()
+class ScrollView: UIScrollView {
 
     init() {
         super.init(frame: .zero)
-        addSubview(scrollView)
-        scrollView.edgesToSuperview()
+        setup()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
+    required init?(coder: NSCoder) { interfaceBuilderSucks }
 }
 
-private extension ScrollViewOwner {
+private extension ScrollView {
+    func setup() {
+        setupContentView()
+        contentInsetAdjustmentBehavior = .never
+    }
+
+    func setupContentView() {
+        let contentView = makeView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(contentView)
+        contentView.heightToSuperview()
+        contentView.widthToSuperview()
+        contentView.edgesToSuperview()
+    }
+
     func makeView() -> UIView {
         guard let viewProvider = self as? ContentViewProvider else { fatalError("should conform to `ContentViewProvider`") }
         return viewProvider.makeContentView()

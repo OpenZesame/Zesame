@@ -21,12 +21,11 @@ final class SettingsView: ScrollingStackView {
         stackViewStyle: UIStackView.Style(alignment: .center)
     )
 
-    lazy var stackViewStyle = UIStackView.Style([
-        .spacer,
+    lazy var stackViewStyle: UIStackView.Style = [
         removeWalletButton,
         appVersionLabels,
         .spacer
-    ], spacing: 16, margin: 16)
+    ]
 }
 
 extension SettingsView: ViewModelled {
