@@ -38,7 +38,7 @@ extension ChooseWalletNavigator {
         case .chosen(let wallet): chosenWallet(wallet)
         case .chooseWallet:
             navigationController?.pushViewController(
-                ChooseWalletController(viewModel: ChooseWalletViewModel(navigate(to:))),
+                ChooseWallet(viewModel: ChooseWalletViewModel(navigate(to:))),
                 animated: true
             )
         case .createNewWallet:

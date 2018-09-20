@@ -33,7 +33,7 @@ extension SettingsNavigator: Navigator {
         switch destination {
         case .settings:
             navigationController?.pushViewController(
-                SettingsController(
+                Settings(
                     viewModel: SettingsViewModel(navigate(to:))
                 ),
                 animated: true

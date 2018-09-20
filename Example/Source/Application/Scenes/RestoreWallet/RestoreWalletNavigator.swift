@@ -32,7 +32,7 @@ extension RestoreWalletNavigator: Navigator {
         case .restored(let wallet): didChooseWallet(wallet)
         case .restore:
             let viewModel = RestoreWalletViewModel(navigate(to:))
-            let vc = RestoreWalletController(viewModel: viewModel)
+            let vc = RestoreWallet(viewModel: viewModel)
             navigationController?.pushViewController(vc, animated: true)
         }
     }

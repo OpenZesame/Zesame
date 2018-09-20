@@ -47,7 +47,7 @@ private extension CreateNewWalletNavigator {
     private func makeViewController(for destination: Destination) -> UIViewController {
         switch destination {
         case .create:
-            return CreateNewWalletController(viewModel: CreateNewWalletViewModel(navigator: self))
+            return CreateNewWallet(viewModel: CreateNewWalletViewModel(navigator: self))
         default: fatalError("No support for `\(String(reflecting: destination))` yet")
         }
     }

@@ -33,7 +33,7 @@ extension SendNavigator: Navigator {
         switch destination {
         case .send:
             navigationController?.pushViewController(
-                SendController(
+                Send(
                     viewModel: SendViewModel(navigate(to:), service: DefaultZilliqaService(wallet: wallet))
                 ),
                 animated: true

@@ -11,8 +11,12 @@ import UIKit
 import RxSwift
 import TinyConstraints
 
+/// Use typealias when you don't require a subclass. If your use case requires subclass, inherit from `SceneController`.
+typealias Scene<View: UIView & ViewModelled> = SceneController<View>
+
 /// The "Single-Line Controller" base class
-class Scene<View, ViewModel>: UIViewController where View: UIView & ViewModelled, View.ViewModel == ViewModel {
+class SceneController<View>: UIViewController where View: UIView & ViewModelled {
+    typealias ViewModel = View.ViewModel
 
     private let bag = DisposeBag()
 
