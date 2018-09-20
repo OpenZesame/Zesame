@@ -38,8 +38,18 @@ extension SettingsViewModel: ViewModelType {
                 self.navigateTo(.chooseWallet)
             }).drive().disposed(by: bag)
 
+        let appVersionString: String? = {
+            guard
+                let info = Bundle.main.infoDictionary,
+                let version = info["CFBundleShortVersionString"] as? String,
+                let build = info["CFBundleVersion"] as? String
+                else { return nil }
+            return "\(version) (\(build))"
+        }()
+        let appVersion = Driver<String?>.just(appVersionString).filterNil()
+
         return Output(
-            appVersion: .just("HC: 0.0.1")
+            appVersion: appVersion
         )
     }
 }
