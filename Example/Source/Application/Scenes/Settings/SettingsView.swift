@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 // MARK: - SettingsView
-final class SettingsView: StackViewOwningView, StackViewStyling {
+final class SettingsView: ScrollingStackView {
 
     private lazy var removeWalletButton: UIButton = "Remove Wallet"
 

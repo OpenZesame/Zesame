@@ -17,6 +17,9 @@
 		4850A408214C122900EBB85B /* Makeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4850A407214C122900EBB85B /* Makeable.swift */; };
 		4850A40A214C124400EBB85B /* ViewStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4850A409214C124400EBB85B /* ViewStyling.swift */; };
 		4850A40C214C125400EBB85B /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4850A40B214C125400EBB85B /* ViewStyle.swift */; };
+		4898FB4521542333009501DC /* StackViewStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4898FB4421542333009501DC /* StackViewStyling.swift */; };
+		4898FB48215423D6009501DC /* ScrollViewOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4898FB47215423D6009501DC /* ScrollViewOwner.swift */; };
+		4898FB4A21542400009501DC /* ContentViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4898FB4921542400009501DC /* ContentViewProvider.swift */; };
 		489CDB9A2143E0CC00318450 /* ZilliqaSDKiOSExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B067B20BA0D2C00C4E50A /* ZilliqaSDKiOSExampleTests.swift */; };
 		489CDB9B2143E0D300318450 /* ZilliqaSDKiOSExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B067520BA0D2100C4E50A /* ZilliqaSDKiOSExampleUITests.swift */; };
 		489CDBCF2143FF3E00318450 /* FilterNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489CDBCE2143FF3E00318450 /* FilterNil.swift */; };
@@ -48,7 +51,6 @@
 		48C89FEA214331DA0063B0FA /* CreateNewWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE9214331DA0063B0FA /* CreateNewWalletView.swift */; };
 		48C89FEC214331F00063B0FA /* EmptyInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FEB214331F00063B0FA /* EmptyInitializable.swift */; };
 		48C89FEE214331FE0063B0FA /* ViewModelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FED214331FE0063B0FA /* ViewModelled.swift */; };
-		48C89FF12143321E0063B0FA /* StackViewOwningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF02143321E0063B0FA /* StackViewOwningView.swift */; };
 		48C89FF32143322C0063B0FA /* ChooseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF22143322C0063B0FA /* ChooseWalletView.swift */; };
 		48C89FF62143326F0063B0FA /* UIButton+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF52143326F0063B0FA /* UIButton+Styling.swift */; };
 		48C89FF92143328E0063B0FA /* UIStackView+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF82143328E0063B0FA /* UIStackView+Styling.swift */; };
@@ -152,6 +154,9 @@
 		4850A407214C122900EBB85B /* Makeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Makeable.swift; sourceTree = "<group>"; };
 		4850A409214C124400EBB85B /* ViewStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyling.swift; sourceTree = "<group>"; };
 		4850A40B214C125400EBB85B /* ViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyle.swift; sourceTree = "<group>"; };
+		4898FB4421542333009501DC /* StackViewStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewStyling.swift; sourceTree = "<group>"; };
+		4898FB47215423D6009501DC /* ScrollViewOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewOwner.swift; sourceTree = "<group>"; };
+		4898FB4921542400009501DC /* ContentViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewProvider.swift; sourceTree = "<group>"; };
 		489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Debug.xcconfig"; sourceTree = "<group>"; };
 		489CDB9E2143E26C00318450 /* Example-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Common.xcconfig"; sourceTree = "<group>"; };
 		489CDB9F2143E26C00318450 /* Example-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Release.xcconfig"; sourceTree = "<group>"; };
@@ -189,7 +194,6 @@
 		48C89FE9214331DA0063B0FA /* CreateNewWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletView.swift; sourceTree = "<group>"; };
 		48C89FEB214331F00063B0FA /* EmptyInitializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyInitializable.swift; sourceTree = "<group>"; };
 		48C89FED214331FE0063B0FA /* ViewModelled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelled.swift; sourceTree = "<group>"; };
-		48C89FF02143321E0063B0FA /* StackViewOwningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewOwningView.swift; sourceTree = "<group>"; };
 		48C89FF22143322C0063B0FA /* ChooseWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWalletView.swift; sourceTree = "<group>"; };
 		48C89FF52143326F0063B0FA /* UIButton+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Styling.swift"; sourceTree = "<group>"; };
 		48C89FF82143328E0063B0FA /* UIStackView+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Styling.swift"; sourceTree = "<group>"; };
@@ -373,6 +377,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		4898FB46215423B4009501DC /* SingleViewOwner */ = {
+			isa = PBXGroup;
+			children = (
+				4898FB47215423D6009501DC /* ScrollViewOwner.swift */,
+				4898FB4921542400009501DC /* ContentViewProvider.swift */,
+			);
+			path = SingleViewOwner;
+			sourceTree = "<group>";
+		};
 		489CDB9C2143E26C00318450 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,7 +553,7 @@
 				4850A40B214C125400EBB85B /* ViewStyle.swift */,
 				4850A409214C124400EBB85B /* ViewStyling.swift */,
 				4850A407214C122900EBB85B /* Makeable.swift */,
-				48C89FF02143321E0063B0FA /* StackViewOwningView.swift */,
+				4898FB4421542333009501DC /* StackViewStyling.swift */,
 				48C89FED214331FE0063B0FA /* ViewModelled.swift */,
 				48C89FF72143327A0063B0FA /* Styling */,
 			);
@@ -570,6 +583,7 @@
 		48C89FFB214335220063B0FA /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				4898FB46215423B4009501DC /* SingleViewOwner */,
 				48C89FEF2143320B0063B0FA /* Views+Styleable */,
 				48C89FFC2143353C0063B0FA /* UIFont_Extension.swift */,
 				48C8A0102143CE8F0063B0FA /* UIColor_Extension.swift */,
@@ -807,12 +821,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				48C89FE0214331590063B0FA /* Scene.swift in Sources */,
+				4898FB4A21542400009501DC /* ContentViewProvider.swift in Sources */,
 				4850A40A214C124400EBB85B /* ViewStyling.swift in Sources */,
 				48C89FDB214331050063B0FA /* OpenWalletUseCase.swift in Sources */,
 				48C8A0032143C5B20063B0FA /* UITextField+Styling.swift in Sources */,
 				48C8A0132143CF6C0063B0FA /* RestoreWallet.swift in Sources */,
 				48C8A0112143CE8F0063B0FA /* UIColor_Extension.swift in Sources */,
-				48C89FF12143321E0063B0FA /* StackViewOwningView.swift in Sources */,
 				484F7D7921441BF20023C6D4 /* Send.swift in Sources */,
 				48C89FE6214331AD0063B0FA /* CreateNewWalletNavigator.swift in Sources */,
 				48C8A00D2143CE3E0063B0FA /* StaticEmptyInitializable.swift in Sources */,
@@ -824,6 +838,7 @@
 				48AC6CB9214533C500B4D036 /* Unsafe︕！Cache.swift in Sources */,
 				48C89FE22143316B0063B0FA /* ChooseWallet.swift in Sources */,
 				48AC6CC42145AC4A00B4D036 /* SettingsViewModel.swift in Sources */,
+				4898FB48215423D6009501DC /* ScrollViewOwner.swift in Sources */,
 				48C89FF32143322C0063B0FA /* ChooseWalletView.swift in Sources */,
 				484F7D7821441BF20023C6D4 /* SendView.swift in Sources */,
 				484F7D7721441BF20023C6D4 /* SendNavigator.swift in Sources */,
@@ -842,6 +857,7 @@
 				48C89FFD2143353C0063B0FA /* UIFont_Extension.swift in Sources */,
 				48C89FF62143326F0063B0FA /* UIButton+Styling.swift in Sources */,
 				48AC6CC52145AC4A00B4D036 /* SettingsNavigator.swift in Sources */,
+				4898FB4521542333009501DC /* StackViewStyling.swift in Sources */,
 				48C8A001214335E70063B0FA /* AppNavigator.swift in Sources */,
 				48C89FEC214331F00063B0FA /* EmptyInitializable.swift in Sources */,
 				48AC6CCB2145AF3E00B4D036 /* UITabBarItem_Extension.swift in Sources */,

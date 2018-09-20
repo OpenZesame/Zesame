@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 // MARK: - SendView
-final class SendView: StackViewOwningView, StackViewStyling {
+final class SendView: ScrollingStackView {
 
     private lazy var addressLabels = LabelsView(
         titleStyle: "Your Public Address",

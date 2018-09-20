@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-final class RestoreWalletView: StackViewOwningView, StackViewStyling {
+final class RestoreWalletView: ScrollingStackView {
 
     private lazy var privateKeyField: UITextField = "Private Key"
     private lazy var restoreWalletButton: UIButton = "Restore Wallet"

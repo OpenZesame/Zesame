@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-final class ChooseWalletView: StackViewOwningView, StackViewStyling {
+final class ChooseWalletView: ScrollingStackView {
 
     private lazy var createNewWalletButton: UIButton = "New Wallet"
     private lazy var restoreWalletButton: UIButton = "Restore Wallet"
