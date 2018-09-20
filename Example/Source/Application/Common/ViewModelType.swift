@@ -1,5 +1,5 @@
 //
-//  ViewModelConvertible.swift
+//  ViewModelType.swift
 //  ZilliqaSDKiOSExample
 //
 //  Created by Alexander Cyon on 2018-09-08.
