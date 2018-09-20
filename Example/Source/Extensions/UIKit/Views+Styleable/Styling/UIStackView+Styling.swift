@@ -31,8 +31,8 @@ extension UIStackView: Styling, StaticEmptyInitializable {
             axis: NSLayoutConstraint.Axis? = nil,
             alignment: UIStackView.Alignment? = nil,
             distribution: UIStackView.Distribution? = nil,
-            spacing: CGFloat? = nil,
-            margin: CGFloat? = nil
+            spacing: CGFloat? = 16,
+            margin: CGFloat? = 16
         ) {
             self.views = views
             self.axis = axis

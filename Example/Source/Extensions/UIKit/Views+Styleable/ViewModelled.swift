@@ -1,5 +1,5 @@
 //
-//  SingleContentView.swift
+//  ViewModelled.swift
 //  ZilliqaSDKiOSExample
 //
 //  Created by Alexander Cyon on 2018-09-08.
@@ -8,11 +8,12 @@
 
 import RxSwift
 
-protocol SingleContentView: EmptyInitializable, AnyObject {
-    associatedtype ViewModel: ViewModelConvertible
+protocol ViewModelled: EmptyInitializable {
+    associatedtype ViewModel: ViewModelType
+    var inputFromView: ViewModel.Input { get }
     func populate(with viewModel: ViewModel.Output) -> [Disposable]
 }
 
-extension SingleContentView {
+extension ViewModelled {
     func populate(with viewModel: ViewModel.Output) -> [Disposable] { return [] }
 }

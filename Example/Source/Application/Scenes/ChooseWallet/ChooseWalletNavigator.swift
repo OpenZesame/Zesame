@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import ZilliqaSDK
 
-final class ChooseWalletNavigator: Navigator {
+struct ChooseWalletNavigator: Navigator {
 
     private weak var navigationController: UINavigationController?
     private let chosenWallet: (Wallet) -> Void
@@ -18,10 +18,6 @@ final class ChooseWalletNavigator: Navigator {
     init(navigationController: UINavigationController, chosenWallet: @escaping (Wallet) -> Void) {
         self.navigationController = navigationController
         self.chosenWallet = chosenWallet
-    }
-
-    deinit {
-        print("💣 ChooseWalletNavigator")
     }
 }
 
@@ -42,17 +38,17 @@ extension ChooseWalletNavigator {
         case .chosen(let wallet): chosenWallet(wallet)
         case .chooseWallet:
             navigationController?.pushViewController(
-                ChooseWalletController(viewModel: ChooseWalletViewModel(navigate(to:))),
+                ChooseWallet(viewModel: ChooseWalletViewModel(navigate(to:))),
                 animated: true
             )
         case .createNewWallet:
-            let navigator = CreateNewWalletNavigator(navigationController: navigationController) { [weak self] in
-                self?.navigate(to: .chosen(wallet: $0))
+            let navigator = CreateNewWalletNavigator(navigationController: navigationController) {
+                self.navigate(to: .chosen(wallet: $0))
             }
             navigator.start()
         case .restoreWallet:
-            let navigator = RestoreWalletNavigator(navigationController: navigationController) { [weak self] in
-                self?.navigate(to: .chosen(wallet: $0))
+            let navigator = RestoreWalletNavigator(navigationController: navigationController) {
+                self.navigate(to: .chosen(wallet: $0))
             }
             navigator.start()
         }

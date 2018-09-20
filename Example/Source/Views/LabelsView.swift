@@ -23,12 +23,13 @@ final class LabelsView: UIStackView {
 
         let defaultTitleStyle = UILabel.Style(font: .boldSystemFont(ofSize: 16), textColor: .black)
         let defaultvalueStyle = UILabel.Style(font: .systemFont(ofSize: 14), textColor: .darkGray)
-        let defaultStackViewStyle = UIStackView.Style(spacing: 8)
+        let defaultStackViewStyle = UIStackView.Style(spacing: 8, margin: 0)
 
         self.titleLabel = titleStyle.merged(other: defaultTitleStyle, mode: .overrideOther).make()
         self.valueLabel = valueStyle.merged(other: defaultvalueStyle, mode: .overrideOther).make()
 
         super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
         apply(style: stackViewStyle.merged(other: defaultStackViewStyle, mode: .overrideOther))
         [valueLabel, titleLabel].forEach { insertArrangedSubview($0, at: 0) }
     }

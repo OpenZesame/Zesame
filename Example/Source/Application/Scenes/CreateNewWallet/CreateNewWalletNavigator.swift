@@ -9,7 +9,7 @@
 import UIKit
 import ZilliqaSDK
 
-final class CreateNewWalletNavigator {
+struct CreateNewWalletNavigator {
 
     private weak var navigationController: UINavigationController?
     private let didChooseWallet: (Wallet) -> Void
@@ -17,10 +17,6 @@ final class CreateNewWalletNavigator {
     init(navigationController: UINavigationController?, didChooseWallet: @escaping (Wallet) -> Void) {
         self.navigationController = navigationController
         self.didChooseWallet = didChooseWallet
-    }
-
-    deinit {
-        print("💣 CreateNewWalletNavigator")
     }
 }
 
@@ -51,7 +47,7 @@ private extension CreateNewWalletNavigator {
     private func makeViewController(for destination: Destination) -> UIViewController {
         switch destination {
         case .create:
-            return CreateNewWalletController(viewModel: CreateNewWalletViewModel(navigator: self))
+            return CreateNewWallet(viewModel: CreateNewWalletViewModel(navigator: self))
         default: fatalError("No support for `\(String(reflecting: destination))` yet")
         }
     }

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 // MARK: - SendView
-final class SendView: StackViewOwningView, StackViewStyling {
+final class SendView: ScrollingStackView {
 
     private lazy var addressLabels = LabelsView(
         titleStyle: "Your Public Address",
@@ -34,7 +34,7 @@ final class SendView: StackViewOwningView, StackViewStyling {
     private lazy var transactionIdentifierLabel: UILabel = "No tx"
 
     // MARK: - StackViewStyling
-    lazy var stackViewStyle = UIStackView.Style([
+    lazy var stackViewStyle: UIStackView.Style = [
         addressLabels,
         publicKeyLabels,
         balanceLabels,
@@ -46,15 +46,15 @@ final class SendView: StackViewOwningView, StackViewStyling {
         sendButton,
         transactionIdentifierLabel,
         .spacer
-        ], spacing: 16, margin: 16)
+    ]
 }
 
 // MARK: - SingleContentView
 extension SendView: ViewModelled {
     typealias ViewModel = SendViewModel
 
-    var inputFromView: InputFromView {
-        return InputFromView(
+    var inputFromView: ViewModel.Input {
+        return ViewModel.Input(
             sendTrigger: sendButton.rx.tap.asDriver(),
             recepientAddress: recipientAddressField.rx.text.orEmpty.asDriver(),
             amountToSend: amountToSendField.rx.text.orEmpty.asDriver(),

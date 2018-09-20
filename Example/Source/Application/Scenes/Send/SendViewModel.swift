@@ -28,19 +28,12 @@ struct SendViewModel {
 
 extension SendViewModel: ViewModelType {
 
-    struct Input: InputType {
-        struct FromView {
-            let sendTrigger: Driver<Void>
-            let recepientAddress: Driver<String>
-            let amountToSend: Driver<String>
-            let gasLimit: Driver<String>
-            let gasPrice: Driver<String>
-        }
-        let fromView: FromView
-
-        init(fromView: FromView, fromController: NotUsed = nil) {
-            self.fromView = fromView
-        }
+    struct Input {
+        let sendTrigger: Driver<Void>
+        let recepientAddress: Driver<String>
+        let amountToSend: Driver<String>
+        let gasLimit: Driver<String>
+        let gasPrice: Driver<String>
     }
 
     struct Output {
@@ -68,16 +61,16 @@ extension SendViewModel: ViewModelType {
 
         let balance = wallet.map { "\($0.balance.amount) ZILs" }
 
-        let recipient = input.fromView.recepientAddress.map { Recipient(string: $0) }.filterNil()
-        let amount = input.fromView.amountToSend.map { Double($0) }.filterNil()
-        let gasLimit = input.fromView.gasLimit.map { Double($0) }.filterNil()
-        let gasPrice = input.fromView.gasPrice.map { Double($0) }.filterNil()
+        let recipient = input.recepientAddress.map { Recipient(string: $0) }.filterNil()
+        let amount = input.amountToSend.map { Double($0) }.filterNil()
+        let gasLimit = input.gasLimit.map { Double($0) }.filterNil()
+        let gasPrice = input.gasPrice.map { Double($0) }.filterNil()
 
         let payment = Driver.combineLatest(recipient, amount, gasLimit, gasPrice, wallet) {
             Payment(to: $0, amount: $1, gasLimit: $2, gasPrice: $3, from: $4)
         }.filterNil()
 
-        let transactionId: Driver<String> = input.fromView.sendTrigger
+        let transactionId: Driver<String> = input.sendTrigger
             .withLatestFrom(payment)
             .flatMapLatest {
                 self.service.rx.signAndMakeTransaction(payment: $0, using: self.wallet.keyPair)

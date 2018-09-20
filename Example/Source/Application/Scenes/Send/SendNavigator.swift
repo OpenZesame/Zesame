@@ -12,7 +12,7 @@ import RxCocoa
 import ZilliqaSDK
 
 // MARK: - SendNavigator
-final class SendNavigator {
+struct SendNavigator {
 
     private weak var navigationController: UINavigationController?
     private let wallet: Wallet
@@ -21,11 +21,6 @@ final class SendNavigator {
         self.navigationController = navigationController
         self.wallet = wallet
     }
-
-    deinit {
-        print("💣 SendNavigator")
-    }
-
 }
 
 extension SendNavigator: Navigator {
@@ -38,7 +33,7 @@ extension SendNavigator: Navigator {
         switch destination {
         case .send:
             navigationController?.pushViewController(
-                SendController(
+                Send(
                     viewModel: SendViewModel(navigate(to:), service: DefaultZilliqaService(wallet: wallet))
                 ),
                 animated: true

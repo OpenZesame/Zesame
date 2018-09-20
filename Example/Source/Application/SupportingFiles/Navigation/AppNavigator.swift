@@ -17,12 +17,9 @@ final class AppNavigator {
     init(window: UIWindow) {
         self.window = window
     }
-
-    deinit {
-        print("💣 AppNavigator")
-    }
 }
 
+// MARK: - Conformance: Navigator
 extension AppNavigator: Navigator {
 
     enum Destination {
@@ -51,6 +48,7 @@ extension AppNavigator: Navigator {
     }
 }
 
+// MARK: - Private
 private extension AppNavigator {
     func startChooseWalletFlow() {
         let navigationController = UINavigationController()

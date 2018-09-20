@@ -9,18 +9,22 @@
 import UIKit
 import RxSwift
 
-final class ChooseWalletView: StackViewOwningView, StackViewStyling {
+final class ChooseWalletView: ScrollingStackView {
 
-    lazy var createNewWalletButton: UIButton = "New Wallet"
-    lazy var restoreWalletButton: UIButton = "Restore Wallet"
+    private lazy var createNewWalletButton: UIButton = "New Wallet"
+    private lazy var restoreWalletButton: UIButton = "Restore Wallet"
 
-    lazy var stackViewStyle: UIStackView.Style = [createNewWalletButton, restoreWalletButton, .spacer]
+    lazy var stackViewStyle: UIStackView.Style = [
+        createNewWalletButton,
+        restoreWalletButton,
+        .spacer
+    ]
 }
 
 extension ChooseWalletView: ViewModelled {
     typealias ViewModel = ChooseWalletViewModel
-    var inputFromView: InputFromView {
-        return InputFromView(
+    var inputFromView: ViewModel.Input {
+        return ViewModel.Input(
             createNewTrigger: createNewWalletButton.rx.tap.asDriver(),
             restoreTrigger: restoreWalletButton.rx.tap.asDriver()
         )
