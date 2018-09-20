@@ -10,7 +10,7 @@ import Foundation
 import ZilliqaSDK
 
 
-final class MainNavigator: Navigator {
+struct MainNavigator: Navigator {
     enum Destination {
         case tab(Tab)
         enum Tab: Int {
@@ -27,10 +27,6 @@ final class MainNavigator: Navigator {
     private let settingsNavigator: SettingsNavigator
     private let wallet: Wallet
     private let chooseWallet: () -> Void
-
-    deinit {
-        print("💣 MainNavigator")
-    }
 
     init(navigationController: UINavigationController, wallet: Wallet, chooseWallet: @escaping () -> Void) {
         self.navigationController = navigationController

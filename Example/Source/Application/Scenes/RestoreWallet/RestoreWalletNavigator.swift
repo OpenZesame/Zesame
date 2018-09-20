@@ -9,7 +9,7 @@
 import UIKit
 import ZilliqaSDK
 
-final class RestoreWalletNavigator {
+struct RestoreWalletNavigator {
 
     private weak var navigationController: UINavigationController?
     private let didChooseWallet: (Wallet) -> Void
@@ -17,10 +17,6 @@ final class RestoreWalletNavigator {
     init(navigationController: UINavigationController?, didChooseWallet: @escaping (Wallet) -> Void) {
         self.navigationController = navigationController
         self.didChooseWallet = didChooseWallet
-    }
-
-    deinit {
-        print("💣 RestoreWalletNavigator")
     }
 }
 

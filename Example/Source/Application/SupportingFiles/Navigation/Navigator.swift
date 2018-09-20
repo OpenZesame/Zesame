@@ -10,7 +10,7 @@ import Foundation
 
 typealias Navigation<N: Navigator> = (N.Destination) -> Void
 
-protocol AnyNavigator: AnyObject {
+protocol AnyNavigator {
     func start()
 }
 
