@@ -9,6 +9,9 @@
 import EllipticCurveKit
 
 public typealias KeyPair = EllipticCurveKit.KeyPair<Secp256k1>
+public typealias PublicKey = EllipticCurveKit.PublicKey<Secp256k1>
+public typealias Signature = EllipticCurveKit.Signature<Secp256k1>
+public typealias Signer = EllipticCurveKit.AnyKeySigner<Schnorr<Secp256k1>>
 public typealias Address = EllipticCurveKit.PublicAddress<Zilliqa>
 public typealias Network = EllipticCurveKit.Zilliqa.Network
 
@@ -21,17 +24,17 @@ public struct Wallet {
 
     public init(keyPair: KeyPair, network: Network = .testnet, balance: Amount = 0, nonce: Nonce = 0) {
         self.keyPair = keyPair
-        self.address = Address(keyPair: keyPair, system: Zilliqa(network))
+        self.address = Address(keyPair: keyPair, system: Zilliqa(.mainnet))
         self.balance = balance
-        self.network = network
+        self.network = .mainnet
         self.nonce = nonce
     }
 }
 
 public extension Wallet {
-    init?(privateKeyHex: String) {
+    init?(privateKeyHex: String, network: Network = .testnet, balance: Amount = 1000000, nonce: Nonce = 0) {
         guard let keyPair = KeyPair(privateKeyHex: privateKeyHex) else { return nil }
-        self.init(keyPair: keyPair)
+        self.init(keyPair: keyPair, network: network, balance: balance, nonce: nonce)
     }
 }
 

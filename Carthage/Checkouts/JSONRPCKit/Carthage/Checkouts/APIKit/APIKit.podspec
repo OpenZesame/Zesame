@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = "APIKit"
-  s.version  = "3.1.2"
+  s.version  = "3.2.1"
   s.summary  = "Type-safe networking abstraction layer that associates request type with response type."
   s.homepage = "https://github.com/ishkawa/APIKit"
 
@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
       :tag => "#{s.version}",
   }
 
-  s.pod_target_xcconfigs = { "SWIFT_VERSION" => "4.0" }
+  s.pod_target_xcconfig = { "SWIFT_VERSION" => "4.0" }
 
   s.license = {
     :type => "MIT",

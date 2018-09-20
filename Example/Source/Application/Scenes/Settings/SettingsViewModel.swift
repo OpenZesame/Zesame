@@ -23,14 +23,8 @@ struct SettingsViewModel {
 
 extension SettingsViewModel: ViewModelType {
 
-    struct Input: InputType {
-        struct FromView {
-            let removeWalletTrigger: Driver<Void>
-        }
-        let fromView: FromView
-        init(fromView: FromView, fromController: NotUsed = nil) {
-            self.fromView = fromView
-        }
+    struct Input {
+        let removeWalletTrigger: Driver<Void>
     }
 
     struct Output {
@@ -39,13 +33,23 @@ extension SettingsViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
 
-        input.fromView.removeWalletTrigger
+        input.removeWalletTrigger
             .do(onNext: {
                 self.navigateTo(.chooseWallet)
             }).drive().disposed(by: bag)
 
+        let appVersionString: String? = {
+            guard
+                let info = Bundle.main.infoDictionary,
+                let version = info["CFBundleShortVersionString"] as? String,
+                let build = info["CFBundleVersion"] as? String
+                else { return nil }
+            return "\(version) (\(build))"
+        }()
+        let appVersion = Driver<String?>.just(appVersionString).filterNil()
+
         return Output(
-            appVersion: .just("HC: 0.0.1")
+            appVersion: appVersion
         )
     }
 }

@@ -9,48 +9,30 @@
 import Foundation
 import ZilliqaSDK
 
-
-final class MainNavigator: Navigator {
-    enum Destination {
-        case tab(Tab)
-        enum Tab: Int {
-            case send, settings
-        }
-
-        static var send: Destination { return .tab(.send) }
-        static var settings: Destination { return .tab(.settings) }
-    }
+struct MainNavigator {
 
     private weak var navigationController: UINavigationController?
-    private let tabBarController: UITabBarController
+    private let tabBarController = UITabBarController()
     private let sendNavigator: SendNavigator
     private let settingsNavigator: SettingsNavigator
     private let wallet: Wallet
     private let chooseWallet: () -> Void
-
-    deinit {
-        print("💣 MainNavigator")
-    }
 
     init(navigationController: UINavigationController, wallet: Wallet, chooseWallet: @escaping () -> Void) {
         self.navigationController = navigationController
         self.wallet = wallet
         self.chooseWallet = chooseWallet
 
-        tabBarController = UITabBarController()
-
         // SEND
         let sendNavigationController = UINavigationController()
         sendNavigationController.tabBarItem = UITabBarItem("Send")
         sendNavigator = SendNavigator(navigationController: sendNavigationController, wallet: wallet)
-        sendNavigator.start()
+
 
         // SETTINGS
         let settingsNavigationController = UINavigationController()
         settingsNavigationController.tabBarItem = UITabBarItem("Settings")
         settingsNavigator = SettingsNavigator(navigationController: settingsNavigationController, chooseWallet: chooseWallet)
-        settingsNavigator.start()
-
 
         tabBarController.viewControllers = [
             sendNavigationController,
@@ -58,6 +40,16 @@ final class MainNavigator: Navigator {
         ]
 
         navigationController.pushViewController(tabBarController, animated: false)
+    }
+}
+
+// MARK: - Conformance: Navigator
+extension MainNavigator: Navigator {
+    enum Destination {
+        case tab(Tab)
+        enum Tab: Int {
+            case send, settings
+        }
     }
 
     func navigate(to destination: Destination) {
@@ -67,12 +59,20 @@ final class MainNavigator: Navigator {
     }
 
     func start() {
+        sendNavigator.start()
+        settingsNavigator.start()
         navigate(to: .send)
     }
 }
 
+// MARK: Private
 private extension MainNavigator {
     func focus(tab: Destination.Tab) {
         tabBarController.selectedIndex = tab.rawValue
     }
+}
+
+private extension MainNavigator.Destination {
+    static var send: MainNavigator.Destination { return .tab(.send) }
+    static var settings: MainNavigator.Destination { return .tab(.settings) }
 }

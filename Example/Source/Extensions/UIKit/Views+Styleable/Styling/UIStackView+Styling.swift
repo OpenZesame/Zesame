@@ -8,47 +8,77 @@
 
 import UIKit
 
-
-
 extension UIStackView: Styling, StaticEmptyInitializable {
 
     public static func createEmpty() -> UIStackView {
         return UIStackView(arrangedSubviews: [])
     }
 
-    public final class Style: ViewStyle, ExpressibleByArrayLiteral {
+    public final class Style: ViewStyle, Makeable, ExpressibleByArrayLiteral {
 
-        typealias View = UIStackView
+        public typealias View = UIStackView
 
-        let axis: NSLayoutConstraint.Axis
-        let alignment: UIStackView.Alignment
-        let distribution: UIStackView.Distribution
-        let views: [UIView]
+        let axis: NSLayoutConstraint.Axis?
+        let alignment: UIStackView.Alignment?
+        let distribution: UIStackView.Distribution?
+        let views: [UIView]?
+        let spacing: CGFloat?
+        let margin: CGFloat?
 
-        init(
-            _ views: [UIView],
-            axis: NSLayoutConstraint.Axis = .vertical,
-            alignment: UIStackView.Alignment = .fill,
-            distribution: UIStackView.Distribution = .fill
+
+        public init(
+            _ views: [UIView]? = nil,
+            axis: NSLayoutConstraint.Axis? = nil,
+            alignment: UIStackView.Alignment? = nil,
+            distribution: UIStackView.Distribution? = nil,
+            spacing: CGFloat? = 16,
+            margin: CGFloat? = 16
         ) {
             self.views = views
             self.axis = axis
             self.alignment = alignment
             self.distribution = distribution
+            self.spacing = spacing
+            self.margin = margin
 
             // background color is irrelevant for stackviews
-            super.init(height: nil, backgroundColor: .red)
+            super.init(height: nil, backgroundColor: nil)
         }
 
         public convenience init(arrayLiteral views: UIView...) {
             self.init(views)
         }
+
+        public static var `default`: Style {
+            return Style()
+        }
+
+        public func merged(other: Style, mode: MergeMode) -> Style {
+            func merge<T>(_ attributePath: KeyPath<Style, T?>) -> T? {
+                return mergeAttribute(other: other, path: attributePath, mode: mode)
+            }
+
+            return Style(
+                merge(\.views),
+                axis: merge(\.axis),
+                alignment: merge(\.alignment),
+                distribution: merge(\.distribution),
+                spacing: merge(\.spacing)
+            )
+        }
     }
 
     public func apply(style: Style) {
-        style.views.reversed().forEach { self.insertArrangedSubview($0, at: 0) }
-        axis = style.axis
-        alignment = style.alignment
-        distribution = style.distribution
+        if let views = style.views, !views.isEmpty {
+            views.reversed().forEach { self.insertArrangedSubview($0, at: 0) }
+        }
+        axis = style.axis ?? .vertical
+        alignment = style.alignment ?? .fill
+        distribution = style.distribution ?? .fill
+        spacing = style.spacing ?? 0
+        if let margin = style.margin {
+            layoutMargins = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+            isLayoutMarginsRelativeArrangement = true
+        }
     }
 }

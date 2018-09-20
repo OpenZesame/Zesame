@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SettingsNavigator {
+struct SettingsNavigator {
 
     private weak var navigationController: UINavigationController?
 
@@ -19,10 +19,6 @@ final class SettingsNavigator {
     init(navigationController: UINavigationController?, chooseWallet: @escaping () -> Void) {
         self.navigationController = navigationController
         self.chooseWallet = chooseWallet
-    }
-
-    deinit {
-        print("💣 SettingsNavigator")
     }
 }
 
@@ -37,7 +33,7 @@ extension SettingsNavigator: Navigator {
         switch destination {
         case .settings:
             navigationController?.pushViewController(
-                SettingsController(
+                Settings(
                     viewModel: SettingsViewModel(navigate(to:))
                 ),
                 animated: true

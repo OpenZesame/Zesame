@@ -10,7 +10,7 @@ import Foundation
 import JSONRPCKit
 
 public struct BalanceRequest: JSONRPCKit.Request {
-    public typealias Response = Dictionary<String, Any>
+    public typealias Response = BalanceResponse
 
     public let publicAddress: String
     public init(publicAddress: String) {
@@ -23,15 +23,7 @@ public extension BalanceRequest {
         return "GetBalance"
     }
 
-    var parameters: Any? {
+    var parameters: Encodable? {
         return [publicAddress]
-    }
-
-    func response(from resultObject: Any) throws -> Response {
-        if let response = resultObject as? Response {
-            return response
-        } else {
-            throw Error.json(.cast(actualValue: resultObject, expectedType: Response.self))
-        }
     }
 }

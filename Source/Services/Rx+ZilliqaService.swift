@@ -9,31 +9,34 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import JSONRPCKit
+import APIKit
+import Result
 
 public extension Reactive where Base: (ZilliqaService & AnyObject) {
-    func getBalance() -> Driver<BalanceResponse> {
+
+    func getBalance() -> Observable<BalanceResponse> {
         return Single.create { [weak base] single in
             base?.getBalalance() {
                 switch $0 {
                 case .failure(let error): single(.error(error))
-                case .success(let balance): single(.success(balance))
+                case .success(let result): single(.success(result))
                 }
             }
             return Disposables.create {}
-        }.asObservable().asDriverOnErrorReturnEmpty()
+        }.asObservable()
     }
-}
 
-public extension DefaultZilliqaService {
-    func getBalance() -> Driver<BalanceResponse> {
-        return Single.create { [weak self] single in
-            self?.getBalalance() {
+    func signAndMakeTransaction(payment: Payment, using keyPair: KeyPair) -> Observable<TransactionIdentifier> {
+        return Single.create { [weak base] single in
+            base?.signAndMakeTransaction(payment: payment, using: keyPair) {
                 switch $0 {
                 case .failure(let error): single(.error(error))
-                case .success(let balance): single(.success(balance))
+                case .success(let result): single(.success(result))
                 }
             }
             return Disposables.create {}
-        }.asObservable().asDriverOnErrorReturnEmpty()
+        }.asObservable()
     }
+
 }

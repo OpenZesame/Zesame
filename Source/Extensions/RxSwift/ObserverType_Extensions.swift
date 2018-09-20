@@ -28,3 +28,4 @@ public extension ObservableType {
         return map { _ in }
     }
 }
+

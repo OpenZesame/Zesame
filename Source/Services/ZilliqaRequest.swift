@@ -29,11 +29,16 @@ public extension ZilliqaRequest {
     }
 
     var parameters: Any? {
-        return batch.requestObject
+        let encoder = JSONEncoder()
+        guard let data = try? encoder.encode(batch) else {
+            return nil
+        }
+        return try? JSONSerialization.jsonObject(with: data, options: [])
     }
 
     func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-        return try batch.responses(from: object)
+        let jsonData = try JSONSerialization.data(withJSONObject: object)
+        return try batch.responses(from: jsonData)
     }
 }
 

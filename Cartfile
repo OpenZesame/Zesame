@@ -1,6 +1,6 @@
 github "attaswift/BigInt"
 github "Sajjon/EllipticCurveKit" "legacy"
 github "krzyzanowskim/CryptoSwift"
-github "bricklife/JSONRPCKit"
+github "Sajjon/JSONRPCKit" "swift4.2"
 github "ishkawa/APIKit"
 github "ReactiveX/RxSwift" "4.2.0"

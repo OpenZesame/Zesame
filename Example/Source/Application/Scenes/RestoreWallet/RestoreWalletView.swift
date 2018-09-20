@@ -9,18 +9,22 @@
 import UIKit
 import RxSwift
 
-final class RestoreWalletView: StackViewOwningView, StackViewStyling {
+final class RestoreWalletView: ScrollingStackView {
 
-    lazy var privateKeyField: UITextField = "Private Key"
-    lazy var restoreWalletButton: UIButton = "Restore Wallet"
+    private lazy var privateKeyField: UITextField = "Private Key"
+    private lazy var restoreWalletButton: UIButton = "Restore Wallet"
 
-    lazy var stackViewStyle: UIStackView.Style = [privateKeyField, restoreWalletButton, .spacer]
+    lazy var stackViewStyle: UIStackView.Style = [
+        privateKeyField,
+        restoreWalletButton,
+        .spacer
+    ]
 }
 
 extension RestoreWalletView: ViewModelled {
     typealias ViewModel = RestoreWalletViewModel
-    var inputFromView: InputFromView {
-        return InputFromView(
+    var inputFromView: ViewModel.Input {
+        return ViewModel.Input(
             privateKey: privateKeyField.rx.text.orEmpty.asDriver(),
             restoreTrigger: restoreWalletButton.rx.tap.asDriver()
         )

@@ -10,13 +10,13 @@ import Foundation
 
 public struct Nonce {
     public let nonce: Int
-    public init(nonce: Int = 0) {
+    public init(_ nonce: Int = 0) {
         self.nonce = nonce
     }
 }
 
 extension Nonce: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: Int) {
-        self.init(nonce: value)
+        self.init(value)
     }
 }
