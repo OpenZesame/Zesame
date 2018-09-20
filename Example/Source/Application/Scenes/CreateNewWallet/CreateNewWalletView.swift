@@ -20,7 +20,7 @@ final class CreateNewWalletView: StackViewOwningView, StackViewStyling {
 // MARK: - ViewModelled
 extension CreateNewWalletView: ViewModelled {
     typealias ViewModel = CreateNewWalletViewModel
-    var inputFromView: InputFromView {
-        return InputFromView()
+    var inputFromView: ViewModel.Input {
+        return ViewModel.Input()
     }
 }

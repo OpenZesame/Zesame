@@ -11,16 +11,21 @@ import RxSwift
 
 final class RestoreWalletView: StackViewOwningView, StackViewStyling {
 
-    lazy var privateKeyField: UITextField = "Private Key"
-    lazy var restoreWalletButton: UIButton = "Restore Wallet"
+    private lazy var privateKeyField: UITextField = "Private Key"
+    private lazy var restoreWalletButton: UIButton = "Restore Wallet"
 
-    lazy var stackViewStyle: UIStackView.Style = [privateKeyField, restoreWalletButton, .spacer]
+    lazy var stackViewStyle = UIStackView.Style([
+        .spacer,
+        privateKeyField,
+        restoreWalletButton,
+        .spacer
+    ], spacing: 16, margin: 16)
 }
 
 extension RestoreWalletView: ViewModelled {
     typealias ViewModel = RestoreWalletViewModel
-    var inputFromView: InputFromView {
-        return InputFromView(
+    var inputFromView: ViewModel.Input {
+        return ViewModel.Input(
             privateKey: privateKeyField.rx.text.orEmpty.asDriver(),
             restoreTrigger: restoreWalletButton.rx.tap.asDriver()
         )

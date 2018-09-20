@@ -8,34 +8,8 @@
 
 import Foundation
 
-protocol ViewModelConvertible {
+protocol ViewModelType {
     associatedtype Input
     associatedtype Output
     func transform(input: Input) -> Output
-}
-
-protocol ViewModelType: ViewModelConvertible where Input: InputType {}
-
-protocol InputType {
-    associatedtype FromView
-    associatedtype FromController
-    var fromView: FromView { get }
-    var fromController: FromController { get }
-    init(fromView: FromView, fromController: FromController)
-}
-
-struct NotUsed: ExpressibleByNilLiteral {
-    init(nilLiteral: ()) {}
-}
-
-extension InputType {
-    var fromController: NotUsed {
-        return nil
-    }
-}
-
-extension InputType where FromController == NotUsed {
-    init(fromView: FromView) {
-        self.init(fromView: fromView, fromController: nil)
-    }
 }

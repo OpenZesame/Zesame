@@ -11,16 +11,21 @@ import RxSwift
 
 final class ChooseWalletView: StackViewOwningView, StackViewStyling {
 
-    lazy var createNewWalletButton: UIButton = "New Wallet"
-    lazy var restoreWalletButton: UIButton = "Restore Wallet"
+    private lazy var createNewWalletButton: UIButton = "New Wallet"
+    private lazy var restoreWalletButton: UIButton = "Restore Wallet"
 
-    lazy var stackViewStyle: UIStackView.Style = [createNewWalletButton, restoreWalletButton, .spacer]
+    lazy var stackViewStyle = UIStackView.Style([
+        .spacer,
+        createNewWalletButton,
+        restoreWalletButton,
+        .spacer
+        ], spacing: 16, margin: 16)
 }
 
 extension ChooseWalletView: ViewModelled {
     typealias ViewModel = ChooseWalletViewModel
-    var inputFromView: InputFromView {
-        return InputFromView(
+    var inputFromView: ViewModel.Input {
+        return ViewModel.Input(
             createNewTrigger: createNewWalletButton.rx.tap.asDriver(),
             restoreTrigger: restoreWalletButton.rx.tap.asDriver()
         )

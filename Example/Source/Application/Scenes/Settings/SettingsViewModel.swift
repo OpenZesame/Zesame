@@ -23,14 +23,8 @@ struct SettingsViewModel {
 
 extension SettingsViewModel: ViewModelType {
 
-    struct Input: InputType {
-        struct FromView {
-            let removeWalletTrigger: Driver<Void>
-        }
-        let fromView: FromView
-        init(fromView: FromView, fromController: NotUsed = nil) {
-            self.fromView = fromView
-        }
+    struct Input {
+        let removeWalletTrigger: Driver<Void>
     }
 
     struct Output {
@@ -39,7 +33,7 @@ extension SettingsViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
 
-        input.fromView.removeWalletTrigger
+        input.removeWalletTrigger
             .do(onNext: {
                 self.navigateTo(.chooseWallet)
             }).drive().disposed(by: bag)

@@ -40,14 +40,14 @@
 		48C89FCF21432E440063B0FA /* CreateNewWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCE21432E440063B0FA /* CreateNewWalletViewModel.swift */; };
 		48C89FDB214331050063B0FA /* OpenWalletUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FDA214331050063B0FA /* OpenWalletUseCase.swift */; };
 		48C89FDE2143313B0063B0FA /* KeyRestoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FDD2143313B0063B0FA /* KeyRestoration.swift */; };
-		48C89FE0214331590063B0FA /* SingleContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FDF214331590063B0FA /* SingleContentViewController.swift */; };
+		48C89FE0214331590063B0FA /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FDF214331590063B0FA /* Scene.swift */; };
 		48C89FE22143316B0063B0FA /* ChooseWalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE12143316B0063B0FA /* ChooseWalletController.swift */; };
 		48C89FE42143318E0063B0FA /* ChooseWalletNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE32143318E0063B0FA /* ChooseWalletNavigator.swift */; };
 		48C89FE6214331AD0063B0FA /* CreateNewWalletNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE5214331AD0063B0FA /* CreateNewWalletNavigator.swift */; };
 		48C89FE8214331CB0063B0FA /* CreateNewWalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE7214331CB0063B0FA /* CreateNewWalletController.swift */; };
 		48C89FEA214331DA0063B0FA /* CreateNewWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE9214331DA0063B0FA /* CreateNewWalletView.swift */; };
 		48C89FEC214331F00063B0FA /* EmptyInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FEB214331F00063B0FA /* EmptyInitializable.swift */; };
-		48C89FEE214331FE0063B0FA /* SingleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FED214331FE0063B0FA /* SingleContentView.swift */; };
+		48C89FEE214331FE0063B0FA /* ViewModelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FED214331FE0063B0FA /* ViewModelled.swift */; };
 		48C89FF12143321E0063B0FA /* StackViewOwningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF02143321E0063B0FA /* StackViewOwningView.swift */; };
 		48C89FF32143322C0063B0FA /* ChooseWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF22143322C0063B0FA /* ChooseWalletView.swift */; };
 		48C89FF62143326F0063B0FA /* UIButton+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FF52143326F0063B0FA /* UIButton+Styling.swift */; };
@@ -181,14 +181,14 @@
 		48C89FCE21432E440063B0FA /* CreateNewWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletViewModel.swift; sourceTree = "<group>"; };
 		48C89FDA214331050063B0FA /* OpenWalletUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWalletUseCase.swift; sourceTree = "<group>"; };
 		48C89FDD2143313B0063B0FA /* KeyRestoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyRestoration.swift; sourceTree = "<group>"; };
-		48C89FDF214331590063B0FA /* SingleContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleContentViewController.swift; sourceTree = "<group>"; };
+		48C89FDF214331590063B0FA /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		48C89FE12143316B0063B0FA /* ChooseWalletController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWalletController.swift; sourceTree = "<group>"; };
 		48C89FE32143318E0063B0FA /* ChooseWalletNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWalletNavigator.swift; sourceTree = "<group>"; };
 		48C89FE5214331AD0063B0FA /* CreateNewWalletNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletNavigator.swift; sourceTree = "<group>"; };
 		48C89FE7214331CB0063B0FA /* CreateNewWalletController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletController.swift; sourceTree = "<group>"; };
 		48C89FE9214331DA0063B0FA /* CreateNewWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletView.swift; sourceTree = "<group>"; };
 		48C89FEB214331F00063B0FA /* EmptyInitializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyInitializable.swift; sourceTree = "<group>"; };
-		48C89FED214331FE0063B0FA /* SingleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleContentView.swift; sourceTree = "<group>"; };
+		48C89FED214331FE0063B0FA /* ViewModelled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelled.swift; sourceTree = "<group>"; };
 		48C89FF02143321E0063B0FA /* StackViewOwningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewOwningView.swift; sourceTree = "<group>"; };
 		48C89FF22143322C0063B0FA /* ChooseWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWalletView.swift; sourceTree = "<group>"; };
 		48C89FF52143326F0063B0FA /* UIButton+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Styling.swift"; sourceTree = "<group>"; };
@@ -510,7 +510,7 @@
 			isa = PBXGroup;
 			children = (
 				48C89FCA21432E220063B0FA /* ViewModelConvertible.swift */,
-				48C89FDF214331590063B0FA /* SingleContentViewController.swift */,
+				48C89FDF214331590063B0FA /* Scene.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -541,7 +541,7 @@
 				4850A409214C124400EBB85B /* ViewStyling.swift */,
 				4850A407214C122900EBB85B /* Makeable.swift */,
 				48C89FF02143321E0063B0FA /* StackViewOwningView.swift */,
-				48C89FED214331FE0063B0FA /* SingleContentView.swift */,
+				48C89FED214331FE0063B0FA /* ViewModelled.swift */,
 				48C89FF72143327A0063B0FA /* Styling */,
 			);
 			path = "Views+Styleable";
@@ -806,7 +806,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48C89FE0214331590063B0FA /* SingleContentViewController.swift in Sources */,
+				48C89FE0214331590063B0FA /* Scene.swift in Sources */,
 				4850A40A214C124400EBB85B /* ViewStyling.swift in Sources */,
 				48C89FDB214331050063B0FA /* OpenWalletUseCase.swift in Sources */,
 				48C8A0032143C5B20063B0FA /* UITextField+Styling.swift in Sources */,
@@ -836,7 +836,7 @@
 				48B16E3021452A2600177434 /* Never.swift in Sources */,
 				48C8A00B2143CDB50063B0FA /* RestoreWalletNavigator.swift in Sources */,
 				48C89FDE2143313B0063B0FA /* KeyRestoration.swift in Sources */,
-				48C89FEE214331FE0063B0FA /* SingleContentView.swift in Sources */,
+				48C89FEE214331FE0063B0FA /* ViewModelled.swift in Sources */,
 				48AC6CC32145AC4A00B4D036 /* SettingsController.swift in Sources */,
 				48C8A00F2143CE490063B0FA /* Styling.swift in Sources */,
 				48C89FFD2143353C0063B0FA /* UIFont_Extension.swift in Sources */,

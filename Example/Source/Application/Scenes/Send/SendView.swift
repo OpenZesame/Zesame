@@ -53,8 +53,8 @@ final class SendView: StackViewOwningView, StackViewStyling {
 extension SendView: ViewModelled {
     typealias ViewModel = SendViewModel
 
-    var inputFromView: InputFromView {
-        return InputFromView(
+    var inputFromView: ViewModel.Input {
+        return ViewModel.Input(
             sendTrigger: sendButton.rx.tap.asDriver(),
             recepientAddress: recipientAddressField.rx.text.orEmpty.asDriver(),
             amountToSend: amountToSendField.rx.text.orEmpty.asDriver(),

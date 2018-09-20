@@ -13,16 +13,20 @@ import RxCocoa
 // MARK: - SettingsView
 final class SettingsView: StackViewOwningView, StackViewStyling {
 
-    lazy var removeWalletButton: UIButton = "Remove Wallet"
-    lazy var appVersionTitleLabel: UILabel = "App Version"
-    lazy var appVersionValueLabel = UILabel.Style().make()
+    private lazy var removeWalletButton: UIButton = "Remove Wallet"
 
-    lazy var stackViewStyle: UIStackView.Style = [
-        removeWalletButton,
+    private lazy var appVersionLabels = LabelsView(
+        titleStyle: "App Version",
+        valueStyle: "🤷‍♀️",
+        stackViewStyle: UIStackView.Style(alignment: .center)
+    )
+
+    lazy var stackViewStyle = UIStackView.Style([
         .spacer,
-        appVersionTitleLabel,
-        appVersionValueLabel
-    ]
+        removeWalletButton,
+        appVersionLabels,
+        .spacer
+    ], spacing: 16, margin: 16)
 }
 
 extension SettingsView: ViewModelled {
@@ -31,12 +35,12 @@ extension SettingsView: ViewModelled {
 
     func populate(with viewModel: ViewModel.Output) -> [Disposable] { 
         return [
-        	viewModel.appVersion --> appVersionValueLabel
-        ] 
+        	viewModel.appVersion --> appVersionLabels
+        ]
     }
 
-    var inputFromView: InputFromView {
-        return InputFromView(
+    var inputFromView: ViewModel.Input {
+        return ViewModel.Input(
             removeWalletTrigger: removeWalletButton.rx.tap.asDriver()
         )
     }
