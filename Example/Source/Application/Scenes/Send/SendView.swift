@@ -65,11 +65,11 @@ extension SendView: ViewModelled {
 
     func populate(with viewModel: ViewModel.Output) -> [Disposable] {
         return [
-            viewModel.address --> addressLabels,
-            viewModel.publicKey --> publicKeyLabels,
-            viewModel.balance --> balanceLabels,
-            viewModel.nonce --> nonceLabels,
-            viewModel.transactionId --> transactionIdentifierLabel
+            viewModel.address           --> addressLabels,
+            viewModel.publicKey         --> publicKeyLabels,
+            viewModel.balance           --> balanceLabels,
+            viewModel.nonce             --> nonceLabels,
+            viewModel.transactionId     --> transactionIdentifierLabel
         ]
     }
 }
