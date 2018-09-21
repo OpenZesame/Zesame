@@ -1,5 +1,5 @@
 github "attaswift/BigInt"
-github "Sajjon/EllipticCurveKit" "legacy"
+github "Sajjon/EllipticCurveKit" "master"
 github "krzyzanowskim/CryptoSwift"
 github "Sajjon/JSONRPCKit" "swift4.2"
 github "ishkawa/APIKit"

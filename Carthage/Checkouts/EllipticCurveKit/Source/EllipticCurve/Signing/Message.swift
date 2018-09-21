@@ -1,6 +1,6 @@
 //
 //  Message.swift
-//  SwiftCrypto
+//  EllipticCurveKit
 //
 //  Created by Alexander Cyon on 2018-07-09.
 //  Copyright © 2018 Alexander Cyon. All rights reserved.
@@ -17,7 +17,7 @@ public struct Message: Equatable, CustomStringConvertible {
 
     public init(message: String) {
         func hash256(for message: String) -> Data {
-            return Crypto.sha2Sha256(message.data(using: .utf8, allowLossyConversion: false)!)
+            return Crypto.sha2Sha256(message.data(using: .ascii, allowLossyConversion: false)!)
         }
         self.hexString = hash256(for: message).toHexString()
     }

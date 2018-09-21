@@ -1,6 +1,6 @@
 //
 //  Signature.swift
-//  SwiftCrypto
+//  EllipticCurveKit
 //
 //  Created by Alexander Cyon on 2018-07-09.
 //  Copyright © 2018 Alexander Cyon. All rights reserved.
@@ -38,6 +38,7 @@ public extension Signature {
             hex.count == 128,
         case let rHex = String(hex.prefix(64)),
         case let sHex = String(hex.suffix(64)),
+            sHex.count == 64 ,
         let r = Number(hexString: rHex),
         let s = Number(hexString: sHex)
             else { return nil }
