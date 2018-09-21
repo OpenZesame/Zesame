@@ -17,6 +17,7 @@ final class CreateNewWalletView: ScrollingStackView {
 
     // MARK: - StackViewStyling
     lazy var stackViewStyle: UIStackView.Style = [
+        walletView,
         emailForKeystoreBackupField,
         sendBackupButton,
         .spacer
@@ -35,7 +36,8 @@ extension CreateNewWalletView: ViewModelled {
 
     func populate(with viewModel: ViewModel.Output) -> [Disposable] {
         return [
-            viewModel.canSendBackup --> sendBackupButton.rx.isEnabled
+            viewModel.canSendBackup --> sendBackupButton.rx.isEnabled,
+            viewModel.wallet        --> walletView.rx.wallet
         ]
     }
 }

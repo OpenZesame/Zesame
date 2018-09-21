@@ -15,6 +15,18 @@ import Result
 
 extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObject) {
 
+    public func createNewWallet() -> Observable<Wallet> {
+        return Single.create { [unowned base] single in
+            DispatchQueue.global(qos: .background).async {
+                let newWallet = base.createNewWallet()
+                DispatchQueue.main.async {
+                    single(.success(newWallet))
+                }
+            }
+              return Disposables.create {}
+        }.asObservable()
+    }
+
     public func getBalance(for address: Address) -> Observable<BalanceResponse> {
         return callBase {
             $0.getBalalance(for: address, done: $1)

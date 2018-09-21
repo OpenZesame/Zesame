@@ -62,11 +62,11 @@ extension CreateNewWalletViewModel: ViewModelType {
 
         let isEmailValid = input.emailAddress.map { $0.validates(by: emailValidator) }.startWith(false)
 
-//        let wallet = service.rx
+        let wallet = service.createNewWallet().asDriverOnErrorReturnEmpty()
 
         return Output(
             canSendBackup: isEmailValid,
-            wallet: .empty()
+            wallet: wallet
         )
     }
 

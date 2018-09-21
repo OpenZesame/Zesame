@@ -16,11 +16,13 @@ import RxSwift
 
 public protocol ZilliqaService {
     var apiClient: APIClient { get }
+    func createNewWallet() -> Wallet
     func getBalalance(for address: Address, done: @escaping RequestDone<BalanceResponse>)
     func send(transaction: Transaction, done: @escaping RequestDone<TransactionIdentifier>)
 }
 
 public protocol ZilliqaServiceReactive {
+    func createNewWallet() -> Observable<Wallet>
     func getBalance(for address: Address) -> Observable<BalanceResponse>
     func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier>
 }
