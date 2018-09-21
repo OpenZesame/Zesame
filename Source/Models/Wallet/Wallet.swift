@@ -15,6 +15,19 @@ public typealias Signer = EllipticCurveKit.AnyKeySigner<Schnorr<Secp256k1>>
 public typealias Address = EllipticCurveKit.PublicAddress<Zilliqa>
 public typealias Network = EllipticCurveKit.Zilliqa.Network
 
+extension EllipticCurveKit.PublicKey: CustomStringConvertible {
+    public var description: String {
+        return hex.compressed
+    }
+}
+
+extension EllipticCurveKit.PublicAddress: CustomStringConvertible {
+    public var description: String {
+        return address
+    }
+}
+
+
 public struct Wallet {
     public let keyPair: KeyPair
     public let address: Address
@@ -42,7 +55,9 @@ extension Wallet: CustomStringConvertible {}
 public extension Wallet {
     var description: String {
         return """
-        address: '\(address.address)'
+            address: '\(address)'
+            publicKey: '\(keyPair.publicKey)'
+            balance: '\(balance)'
         """
     }
 }

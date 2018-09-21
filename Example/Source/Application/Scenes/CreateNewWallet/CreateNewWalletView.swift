@@ -11,16 +11,31 @@ import RxSwift
 
 final class CreateNewWalletView: ScrollingStackView {
 
-    private lazy var createNewWalletButton: UIButton = "New Wallet"
+    private lazy var walletView = WalletView()
+    private lazy var emailForKeystoreBackupField: UITextField = "Email for keystore backup"
+    private lazy var sendBackupButton: UIButton = "Send keystore backup "
 
     // MARK: - StackViewStyling
-    lazy var stackViewStyle: UIStackView.Style = [createNewWalletButton, .spacer]
+    lazy var stackViewStyle: UIStackView.Style = [
+        emailForKeystoreBackupField,
+        sendBackupButton,
+        .spacer
+    ]
 }
 
 // MARK: - ViewModelled
 extension CreateNewWalletView: ViewModelled {
     typealias ViewModel = CreateNewWalletViewModel
     var inputFromView: ViewModel.Input {
-        return ViewModel.Input()
+        return ViewModel.Input(
+            emailAddress: emailForKeystoreBackupField.rx.text.asDriverOnErrorReturnEmpty(),
+            sendBackupTrigger: sendBackupButton.rx.tap.asDriverOnErrorReturnEmpty()
+        )
+    }
+
+    func populate(with viewModel: ViewModel.Output) -> [Disposable] {
+        return [
+            viewModel.canSendBackup --> sendBackupButton.rx.isEnabled
+        ]
     }
 }

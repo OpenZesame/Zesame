@@ -90,3 +90,9 @@ public extension Amount {
     }
 }
 
+extension Amount: CustomStringConvertible {
+    public var description: String {
+        return "\(amount) ZILs"
+    }
+}
+

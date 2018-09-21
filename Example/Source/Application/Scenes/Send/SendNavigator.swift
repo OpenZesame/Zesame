@@ -34,7 +34,7 @@ extension SendNavigator: Navigator {
         case .send:
             navigationController?.pushViewController(
                 Send(
-                    viewModel: SendViewModel(navigate(to:), service: DefaultZilliqaService(wallet: wallet))
+                    viewModel: SendViewModel(navigate(to:), wallet: wallet, service: DefaultZilliqaService.shared.rx)
                 ),
                 animated: true
             )

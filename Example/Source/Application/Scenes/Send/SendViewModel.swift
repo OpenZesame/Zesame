@@ -16,13 +16,13 @@ struct SendViewModel {
     
     typealias NavigationTo = Navigation<SendNavigator>
     private let navigateTo: NavigationTo
-    private let service: DefaultZilliqaService
+    private let service: ZilliqaServiceReactive
     private let wallet: Wallet
 
-    init(_ navigation: @escaping NavigationTo, service: DefaultZilliqaService) {
+    init(_ navigation: @escaping NavigationTo, wallet: Wallet, service: ZilliqaServiceReactive) {
         self.navigateTo = navigation
         self.service = service
-        self.wallet = service.wallet
+        self.wallet = wallet
     }
 }
 
@@ -37,34 +37,29 @@ extension SendViewModel: ViewModelType {
     }
 
     struct Output {
-        let address: Driver<String>
-        let publicKey: Driver<String>
-        let balance: Driver<String>
-        let nonce: Driver<String>
+        let wallet: Driver<Wallet>
         let transactionId: Driver<String>
     }
 
     func transform(input: Input) -> Output {
 
+        let _address = self.wallet.address
 
         let fetchBalanceSubject = BehaviorSubject<Void>(value: ())
 
         let fetchTrigger = fetchBalanceSubject.asDriverOnErrorReturnEmpty()
 
-        let balanceAndNonce: Driver<BalanceResponse> = fetchTrigger.flatMapLatest {
-            self.service.rx
-                .getBalance()
+        let balanceAndNonce: Driver<BalanceResponse> = fetchTrigger.flatMapLatest { _ in 
+            self.service
+                .getBalance(for: _address)
                 .asDriverOnErrorReturnEmpty()
         }
 
-        let _keyPair = service.wallet.keyPair
+        let _keyPair = self.wallet.keyPair
         let wallet: Driver<Wallet> = balanceAndNonce.map { balance in
             let amount = try! Amount(double: Double(balance.balance)!)
             return Wallet(keyPair: _keyPair, balance: amount, nonce: Nonce(balance.nonce))
         }
-
-
-        let balance = wallet.map { "\($0.balance.amount) ZILs" }
 
         let recipient = input.recepientAddress.map { Recipient(string: $0) }.filterNil()
         let amount = input.amountToSend.map { Double($0) }.filterNil()
@@ -78,7 +73,7 @@ extension SendViewModel: ViewModelType {
         let transactionId: Driver<String> = input.sendTrigger
             .withLatestFrom(Driver.combineLatest(payment, wallet) { (payment: $0, keyPair: $1.keyPair) })
             .flatMapLatest {
-                self.service.rx.sendTransaction(for: $0.payment, signWith: $0.keyPair)
+                self.service.sendTransaction(for: $0.payment, signWith: $0.keyPair)
                     .asDriverOnErrorReturnEmpty()
                     // Trigger fetching of balance after successfull send
                     .do(onNext: { _ in
@@ -87,10 +82,7 @@ extension SendViewModel: ViewModelType {
         }
 
         return Output(
-            address: wallet.map { $0.address.address },
-            publicKey: wallet.map { $0.keyPair.publicKey.hex.compressed },
-            balance: balance,
-            nonce: wallet.map { String(describing: $0.nonce.nonce) },
+            wallet: wallet,
             transactionId: transactionId
         )
     }

@@ -47,7 +47,7 @@ private extension CreateNewWalletNavigator {
     private func makeViewController(for destination: Destination) -> UIViewController {
         switch destination {
         case .create:
-            return CreateNewWallet(viewModel: CreateNewWalletViewModel(navigator: self))
+            return CreateNewWallet(viewModel: CreateNewWalletViewModel(navigator: self, service: DefaultZilliqaService.shared.rx))
         default: fatalError("No support for `\(String(reflecting: destination))` yet")
         }
     }

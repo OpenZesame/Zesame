@@ -1,33 +1,15 @@
 //
-//  ZilliqaService.swift
-//  ZilliqaSDK iOS
+//  ZilliqaService+Signing.swift
+//  ZilliqaSDK
 //
-//  Created by Alexander Cyon on 2018-09-09.
+//  Created by Alexander Cyon on 2018-09-22.
 //  Copyright © 2018 Open Zesame. All rights reserved.
 //
 
-import Foundation
 import EllipticCurveKit
-import JSONRPCKit
-import Result
-import APIKit
-import RxCocoa
-import RxSwift
-
-public typealias TransactionIdentifier = String
-
-public protocol ZilliqaService {
-
-    var wallet: Wallet { get }
-    var apiClient: APIClient { get }
-
-    func getBalalance(done: @escaping RequestDone<BalanceResponse>)
-
-    func send(transaction: Transaction, done: @escaping RequestDone<TransactionIdentifier>)
-}
 
 public extension ZilliqaService {
-    
+
     func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, done: @escaping RequestDone<TransactionIdentifier>) {
         let transaction = sign(payment: payment, using: keyPair)
         send(transaction: transaction, done: done)

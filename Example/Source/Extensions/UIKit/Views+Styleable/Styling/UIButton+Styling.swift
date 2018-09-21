@@ -20,6 +20,8 @@ extension UIButton: Styling, StaticEmptyInitializable, ExpressibleByStringLitera
 
         let text: String?
         let textColor: UIColor?
+        let colorNormal: UIColor?
+        let colorDisabled: UIColor?
         let font: UIFont?
 
         init(
@@ -27,12 +29,15 @@ extension UIButton: Styling, StaticEmptyInitializable, ExpressibleByStringLitera
             height: CGFloat? = nil,
             font: UIFont? = nil,
             textColor: UIColor? = nil,
-            backgroundColor: UIColor? = nil
+            colorNormal: UIColor? = nil,
+            colorDisabled: UIColor? = nil
             ) {
             self.text = text
             self.textColor = textColor
+            self.colorNormal = colorNormal
+            self.colorDisabled = colorDisabled
             self.font = font
-            super.init(height: height ?? .defaultHeight, backgroundColor: backgroundColor)
+            super.init(height: height ?? .defaultHeight, backgroundColor: nil)
         }
 
         public convenience init(stringLiteral title: String) {
@@ -49,7 +54,8 @@ extension UIButton: Styling, StaticEmptyInitializable, ExpressibleByStringLitera
                 height: merge(\.height),
                 font: merge(\.font),
                 textColor: merge(\.textColor),
-                backgroundColor: merge(\.backgroundColor)
+                colorNormal: merge(\.colorNormal),
+                colorDisabled: merge(\.colorDisabled)
             )
         }
     }
@@ -58,6 +64,21 @@ extension UIButton: Styling, StaticEmptyInitializable, ExpressibleByStringLitera
         setTitle(style.text, for: UIControl.State())
         setTitleColor(style.textColor ?? .defaultText, for: UIControl.State())
         titleLabel?.font = style.font ?? .default
-        backgroundColor = style.backgroundColor ?? .green
+        let colorNormal = style.colorNormal ?? .green
+        let colorDisabled = style.colorDisabled ?? .gray
+        setBackgroundColor(colorNormal, for: .normal)
+        setBackgroundColor(colorDisabled, for: .disabled)
     }
+}
+
+extension UIButton {
+    func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+        UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
+        UIGraphicsGetCurrentContext()!.setFillColor(color.cgColor)
+        UIGraphicsGetCurrentContext()!.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        let colorImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.setBackgroundImage(colorImage, for: state)
+    }
+
 }

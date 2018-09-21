@@ -11,22 +11,18 @@ import RxSwift
 import JSONRPCKit
 import APIKit
 
-public typealias ZilliqaServiceReactive = ZilliqaService & ReactiveCompatible
+public final class DefaultZilliqaService: ZilliqaService, ReactiveCompatible {
 
-public final class DefaultZilliqaService: ZilliqaServiceReactive {
-
-    public let wallet: Wallet
+    public static let shared = DefaultZilliqaService()
 
     public let apiClient: APIClient = DefaultAPIClient()
 
-    public init(wallet: Wallet) {
-        self.wallet = wallet
-    }
+    private init() {}
 }
 
 public extension DefaultZilliqaService {
-    func getBalalance(done: @escaping RequestDone<BalanceResponse>) -> Void {
-        return apiClient.send(request: BalanceRequest(publicAddress: wallet.address.address), done: done)
+    func getBalalance(for address: Address, done: @escaping RequestDone<BalanceResponse>) -> Void {
+        return apiClient.send(request: BalanceRequest(publicAddress: address.address), done: done)
     }
 
     func send(transaction: Transaction, done: @escaping RequestDone<TransactionIdentifier>) {

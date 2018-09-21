@@ -13,15 +13,15 @@ import JSONRPCKit
 import APIKit
 import Result
 
-public extension Reactive where Base: (ZilliqaService & AnyObject) {
+extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObject) {
 
-    func getBalance() -> Observable<BalanceResponse> {
+    public func getBalance(for address: Address) -> Observable<BalanceResponse> {
         return callBase {
-            $0.getBalalance(done: $1)
+            $0.getBalalance(for: address, done: $1)
         }
     }
 
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier> {
+    public func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier> {
         return callBase {
             $0.sendTransaction(for: payment, signWith: keyPair, done: $1)
         }

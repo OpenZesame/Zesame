@@ -9,24 +9,14 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import ZilliqaSDK
 
 // MARK: - SendView
 final class SendView: ScrollingStackView {
 
-    private lazy var addressLabels = LabelsView(
-        titleStyle: "Your Public Address",
-        valueStyle: UILabel.Style(numberOfLines: 0)
-    )
+    private lazy var walletView = WalletView()
 
-    private lazy var publicKeyLabels = LabelsView(
-        titleStyle: "Your Public Key (compressed)",
-        valueStyle: UILabel.Style(numberOfLines: 0)
-    )
-
-    private lazy var balanceLabels = LabelsView(titleStyle: "Balance", valueStyle: "🤷‍♀️")
-    private lazy var nonceLabels = LabelsView(titleStyle: "Current wallet nonce", valueStyle: "🤷‍♀️")
-
-    private lazy var recipientAddressField = UITextField.Style("To address", text: "9CA91EB535FB92FDA5094110FDAEB752EDB9B039").make()
+    private lazy var recipientAddressField = UITextField.Style("To address", text: "74C544A11795905C2C9808F9E78D8156159D32E4").make()
     private lazy var amountToSendField = UITextField.Style("Amount", text: "11").make()
     private lazy var gasLimitField = UITextField.Style("Gas limit", text: "1").make()
     private lazy var gasPriceField = UITextField.Style("Gas price", text: "1").make()
@@ -35,10 +25,7 @@ final class SendView: ScrollingStackView {
 
     // MARK: - StackViewStyling
     lazy var stackViewStyle: UIStackView.Style = [
-        addressLabels,
-        publicKeyLabels,
-        balanceLabels,
-        nonceLabels,
+        walletView,
         recipientAddressField,
         amountToSendField,
         gasLimitField,
@@ -65,10 +52,7 @@ extension SendView: ViewModelled {
 
     func populate(with viewModel: ViewModel.Output) -> [Disposable] {
         return [
-            viewModel.address           --> addressLabels,
-            viewModel.publicKey         --> publicKeyLabels,
-            viewModel.balance           --> balanceLabels,
-            viewModel.nonce             --> nonceLabels,
+            viewModel.wallet            --> walletView.rx.wallet,
             viewModel.transactionId     --> transactionIdentifierLabel
         ]
     }

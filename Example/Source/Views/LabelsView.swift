@@ -37,6 +37,14 @@ final class LabelsView: UIStackView {
     required init(coder: NSCoder) { interfaceBuilderSucks }
 }
 
+extension LabelsView {
+
+    func setValue(_ value: CustomStringConvertible) {
+        valueLabel.text = value.description
+    }
+
+}
+
 extension Reactive where Base == LabelsView {
     var title: Binder<String?> { return base.titleLabel.rx.text }
     var value: Binder<String?> { return base.valueLabel.rx.text }
