@@ -8,7 +8,7 @@
 
 import EllipticCurveKit
 
-func messageFromUnsignedTransaction(_ tx: UnsignedTransaction, publicKey: PublicKey) -> Message {
+func messageFromUnsignedTransaction(_ tx: UnsignedTransaction, publicKey: PublicKey, hasher: EllipticCurveKit.Hasher = DefaultHasher.sha256) -> Message {
     let codeHex = formatCodeOrData(from: tx.code)
     let dataHex = formatCodeOrData(from: tx.data)
 
@@ -25,7 +25,7 @@ func messageFromUnsignedTransaction(_ tx: UnsignedTransaction, publicKey: Public
         eightChar(from: tx.data.count),
         dataHex,
         ].joined()
-    return Message(hex: hexString)
+    return Message(hashedHex: hexString, hashedBy: hasher)!
 }
 
 extension String {

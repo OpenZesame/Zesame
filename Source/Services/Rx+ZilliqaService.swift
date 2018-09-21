@@ -16,27 +16,31 @@ import Result
 public extension Reactive where Base: (ZilliqaService & AnyObject) {
 
     func getBalance() -> Observable<BalanceResponse> {
+        return callBase {
+            $0.getBalalance(done: $1)
+        }
+    }
+
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier> {
+        return callBase {
+            $0.sendTransaction(for: payment, signWith: keyPair, done: $1)
+        }
+    }
+
+    private func callBase<R>(call: @escaping (Base, @escaping RequestDone<R>) -> Void) -> Observable<R> {
         return Single.create { [weak base] single in
-            base?.getBalalance() {
+            guard let strongBase = base else { return Disposables.create {} }
+            call(strongBase, {
                 switch $0 {
-                case .failure(let error): single(.error(error))
-                case .success(let result): single(.success(result))
+                case .failure(let error):
+                    print("⚠️ API request failed, error: '\(error)'")
+                    single(.error(error))
+                case .success(let result):
+                    print("🎉 API request successful, response: '\(String(describing: result))'")
+                    single(.success(result))
                 }
-            }
+            })
             return Disposables.create {}
         }.asObservable()
     }
-
-    func signAndMakeTransaction(payment: Payment, using keyPair: KeyPair) -> Observable<TransactionIdentifier> {
-        return Single.create { [weak base] single in
-            base?.signAndMakeTransaction(payment: payment, using: keyPair) {
-                switch $0 {
-                case .failure(let error): single(.error(error))
-                case .success(let result): single(.success(result))
-                }
-            }
-            return Disposables.create {}
-        }.asObservable()
-    }
-
 }

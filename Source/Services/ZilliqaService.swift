@@ -28,7 +28,7 @@ public protocol ZilliqaService {
 
 public extension ZilliqaService {
     
-    func signAndMakeTransaction(payment: Payment, using keyPair: KeyPair, done: @escaping RequestDone<TransactionIdentifier>) {
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, done: @escaping RequestDone<TransactionIdentifier>) {
         let transaction = sign(payment: payment, using: keyPair)
         send(transaction: transaction, done: done)
     }
@@ -47,6 +47,14 @@ public extension ZilliqaService {
     }
 
     func sign(message: Message, using keyPair: KeyPair) -> Signature {
-        return Signer.sign(message, using: keyPair)
+        return Signer.sign(message, using: keyPair, personalizationDRBG: drbgPers)
     }
 }
+
+private let drbgPers: Data = {
+    let pers = "Schnorr+SHA256  ".data(using: .ascii)!
+    var returnValue = Data([Byte](repeating: 0x00, count: 32))
+    returnValue = returnValue + pers
+    if returnValue.count != 48 { fatalError("bad length") }
+    return returnValue
+}()

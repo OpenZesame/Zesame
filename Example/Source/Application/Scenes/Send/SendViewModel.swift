@@ -46,11 +46,16 @@ extension SendViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
 
-        let fetchBalanceTrigger = BehaviorSubject<Void>(value: ())
 
-        let balanceAndNonce: Driver<BalanceResponse> = fetchBalanceTrigger.asObservable().flatMapLatest {
-            self.service.rx.getBalance()
-        }.asDriverOnErrorReturnEmpty()
+        let fetchBalanceSubject = BehaviorSubject<Void>(value: ())
+
+        let fetchTrigger = fetchBalanceSubject.asDriverOnErrorReturnEmpty()
+
+        let balanceAndNonce: Driver<BalanceResponse> = fetchTrigger.flatMapLatest {
+            self.service.rx
+                .getBalance()
+                .asDriverOnErrorReturnEmpty()
+        }
 
         let _keyPair = service.wallet.keyPair
         let wallet: Driver<Wallet> = balanceAndNonce.map { balance in
@@ -71,12 +76,14 @@ extension SendViewModel: ViewModelType {
         }.filterNil()
 
         let transactionId: Driver<String> = input.sendTrigger
-            .withLatestFrom(payment)
+            .withLatestFrom(Driver.combineLatest(payment, wallet) { (payment: $0, keyPair: $1.keyPair) })
             .flatMapLatest {
-                self.service.rx.signAndMakeTransaction(payment: $0, using: self.wallet.keyPair)
+                self.service.rx.sendTransaction(for: $0.payment, signWith: $0.keyPair)
                     .asDriverOnErrorReturnEmpty()
                     // Trigger fetching of balance after successfull send
-                    .do(onNext: { _ in fetchBalanceTrigger.onNext(()) })
+                    .do(onNext: { _ in
+                        fetchBalanceSubject.onNext(())
+                    })
         }
 
         return Output(
