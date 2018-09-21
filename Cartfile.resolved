@@ -1,5 +1,5 @@
 github "ReactiveX/RxSwift" "4.2.0"
-github "Sajjon/EllipticCurveKit" "4cd179e8899c7fa34e43304ff73b9ec730f6cf70"
+github "Sajjon/EllipticCurveKit" "ea05a2fc6327226d971fe58758748f259c57d998"
 github "Sajjon/JSONRPCKit" "57fe7182b6cc16d2302e16bec9c53ce51d36ec4c"
 github "antitypical/Result" "4.0.0"
 github "attaswift/BigInt" "v3.1.0"
