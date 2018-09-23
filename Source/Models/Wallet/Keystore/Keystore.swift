@@ -21,104 +21,139 @@ public struct Keystore {
 
 extension Keystore {
     public struct Crypto {
-        let cipher: Cipher
+
+        /// "cipher"
+        public let cipherType: String = "aes-128-ctr"
+
+        /// "cipherparams"
+        public let cipherParameters: CipherParameters
+
+        public let encryptedPrivateKey: Data
 
         /// "kdf"
-        let keyDerivationFunction: KeyDerivationFunction
+        public let keyDerivationFunction: String = "scrypt"
+
+        /// "kdfparams"
+        public let keyDerivationFunctionParameters: KeyDerivationFunctionParameters
 
         /// "mac"
-        let messageAuthenticationCode: String
+        let messageAuthenticationCode: Data
     }
 }
 
 extension Keystore.Crypto {
-    public struct Cipher {
-
-        public let type: String = "aes-128-ctr"
-        public let parameters: Parameters
-        public let cipherText: String
-
-        init(parameters: Parameters, cipherText: String) {
-            self.parameters = parameters
-            self.cipherText = cipherText
-        }
+    public struct CipherParameters {
+        /// "iv"
+        public let initializationVector: Data
     }
 
-    /// KDF
-    public struct KeyDerivationFunction {
-        public let name: String = "scrypt"
-        public let parameters: Scrypt.Input
-    }
-}
+    public struct KeyDerivationFunctionParameters {
+        /// "N", CPU/memory cost parameter, must be power of 2.
+        let costParameter: Int
 
-extension Keystore.Crypto.Cipher {
-    public struct Parameters {
-        /// "iv", as hex string from Data
-        public let initializationVectorHexString: String
-    }
-}
+        /// "r", blocksize
+        let blockSize: Int
 
-public extension Keystore {
-    public init(address: Address, crypto: Crypto, id: String? = nil, version: Int = 3) {
-        self.address = address.address
-        self.crypto = crypto
-        self.id = id ?? UUID().uuidString
-        self.version = version
+        /// "p"
+        let parallelizationParameter: Int
+
+        /// "dklen"
+        let lengthOfDerivedKey: Int
+
+        let salt: Data
     }
 }
 
 extension Keystore.Crypto: Codable, Equatable {
     public enum CodingKeys: String, CodingKey {
-        case messageAuthenticationCode = "mac"
+        case cipherType = "cipher"
+        case cipherParameters = "cipherparams"
+        case encryptedPrivateKey = "ciphertext"
         case keyDerivationFunction = "kdf"
-        case cipher
+        case keyDerivationFunctionParameters = "kdfparams"
+        case messageAuthenticationCode = "mac"
     }
 }
+
+extension Keystore.Crypto.CipherParameters: Codable, Equatable {
+    public enum CodingKeys: String, CodingKey {
+        case initializationVector = "iv"
+    }
+}
+
+extension Keystore.Crypto.KeyDerivationFunctionParameters: Codable, Equatable {
+    enum CodingKeys: String, CodingKey {
+        /// Should be lowercase "n", since that is what Zilliqa JS SDK uses
+        case costParameter = "n"
+        case blockSize = "r"
+        case parallelizationParameter = "p"
+        case lengthOfDerivedKey = "dklen"
+
+        case salt
+    }
+}
+
+public extension Keystore.Crypto.KeyDerivationFunctionParameters {
+    func toScryptParameters() -> Scrypt.Parameters {
+        return Scrypt.Parameters(
+            costParameter: costParameter,
+            blockSize: blockSize,
+            parallelizationParameter: parallelizationParameter,
+            lengthOfDerivedKey: lengthOfDerivedKey,
+            salt: salt
+        )
+    }
+
+    init(scryptParameters params: Scrypt.Parameters) {
+        self.init(
+            costParameter: params.costParameter,
+            blockSize: params.blockSize,
+            parallelizationParameter: params.parallelizationParameter,
+            lengthOfDerivedKey: params.lengthOfDerivedKey,
+            salt: params.salt
+        )
+    }
+}
+
+public extension Keystore {
+    init(address: Address, crypto: Crypto, id: String? = nil, version: Int = 3) {
+        self.address = address.address
+        self.crypto = crypto
+        self.id = id ?? UUID().uuidString
+        self.version = version
+    }
+
+    init(from derivedKey: DerivedKey, for wallet: Wallet) {
+        self.init(
+            address: wallet.address,
+            crypto:
+            Keystore.Crypto(derivedKey: derivedKey, wallet: wallet)
+        )
+    }
+}
+
 
 // MARK: Initialization
 public extension Keystore.Crypto {
 
     /// Convenience
     init(derivedKey: DerivedKey, wallet: Wallet) {
-        /// "iv"
-        let initializationVector: DataConvertible = try! securelyGenerateBytes(count: 32)
 
-        let aesCtr = try! AES(key: derivedKey.asData.prefix(16).bytes, blockMode: CTR(iv: initializationVector.bytes))
+        /// initializationVector
+        let iv = try! securelyGenerateBytes(count: 32).asData
 
-        let encryptedPrivateKey = try! aesCtr.encrypt(wallet.keyPair.privateKey.bytes)
+        let aesCtr = try! AES(key: derivedKey.asData.prefix(16).bytes, blockMode: CTR(iv: iv.bytes))
+
+        let encryptedPrivateKey = try! aesCtr.encrypt(wallet.keyPair.privateKey.bytes).asData
 
         let mac = (derivedKey.asData.suffix(16) + encryptedPrivateKey).asData.sha3(.sha256)
 
         self.init(
-            cipher: Keystore.Crypto.Cipher(
-                parameters:
-                Keystore.Crypto.Cipher.Parameters(initializationVectorHexString: initializationVector.asHex),
-                cipherText: encryptedPrivateKey.asHex),
-            keyDerivationFunction:
-            Keystore.Crypto.KeyDerivationFunction(parameters: derivedKey.from),
-            messageAuthenticationCode: mac.asHex)
-    }
-}
-
-
-extension Keystore.Crypto.Cipher: Codable, Equatable {
-    public enum CodingKeys: String, CodingKey {
-        case type = "cipher"
-        case parameters = "cipherparams"
-        case cipherText = "ciphertext"
-    }
-}
-
-extension Keystore.Crypto.Cipher.Parameters: Codable, Equatable {
-    public enum CodingKeys: String, CodingKey {
-        case initializationVectorHexString = "iv"
-    }
-}
-
-extension Keystore.Crypto.KeyDerivationFunction: Codable, Equatable {
-    public enum CodingKeys: String, CodingKey {
-        case name = "kdf"
-        case parameters = "kdfparams"
+            cipherParameters:
+            Keystore.Crypto.CipherParameters(initializationVector: iv),
+            encryptedPrivateKey: encryptedPrivateKey,
+            keyDerivationFunctionParameters: Keystore.Crypto.KeyDerivationFunctionParameters(scryptParameters: derivedKey.parametersUsed),
+            messageAuthenticationCode: mac)
     }
 }
 

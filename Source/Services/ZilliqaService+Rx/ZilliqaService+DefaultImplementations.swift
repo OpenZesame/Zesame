@@ -23,8 +23,8 @@ public extension ZilliqaService {
 
     func exportKeystoreJson(from wallet: Wallet, passphrase: String, done: @escaping Done<Keystore>) {
         // Same parameters used by Zilliqa Javascript SDK: https://github.com/Zilliqa/Zilliqa-Wallet/blob/master/src/app/zilliqa.service.ts#L142
-        let salt: DataConvertible = try! securelyGenerateBytes(count: 16)
-        let input = Scrypt.Input(
+        let salt = try! securelyGenerateBytes(count: 16).asData
+        let kdfParams = Keystore.Crypto.KeyDerivationFunctionParameters(
             costParameter: 262144,
             blockSize: 1,
             parallelizationParameter: 8,
@@ -32,11 +32,9 @@ public extension ZilliqaService {
             salt: salt.asData
         )
 
-        Scrypt(passphrase: passphrase, input: input).deriveKey() { derivedKey in
-            let keyStore = Keystore(
-                address: wallet.address,
-                crypto: Keystore.Crypto(derivedKey: derivedKey, wallet: wallet)
-            )
+
+        Scrypt(passphrase: passphrase, parameters: kdfParams.toScryptParameters()).deriveKey() {derivedKey in
+            let keyStore = Keystore(from: derivedKey, for: wallet)
             done(Result.success(keyStore))
         }
     }

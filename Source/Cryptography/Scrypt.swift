@@ -11,12 +11,17 @@ import CryptoSwift
 import EllipticCurveKit
 
 public struct Scrypt {
+    private let passphrase: String
+    private let parameters: Parameters
 
-    func deriveKey(done: @escaping (DerivedKey) -> Void)  {
-        fatalError()
+    init(passphrase: String, parameters: Parameters) {
+        self.passphrase = passphrase
+        self.parameters = parameters
     }
+}
 
-    public struct Input: Codable, Equatable {
+public extension Scrypt {
+    public struct Parameters {
         /// "N", CPU/memory cost parameter, must be power of 2.
         let costParameter: Int
 
@@ -30,33 +35,21 @@ public struct Scrypt {
         let lengthOfDerivedKey: Int
 
         let salt: Data
-
-        enum CodingKeys: String, CodingKey {
-            /// Should be lowercase "n", since that is what Zilliqa JS SDK uses
-            case costParameter = "n"
-            case blockSize = "r"
-            case parallelizationParameter = "p"
-            case lengthOfDerivedKey = "dklen"
-
-            case salt
-        }
     }
+}
 
-    private let passphrase: String
-    private let input: Input
-    
-    public init(passphrase: String, input: Input) {
-        self.passphrase = passphrase
-        self.input = input
+public extension Scrypt {
+    func deriveKey(done: @escaping (DerivedKey) -> Void)  {
+        fatalError()
     }
 }
 
 public struct DerivedKey {
-    let data: Data
-    let from: Scrypt.Input
-    fileprivate init(data: DataConvertible, from input: Scrypt.Input) {
+    public let data: Data
+    public let parametersUsed: Scrypt.Parameters
+    fileprivate init(data: DataConvertible, parametersUsed: Scrypt.Parameters) {
         self.data = data.asData
-        self.from = input
+        self.parametersUsed = parametersUsed
     }
 }
 
