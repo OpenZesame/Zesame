@@ -23,15 +23,11 @@ public final class DefaultZilliqaService: ZilliqaService, ReactiveCompatible {
 
 public extension DefaultZilliqaService {
 
-    func createNewWallet() -> Wallet {
-        return Wallet(keyPair: KeyPair(private: PrivateKey.generateNew()), network: Network.testnet)
-    }
-
-    func getBalalance(for address: Address, done: @escaping RequestDone<BalanceResponse>) -> Void {
+    func getBalalance(for address: Address, done: @escaping Done<BalanceResponse>) -> Void {
         return apiClient.send(request: BalanceRequest(publicAddress: address.address), done: done)
     }
 
-    func send(transaction: Transaction, done: @escaping RequestDone<TransactionIdentifier>) {
+    func send(transaction: Transaction, done: @escaping Done<TransactionIdentifier>) {
         return apiClient.send(request: TransactionRequest(transaction: transaction), done: done)
     }
 }

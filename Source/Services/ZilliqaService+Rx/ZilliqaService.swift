@@ -13,12 +13,16 @@ import Result
 import APIKit
 import RxCocoa
 import RxSwift
+import CryptoSwift
 
 public protocol ZilliqaService {
     var apiClient: APIClient { get }
-    func createNewWallet() -> Wallet
-    func getBalalance(for address: Address, done: @escaping RequestDone<BalanceResponse>)
-    func send(transaction: Transaction, done: @escaping RequestDone<TransactionIdentifier>)
+
+    func createNewWallet(done: @escaping Done<Wallet>)
+    func exportKeystoreJson(from wallet: Wallet, passphrase: String, done: @escaping Done<Keystore>)
+
+    func getBalalance(for address: Address, done: @escaping Done<BalanceResponse>)
+    func send(transaction: Transaction, done: @escaping Done<TransactionIdentifier>)
 }
 
 public protocol ZilliqaServiceReactive {

@@ -10,7 +10,7 @@ import EllipticCurveKit
 
 public extension ZilliqaService {
 
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, done: @escaping RequestDone<TransactionIdentifier>) {
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, done: @escaping Done<TransactionIdentifier>) {
         let transaction = sign(payment: payment, using: keyPair)
         send(transaction: transaction, done: done)
     }

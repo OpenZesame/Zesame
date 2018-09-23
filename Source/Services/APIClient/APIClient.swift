@@ -10,5 +10,5 @@ import JSONRPCKit
 import APIKit
 
 public protocol APIClient {
-    func send<Request>(request: Request, done: @escaping RequestDone<Request.Response>) where Request: JSONRPCKit.Request
+    func send<Request>(request: Request, done: @escaping Done<Request.Response>) where Request: JSONRPCKit.Request
 }

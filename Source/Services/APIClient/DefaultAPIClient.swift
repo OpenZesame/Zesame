@@ -16,7 +16,7 @@ public final class DefaultAPIClient: APIClient {
 
 public extension DefaultAPIClient {
 
-    func send<Request>(request: Request, done: @escaping RequestDone<Request.Response>) where Request: JSONRPCKit.Request {
+    func send<Request>(request: Request, done: @escaping Done<Request.Response>) where Request: JSONRPCKit.Request {
         let httpRequest = ZilliqaRequest(batch: batchFactory.create(request))
         let handlerAPIKit = mapHandler(done)
 
