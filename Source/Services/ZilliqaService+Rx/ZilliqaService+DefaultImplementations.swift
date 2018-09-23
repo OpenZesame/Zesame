@@ -33,7 +33,7 @@ public extension ZilliqaService {
         )
 
 
-        Scrypt(passphrase: passphrase, parameters: kdfParams.toScryptParameters()).deriveKey() {derivedKey in
+        try! Scrypt(passphrase: passphrase, parameters: kdfParams.toScryptParameters()).deriveKey() { derivedKey in
             let keyStore = Keystore(from: derivedKey, for: wallet)
             done(Result.success(keyStore))
         }
