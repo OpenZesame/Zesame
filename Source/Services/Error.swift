@@ -30,4 +30,13 @@ public enum Error: Swift.Error {
             }
         }
     }
+
+    case keystorePasshraseTooShort(provided: Int, minimum: Int)
+
+    indirect case walletImport(WalletImport)
+    public enum WalletImport: Swift.Error {
+        case jsonStringDecoding
+        case jsonDecoding(Swift.DecodingError)
+        case incorrectPasshrase
+    }
 }

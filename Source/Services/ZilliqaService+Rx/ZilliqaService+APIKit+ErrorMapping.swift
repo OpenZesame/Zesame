@@ -12,9 +12,9 @@ import APIKit
 import Result
 
 typealias APIKitHandler<R> = (Result<R, APIKit.SessionTaskError>) -> Void
-public typealias RequestDone<R> = (Result<R, ZilliqaSDK.Error>) -> Void
+public typealias Done<R> = (Result<R, ZilliqaSDK.Error>) -> Void
 
-func mapHandler<R>(_ handler: @escaping RequestDone<R>) -> APIKitHandler<R> {
+func mapHandler<R>(_ handler: @escaping Done<R>) -> APIKitHandler<R> {
     return { (result: Result<R, APIKit.SessionTaskError>) -> Void in
         switch result {
         case .failure(let apiKitError):

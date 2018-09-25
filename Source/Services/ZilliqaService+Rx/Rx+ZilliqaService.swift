@@ -16,15 +16,21 @@ import Result
 extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObject) {
 
     public func createNewWallet() -> Observable<Wallet> {
-        return Single.create { [unowned base] single in
-            DispatchQueue.global(qos: .background).async {
-                let newWallet = base.createNewWallet()
-                DispatchQueue.main.async {
-                    single(.success(newWallet))
-                }
-            }
-              return Disposables.create {}
-        }.asObservable()
+        return callBase {
+            $0.createNewWallet(done: $1)
+        }
+    }
+
+    public func exportKeystore(from wallet: Wallet, encryptWalletBy passphrase: String) -> Observable<Keystore> {
+        return callBase {
+            $0.exportKeystore(from: wallet, encryptWalletBy: passphrase, done: $1)
+        }
+    }
+
+    public func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String) -> Observable<Wallet> {
+        return callBase {
+            $0.importWalletFrom(keyStore: keyStore, encryptedBy: passphrase, done: $1)
+        }
     }
 
     public func getBalance(for address: Address) -> Observable<BalanceResponse> {
@@ -39,7 +45,7 @@ extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObje
         }
     }
 
-    private func callBase<R>(call: @escaping (Base, @escaping RequestDone<R>) -> Void) -> Observable<R> {
+    private func callBase<R>(call: @escaping (Base, @escaping Done<R>) -> Void) -> Observable<R> {
         return Single.create { [weak base] single in
             guard let strongBase = base else { return Disposables.create {} }
             call(strongBase, {

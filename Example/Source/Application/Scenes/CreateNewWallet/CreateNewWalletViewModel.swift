@@ -35,7 +35,7 @@ extension Optional where Wrapped == String {
 }
 
 struct CreateNewWalletViewModel {
-
+    private let bag = DisposeBag()
     private let navigator: CreateNewWalletNavigator
     private let service: ZilliqaServiceReactive
 
@@ -62,11 +62,16 @@ extension CreateNewWalletViewModel: ViewModelType {
 
         let isEmailValid = input.emailAddress.map { $0.validates(by: emailValidator) }.startWith(false)
 
-        let wallet = service.createNewWallet().asDriverOnErrorReturnEmpty()
+        let wallet = service.createNewWallet()
+        let keystore = wallet.flatMapLatest { newWallet -> Observable<Keystore> in
+            return self.service.exportKeystore(from: newWallet, encryptWalletBy: "apa")
+        }.asDriverOnErrorReturnEmpty()
+
+        keystore.do(onNext: { print("Successfully created keystore: \($0.toJson())")}).drive().disposed(by: bag)
 
         return Output(
             canSendBackup: isEmailValid,
-            wallet: wallet
+            wallet: wallet.asDriverOnErrorReturnEmpty()
         )
     }
 
