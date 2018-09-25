@@ -19,32 +19,39 @@ public struct Keystore {
     public let version: Int
 }
 
+public extension Keystore {
+    static var minumumPasshraseLength: Int { return 8 }
+}
+
 extension Keystore {
     public struct Crypto {
 
         /// "cipher"
-        public let cipherType: String = "aes-128-ctr"
+        let cipherType: String = "aes-128-ctr"
 
         /// "cipherparams"
-        public let cipherParameters: CipherParameters
+        let cipherParameters: CipherParameters
 
-        public let encryptedPrivateKey: Data
+        let encryptedPrivateKeyHex: String
+        var encryptedPrivateKey: Data { return Data(hex: encryptedPrivateKeyHex) }
 
         /// "kdf"
-        public let keyDerivationFunction: String = "scrypt"
+        let keyDerivationFunction: String = "scrypt"
 
         /// "kdfparams"
-        public let keyDerivationFunctionParameters: KeyDerivationFunctionParameters
+        let keyDerivationFunctionParameters: KeyDerivationFunctionParameters
 
         /// "mac"
-        let messageAuthenticationCode: Data
+        let messageAuthenticationCodeHex: String
+        var messageAuthenticationCode: Data { return Data(hex: messageAuthenticationCodeHex) }
     }
 }
 
 extension Keystore.Crypto {
     public struct CipherParameters {
         /// "iv"
-        public let initializationVector: Data
+        let initializationVectorHex: String
+        var initializationVector: Data { return Data(hex: initializationVectorHex) }
     }
 
     public struct KeyDerivationFunctionParameters {
@@ -60,7 +67,8 @@ extension Keystore.Crypto {
         /// "dklen"
         let lengthOfDerivedKey: Int
 
-        let salt: Data
+        let saltHex: String
+        var salt: Data { return Data(hex: saltHex) }
     }
 }
 
@@ -68,16 +76,16 @@ extension Keystore.Crypto: Codable, Equatable {
     public enum CodingKeys: String, CodingKey {
         case cipherType = "cipher"
         case cipherParameters = "cipherparams"
-        case encryptedPrivateKey = "ciphertext"
+        case encryptedPrivateKeyHex = "ciphertext"
         case keyDerivationFunction = "kdf"
         case keyDerivationFunctionParameters = "kdfparams"
-        case messageAuthenticationCode = "mac"
+        case messageAuthenticationCodeHex = "mac"
     }
 }
 
 extension Keystore.Crypto.CipherParameters: Codable, Equatable {
     public enum CodingKeys: String, CodingKey {
-        case initializationVector = "iv"
+        case initializationVectorHex = "iv"
     }
 }
 
@@ -89,29 +97,7 @@ extension Keystore.Crypto.KeyDerivationFunctionParameters: Codable, Equatable {
         case parallelizationParameter = "p"
         case lengthOfDerivedKey = "dklen"
 
-        case salt
-    }
-}
-
-public extension Keystore.Crypto.KeyDerivationFunctionParameters {
-    func toScryptParameters() -> Scrypt.Parameters {
-        return Scrypt.Parameters(
-            costParameter: costParameter,
-            blockSize: blockSize,
-            parallelizationParameter: parallelizationParameter,
-            lengthOfDerivedKey: lengthOfDerivedKey,
-            salt: salt
-        )
-    }
-
-    init(scryptParameters params: Scrypt.Parameters) {
-        self.init(
-            costParameter: params.costParameter,
-            blockSize: params.blockSize,
-            parallelizationParameter: params.parallelizationParameter,
-            lengthOfDerivedKey: params.lengthOfDerivedKey,
-            salt: params.salt
-        )
+        case saltHex = "salt"
     }
 }
 
@@ -123,11 +109,11 @@ public extension Keystore {
         self.version = version
     }
 
-    init(from derivedKey: DerivedKey, for wallet: Wallet) {
+    init(from derivedKey: DerivedKey, for wallet: Wallet, parameters: Keystore.Crypto.KeyDerivationFunctionParameters) {
         self.init(
             address: wallet.address,
             crypto:
-            Keystore.Crypto(derivedKey: derivedKey, wallet: wallet)
+            Keystore.Crypto(derivedKey: derivedKey, wallet: wallet, parameters: parameters)
         )
     }
 }
@@ -137,10 +123,10 @@ public extension Keystore {
 public extension Keystore.Crypto {
 
     /// Convenience
-    init(derivedKey: DerivedKey, wallet: Wallet) {
+    init(derivedKey: DerivedKey, wallet: Wallet, parameters: Keystore.Crypto.KeyDerivationFunctionParameters) {
 
         /// initializationVector
-        let iv = try! securelyGenerateBytes(count: 32).asData
+        let iv = try! securelyGenerateBytes(count: 16).asData
 
         let aesCtr = try! AES(key: derivedKey.asData.prefix(16).bytes, blockMode: CTR(iv: iv.bytes))
 
@@ -150,10 +136,10 @@ public extension Keystore.Crypto {
 
         self.init(
             cipherParameters:
-            Keystore.Crypto.CipherParameters(initializationVector: iv),
-            encryptedPrivateKey: encryptedPrivateKey,
-            keyDerivationFunctionParameters: Keystore.Crypto.KeyDerivationFunctionParameters(scryptParameters: derivedKey.parametersUsed),
-            messageAuthenticationCode: mac)
+            Keystore.Crypto.CipherParameters(initializationVectorHex: iv.asHex),
+            encryptedPrivateKeyHex: encryptedPrivateKey.asHex,
+            keyDerivationFunctionParameters: parameters,
+            messageAuthenticationCodeHex: mac.asHex)
     }
 }
 

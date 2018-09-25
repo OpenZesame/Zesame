@@ -22,6 +22,22 @@ public struct Scrypt {
 }
 
 public extension Scrypt {
+
+    init(passphrase: String, kdfParameters: Keystore.Crypto.KeyDerivationFunctionParameters) {
+        self.init(passphrase: passphrase, parameters:
+            Parameters(
+                costParameter: kdfParameters.costParameter,
+                blockSize: kdfParameters.blockSize,
+                parallelizationParameter: kdfParameters.parallelizationParameter,
+                lengthOfDerivedKey: kdfParameters.lengthOfDerivedKey,
+                salt: kdfParameters.salt
+            )
+        )
+    }
+}
+
+/// https://tools.ietf.org/html/rfc7914.html
+public extension Scrypt {
     public struct Parameters {
         /// "N", CPU/memory cost parameter, must be power of 2.
         let costParameter: Int
