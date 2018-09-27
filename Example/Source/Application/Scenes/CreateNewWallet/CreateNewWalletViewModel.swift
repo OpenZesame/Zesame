@@ -12,31 +12,12 @@ import RxCocoa
 import FormValidatorSwift
 import ZilliqaSDK
 
-extension Validator {
-    func validate(text: String?) -> Bool {
-        if let cond = checkConditions(text) {
-            return cond.isEmpty
-        } else {
-            return true
-        }
-    }
-}
+final class CreateNewWalletViewModel {
 
-extension String {
-    func validates(by valididator: Validator) -> Bool {
-        return valididator.validate(text: self)
-    }
-}
-
-extension Optional where Wrapped == String {
-    func validates(by valididator: Validator) -> Bool {
-        return valididator.validate(text: self)
-    }
-}
-
-struct CreateNewWalletViewModel {
     private let bag = DisposeBag()
-    private let navigator: CreateNewWalletNavigator
+
+    private weak var navigator: CreateNewWalletNavigator?
+
     private let service: ZilliqaServiceReactive
 
     init(navigator: CreateNewWalletNavigator, service: ZilliqaServiceReactive) {
@@ -63,8 +44,8 @@ extension CreateNewWalletViewModel: ViewModelType {
         let isEmailValid = input.emailAddress.map { $0.validates(by: emailValidator) }.startWith(false)
 
         let wallet = service.createNewWallet()
-        let keystore = wallet.flatMapLatest { newWallet -> Observable<Keystore> in
-            return self.service.exportKeystore(from: newWallet, encryptWalletBy: "apa")
+        let keystore = wallet.flatMapLatest {
+            return self.service.exportKeystore(from: $0, encryptWalletBy: "apa")
         }.asDriverOnErrorReturnEmpty()
 
         keystore.do(onNext: { print("Successfully created keystore: \($0.toJson())")}).drive().disposed(by: bag)

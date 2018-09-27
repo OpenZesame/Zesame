@@ -9,14 +9,13 @@
 import RxSwift
 import RxCocoa
 
-struct ChooseWalletViewModel {
+final class ChooseWalletViewModel {
     private let bag = DisposeBag()
 
-    typealias NavigationTo = Navigation<ChooseWalletNavigator>
-    private let navigateTo: NavigationTo
+    private weak var navigator: ChooseWalletNavigator?
 
-    init(_ navigation: @escaping NavigationTo) {
-        self.navigateTo = navigation
+    init(navigator: ChooseWalletNavigator) {
+        self.navigator = navigator
     }
 }
 
@@ -32,11 +31,11 @@ extension ChooseWalletViewModel: ViewModelType {
     func transform(input: Input) -> Output {
 
         input.createNewTrigger.do(onNext: {
-            self.navigateTo(.createNewWallet)
+            self.navigator?.toCreateNewWallet()
         }).drive().disposed(by: bag)
 
         input.restoreTrigger.do(onNext: {
-            self.navigateTo(.restoreWallet)
+            self.navigator?.toRestoreWallet()
         }).drive().disposed(by: bag)
 
         return Output()

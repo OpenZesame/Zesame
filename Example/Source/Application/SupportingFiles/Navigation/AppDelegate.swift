@@ -13,17 +13,17 @@ import ZilliqaSDK
 class AppDelegate: UIResponder {
     var window: UIWindow?
 
-    private lazy var appNavigator: AppNavigator = {
+    private lazy var appCoordinator: AppCoordinator = {
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
         window.makeKeyAndVisible()
-        return AppNavigator(window: window)
+        return AppCoordinator(window: window)
     }()
 }
 
 extension AppDelegate: UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        appNavigator.start()
+        appCoordinator.start()
         return true
     }
 }

@@ -9,65 +9,46 @@
 import UIKit
 import ZilliqaSDK
 
-final class AppNavigator {
+final class AppCoordinator {
 
     private let window: UIWindow
-    private var currentNavigator: AnyNavigator?
+    var childCoordinators = [AnyCoordinator]()
 
     init(window: UIWindow) {
         self.window = window
     }
 }
 
-// MARK: - Conformance: Navigator
-extension AppNavigator: Navigator {
-
-    enum Destination {
-        case chooseWallet
-        case chosen(wallet: Wallet)
-        case main
-    }
-
-    func navigate(to destination: Destination) {
-        switch destination {
-        case .chooseWallet: startChooseWalletFlow()
-        case .chosen(let chosenWallet):
-            Unsafe︕！Cache.unsafe︕！Store(wallet: chosenWallet)
-            startMainFlow(wallet: chosenWallet)
-        case .main:
-            startMainFlow(wallet: Unsafe︕！Cache.wallet!)
-        }
-    }
-
+extension AppCoordinator: Coordinator {
     func start() {
         if Unsafe︕！Cache.isWalletConfigured {
-            navigate(to: .main)
+            toMain(wallet: Unsafe︕！Cache.wallet!)
         } else {
-            navigate(to: .chooseWallet)
+           toChooseWallet()
         }
     }
 }
 
+protocol AppNavigation: AnyObject {
+    func toChooseWallet()
+    func toMain(wallet: Wallet)
+}
+
 // MARK: - Private
-private extension AppNavigator {
-    func startChooseWalletFlow() {
+extension AppCoordinator: AppNavigation {
+    func toChooseWallet() {
         let navigationController = UINavigationController()
         window.rootViewController = navigationController
-        let chooseWalletNavigator = ChooseWalletNavigator(navigationController: navigationController) { [weak self] in
-            self?.navigate(to: .chosen(wallet: $0))
-        }
-
-        currentNavigator = chooseWalletNavigator
-        chooseWalletNavigator.start()
+        let chooseWalletCoordinator = ChooseWalletCoordinator(navigationController: navigationController, navigation: self)
+        childCoordinators = [chooseWalletCoordinator]
+        chooseWalletCoordinator.start()
     }
 
-    func startMainFlow(wallet: Wallet) {
+    func toMain(wallet: Wallet) {
         let navigationController = UINavigationController()
         window.rootViewController = navigationController
-        let mainNavigator = MainNavigator(navigationController: navigationController, wallet: wallet, chooseWallet: startChooseWalletFlow)
-
-        currentNavigator = mainNavigator
-        mainNavigator.start()
-
+        let mainCoordinator = MainCoordinator(navigationController: navigationController, wallet: wallet, navigation: self)
+        childCoordinators = [mainCoordinator]
+        mainCoordinator.start()
     }
 }

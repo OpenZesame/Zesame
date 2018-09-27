@@ -10,14 +10,13 @@ import RxCocoa
 import RxSwift
 import ZilliqaSDK
 
-struct RestoreWalletViewModel {
+final class RestoreWalletViewModel {
     private let bag = DisposeBag()
 
-    typealias NavigationTo = Navigation<RestoreWalletNavigator>
-    private let navigateTo: NavigationTo
+    private weak var navigator: RestoreWalletNavigator?
 
-    init(_ navigation: @escaping NavigationTo) {
-        self.navigateTo = navigation
+    init(navigator: RestoreWalletNavigator) {
+        self.navigator = navigator
     }
 }
 
@@ -38,7 +37,7 @@ extension RestoreWalletViewModel: ViewModelType {
 
         input.restoreTrigger
             .withLatestFrom(wallet).do(onNext: {
-                self.navigateTo(.restored($0))
+                self.navigator?.toMain(restoredWallet: $0)
             }).drive().disposed(by: bag)
 
         return Output()

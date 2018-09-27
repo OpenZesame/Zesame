@@ -10,14 +10,13 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct SettingsViewModel {
+final class SettingsViewModel {
     private let bag = DisposeBag()
     
-    typealias NavigationTo = Navigation<SettingsNavigator>
-    private let navigateTo: NavigationTo
+    private weak var navigation: SettingsNavigator?
 
-    init(_ navigation: @escaping NavigationTo) {
-        self.navigateTo = navigation
+    init(navigation: SettingsNavigator) {
+        self.navigation = navigation
     }
 }
 
@@ -35,7 +34,7 @@ extension SettingsViewModel: ViewModelType {
 
         input.removeWalletTrigger
             .do(onNext: {
-                self.navigateTo(.chooseWallet)
+                self.navigation?.toChooseWallet()
             }).drive().disposed(by: bag)
 
         let appVersionString: String? = {
