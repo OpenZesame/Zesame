@@ -26,7 +26,7 @@ DefaultZilliqaService.shared.getBalalance(for: address) {
 
 ## Functions
 Have a look at [ZilliqaService.swift](Source/Services/ZilliqaService+Rx/ZilliqaService.swift) for an overview of the functions, here is a snapshot of the current functions of the reactive API (each function having a closure counterpart):
-```
+```swift
 public protocol ZilliqaServiceReactive {
     func createNewWallet() -> Observable<Wallet>
     func exportKeystore(from wallet: Wallet, encryptWalletBy passphrase: String) -> Observable<Keystore>
