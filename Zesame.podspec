@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
     s.summary      = 'Zilliqa SDK in pure Swift'
     s.homepage     = 'https://github.com/OpenZesame/Zesame'
     s.author       = { "Sajjon" => "alex.cyon@gmail.com" }
-    s.source       = { :git => 'https://github.com/OpenZesame/Zesame.git', :tag => 'v' + String(spec.version) }
+    s.source       = { :git => 'https://github.com/OpenZesame/Zesame.git', :tag => 'v' + String(s.version) }
     s.source_files = 'Source/*.swift'
     s.social_media_url = 'https://twitter.com/alexcyon'
 
