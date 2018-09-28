@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Example/ZilliqaSDKiOSExample.xcodeproj">
+      location = "group:Zesame.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/sajjon/Developer/Swift/Sources/Crypto/Zilliqa-Swift-SDK/Zesame.xcodeproj">
+      location = "group:Example/ZilliqaSDKiOSExample.xcodeproj">
    </FileRef>
 </Workspace>
