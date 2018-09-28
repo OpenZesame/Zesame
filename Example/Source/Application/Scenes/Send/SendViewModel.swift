@@ -11,16 +11,15 @@ import RxSwift
 import RxCocoa
 import ZilliqaSDK
 
-struct SendViewModel {
+final class SendViewModel {
     private let bag = DisposeBag()
     
-    typealias NavigationTo = Navigation<SendNavigator>
-    private let navigateTo: NavigationTo
+    private weak var navigator: SendNavigator?
     private let service: ZilliqaServiceReactive
     private let wallet: Wallet
 
-    init(_ navigation: @escaping NavigationTo, wallet: Wallet, service: ZilliqaServiceReactive) {
-        self.navigateTo = navigation
+    init(navigator: SendNavigator, wallet: Wallet, service: ZilliqaServiceReactive) {
+        self.navigator = navigator
         self.service = service
         self.wallet = wallet
     }
