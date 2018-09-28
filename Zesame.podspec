@@ -14,8 +14,8 @@ Pod::Spec.new do |s|
      # ECC Methods
     s.dependency 'EllipticCurveKit'
 
-    # JSON RPC in order to format API requests (2018-09-28: ollitapas fork contains support for `Codable`)
-    s.dependency 'JSONRPCKit', '~> 4.0.0'#, :git => 'https://github.com/ollitapa/JSONRPCKit'
+    # JSON RPC in order to format API requests. (2018-09-28: Actually I would like to mark dependency on `ollitapa`s fork github.com/ollitapa/JSONRPCKit contains support for `Codable`)
+    s.dependency 'JSONRPCKit'
 
     # Sending of JSON RPC requests, recommendend by JSONRPCKit: https://github.com/bricklife/JSONRPCKit#json-rpc-over-http-by-apikit
     s.dependency 'APIKit'
