@@ -11,7 +11,6 @@ import EllipticCurveKit
 import JSONRPCKit
 import Result
 import APIKit
-import RxCocoa
 import RxSwift
 import CryptoSwift
 
