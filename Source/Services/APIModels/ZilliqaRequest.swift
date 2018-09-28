@@ -17,7 +17,7 @@ public struct ZilliqaRequest<Batch: JSONRPCKit.Batch>: APIKit.Request {
 
 public extension ZilliqaRequest {
     var baseURL: URL {
-        return URL(string: "https://scillaprod-api.aws.zilliqa.com")!
+        return URL(string: "https://testnet-scilla-prod-api.aws.zilliqa.com")!
     }
 
     var method: HTTPMethod {

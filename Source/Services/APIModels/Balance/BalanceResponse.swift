@@ -9,6 +9,6 @@
 import Foundation
 
 public struct BalanceResponse: Decodable {
-    public let balance: String
+    public let balance: Double
     public let nonce: Int
 }
