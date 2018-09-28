@@ -1,6 +1,6 @@
 ////
 ////  TransactionSigningTests.swift
-////  ZilliqaSDK
+////  Zesame
 ////
 ////  Created by Alexander Cyon on 2018-09-11.
 ////  Copyright © 2018 Open Zesame. All rights reserved.
@@ -8,7 +8,7 @@
 //
 //import XCTest
 //import EllipticCurveKit
-//@testable import ZilliqaSDK
+//@testable import Zesame
 //
 //// Some uninteresting Zilliqa TESTNET private key, containing worthless TEST tokens.
 //private let privateKey = "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638"

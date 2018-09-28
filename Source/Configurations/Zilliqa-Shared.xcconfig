@@ -1,3 +1,0 @@
-INFOPLIST_FILE = Source/SupportingFiles/ZilliqaSDK-Info.plist
-PRODUCT_BUNDLE_IDENTIFIER = org.openzesame.ZilliqaSDK
-PRODUCT_NAME = ZilliqaSDK

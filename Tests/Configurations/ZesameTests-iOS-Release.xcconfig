@@ -1,2 +1,2 @@
-#include "Zilliqa-Shared.xcconfig"
+#include "ZesameTests-iOS-Common.xcconfig"
 #include "../../Configurations/base_release.xcconfig"

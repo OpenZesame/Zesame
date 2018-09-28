@@ -1,13 +1,13 @@
 //
 //  AppDelegate.swift
-//  ZilliqaSDKiOSExample
+//  ZesameiOSExample
 //
 //  Created by Alexander Cyon on 2018-05-26.
 //  Copyright © 2018 Open Zesame. All rights reserved.
 //
 
 import UIKit
-import ZilliqaSDK
+import Zesame
 
 @UIApplicationMain
 class AppDelegate: UIResponder {

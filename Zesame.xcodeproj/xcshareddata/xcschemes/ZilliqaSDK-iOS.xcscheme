@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "48F70A1420B72DD00027B72D"
-               BuildableName = "ZilliqaSDK.framework"
-               BlueprintName = "ZilliqaSDK iOS"
-               ReferencedContainer = "container:ZilliqaSDK.xcodeproj">
+               BuildableName = "Zesame.framework"
+               BlueprintName = "Zesame iOS"
+               ReferencedContainer = "container:Zesame.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "48F70A1D20B72DD00027B72D"
-               BuildableName = "ZilliqaSDKTests.xctest"
-               BlueprintName = "ZilliqaSDK iOS Tests"
-               ReferencedContainer = "container:ZilliqaSDK.xcodeproj">
+               BuildableName = "ZesameTests.xctest"
+               BlueprintName = "Zesame iOS Tests"
+               ReferencedContainer = "container:Zesame.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "48F70A1420B72DD00027B72D"
-            BuildableName = "ZilliqaSDK.framework"
-            BlueprintName = "ZilliqaSDK iOS"
-            ReferencedContainer = "container:ZilliqaSDK.xcodeproj">
+            BuildableName = "Zesame.framework"
+            BlueprintName = "Zesame iOS"
+            ReferencedContainer = "container:Zesame.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -65,9 +65,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "48F70A1420B72DD00027B72D"
-            BuildableName = "ZilliqaSDK.framework"
-            BlueprintName = "ZilliqaSDK iOS"
-            ReferencedContainer = "container:ZilliqaSDK.xcodeproj">
+            BuildableName = "Zesame.framework"
+            BlueprintName = "Zesame iOS"
+            ReferencedContainer = "container:Zesame.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <EnvironmentVariables>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "48F70A1420B72DD00027B72D"
-            BuildableName = "ZilliqaSDK.framework"
-            BlueprintName = "ZilliqaSDK iOS"
-            ReferencedContainer = "container:ZilliqaSDK.xcodeproj">
+            BuildableName = "Zesame.framework"
+            BlueprintName = "Zesame iOS"
+            ReferencedContainer = "container:Zesame.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
