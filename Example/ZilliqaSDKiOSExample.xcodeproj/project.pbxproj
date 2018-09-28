@@ -35,6 +35,7 @@
 		48AC6CC92145AF1B00B4D036 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CC82145AF1B00B4D036 /* MainCoordinator.swift */; };
 		48AC6CCB2145AF3E00B4D036 /* UITabBarItem_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CCA2145AF3E00B4D036 /* UITabBarItem_Extension.swift */; };
 		48B16E3021452A2600177434 /* Never.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B16E2F21452A2600177434 /* Never.swift */; };
+		48BB6346215E72480039E937 /* Driver+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BB6345215E72480039E937 /* Driver+Empty.swift */; };
 		48C469F1214450F0008D0DD7 /* ZilliqaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48F03F932142682F00A13E5E /* ZilliqaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		48C469F521445417008D0DD7 /* UILabel+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C469F421445417008D0DD7 /* UILabel+Styling.swift */; };
 		48C89FBD2142BCF70063B0FA /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FB92142BCF70063B0FA /* RxCocoa.framework */; };
@@ -183,6 +184,7 @@
 		48AC6CC82145AF1B00B4D036 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		48AC6CCA2145AF3E00B4D036 /* UITabBarItem_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabBarItem_Extension.swift; sourceTree = "<group>"; };
 		48B16E2F21452A2600177434 /* Never.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Never.swift; sourceTree = "<group>"; };
+		48BB6345215E72480039E937 /* Driver+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Driver+Empty.swift"; sourceTree = "<group>"; };
 		48C469F421445417008D0DD7 /* UILabel+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Styling.swift"; sourceTree = "<group>"; };
 		48C89FB92142BCF70063B0FA /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TinyConstraints.framework; path = Carthage/Build/iOS/TinyConstraints.framework; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 			children = (
 				489CDBCE2143FF3E00318450 /* FilterNil.swift */,
 				483F0F742146E25400E6EE08 /* Driver+Operator.swift */,
+				48BB6345215E72480039E937 /* Driver+Empty.swift */,
 			);
 			path = RxSwift;
 			sourceTree = "<group>";
@@ -872,6 +875,7 @@
 				48AC6CC42145AC4A00B4D036 /* SettingsViewModel.swift in Sources */,
 				4898FB48215423D6009501DC /* ScrollViewOwner.swift in Sources */,
 				48C89FF32143322C0063B0FA /* ChooseWalletView.swift in Sources */,
+				48BB6346215E72480039E937 /* Driver+Empty.swift in Sources */,
 				484F7D7821441BF20023C6D4 /* SendView.swift in Sources */,
 				484F7D7721441BF20023C6D4 /* SendCoordinator.swift in Sources */,
 				48C89FEA214331DA0063B0FA /* CreateNewWalletView.swift in Sources */,

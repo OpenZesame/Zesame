@@ -1,8 +1,8 @@
 //
-//  ObserverType_Extensions.swift
+//  Driver+Empty.swift
 //  ZilliqaSDKiOSExample
 //
-//  Created by Alexander Cyon on 2018-09-10.
+//  Created by Alexander Cyon on 2018-09-28.
 //  Copyright © 2018 Open Zesame. All rights reserved.
 //
 
@@ -28,4 +28,3 @@ public extension ObservableType {
         return map { _ in }
     }
 }
-
