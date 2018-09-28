@@ -1,13 +1,13 @@
 //
 //  PaymentModelTests.swift
-//  ZilliqaSDKTests
+//  ZesameTests
 //
 //  Created by Alexander Cyon on 2018-05-25.
 //  Copyright © 2018 Open Zesame. All rights reserved.
 //
 
 import XCTest
-@testable import ZilliqaSDK_iOS
+@testable import Zesame_iOS
 
 class PaymentModelTests: XCTestCase {
 

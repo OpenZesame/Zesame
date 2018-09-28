@@ -1,0 +1,2 @@
+#include "Zesame-Shared.xcconfig"
+#include "../../Configurations/base_release.xcconfig"

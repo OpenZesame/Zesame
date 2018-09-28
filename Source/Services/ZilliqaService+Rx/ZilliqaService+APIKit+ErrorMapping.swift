@@ -1,6 +1,6 @@
 //
 //  DefaultZilliqaService+APIKit.swift
-//  ZilliqaSDK
+//  Zesame
 //
 //  Created by Alexander Cyon on 2018-09-10.
 //  Copyright © 2018 Open Zesame. All rights reserved.
@@ -12,7 +12,7 @@ import APIKit
 import Result
 
 typealias APIKitHandler<R> = (Result<R, APIKit.SessionTaskError>) -> Void
-public typealias Done<R> = (Result<R, ZilliqaSDK.Error>) -> Void
+public typealias Done<R> = (Result<R, Zesame.Error>) -> Void
 
 func mapHandler<R>(_ handler: @escaping Done<R>) -> APIKitHandler<R> {
     return { (result: Result<R, APIKit.SessionTaskError>) -> Void in

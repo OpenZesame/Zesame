@@ -35,7 +35,8 @@
 		48AC6CC92145AF1B00B4D036 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CC82145AF1B00B4D036 /* MainCoordinator.swift */; };
 		48AC6CCB2145AF3E00B4D036 /* UITabBarItem_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CCA2145AF3E00B4D036 /* UITabBarItem_Extension.swift */; };
 		48B16E3021452A2600177434 /* Never.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B16E2F21452A2600177434 /* Never.swift */; };
-		48C469F1214450F0008D0DD7 /* ZilliqaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48F03F932142682F00A13E5E /* ZilliqaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48BB6346215E72480039E937 /* Driver+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BB6345215E72480039E937 /* Driver+Empty.swift */; };
+		48BD4ADA215EA792005F1B18 /* Zesame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48BD4AD1215EA77B005F1B18 /* Zesame.framework */; };
 		48C469F521445417008D0DD7 /* UILabel+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C469F421445417008D0DD7 /* UILabel+Styling.swift */; };
 		48C89FBD2142BCF70063B0FA /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FB92142BCF70063B0FA /* RxCocoa.framework */; };
 		48C89FBE2142BCF70063B0FA /* TinyConstraints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */; };
@@ -86,40 +87,40 @@
 			remoteGlobalIDString = 484B063520BA0C2D00C4E50A;
 			remoteInfo = ZilliqaSDKiOSExample;
 		};
-		48C469F2214450F0008D0DD7 /* PBXContainerItemProxy */ = {
+		48BD4AD0215EA77B005F1B18 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 48F70A1420B72DD00027B72D;
-			remoteInfo = "ZilliqaSDK iOS";
-		};
-		48F03F922142682F00A13E5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
+			containerPortal = 48BD4AC9215EA77B005F1B18 /* Zesame.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 48F70A1520B72DD00027B72D;
-			remoteInfo = "ZilliqaSDK-iOS";
+			remoteInfo = "Zesame iOS";
 		};
-		48F03F942142682F00A13E5E /* PBXContainerItemProxy */ = {
+		48BD4AD2215EA77B005F1B18 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
+			containerPortal = 48BD4AC9215EA77B005F1B18 /* Zesame.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 48F70A1E20B72DD00027B72D;
-			remoteInfo = "ZilliqaSDKTests-iOS";
+			remoteInfo = "Zesame iOS Tests";
 		};
-		48F03F962142682F00A13E5E /* PBXContainerItemProxy */ = {
+		48BD4AD4215EA77B005F1B18 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
+			containerPortal = 48BD4AC9215EA77B005F1B18 /* Zesame.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 48ED060520B8618F00C639E5;
-			remoteInfo = "ZilliqaSDK-macOS";
+			remoteInfo = "Zesame macOS";
 		};
-		48F03F982142682F00A13E5E /* PBXContainerItemProxy */ = {
+		48BD4AD6215EA77B005F1B18 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
+			containerPortal = 48BD4AC9215EA77B005F1B18 /* Zesame.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 48ED060D20B8618F00C639E5;
-			remoteInfo = "ZilliqaSDKTests-macOS";
+			remoteInfo = "Zesame macOS Tests";
+		};
+		48BD4AD8215EA78E005F1B18 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 48BD4AC9215EA77B005F1B18 /* Zesame.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 48F70A1420B72DD00027B72D;
+			remoteInfo = "Zesame iOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -130,7 +131,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				48C469F1214450F0008D0DD7 /* ZilliqaSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,9 +139,9 @@
 
 /* Begin PBXFileReference section */
 		483F0F742146E25400E6EE08 /* Driver+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Driver+Operator.swift"; sourceTree = "<group>"; };
-		484B063620BA0C2D00C4E50A /* ZilliqaSDKiOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZilliqaSDKiOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		484B064A20BA0C2F00C4E50A /* ZilliqaSDKiOSExample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZilliqaSDKiOSExample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		484B065520BA0C2F00C4E50A /* ZilliqaSDKiOSExample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZilliqaSDKiOSExample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		484B063620BA0C2D00C4E50A /* ZesameiOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZesameiOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		484B064A20BA0C2F00C4E50A /* ZesameiOSExample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZesameiOSExample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		484B065520BA0C2F00C4E50A /* ZesameiOSExample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZesameiOSExample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		484B067520BA0D2100C4E50A /* ZilliqaSDKiOSExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaSDKiOSExampleUITests.swift; sourceTree = "<group>"; };
 		484B067720BA0D2100C4E50A /* ZilliqaSDK-iOS-Example-UITests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Example-UITests-Info.plist"; sourceTree = "<group>"; };
 		484B067A20BA0D2C00C4E50A /* ZilliqaSDK-iOS-Example-Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Example-Tests-Info.plist"; sourceTree = "<group>"; };
@@ -183,6 +183,8 @@
 		48AC6CC82145AF1B00B4D036 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		48AC6CCA2145AF3E00B4D036 /* UITabBarItem_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabBarItem_Extension.swift; sourceTree = "<group>"; };
 		48B16E2F21452A2600177434 /* Never.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Never.swift; sourceTree = "<group>"; };
+		48BB6345215E72480039E937 /* Driver+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Driver+Empty.swift"; sourceTree = "<group>"; };
+		48BD4AC9215EA77B005F1B18 /* Zesame.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Zesame.xcodeproj; path = ../Zesame.xcodeproj; sourceTree = "<group>"; };
 		48C469F421445417008D0DD7 /* UILabel+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Styling.swift"; sourceTree = "<group>"; };
 		48C89FB92142BCF70063B0FA /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TinyConstraints.framework; path = Carthage/Build/iOS/TinyConstraints.framework; sourceTree = "<group>"; };
@@ -217,7 +219,6 @@
 		48C8A0122143CF6C0063B0FA /* RestoreWallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreWallet.swift; sourceTree = "<group>"; };
 		48C8A0172143D33E0063B0FA /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = ../Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 		48D0E6D8215B5DCF00D5D670 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
-		48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZilliqaSDK.xcodeproj; path = ../ZilliqaSDK.xcodeproj; sourceTree = "<group>"; };
 		48F03F9C2142686900A13E5E /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = ../Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
 		48F03F9D2142686A00A13E5E /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = ../Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
 		48F03F9E2142686A00A13E5E /* SwiftCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCrypto.framework; path = ../Carthage/Build/iOS/SwiftCrypto.framework; sourceTree = "<group>"; };
@@ -228,6 +229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48BD4ADA215EA792005F1B18 /* Zesame.framework in Frameworks */,
 				48C89FBD2142BCF70063B0FA /* RxCocoa.framework in Frameworks */,
 				48C89FBE2142BCF70063B0FA /* TinyConstraints.framework in Frameworks */,
 				48C89FBF2142BCF70063B0FA /* ViewComposer.framework in Frameworks */,
@@ -268,9 +270,9 @@
 		484B063720BA0C2D00C4E50A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				484B063620BA0C2D00C4E50A /* ZilliqaSDKiOSExample.app */,
-				484B064A20BA0C2F00C4E50A /* ZilliqaSDKiOSExample.xctest */,
-				484B065520BA0C2F00C4E50A /* ZilliqaSDKiOSExample.xctest */,
+				484B063620BA0C2D00C4E50A /* ZesameiOSExample.app */,
+				484B064A20BA0C2F00C4E50A /* ZesameiOSExample.xctest */,
+				484B065520BA0C2F00C4E50A /* ZesameiOSExample.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -338,7 +340,7 @@
 		484B069820BA104500C4E50A /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */,
+				48BD4AC9215EA77B005F1B18 /* Zesame.xcodeproj */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
@@ -440,6 +442,7 @@
 			children = (
 				489CDBCE2143FF3E00318450 /* FilterNil.swift */,
 				483F0F742146E25400E6EE08 /* Driver+Operator.swift */,
+				48BB6345215E72480039E937 /* Driver+Empty.swift */,
 			);
 			path = RxSwift;
 			sourceTree = "<group>";
@@ -464,6 +467,17 @@
 				48607BED215D2C5C001AD0D0 /* SettingsCoordinator.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		48BD4ACA215EA77B005F1B18 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				48BD4AD1215EA77B005F1B18 /* Zesame.framework */,
+				48BD4AD3215EA77B005F1B18 /* ZesameTests.xctest */,
+				48BD4AD5215EA77B005F1B18 /* Zesame.framework */,
+				48BD4AD7215EA77B005F1B18 /* ZesameTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		48C89FD021432F980063B0FA /* Domain */ = {
@@ -622,17 +636,6 @@
 			path = History;
 			sourceTree = "<group>";
 		};
-		48F03F8C2142682F00A13E5E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				48F03F932142682F00A13E5E /* ZilliqaSDK.framework */,
-				48F03F952142682F00A13E5E /* ZilliqaSDKTests.xctest */,
-				48F03F972142682F00A13E5E /* ZilliqaSDK.framework */,
-				48F03F992142682F00A13E5E /* ZilliqaSDKTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -649,11 +652,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				48C469F3214450F0008D0DD7 /* PBXTargetDependency */,
+				48BD4AD9215EA78E005F1B18 /* PBXTargetDependency */,
 			);
 			name = ZilliqaSDKiOSExample;
 			productName = ZilliqaSDKiOSExample;
-			productReference = 484B063620BA0C2D00C4E50A /* ZilliqaSDKiOSExample.app */;
+			productReference = 484B063620BA0C2D00C4E50A /* ZesameiOSExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 		484B064920BA0C2F00C4E50A /* ZilliqaSDKiOSExampleTests */ = {
@@ -671,7 +674,7 @@
 			);
 			name = ZilliqaSDKiOSExampleTests;
 			productName = ZilliqaSDKiOSExampleTests;
-			productReference = 484B064A20BA0C2F00C4E50A /* ZilliqaSDKiOSExample.xctest */;
+			productReference = 484B064A20BA0C2F00C4E50A /* ZesameiOSExample.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		484B065420BA0C2F00C4E50A /* ZilliqaSDKiOSExampleUITests */ = {
@@ -689,7 +692,7 @@
 			);
 			name = ZilliqaSDKiOSExampleUITests;
 			productName = ZilliqaSDKiOSExampleUITests;
-			productReference = 484B065520BA0C2F00C4E50A /* ZilliqaSDKiOSExample.xctest */;
+			productReference = 484B065520BA0C2F00C4E50A /* ZesameiOSExample.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -733,8 +736,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 48F03F8C2142682F00A13E5E /* Products */;
-					ProjectRef = 48F03F8B2142682F00A13E5E /* ZilliqaSDK.xcodeproj */;
+					ProductGroup = 48BD4ACA215EA77B005F1B18 /* Products */;
+					ProjectRef = 48BD4AC9215EA77B005F1B18 /* Zesame.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -747,32 +750,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		48F03F932142682F00A13E5E /* ZilliqaSDK.framework */ = {
+		48BD4AD1215EA77B005F1B18 /* Zesame.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = ZilliqaSDK.framework;
-			remoteRef = 48F03F922142682F00A13E5E /* PBXContainerItemProxy */;
+			path = Zesame.framework;
+			remoteRef = 48BD4AD0215EA77B005F1B18 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		48F03F952142682F00A13E5E /* ZilliqaSDKTests.xctest */ = {
+		48BD4AD3215EA77B005F1B18 /* ZesameTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = ZilliqaSDKTests.xctest;
-			remoteRef = 48F03F942142682F00A13E5E /* PBXContainerItemProxy */;
+			path = ZesameTests.xctest;
+			remoteRef = 48BD4AD2215EA77B005F1B18 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		48F03F972142682F00A13E5E /* ZilliqaSDK.framework */ = {
+		48BD4AD5215EA77B005F1B18 /* Zesame.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = ZilliqaSDK.framework;
-			remoteRef = 48F03F962142682F00A13E5E /* PBXContainerItemProxy */;
+			path = Zesame.framework;
+			remoteRef = 48BD4AD4215EA77B005F1B18 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		48F03F992142682F00A13E5E /* ZilliqaSDKTests.xctest */ = {
+		48BD4AD7215EA77B005F1B18 /* ZesameTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = ZilliqaSDKTests.xctest;
-			remoteRef = 48F03F982142682F00A13E5E /* PBXContainerItemProxy */;
+			path = ZesameTests.xctest;
+			remoteRef = 48BD4AD6215EA77B005F1B18 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -872,6 +875,7 @@
 				48AC6CC42145AC4A00B4D036 /* SettingsViewModel.swift in Sources */,
 				4898FB48215423D6009501DC /* ScrollViewOwner.swift in Sources */,
 				48C89FF32143322C0063B0FA /* ChooseWalletView.swift in Sources */,
+				48BB6346215E72480039E937 /* Driver+Empty.swift in Sources */,
 				484F7D7821441BF20023C6D4 /* SendView.swift in Sources */,
 				484F7D7721441BF20023C6D4 /* SendCoordinator.swift in Sources */,
 				48C89FEA214331DA0063B0FA /* CreateNewWalletView.swift in Sources */,
@@ -937,10 +941,10 @@
 			target = 484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */;
 			targetProxy = 484B065620BA0C2F00C4E50A /* PBXContainerItemProxy */;
 		};
-		48C469F3214450F0008D0DD7 /* PBXTargetDependency */ = {
+		48BD4AD9215EA78E005F1B18 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "ZilliqaSDK iOS";
-			targetProxy = 48C469F2214450F0008D0DD7 /* PBXContainerItemProxy */;
+			name = "Zesame iOS";
+			targetProxy = 48BD4AD8215EA78E005F1B18 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -1,6 +1,6 @@
 //
 //  SendNavigator.swift
-//  ZilliqaSDKiOSExample
+//  ZesameiOSExample
 //
 //  Created by Alexander Cyon on 2018-09-08.
 //  Copyright © 2018 Open Zesame. All rights reserved.
@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import ZilliqaSDK
+import Zesame
 
 // MARK: - SendNavigator
 final class SendCoordinator {
