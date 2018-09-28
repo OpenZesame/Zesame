@@ -32,7 +32,7 @@ public protocol ZilliqaServiceReactive {
     func exportKeystore(from wallet: Wallet, encryptWalletBy passphrase: String) -> Observable<Keystore>
     func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String) -> Observable<Wallet>
 
-    func getBalance(for address: Address) -> Single<BalanceResponse>
+    func getBalance(for address: Address) -> Observable<BalanceResponse>
     func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier>
 }
 ```
