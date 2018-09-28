@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
     s.name         = 'Zesame'
     s.version      = '0.0.1'
-    s.swift_version = '4.2'
+    s.swift_version = '4.1'
     s.ios.deployment_target = "11.0"
     s.license      = { :type => 'Apache License, Version 2.0', :file => 'LICENSE' }
     s.summary      = 'Zilliqa SDK in pure Swift'
