@@ -221,7 +221,6 @@
 		48D0E6D8215B5DCF00D5D670 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		48F03F9C2142686900A13E5E /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = ../Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
 		48F03F9D2142686A00A13E5E /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = ../Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
-		48F03F9E2142686A00A13E5E /* SwiftCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCrypto.framework; path = ../Carthage/Build/iOS/SwiftCrypto.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,7 +355,6 @@
 				48C89FBB2142BCF70063B0FA /* ViewComposer.framework */,
 				48F03F9D2142686A00A13E5E /* BigInt.framework */,
 				48F03F9C2142686900A13E5E /* SipHash.framework */,
-				48F03F9E2142686A00A13E5E /* SwiftCrypto.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

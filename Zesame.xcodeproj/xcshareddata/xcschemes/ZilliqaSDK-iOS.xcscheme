@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "48F70A1420B72DD00027B72D"
                BuildableName = "Zesame.framework"
-               BlueprintName = "Zesame iOS"
+               BlueprintName = "Zesame-iOS"
                ReferencedContainer = "container:Zesame.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +34,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "48F70A1D20B72DD00027B72D"
                BuildableName = "ZesameTests.xctest"
-               BlueprintName = "Zesame iOS Tests"
+               BlueprintName = "Zesame-iOS-Tests"
                ReferencedContainer = "container:Zesame.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -44,7 +44,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "48F70A1420B72DD00027B72D"
             BuildableName = "Zesame.framework"
-            BlueprintName = "Zesame iOS"
+            BlueprintName = "Zesame-iOS"
             ReferencedContainer = "container:Zesame.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -66,7 +66,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "48F70A1420B72DD00027B72D"
             BuildableName = "Zesame.framework"
-            BlueprintName = "Zesame iOS"
+            BlueprintName = "Zesame-iOS"
             ReferencedContainer = "container:Zesame.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -96,7 +96,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "48F70A1420B72DD00027B72D"
             BuildableName = "Zesame.framework"
-            BlueprintName = "Zesame iOS"
+            BlueprintName = "Zesame-iOS"
             ReferencedContainer = "container:Zesame.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

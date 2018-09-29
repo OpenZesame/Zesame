@@ -124,7 +124,6 @@
 		484E09E921543F3B003D928E /* MessageFromUnsignedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromUnsignedTransaction.swift; sourceTree = "<group>"; };
 		484E09EC215440B1003D928E /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		484E09EF21544134003D928E /* DefaultAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAPIClient.swift; sourceTree = "<group>"; };
-		487166572141ADEA00F0B413 /* SwiftCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCrypto.framework; path = Carthage/Build/iOS/SwiftCrypto.framework; sourceTree = "<group>"; };
 		487166582141ADEA00F0B413 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
 		487166592141ADEA00F0B413 /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
 		48838C9420B9F64800C18DC2 /* WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTests.swift; sourceTree = "<group>"; };
@@ -281,7 +280,6 @@
 				48E849C62144404F00A06C40 /* EllipticCurveKit.framework */,
 				487166582141ADEA00F0B413 /* BigInt.framework */,
 				487166592141ADEA00F0B413 /* SipHash.framework */,
-				487166572141ADEA00F0B413 /* SwiftCrypto.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -505,9 +503,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		48ED060420B8618F00C639E5 /* Zesame macOS */ = {
+		48ED060420B8618F00C639E5 /* Zesame-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 48ED061620B8618F00C639E5 /* Build configuration list for PBXNativeTarget "Zesame macOS" */;
+			buildConfigurationList = 48ED061620B8618F00C639E5 /* Build configuration list for PBXNativeTarget "Zesame-macOS" */;
 			buildPhases = (
 				48ED060020B8618F00C639E5 /* Sources */,
 				48ED060120B8618F00C639E5 /* Frameworks */,
@@ -518,14 +516,14 @@
 			);
 			dependencies = (
 			);
-			name = "Zesame macOS";
+			name = "Zesame-macOS";
 			productName = "ZilliqaSDK-macOS";
 			productReference = 48ED060520B8618F00C639E5 /* Zesame.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		48ED060C20B8618F00C639E5 /* Zesame macOS Tests */ = {
+		48ED060C20B8618F00C639E5 /* Zesame-macOS-Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 48ED061920B8618F00C639E5 /* Build configuration list for PBXNativeTarget "Zesame macOS Tests" */;
+			buildConfigurationList = 48ED061920B8618F00C639E5 /* Build configuration list for PBXNativeTarget "Zesame-macOS-Tests" */;
 			buildPhases = (
 				48ED060920B8618F00C639E5 /* Sources */,
 				48ED060A20B8618F00C639E5 /* Frameworks */,
@@ -536,14 +534,14 @@
 			dependencies = (
 				48ED061020B8618F00C639E5 /* PBXTargetDependency */,
 			);
-			name = "Zesame macOS Tests";
+			name = "Zesame-macOS-Tests";
 			productName = "ZilliqaSDK-macOSTests";
 			productReference = 48ED060D20B8618F00C639E5 /* ZesameTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		48F70A1420B72DD00027B72D /* Zesame iOS */ = {
+		48F70A1420B72DD00027B72D /* Zesame-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 48F70A2920B72DD00027B72D /* Build configuration list for PBXNativeTarget "Zesame iOS" */;
+			buildConfigurationList = 48F70A2920B72DD00027B72D /* Build configuration list for PBXNativeTarget "Zesame-iOS" */;
 			buildPhases = (
 				48F70A1020B72DD00027B72D /* Sources */,
 				48F70A1120B72DD00027B72D /* Frameworks */,
@@ -554,14 +552,14 @@
 			);
 			dependencies = (
 			);
-			name = "Zesame iOS";
+			name = "Zesame-iOS";
 			productName = ZilliqaSDK;
 			productReference = 48F70A1520B72DD00027B72D /* Zesame.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		48F70A1D20B72DD00027B72D /* Zesame iOS Tests */ = {
+		48F70A1D20B72DD00027B72D /* Zesame-iOS-Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 48F70A2C20B72DD00027B72D /* Build configuration list for PBXNativeTarget "Zesame iOS Tests" */;
+			buildConfigurationList = 48F70A2C20B72DD00027B72D /* Build configuration list for PBXNativeTarget "Zesame-iOS-Tests" */;
 			buildPhases = (
 				48F70A1A20B72DD00027B72D /* Sources */,
 				48F70A1B20B72DD00027B72D /* Frameworks */,
@@ -572,7 +570,7 @@
 			dependencies = (
 				48F70A2120B72DD00027B72D /* PBXTargetDependency */,
 			);
-			name = "Zesame iOS Tests";
+			name = "Zesame-iOS-Tests";
 			productName = ZilliqaSDKTests;
 			productReference = 48F70A1E20B72DD00027B72D /* ZesameTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -616,10 +614,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				48F70A1420B72DD00027B72D /* Zesame iOS */,
-				48F70A1D20B72DD00027B72D /* Zesame iOS Tests */,
-				48ED060420B8618F00C639E5 /* Zesame macOS */,
-				48ED060C20B8618F00C639E5 /* Zesame macOS Tests */,
+				48F70A1420B72DD00027B72D /* Zesame-iOS */,
+				48F70A1D20B72DD00027B72D /* Zesame-iOS-Tests */,
+				48ED060420B8618F00C639E5 /* Zesame-macOS */,
+				48ED060C20B8618F00C639E5 /* Zesame-macOS-Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -745,12 +743,12 @@
 /* Begin PBXTargetDependency section */
 		48ED061020B8618F00C639E5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 48ED060420B8618F00C639E5 /* Zesame macOS */;
+			target = 48ED060420B8618F00C639E5 /* Zesame-macOS */;
 			targetProxy = 48ED060F20B8618F00C639E5 /* PBXContainerItemProxy */;
 		};
 		48F70A2120B72DD00027B72D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 48F70A1420B72DD00027B72D /* Zesame iOS */;
+			target = 48F70A1420B72DD00027B72D /* Zesame-iOS */;
 			targetProxy = 48F70A2020B72DD00027B72D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -760,8 +758,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48BD4ADD215EA846005F1B18 /* Zesame-macOS-Debug.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = "Source/SupportingFiles/Zesame-Info.plist";
-				PRODUCT_NAME = Zesame;
 			};
 			name = Debug;
 		};
@@ -769,8 +765,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48BD4ADB215EA846005F1B18 /* Zesame-macOS-Release.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = "Source/SupportingFiles/Zesame-Info.plist";
-				PRODUCT_NAME = Zesame;
 			};
 			name = Release;
 		};
@@ -823,8 +817,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48BD4ADC215EA846005F1B18 /* Zesame-iOS-Debug.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = "Source/SupportingFiles/Zesame-Info.plist";
-				PRODUCT_NAME = Zesame;
 			};
 			name = Debug;
 		};
@@ -832,8 +824,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48BD4AE0215EA846005F1B18 /* Zesame-iOS-Release.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = "Source/SupportingFiles/Zesame-Info.plist";
-				PRODUCT_NAME = Zesame;
 			};
 			name = Release;
 		};
@@ -893,7 +883,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		48ED061620B8618F00C639E5 /* Build configuration list for PBXNativeTarget "Zesame macOS" */ = {
+		48ED061620B8618F00C639E5 /* Build configuration list for PBXNativeTarget "Zesame-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				48ED061720B8618F00C639E5 /* Debug */,
@@ -902,7 +892,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		48ED061920B8618F00C639E5 /* Build configuration list for PBXNativeTarget "Zesame macOS Tests" */ = {
+		48ED061920B8618F00C639E5 /* Build configuration list for PBXNativeTarget "Zesame-macOS-Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				48ED061A20B8618F00C639E5 /* Debug */,
@@ -920,7 +910,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		48F70A2920B72DD00027B72D /* Build configuration list for PBXNativeTarget "Zesame iOS" */ = {
+		48F70A2920B72DD00027B72D /* Build configuration list for PBXNativeTarget "Zesame-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				48F70A2A20B72DD00027B72D /* Debug */,
@@ -929,7 +919,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		48F70A2C20B72DD00027B72D /* Build configuration list for PBXNativeTarget "Zesame iOS Tests" */ = {
+		48F70A2C20B72DD00027B72D /* Build configuration list for PBXNativeTarget "Zesame-iOS-Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				48F70A2D20B72DD00027B72D /* Debug */,
