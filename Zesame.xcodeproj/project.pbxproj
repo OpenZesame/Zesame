@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		481169A22167778900341F81 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481169A12167778900341F81 /* Address.swift */; };
+		481169A32167778C00341F81 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481169A12167778900341F81 /* Address.swift */; };
+		481169A521677CC300341F81 /* AddressChecksumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481169A421677CC300341F81 /* AddressChecksumTests.swift */; };
+		481169A621677CC300341F81 /* AddressChecksumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481169A421677CC300341F81 /* AddressChecksumTests.swift */; };
 		48196F232157C480009C40BB /* Scrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48196F222157C480009C40BB /* Scrypt.swift */; };
 		48196F242157C480009C40BB /* Scrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48196F222157C480009C40BB /* Scrypt.swift */; };
 		48196F262157C574009C40BB /* ZilliqaService+DefaultImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48196F252157C574009C40BB /* ZilliqaService+DefaultImplementations.swift */; };
@@ -107,6 +111,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		481169A12167778900341F81 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		481169A421677CC300341F81 /* AddressChecksumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressChecksumTests.swift; sourceTree = "<group>"; };
 		48196F222157C480009C40BB /* Scrypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrypt.swift; sourceTree = "<group>"; };
 		48196F252157C574009C40BB /* ZilliqaService+DefaultImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZilliqaService+DefaultImplementations.swift"; sourceTree = "<group>"; };
 		48196F292157C5CA009C40BB /* Keystore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keystore.swift; sourceTree = "<group>"; };
@@ -419,6 +425,7 @@
 				48B5B2EE21482EC600147005 /* ZilliqaSDK iOS Tests-Bridging-Header.h */,
 				48B5B2EF21482EC600147005 /* ZilliqaSDK macOS Tests-Bridging-Header.h */,
 				488A658D2157BC5F0091FD03 /* ExportKeystoreTests.swift */,
+				481169A421677CC300341F81 /* AddressChecksumTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -485,6 +492,7 @@
 			children = (
 				48196F282157C5C1009C40BB /* Keystore */,
 				48F70A7820B811330027B72D /* Wallet.swift */,
+				481169A12167778900341F81 /* Address.swift */,
 				48F70A7E20B812990027B72D /* Nonce.swift */,
 			);
 			path = Wallet;
@@ -673,6 +681,7 @@
 				483F0F7D2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */,
 				483F0F912147083800E6EE08 /* BalanceRequest.swift in Sources */,
 				48ED0E5320E7F158005DA19C /* Amount.swift in Sources */,
+				481169A32167778C00341F81 /* Address.swift in Sources */,
 				48196F2B2157C5CA009C40BB /* Keystore.swift in Sources */,
 				484E09EE215440B4003D928E /* APIClient.swift in Sources */,
 				488A658C2157A1670091FD03 /* DispatchQueue+Sugar.swift in Sources */,
@@ -702,6 +711,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48B5B2F221482EC600147005 /* TransactionSigningTests.swift in Sources */,
+				481169A621677CC300341F81 /* AddressChecksumTests.swift in Sources */,
 				488A658F2157BC5F0091FD03 /* ExportKeystoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -719,6 +729,7 @@
 				48196F2A2157C5CA009C40BB /* Keystore.swift in Sources */,
 				484E09ED215440B1003D928E /* APIClient.swift in Sources */,
 				488A658B2157A1670091FD03 /* DispatchQueue+Sugar.swift in Sources */,
+				481169A22167778900341F81 /* Address.swift in Sources */,
 				48F70A7D20B812080027B72D /* Amount.swift in Sources */,
 				484E09EA21543F3B003D928E /* MessageFromUnsignedTransaction.swift in Sources */,
 				483F0F932147085500E6EE08 /* BalanceResponse.swift in Sources */,
@@ -746,6 +757,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48B5B2F121482EC600147005 /* TransactionSigningTests.swift in Sources */,
+				481169A521677CC300341F81 /* AddressChecksumTests.swift in Sources */,
 				488A658E2157BC5F0091FD03 /* ExportKeystoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
