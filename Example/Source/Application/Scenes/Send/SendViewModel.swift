@@ -28,15 +28,18 @@ final class SendViewModel {
 extension SendViewModel: ViewModelType {
 
     struct Input {
-        let sendTrigger: Driver<Void>
         let recepientAddress: Driver<String>
         let amountToSend: Driver<String>
         let gasLimit: Driver<String>
         let gasPrice: Driver<String>
+        let passphrase: Driver<String>
+        let sendTrigger: Driver<Void>
     }
 
     struct Output {
-        let walletBalance: Driver<WalletBalance>
+        let address: Driver<String>
+        let nonce: Driver<String>
+        let balance: Driver<String>
         let transactionId: Driver<String>
     }
 
@@ -65,9 +68,9 @@ extension SendViewModel: ViewModelType {
         }.filterNil()
 
         let transactionId: Driver<String> = input.sendTrigger
-            .withLatestFrom(Driver.combineLatest(payment, wallet) { (payment: $0, keyPair: $1.keyPair) })
+            .withLatestFrom(Driver.combineLatest(payment, walletBalance, input.passphrase) { (payment: $0, keystore: $1.wallet.keystore, encyptedBy: $2) })
             .flatMapLatest {
-                self.service.sendTransaction(for: $0.payment, signWith: $0.keyPair)
+                self.service.sendTransaction(for: $0.payment, keystore: $0.keystore, passphrase: $0.encyptedBy)
                     .asDriverOnErrorReturnEmpty()
                     // Trigger fetching of balance after successfull send
                     .do(onNext: { _ in
@@ -76,7 +79,9 @@ extension SendViewModel: ViewModelType {
         }
 
         return Output(
-            walletBalance: walletBalance,
+            address: wallet.map { $0.address.checksummedHex },
+            nonce: walletBalance.map { "\($0.nonce)" },
+            balance: walletBalance.map { "\($0.balance) ZILs" },
             transactionId: transactionId
         )
     }

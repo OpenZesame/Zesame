@@ -11,13 +11,13 @@ import Result
 
 public extension Keystore {
 
-    func toWallet(encryptedBy passphrase: String, done: @escaping Done<Wallet>) {
+    func toKeypair(encryptedBy passphrase: String, done: @escaping Done<KeyPair>) {
         decryptPrivateKey(using: passphrase) {
             switch $0 {
             case .failure(let error): done(Result.failure(error))
-            case .success(let privateKey):
-                let wallet = Wallet(privateKeyHex: privateKey)!
-                done(.success(wallet))
+            case .success(let privateKeyHex):
+                let keyPair = KeyPair(privateKeyHex: privateKeyHex)!
+                done(.success(keyPair))
             }
         }
     }

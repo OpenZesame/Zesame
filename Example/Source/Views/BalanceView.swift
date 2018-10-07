@@ -37,4 +37,12 @@ extension BalanceView {
         balanceLabels.setValue(walletBalance.balance)
         nonceLabels.setValue(walletBalance.nonce.nonce)
     }
+
+    func setBalance(_ balance: String) {
+        balanceLabels.setValue(balance)
+    }
+
+    func setNonce(_ nonce: String) {
+        nonceLabels.setValue(nonce)
+    }
 }

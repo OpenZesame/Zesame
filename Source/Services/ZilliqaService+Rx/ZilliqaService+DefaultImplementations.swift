@@ -13,12 +13,23 @@ import CryptoSwift
 
 public extension ZilliqaService {
 
-    func createNewWallet(done: @escaping Done<Wallet>) {
+    func createNewWallet(encryptionPassphrase: String, done: @escaping Done<Wallet>) {
+//        background {
+//            let privateKey = PrivateKey.generateNew()
+//            let keyPair = KeyPair(private: privateKey)
+//            let address = Address(keyPair: keyPair, network: Network.default)
+//            Keystore.from(address: address, privateKey: privateKey, encryptBy: encryptionPassphrase) {
+//                guard case .success(let keystore) = $0 else { done(Result.failure($0.error!)); return }
+//                let wallet = Wallet(keystore: keystore, address: address)
+//                main {
+//                    done(Result.success(wallet))
+//                }
+//            }
+//        }
+
         background {
-            let newWallet = Wallet(keyPair: KeyPair(private: PrivateKey.generateNew()), network: Network.testnet)
-            main {
-                done(Result.success(newWallet))
-            }
+            let privateKey = PrivateKey.generateNew()
+            self.importWalletFrom(privateKey: privateKey, newEncryptionPassphrase: encryptionPassphrase, done: done)
         }
     }
 
@@ -26,8 +37,38 @@ public extension ZilliqaService {
         Keystore.from(address: address, privateKey: privateKey, encryptBy: passphrase, done: done)
     }
 
+    func importWalletFrom(privateKeyHex: HexString, newEncryptionPassphrase: String, done: @escaping Done<Wallet>) {
+        background {
+            guard let keyPair = KeyPair(privateKeyHex: privateKeyHex) else {
+                main {
+                    done(.failure(.walletImport(.badPrivateKeyHex)))
+                }
+                return
+            }
+            self.importWalletFrom(privateKey: keyPair.privateKey, newEncryptionPassphrase: newEncryptionPassphrase, done: done)
+        }
+    }
+
+    func importWalletFrom(privateKey: PrivateKey, newEncryptionPassphrase: String, done: @escaping Done<Wallet>) {
+        background {
+            let address = Address(privateKey: privateKey)
+            Keystore.from(address: address, privateKey: privateKey, encryptBy: newEncryptionPassphrase) {
+                guard case .success(let keystore) = $0 else { done(Result.failure($0.error!)); return }
+                let wallet = Wallet(keystore: keystore, address: address)
+                main {
+                    done(Result.success(wallet))
+                }
+            }
+        }
+    }
+
     func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String, done: @escaping Done<Wallet>) {
-        keyStore.toWallet(encryptedBy: passphrase, done: done)
+        guard let address = Address(uncheckedString: keyStore.address) else {
+            done(.failure(.walletImport(.badAddress)))
+            return
+        }
+        let wallet = Wallet(keystore: keyStore, address: address)
+        done(.success(wallet))
     }
 }
 

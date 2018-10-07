@@ -34,8 +34,8 @@ final class WalletView: UIStackView, StackViewStyling {
 
     // MARK: - StackViewStyling
     lazy var stackViewStyle = UIStackView.Style([
-        addressLabels,
-        publicKeyLabels
+        addressLabels
+//        publicKeyLabels
         ], spacing: 16, margin: 0)
 }
 
@@ -43,7 +43,11 @@ extension WalletView {
 
     func populate(with wallet: Wallet) {
         addressLabels.setValue(wallet.address.checksummedHex)
-        publicKeyLabels.setValue(wallet.keyPair.publicKey)
+//        publicKeyLabels.setValue(wallet.keystore.)
+    }
+
+    func setAddress(_ address: String) {
+        addressLabels.setValue(address)
     }
 }
 

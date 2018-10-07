@@ -10,8 +10,8 @@ import UIKit
 import Zesame
 
 final class WalletBalanceView: UIStackView, StackViewStyling {
-    private lazy var walletView = WalletView()
-    private lazy var balanceView = BalanceView()
+    fileprivate lazy var walletView = WalletView()
+    fileprivate lazy var balanceView = BalanceView()
 
     init() {
         super.init(frame: .zero)
@@ -46,6 +46,24 @@ extension Reactive where Base == WalletBalanceView {
     var wallet: Binder<WalletBalance> {
         return Binder(base) {
             $0.populate(with: $1)
+        }
+    }
+
+    var address: Binder<String> {
+        return Binder(base) {
+            $0.walletView.setAddress($1)
+        }
+    }
+
+    var balance: Binder<String> {
+        return Binder(base) {
+            $0.balanceView.setBalance($1)
+        }
+    }
+
+    var nonce: Binder<String> {
+        return Binder(base) {
+            $0.balanceView.setNonce($1)
         }
     }
 }
