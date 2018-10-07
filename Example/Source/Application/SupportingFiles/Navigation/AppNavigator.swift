@@ -45,6 +45,7 @@ extension AppCoordinator: AppNavigation {
     }
 
     func toMain(wallet: Wallet) {
+        Unsafe︕！Cache.unsafe︕！Store(wallet: wallet)
         let navigationController = UINavigationController()
         window.rootViewController = navigationController
         let mainCoordinator = MainCoordinator(navigationController: navigationController, wallet: wallet, navigation: self)
