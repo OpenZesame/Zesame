@@ -6,42 +6,26 @@
 //  Copyright © 2018 Open Zesame. All rights reserved.
 //
 
-import EllipticCurveKit
-
-public typealias Curve = Secp256k1
-public typealias KeyPair = EllipticCurveKit.KeyPair<Curve>
-public typealias PrivateKey = EllipticCurveKit.PrivateKey<Curve>
-public typealias PublicKey = EllipticCurveKit.PublicKey<Curve>
-public typealias Signature = EllipticCurveKit.Signature<Curve>
-public typealias Signer = EllipticCurveKit.AnyKeySigner<Schnorr<Curve>>
-public typealias Network = EllipticCurveKit.Zilliqa.Network
-
-public extension Network {
-    static var `default`: Network {
-        return .mainnet
-    }
-}
-
 public struct Wallet {
     public let keyPair: KeyPair
     public let address: Address
-    public let balance: Amount
-    public let nonce: Nonce
-    public let network: Network
 
-    public init(keyPair: KeyPair, network: Network = .default, balance: Amount = 0, nonce: Nonce = 0) {
+    public init(keyPair: KeyPair, address: Address) {
         self.keyPair = keyPair
-        self.address = Address(keyPair: keyPair, network: network)
-        self.balance = balance
-        self.network = network
-        self.nonce = nonce
+        self.address = address
     }
 }
 
+
 public extension Wallet {
-    init?(privateKeyHex: String, network: Network = .default, balance: Amount = 0, nonce: Nonce = 0) {
+
+    init(keyPair: KeyPair, network: Network) {
+        self.init(keyPair: keyPair, address:  Address(keyPair: keyPair, network: network))
+    }
+
+    init?(privateKeyHex: String, network: Network = .default) {
         guard let keyPair = KeyPair(privateKeyHex: privateKeyHex) else { return nil }
-        self.init(keyPair: keyPair, network: network, balance: balance, nonce: nonce)
+        self.init(keyPair: keyPair, network: network)
     }
 }
 
@@ -51,13 +35,6 @@ public extension Wallet {
         return """
             address: '\(address)'
             publicKey: '\(keyPair.publicKey)'
-            balance: '\(balance)'
         """
-    }
-}
-
-extension EllipticCurveKit.PublicKey: CustomStringConvertible {
-    public var description: String {
-        return hex.compressed
     }
 }

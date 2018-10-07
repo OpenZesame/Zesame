@@ -14,7 +14,7 @@ import Zesame
 // MARK: - SendView
 final class SendView: ScrollingStackView {
 
-    private lazy var walletView = WalletView()
+    private lazy var walletBalanceView = WalletBalanceView()
 
     private lazy var recipientAddressField = UITextField.Style("To address", text: "74C544A11795905C2C9808F9E78D8156159D32E4").make()
     private lazy var amountToSendField = UITextField.Style("Amount", text: "11").make()
@@ -25,7 +25,7 @@ final class SendView: ScrollingStackView {
 
     // MARK: - StackViewStyling
     lazy var stackViewStyle: UIStackView.Style = [
-        walletView,
+        walletBalanceView,
         recipientAddressField,
         amountToSendField,
         gasLimitField,
@@ -52,7 +52,7 @@ extension SendView: ViewModelled {
 
     func populate(with viewModel: ViewModel.Output) -> [Disposable] {
         return [
-            viewModel.wallet            --> walletView.rx.wallet,
+            viewModel.walletBalance     --> walletBalanceView.rx.wallet,
             viewModel.transactionId     --> transactionIdentifierLabel
         ]
     }

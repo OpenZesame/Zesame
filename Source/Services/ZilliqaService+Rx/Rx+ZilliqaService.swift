@@ -21,9 +21,9 @@ extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObje
         }
     }
 
-    public func exportKeystore(from wallet: Wallet, encryptWalletBy passphrase: String) -> Observable<Keystore> {
+    public func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String) -> Observable<Keystore> {
         return callBase {
-            $0.exportKeystore(from: wallet, encryptWalletBy: passphrase, done: $1)
+            $0.exportKeystore(address: address, privateKey: privateKey, encryptWalletBy: passphrase, done: $1)
         }
     }
 

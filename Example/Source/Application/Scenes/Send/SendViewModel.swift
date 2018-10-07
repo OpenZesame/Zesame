@@ -16,12 +16,12 @@ final class SendViewModel {
     
     private weak var navigator: SendNavigator?
     private let service: ZilliqaServiceReactive
-    private let wallet: Wallet
+    private let wallet: Driver<Wallet>
 
-    init(navigator: SendNavigator, wallet: Wallet, service: ZilliqaServiceReactive) {
+    init(navigator: SendNavigator, wallet: Observable<Wallet>, service: ZilliqaServiceReactive) {
         self.navigator = navigator
         self.service = service
-        self.wallet = wallet
+        self.wallet = wallet.asDriverOnErrorReturnEmpty()
     }
 }
 
@@ -36,36 +36,31 @@ extension SendViewModel: ViewModelType {
     }
 
     struct Output {
-        let wallet: Driver<Wallet>
+        let walletBalance: Driver<WalletBalance>
         let transactionId: Driver<String>
     }
 
     func transform(input: Input) -> Output {
 
-        let _address = self.wallet.address
-
         let fetchBalanceSubject = BehaviorSubject<Void>(value: ())
 
         let fetchTrigger = fetchBalanceSubject.asDriverOnErrorReturnEmpty()
 
-        let balanceAndNonce: Driver<BalanceResponse> = fetchTrigger.flatMapLatest { _ in 
+        let balanceAndNonce: Driver<BalanceResponse> = fetchTrigger.withLatestFrom(wallet) { _, w in w.address }
+            .flatMapLatest {
             self.service
-                .getBalance(for: _address)
+                .getBalance(for: $0)
                 .asDriverOnErrorReturnEmpty()
         }
 
-        let _keyPair = self.wallet.keyPair
-        let wallet: Driver<Wallet> = balanceAndNonce.map { balance in
-            let amount = try! Amount(double: Double(balance.balance)!)
-            return Wallet(keyPair: _keyPair, balance: amount, nonce: Nonce(balance.nonce))
-        }
+        let walletBalance = Driver.combineLatest(wallet, balanceAndNonce) { WalletBalance(wallet: $0, balanceResponse: $1) }
 
         let recipient = input.recepientAddress.map { Address(uncheckedString: $0) }.filterNil()
         let amount = input.amountToSend.map { Double($0) }.filterNil()
         let gasLimit = input.gasLimit.map { Double($0) }.filterNil()
         let gasPrice = input.gasPrice.map { Double($0) }.filterNil()
 
-        let payment = Driver.combineLatest(recipient, amount, gasLimit, gasPrice, wallet) {
+        let payment = Driver.combineLatest(recipient, amount, gasLimit, gasPrice, walletBalance) {
             Payment(to: $0, amount: $1, gasLimit: $2, gasPrice: $3, nonce: $4.nonce)
         }.filterNil()
 
@@ -81,7 +76,7 @@ extension SendViewModel: ViewModelType {
         }
 
         return Output(
-            wallet: wallet,
+            walletBalance: walletBalance,
             transactionId: transactionId
         )
     }

@@ -7,8 +7,16 @@
 //
 
 import EllipticCurveKit
+import Result
 
 public extension ZilliqaService {
+
+    func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String, done: @escaping Done<TransactionIdentifier>) {
+        keystore.toWallet(encryptedBy: passphrase) {
+            guard case .success(let wallet) = $0 else { done(Result.failure($0.error!)); return }
+            self.sendTransaction(for: payment, signWith: wallet.keyPair, done: done)
+        }
+    }
 
     func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, done: @escaping Done<TransactionIdentifier>) {
         let transaction = sign(payment: payment, using: keyPair)

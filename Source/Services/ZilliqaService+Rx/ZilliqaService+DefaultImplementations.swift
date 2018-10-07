@@ -22,39 +22,12 @@ public extension ZilliqaService {
         }
     }
 
-    func exportKeystore(from wallet: Wallet, encryptWalletBy passphrase: String, done: @escaping Done<Keystore>){
-        guard passphrase.count >= Keystore.minumumPasshraseLength else { done(.failure(.keystorePasshraseTooShort(provided: passphrase.count, minimum: Keystore.minumumPasshraseLength))); return }
-
-        // Same parameters used by Zilliqa Javascript SDK: https://github.com/Zilliqa/Zilliqa-Wallet/blob/master/src/app/zilliqa.service.ts#L142
-        let salt = try! securelyGenerateBytes(count: 32).asData
-        let kdfParams = Keystore.Crypto.KeyDerivationFunctionParameters(
-            costParameter: 2048,
-            blockSize: 1,
-            parallelizationParameter: 8,
-            lengthOfDerivedKey: 32,
-            saltHex: salt.asHex
-        )
-
-        Scrypt(kdfParameters: kdfParams).deriveKey(passphrase: passphrase) { derivedKey in
-            let keyStore = Keystore(from: derivedKey, for: wallet, parameters: kdfParams)
-            done(Result.success(keyStore))
-        }
+    func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String, done: @escaping Done<Keystore>) {
+        Keystore.from(address: address, privateKey: privateKey, encryptBy: passphrase, done: done)
     }
 
     func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String, done: @escaping Done<Wallet>) {
-        guard passphrase.count >= Keystore.minumumPasshraseLength else { done(.failure(.keystorePasshraseTooShort(provided: passphrase.count, minimum: Keystore.minumumPasshraseLength))); return }
-
-        let encryptedPrivateKey = keyStore.crypto.encryptedPrivateKey
-
-        Scrypt(kdfParameters: keyStore.crypto.keyDerivationFunctionParameters).deriveKey(passphrase: passphrase) { derivedKey in
-            let mac = (derivedKey.asData.suffix(16) + encryptedPrivateKey).sha3(.sha256)
-            guard mac == keyStore.crypto.messageAuthenticationCode else { done(.failure(.walletImport(.incorrectPasshrase))); return }
-
-            let aesCtr = try! AES(key: derivedKey.asData.prefix(16).bytes, blockMode: CTR(iv: keyStore.crypto.cipherParameters.initializationVector.bytes))
-            let decryptedPrivateKey = try! aesCtr.decrypt(encryptedPrivateKey.bytes).asHex
-            let wallet = Wallet(privateKeyHex: decryptedPrivateKey)!
-            done(.success(wallet))
-        }
+        keyStore.toWallet(encryptedBy: passphrase, done: done)
     }
 }
 

@@ -37,6 +37,12 @@ public struct Amount {
     /// However, this limitations might be okay, if you are sending such big amounts as 9 billion Zillings, the first of all, congrats, you are a rich person, second, it might be okay to be constrained to 5 decimals sending such a big amount.
 
     public let amount: Double
+
+    public init(string: String) throws {
+        guard let double = Double(string) else { throw Error.nonNumericString }
+        try self.init(double: double)
+    }
+
     public init(double amount: Double, smallFractionRule: SmallFractionRule = .throwError) throws {
         guard amount >= 0 else { throw Error.amountWasNegative }
         guard amount <= Amount.totalSupply else { throw Error.amountExceededTotalSupply }
@@ -60,6 +66,7 @@ public struct Amount {
     }
 
     public enum Error: Int, Swift.Error, Equatable {
+        case nonNumericString
         case amountWasNegative
         case amountExceededTotalSupply
         case amountContainsTooSmallFractions
