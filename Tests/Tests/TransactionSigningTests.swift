@@ -21,15 +21,14 @@ class TransactionSigningTests: XCTestCase {
     func testTransactionSigning() {
         XCTAssertEqual(wallet.keyPair.publicKey.hex.compressed.lowercased(), "034ae47910d58b9bde819c3cffa8de4441955508db00aa2540db8e6bf6e99abc1b")
 
-        let recipientAddress = try! Address(hexString: "9CA91EB535FB92FDA5094110FDAEB752EDB9B039")
-        let recipient = Recipient(address: recipientAddress)
+        let recipient = try! Address(hexString: "9CA91EB535FB92FDA5094110FDAEB752EDB9B039")
 
         let payment = Payment(
             to: recipient,
             amount: 15,
             gasLimit: 1,
             gasPrice: 1,
-            from: wallet
+            nonce: wallet.nonce
         )!
 
         let unsignedTx = UnsignedTransaction(payment: payment, version: 0)
@@ -39,7 +38,7 @@ class TransactionSigningTests: XCTestCase {
         XCTAssertEqual(unsignedTx.gasPrice, 1)
         XCTAssertEqual(unsignedTx.nonce, 4)
         XCTAssertEqual(unsignedTx.version, 0)
-        XCTAssertEqual(unsignedTx.to, "9CA91EB535FB92FDA5094110FDAEB752EDB9B039")
+        XCTAssertEqual(unsignedTx.to, "9cA91eB535fb92FDA5094110fDAeb752EdB9B039")
 
         let message = messageFromUnsignedTransaction(unsignedTx, publicKey: wallet.keyPair.publicKey)
 

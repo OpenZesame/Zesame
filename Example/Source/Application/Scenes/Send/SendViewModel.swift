@@ -60,13 +60,13 @@ extension SendViewModel: ViewModelType {
             return Wallet(keyPair: _keyPair, balance: amount, nonce: Nonce(balance.nonce))
         }
 
-        let recipient = input.recepientAddress.map { Recipient(string: $0) }.filterNil()
+        let recipient = input.recepientAddress.map { Address(uncheckedString: $0) }.filterNil()
         let amount = input.amountToSend.map { Double($0) }.filterNil()
         let gasLimit = input.gasLimit.map { Double($0) }.filterNil()
         let gasPrice = input.gasPrice.map { Double($0) }.filterNil()
 
         let payment = Driver.combineLatest(recipient, amount, gasLimit, gasPrice, wallet) {
-            Payment(to: $0, amount: $1, gasLimit: $2, gasPrice: $3, from: $4)
+            Payment(to: $0, amount: $1, gasLimit: $2, gasPrice: $3, nonce: $4.nonce)
         }.filterNil()
 
         let transactionId: Driver<String> = input.sendTrigger

@@ -29,6 +29,14 @@ public extension Address {
         try self.init(hexString: compressedHash.toHexString())
     }
 
+    init?(uncheckedString: String) {
+        do {
+            try self.init(hexString: uncheckedString)
+        } catch {
+            return nil
+        }
+    }
+
     init(publicKey: PublicKey, network: Network) {
         let system = EllipticCurveKit.Zilliqa(network)
         let compressedHash = system.compressedHash(from: publicKey)
@@ -55,7 +63,7 @@ public extension Address {
     static func checksum(address hex: HexString) -> String {
         let hash = EllipticCurveKit.Crypto.hash(Data(hex: hex), function: HashFunction.sha256).asHex
         let address = hex.lowercased().droppingLeading0x()
-        var checksummed = "0x"
+        var checksummed = ""
         for (i, character) in address.enumerated() {
             let index = String.Index(encodedOffset: i)
             let string = String(character)
@@ -73,7 +81,7 @@ public extension Address {
         guard
             address.isAddress,
             case let checksummed = checksum(address: address),
-            checksummed == address || checksummed.droppingLeading0x() == address
+            checksummed == address || checksummed == address.droppingLeading0x()
             else { return false }
         return true
     }
