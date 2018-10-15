@@ -17,16 +17,10 @@
 		48196F272157C574009C40BB /* ZilliqaService+DefaultImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48196F252157C574009C40BB /* ZilliqaService+DefaultImplementations.swift */; };
 		48196F2A2157C5CA009C40BB /* Keystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48196F292157C5CA009C40BB /* Keystore.swift */; };
 		48196F2B2157C5CA009C40BB /* Keystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48196F292157C5CA009C40BB /* Keystore.swift */; };
-		482E31702144421F00D81A91 /* EllipticCurveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E849C62144404F00A06C40 /* EllipticCurveKit.framework */; };
-		483460A42145BD28007E5D5C /* JSONRPCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460A22145BD28007E5D5C /* JSONRPCKit.framework */; };
-		483460A52145BD28007E5D5C /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460A32145BD28007E5D5C /* Result.framework */; };
 		483460A82145BD4A007E5D5C /* ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483460A72145BD4A007E5D5C /* ZilliqaService.swift */; };
 		483460A92145BD4C007E5D5C /* ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483460A72145BD4A007E5D5C /* ZilliqaService.swift */; };
-		483460AB2145C183007E5D5C /* APIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460AA2145C182007E5D5C /* APIKit.framework */; };
 		483F0F7C2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */; };
 		483F0F7D2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */; };
-		483F0F802146FB8D00E6EE08 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */; };
-		483F0F812146FB8D00E6EE08 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */; };
 		483F0F8B214704D700E6EE08 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F8A214704D700E6EE08 /* Error.swift */; };
 		483F0F8C214704D700E6EE08 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F8A214704D700E6EE08 /* Error.swift */; };
 		483F0F902147083800E6EE08 /* BalanceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F8F2147083800E6EE08 /* BalanceRequest.swift */; };
@@ -58,8 +52,43 @@
 		484E09F121544134003D928E /* DefaultAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09EF21544134003D928E /* DefaultAPIClient.swift */; };
 		485D2899216A3BF7006F23E5 /* UnsignedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D2898216A3BF7006F23E5 /* UnsignedTransaction.swift */; };
 		485D289A216A3BFA006F23E5 /* UnsignedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D2898216A3BF7006F23E5 /* UnsignedTransaction.swift */; };
-		4871665B2141ADEA00F0B413 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166582141ADEA00F0B413 /* BigInt.framework */; };
-		4871665C2141ADEA00F0B413 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166592141ADEA00F0B413 /* SipHash.framework */; };
+		48802CDB21751A32003A22FD /* RxTest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48B5B2FB2148321500147005 /* RxTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CDD21751A32003A22FD /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CDE21751A32003A22FD /* APIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 483460AA2145C182007E5D5C /* APIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CDF21751A32003A22FD /* JSONRPCKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 483460A22145BD28007E5D5C /* JSONRPCKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CE021751A32003A22FD /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 483460A32145BD28007E5D5C /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CE121751A32003A22FD /* EllipticCurveKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48E849C62144404F00A06C40 /* EllipticCurveKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CE221751A32003A22FD /* BigInt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 487166582141ADEA00F0B413 /* BigInt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CE321751A32003A22FD /* SipHash.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 487166592141ADEA00F0B413 /* SipHash.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CF321751AE3003A22FD /* APIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE521751AB7003A22FD /* APIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CF421751AE3003A22FD /* BigInt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE721751AB8003A22FD /* BigInt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CF521751AE3003A22FD /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CEA21751AB8003A22FD /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CF621751AE3003A22FD /* JSONRPCKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE621751AB7003A22FD /* JSONRPCKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CF721751AE3003A22FD /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE421751AB7003A22FD /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CF821751AE3003A22FD /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE921751AB8003A22FD /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802CF921751AE3003A22FD /* SipHash.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE821751AB8003A22FD /* SipHash.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802D0521751D0A003A22FD /* APIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460AA2145C182007E5D5C /* APIKit.framework */; };
+		48802D0621751D0A003A22FD /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166582141ADEA00F0B413 /* BigInt.framework */; };
+		48802D0721751D0A003A22FD /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48802D0321751CD4003A22FD /* CryptoSwift.framework */; };
+		48802D0821751D0A003A22FD /* EllipticCurveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E849C62144404F00A06C40 /* EllipticCurveKit.framework */; };
+		48802D0921751D0A003A22FD /* JSONRPCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460A22145BD28007E5D5C /* JSONRPCKit.framework */; };
+		48802D0A21751D0A003A22FD /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460A32145BD28007E5D5C /* Result.framework */; };
+		48802D0B21751D0A003A22FD /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */; };
+		48802D0C21751D0A003A22FD /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */; };
+		48802D0E21751D0A003A22FD /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166592141ADEA00F0B413 /* SipHash.framework */; };
+		48802D1121751D37003A22FD /* APIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE521751AB7003A22FD /* APIKit.framework */; };
+		48802D1221751D37003A22FD /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE721751AB8003A22FD /* BigInt.framework */; };
+		48802D1321751D37003A22FD /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CEA21751AB8003A22FD /* CryptoSwift.framework */; };
+		48802D1421751D37003A22FD /* JSONRPCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE621751AB7003A22FD /* JSONRPCKit.framework */; };
+		48802D1521751D37003A22FD /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE421751AB7003A22FD /* Result.framework */; };
+		48802D1621751D37003A22FD /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE921751AB8003A22FD /* RxSwift.framework */; };
+		48802D1721751D37003A22FD /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48802CE821751AB8003A22FD /* SipHash.framework */; };
+		48802D1D21751D37003A22FD /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48802D1921751D37003A22FD /* RxCocoa.framework */; };
+		48802D1E21751D37003A22FD /* EllipticCurveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48802D1A21751D37003A22FD /* EllipticCurveKit.framework */; };
+		48802D2021751DCC003A22FD /* EllipticCurveKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48802D1A21751D37003A22FD /* EllipticCurveKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802D2221751DE7003A22FD /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48802D0321751CD4003A22FD /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802D2421751E0C003A22FD /* RxTest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48802D1B21751D37003A22FD /* RxTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48802D2621751EE9003A22FD /* Scrypt+KDFParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4847EE0E216141BB002FF978 /* Scrypt+KDFParameters.swift */; };
 		488A65872155ACD20091FD03 /* ZilliqaService+Signing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488A65862155ACD20091FD03 /* ZilliqaService+Signing.swift */; };
 		488A65882155ACD20091FD03 /* ZilliqaService+Signing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488A65862155ACD20091FD03 /* ZilliqaService+Signing.swift */; };
 		488A658B2157A1670091FD03 /* DispatchQueue+Sugar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488A658A2157A1670091FD03 /* DispatchQueue+Sugar.swift */; };
@@ -68,15 +97,6 @@
 		488A658F2157BC5F0091FD03 /* ExportKeystoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488A658D2157BC5F0091FD03 /* ExportKeystoreTests.swift */; };
 		48B5B2F121482EC600147005 /* TransactionSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B5B2F021482EC600147005 /* TransactionSigningTests.swift */; };
 		48B5B2F221482EC600147005 /* TransactionSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B5B2F021482EC600147005 /* TransactionSigningTests.swift */; };
-		48B5B2F32148321400147005 /* APIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460AA2145C182007E5D5C /* APIKit.framework */; };
-		48B5B2F42148321400147005 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166582141ADEA00F0B413 /* BigInt.framework */; };
-		48B5B2F52148321400147005 /* EllipticCurveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E849C62144404F00A06C40 /* EllipticCurveKit.framework */; };
-		48B5B2F62148321400147005 /* JSONRPCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460A22145BD28007E5D5C /* JSONRPCKit.framework */; };
-		48B5B2F72148321400147005 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483460A32145BD28007E5D5C /* Result.framework */; };
-		48B5B2F82148321400147005 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */; };
-		48B5B2F92148321400147005 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */; };
-		48B5B2FA2148321400147005 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487166592141ADEA00F0B413 /* SipHash.framework */; };
-		48B5B2FC2148321500147005 /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B5B2FB2148321500147005 /* RxTest.framework */; };
 		48D4114C2147202500E2F207 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D4114B2147202500E2F207 /* Transaction.swift */; };
 		48D4114F2147205200E2F207 /* TransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D4114E2147205200E2F207 /* TransactionRequest.swift */; };
 		48D411502147205500E2F207 /* TransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D4114E2147205200E2F207 /* TransactionRequest.swift */; };
@@ -118,6 +138,47 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		48802CD521751743003A22FD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				48802D2221751DE7003A22FD /* CryptoSwift.framework in Embed Frameworks */,
+				48802CDB21751A32003A22FD /* RxTest.framework in Embed Frameworks */,
+				48802CDD21751A32003A22FD /* RxSwift.framework in Embed Frameworks */,
+				48802CDE21751A32003A22FD /* APIKit.framework in Embed Frameworks */,
+				48802CDF21751A32003A22FD /* JSONRPCKit.framework in Embed Frameworks */,
+				48802CE021751A32003A22FD /* Result.framework in Embed Frameworks */,
+				48802CE121751A32003A22FD /* EllipticCurveKit.framework in Embed Frameworks */,
+				48802CE221751A32003A22FD /* BigInt.framework in Embed Frameworks */,
+				48802CE321751A32003A22FD /* SipHash.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		48802CF221751ACB003A22FD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				48802D2421751E0C003A22FD /* RxTest.framework in Embed Frameworks */,
+				48802D2021751DCC003A22FD /* EllipticCurveKit.framework in Embed Frameworks */,
+				48802CF321751AE3003A22FD /* APIKit.framework in Embed Frameworks */,
+				48802CF421751AE3003A22FD /* BigInt.framework in Embed Frameworks */,
+				48802CF521751AE3003A22FD /* CryptoSwift.framework in Embed Frameworks */,
+				48802CF621751AE3003A22FD /* JSONRPCKit.framework in Embed Frameworks */,
+				48802CF721751AE3003A22FD /* Result.framework in Embed Frameworks */,
+				48802CF821751AE3003A22FD /* RxSwift.framework in Embed Frameworks */,
+				48802CF921751AE3003A22FD /* SipHash.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		481169A12167778900341F81 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		481169A421677CC300341F81 /* AddressChecksumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressChecksumTests.swift; sourceTree = "<group>"; };
@@ -128,6 +189,12 @@
 		483460A32145BD28007E5D5C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		483460A72145BD4A007E5D5C /* ZilliqaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaService.swift; sourceTree = "<group>"; };
 		483460AA2145C182007E5D5C /* APIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = APIKit.framework; path = Carthage/Build/iOS/APIKit.framework; sourceTree = "<group>"; };
+		483B2CF32175126B004E07A4 /* Zesame-Tests-Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-Tests-Mac.xcconfig"; sourceTree = "<group>"; };
+		483B2CF42175126B004E07A4 /* Zesame-Tests-iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-Tests-iOS.xcconfig"; sourceTree = "<group>"; };
+		483B2CF52175126B004E07A4 /* Zesame-Tests-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-Tests-Shared.xcconfig"; sourceTree = "<group>"; };
+		483B2CF62175127B004E07A4 /* Zesame-iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-iOS.xcconfig"; sourceTree = "<group>"; };
+		483B2CF72175127B004E07A4 /* Zesame-Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-Mac.xcconfig"; sourceTree = "<group>"; };
+		483B2CF82175127B004E07A4 /* Zesame-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-Shared.xcconfig"; sourceTree = "<group>"; };
 		483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+ZilliqaService.swift"; sourceTree = "<group>"; };
 		483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
@@ -137,13 +204,6 @@
 		483F0F952147087700E6EE08 /* ZilliqaRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaRequest.swift; sourceTree = "<group>"; };
 		483F0F982147091900E6EE08 /* DefaultZilliqaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultZilliqaService.swift; sourceTree = "<group>"; };
 		483F0F9B2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZilliqaService+APIKit+ErrorMapping.swift"; sourceTree = "<group>"; };
-		4847EE032161390D002FF978 /* ZesameTests-iOS-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZesameTests-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
-		4847EE042161390D002FF978 /* ZesameTests-macOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZesameTests-macOS-Release.xcconfig"; sourceTree = "<group>"; };
-		4847EE052161390D002FF978 /* ZesameTests-macOS-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZesameTests-macOS-Debug.xcconfig"; sourceTree = "<group>"; };
-		4847EE062161390D002FF978 /* ZesameTests-iOS-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZesameTests-iOS-Common.xcconfig"; sourceTree = "<group>"; };
-		4847EE072161390D002FF978 /* Zilliqa-Tests-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zilliqa-Tests-Shared.xcconfig"; sourceTree = "<group>"; };
-		4847EE082161390D002FF978 /* ZesameTests-iOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZesameTests-iOS-Release.xcconfig"; sourceTree = "<group>"; };
-		4847EE092161390D002FF978 /* ZesameTests-macOS-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZesameTests-macOS-Common.xcconfig"; sourceTree = "<group>"; };
 		4847EE0A21613972002FF978 /* ZesameTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZesameTests-Info.plist"; sourceTree = "<group>"; };
 		4847EE0B21614196002FF978 /* DerivedKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DerivedKey.swift; sourceTree = "<group>"; };
 		4847EE0E216141BB002FF978 /* Scrypt+KDFParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scrypt+KDFParameters.swift"; sourceTree = "<group>"; };
@@ -157,6 +217,19 @@
 		485D2898216A3BF7006F23E5 /* UnsignedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsignedTransaction.swift; sourceTree = "<group>"; };
 		487166582141ADEA00F0B413 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
 		487166592141ADEA00F0B413 /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
+		48802CE421751AB7003A22FD /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/Mac/Result.framework; sourceTree = "<group>"; };
+		48802CE521751AB7003A22FD /* APIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = APIKit.framework; path = Carthage/Build/Mac/APIKit.framework; sourceTree = "<group>"; };
+		48802CE621751AB7003A22FD /* JSONRPCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONRPCKit.framework; path = Carthage/Build/Mac/JSONRPCKit.framework; sourceTree = "<group>"; };
+		48802CE721751AB8003A22FD /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = Carthage/Build/Mac/BigInt.framework; sourceTree = "<group>"; };
+		48802CE821751AB8003A22FD /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = Carthage/Build/Mac/SipHash.framework; sourceTree = "<group>"; };
+		48802CE921751AB8003A22FD /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/Mac/RxSwift.framework; sourceTree = "<group>"; };
+		48802CEA21751AB8003A22FD /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/Mac/CryptoSwift.framework; sourceTree = "<group>"; };
+		48802D0321751CD4003A22FD /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
+		48802D0F21751D0A003A22FD /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
+		48802D1821751D37003A22FD /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/Mac/RxBlocking.framework; sourceTree = "<group>"; };
+		48802D1921751D37003A22FD /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/Mac/RxCocoa.framework; sourceTree = "<group>"; };
+		48802D1A21751D37003A22FD /* EllipticCurveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EllipticCurveKit.framework; path = Carthage/Build/Mac/EllipticCurveKit.framework; sourceTree = "<group>"; };
+		48802D1B21751D37003A22FD /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/Mac/RxTest.framework; sourceTree = "<group>"; };
 		48838C9420B9F64800C18DC2 /* WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTests.swift; sourceTree = "<group>"; };
 		488A65862155ACD20091FD03 /* ZilliqaService+Signing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZilliqaService+Signing.swift"; sourceTree = "<group>"; };
 		488A658A2157A1670091FD03 /* DispatchQueue+Sugar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Sugar.swift"; sourceTree = "<group>"; };
@@ -165,13 +238,6 @@
 		48B5B2EF21482EC600147005 /* ZilliqaSDK macOS Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDK macOS Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		48B5B2F021482EC600147005 /* TransactionSigningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSigningTests.swift; sourceTree = "<group>"; };
 		48B5B2FB2148321500147005 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
-		48BD4ADB215EA846005F1B18 /* Zesame-macOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-macOS-Release.xcconfig"; sourceTree = "<group>"; };
-		48BD4ADC215EA846005F1B18 /* Zesame-iOS-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
-		48BD4ADD215EA846005F1B18 /* Zesame-macOS-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-macOS-Debug.xcconfig"; sourceTree = "<group>"; };
-		48BD4ADE215EA846005F1B18 /* Zesame-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-Shared.xcconfig"; sourceTree = "<group>"; };
-		48BD4ADF215EA846005F1B18 /* Zesame-macOS-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-macOS-Common.xcconfig"; sourceTree = "<group>"; };
-		48BD4AE0215EA846005F1B18 /* Zesame-iOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-iOS-Release.xcconfig"; sourceTree = "<group>"; };
-		48BD4AE1215EA846005F1B18 /* Zesame-iOS-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-iOS-Common.xcconfig"; sourceTree = "<group>"; };
 		48C89FC42142C4F10063B0FA /* Zesame-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Zesame-Info.plist"; sourceTree = "<group>"; };
 		48D4114B2147202500E2F207 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		48D4114E2147205200E2F207 /* TransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRequest.swift; sourceTree = "<group>"; };
@@ -202,6 +268,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48802D1121751D37003A22FD /* APIKit.framework in Frameworks */,
+				48802D1221751D37003A22FD /* BigInt.framework in Frameworks */,
+				48802D1321751D37003A22FD /* CryptoSwift.framework in Frameworks */,
+				48802D1E21751D37003A22FD /* EllipticCurveKit.framework in Frameworks */,
+				48802D1421751D37003A22FD /* JSONRPCKit.framework in Frameworks */,
+				48802D1521751D37003A22FD /* Result.framework in Frameworks */,
+				48802D1D21751D37003A22FD /* RxCocoa.framework in Frameworks */,
+				48802D1621751D37003A22FD /* RxSwift.framework in Frameworks */,
+				48802D1721751D37003A22FD /* SipHash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,14 +292,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4871665B2141ADEA00F0B413 /* BigInt.framework in Frameworks */,
-				483460AB2145C183007E5D5C /* APIKit.framework in Frameworks */,
-				4871665C2141ADEA00F0B413 /* SipHash.framework in Frameworks */,
-				483460A42145BD28007E5D5C /* JSONRPCKit.framework in Frameworks */,
-				483F0F802146FB8D00E6EE08 /* RxCocoa.framework in Frameworks */,
-				483F0F812146FB8D00E6EE08 /* RxSwift.framework in Frameworks */,
-				483460A52145BD28007E5D5C /* Result.framework in Frameworks */,
-				482E31702144421F00D81A91 /* EllipticCurveKit.framework in Frameworks */,
+				48802D0521751D0A003A22FD /* APIKit.framework in Frameworks */,
+				48802D0621751D0A003A22FD /* BigInt.framework in Frameworks */,
+				48802D0721751D0A003A22FD /* CryptoSwift.framework in Frameworks */,
+				48802D0821751D0A003A22FD /* EllipticCurveKit.framework in Frameworks */,
+				48802D0921751D0A003A22FD /* JSONRPCKit.framework in Frameworks */,
+				48802D0A21751D0A003A22FD /* Result.framework in Frameworks */,
+				48802D0B21751D0A003A22FD /* RxCocoa.framework in Frameworks */,
+				48802D0C21751D0A003A22FD /* RxSwift.framework in Frameworks */,
+				48802D0E21751D0A003A22FD /* SipHash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,15 +309,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				48F70A1F20B72DD00027B72D /* Zesame.framework in Frameworks */,
-				48B5B2FC2148321500147005 /* RxTest.framework in Frameworks */,
-				48B5B2F32148321400147005 /* APIKit.framework in Frameworks */,
-				48B5B2F42148321400147005 /* BigInt.framework in Frameworks */,
-				48B5B2F52148321400147005 /* EllipticCurveKit.framework in Frameworks */,
-				48B5B2F62148321400147005 /* JSONRPCKit.framework in Frameworks */,
-				48B5B2F72148321400147005 /* Result.framework in Frameworks */,
-				48B5B2F82148321400147005 /* RxCocoa.framework in Frameworks */,
-				48B5B2F92148321400147005 /* RxSwift.framework in Frameworks */,
-				48B5B2FA2148321400147005 /* SipHash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +366,19 @@
 		487166562141ADEA00F0B413 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				48802D1A21751D37003A22FD /* EllipticCurveKit.framework */,
+				48802D0F21751D0A003A22FD /* RxBlocking.framework */,
+				48802D1821751D37003A22FD /* RxBlocking.framework */,
+				48802D1921751D37003A22FD /* RxCocoa.framework */,
+				48802D1B21751D37003A22FD /* RxTest.framework */,
+				48802D0321751CD4003A22FD /* CryptoSwift.framework */,
+				48802CE521751AB7003A22FD /* APIKit.framework */,
+				48802CE721751AB8003A22FD /* BigInt.framework */,
+				48802CEA21751AB8003A22FD /* CryptoSwift.framework */,
+				48802CE621751AB7003A22FD /* JSONRPCKit.framework */,
+				48802CE421751AB7003A22FD /* Result.framework */,
+				48802CE921751AB8003A22FD /* RxSwift.framework */,
+				48802CE821751AB8003A22FD /* SipHash.framework */,
 				48B5B2FB2148321500147005 /* RxTest.framework */,
 				483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */,
 				483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */,
@@ -455,13 +535,9 @@
 		48F70A4020B730070027B72D /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				48BD4AE1215EA846005F1B18 /* Zesame-iOS-Common.xcconfig */,
-				48BD4ADC215EA846005F1B18 /* Zesame-iOS-Debug.xcconfig */,
-				48BD4AE0215EA846005F1B18 /* Zesame-iOS-Release.xcconfig */,
-				48BD4ADF215EA846005F1B18 /* Zesame-macOS-Common.xcconfig */,
-				48BD4ADD215EA846005F1B18 /* Zesame-macOS-Debug.xcconfig */,
-				48BD4ADB215EA846005F1B18 /* Zesame-macOS-Release.xcconfig */,
-				48BD4ADE215EA846005F1B18 /* Zesame-Shared.xcconfig */,
+				483B2CF62175127B004E07A4 /* Zesame-iOS.xcconfig */,
+				483B2CF72175127B004E07A4 /* Zesame-Mac.xcconfig */,
+				483B2CF82175127B004E07A4 /* Zesame-Shared.xcconfig */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -469,13 +545,9 @@
 		48F70A4420B7F4590027B72D /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4847EE062161390D002FF978 /* ZesameTests-iOS-Common.xcconfig */,
-				4847EE032161390D002FF978 /* ZesameTests-iOS-Debug.xcconfig */,
-				4847EE082161390D002FF978 /* ZesameTests-iOS-Release.xcconfig */,
-				4847EE092161390D002FF978 /* ZesameTests-macOS-Common.xcconfig */,
-				4847EE052161390D002FF978 /* ZesameTests-macOS-Debug.xcconfig */,
-				4847EE042161390D002FF978 /* ZesameTests-macOS-Release.xcconfig */,
-				4847EE072161390D002FF978 /* Zilliqa-Tests-Shared.xcconfig */,
+				483B2CF42175126B004E07A4 /* Zesame-Tests-iOS.xcconfig */,
+				483B2CF32175126B004E07A4 /* Zesame-Tests-Mac.xcconfig */,
+				483B2CF52175126B004E07A4 /* Zesame-Tests-Shared.xcconfig */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -561,6 +633,7 @@
 				48ED060920B8618F00C639E5 /* Sources */,
 				48ED060A20B8618F00C639E5 /* Frameworks */,
 				48ED060B20B8618F00C639E5 /* Resources */,
+				48802CF221751ACB003A22FD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -597,6 +670,7 @@
 				48F70A1A20B72DD00027B72D /* Sources */,
 				48F70A1B20B72DD00027B72D /* Frameworks */,
 				48F70A1C20B72DD00027B72D /* Resources */,
+				48802CD521751743003A22FD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -691,6 +765,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48802D2621751EE9003A22FD /* Scrypt+KDFParameters.swift in Sources */,
 				48ED0E6D20E80731005DA19C /* BigNumber.swift in Sources */,
 				483F0F9A2147091900E6EE08 /* DefaultZilliqaService.swift in Sources */,
 				48196F272157C574009C40BB /* ZilliqaService+DefaultImplementations.swift in Sources */,
@@ -804,21 +879,29 @@
 /* Begin XCBuildConfiguration section */
 		48ED061720B8618F00C639E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48BD4ADD215EA846005F1B18 /* Zesame-macOS-Debug.xcconfig */;
+			baseConfigurationReference = 483B2CF72175127B004E07A4 /* Zesame-Mac.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = Debug;
 		};
 		48ED061820B8618F00C639E5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48BD4ADB215EA846005F1B18 /* Zesame-macOS-Release.xcconfig */;
+			baseConfigurationReference = 483B2CF72175127B004E07A4 /* Zesame-Mac.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 			};
 			name = Release;
 		};
 		48ED061A20B8618F00C639E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4847EE052161390D002FF978 /* ZesameTests-macOS-Debug.xcconfig */;
+			baseConfigurationReference = 483B2CF32175126B004E07A4 /* Zesame-Tests-Mac.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -833,7 +916,7 @@
 		};
 		48ED061B20B8618F00C639E5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4847EE042161390D002FF978 /* ZesameTests-macOS-Release.xcconfig */;
+			baseConfigurationReference = 483B2CF32175126B004E07A4 /* Zesame-Tests-Mac.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -862,21 +945,29 @@
 		};
 		48F70A2A20B72DD00027B72D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48BD4ADC215EA846005F1B18 /* Zesame-iOS-Debug.xcconfig */;
+			baseConfigurationReference = 483B2CF62175127B004E07A4 /* Zesame-iOS.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 			};
 			name = Debug;
 		};
 		48F70A2B20B72DD00027B72D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48BD4AE0215EA846005F1B18 /* Zesame-iOS-Release.xcconfig */;
+			baseConfigurationReference = 483B2CF62175127B004E07A4 /* Zesame-iOS.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 			};
 			name = Release;
 		};
 		48F70A2D20B72DD00027B72D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4847EE032161390D002FF978 /* ZesameTests-iOS-Debug.xcconfig */;
+			baseConfigurationReference = 483B2CF42175126B004E07A4 /* Zesame-Tests-iOS.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = NO;
@@ -902,7 +993,7 @@
 		};
 		48F70A2E20B72DD00027B72D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4847EE082161390D002FF978 /* ZesameTests-iOS-Release.xcconfig */;
+			baseConfigurationReference = 483B2CF42175126B004E07A4 /* Zesame-Tests-iOS.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = NO;
