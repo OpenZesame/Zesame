@@ -14,50 +14,63 @@ import APIKit
 import Result
 import EllipticCurveKit
 
-extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObject) {
-    public func importWalletFrom(privateKeyHex: HexString, newEncryptionPassphrase: String) -> Observable<Wallet> {
+extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObject) {}
+public extension Reactive where Base: (ZilliqaService & AnyObject) {
+    func importWalletFrom(privateKeyHex: HexString, newEncryptionPassphrase: String) -> Observable<Wallet> {
         return callBase {
             $0.importWalletFrom(privateKeyHex: privateKeyHex, newEncryptionPassphrase: newEncryptionPassphrase, done: $1)
         }
     }
 
-    public func createNewWallet(encryptionPassphrase: String) -> Observable<Wallet> {
+    func importWalletFrom(keyStoreJSON: Data, encryptedBy passphrase: String) -> Observable<Wallet> {
+        return callBase {
+            $0.importWalletFrom(keyStoreJSON: keyStoreJSON, encryptedBy: passphrase, done: $1)
+        }
+    }
+
+    func importWalletFrom(keyStoreJSONString: String, encodedBy encoding: String.Encoding, encryptedBy passphrase: String) -> Observable<Wallet> {
+        return callBase {
+            $0.importWalletFrom(keyStoreJSONString: keyStoreJSONString, encodedBy: encoding, encryptedBy: passphrase, done: $1)
+        }
+    }
+
+    func createNewWallet(encryptionPassphrase: String) -> Observable<Wallet> {
         return callBase {
             $0.createNewWallet(encryptionPassphrase: encryptionPassphrase, done: $1)
         }
     }
 
-    public func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String) -> Observable<Keystore> {
+    func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String) -> Observable<Keystore> {
         return callBase {
             $0.exportKeystore(address: address, privateKey: privateKey, encryptWalletBy: passphrase, done: $1)
         }
     }
 
-    public func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String) -> Observable<Wallet> {
+    func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String) -> Observable<Wallet> {
         return callBase {
             $0.importWalletFrom(keyStore: keyStore, encryptedBy: passphrase, done: $1)
         }
     }
 
-    public func getBalance(for address: Address) -> Observable<BalanceResponse> {
+    func getBalance(for address: Address) -> Observable<BalanceResponse> {
         return callBase {
             $0.getBalalance(for: address, done: $1)
         }
     }
 
-    public func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String) -> Observable<TransactionIdentifier> {
+    func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String) -> Observable<TransactionIdentifier> {
         return callBase {
             $0.sendTransaction(for: payment, keystore: keystore, passphrase: passphrase, done: $1)
         }
     }
 
-    public func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier> {
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier> {
         return callBase {
             $0.sendTransaction(for: payment, signWith: keyPair, done: $1)
         }
     }
 
-    private func callBase<R>(call: @escaping (Base, @escaping Done<R>) -> Void) -> Observable<R> {
+    func callBase<R>(call: @escaping (Base, @escaping Done<R>) -> Void) -> Observable<R> {
         return Single.create { [weak base] single in
             guard let strongBase = base else { return Disposables.create {} }
             call(strongBase, {

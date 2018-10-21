@@ -27,6 +27,9 @@ public protocol ZilliqaService {
     func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String, done: @escaping Done<Keystore>)
     func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String, done: @escaping Done<Wallet>)
     func importWalletFrom(privateKeyHex: HexString, newEncryptionPassphrase: String, done: @escaping Done<Wallet>)
+    func importWalletFrom(keyStoreJSON: Data, encryptedBy passphrase: String, done: @escaping Done<Wallet>)
+    func importWalletFrom(keyStoreJSONString: String, encodedBy encoding: String.Encoding, encryptedBy passphrase: String, done: @escaping Done<Wallet>)
+
     func getBalalance(for address: Address, done: @escaping Done<BalanceResponse>)
     func send(transaction: Transaction, done: @escaping Done<TransactionIdentifier>)
 }
@@ -43,6 +46,9 @@ public protocol ZilliqaServiceReactive {
     func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String) -> Observable<Keystore>
     func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String) -> Observable<Wallet>
     func importWalletFrom(privateKeyHex: HexString, newEncryptionPassphrase: String) -> Observable<Wallet>
+
+    func importWalletFrom(keyStoreJSON: Data, encryptedBy passphrase: String) -> Observable<Wallet>
+    func importWalletFrom(keyStoreJSONString: String, encodedBy encoding: String.Encoding, encryptedBy passphrase: String) -> Observable<Wallet>
 
     func getBalance(for address: Address) -> Observable<BalanceResponse>
     func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String) -> Observable<TransactionIdentifier>
