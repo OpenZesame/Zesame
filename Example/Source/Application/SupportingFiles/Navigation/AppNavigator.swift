@@ -48,7 +48,7 @@ extension AppCoordinator: AppNavigation {
         Unsafe︕！Cache.unsafe︕！Store(wallet: wallet)
         let navigationController = UINavigationController()
         window.rootViewController = navigationController
-        let mainCoordinator = MainCoordinator(navigationController: navigationController, wallet: wallet, navigation: self)
+        let mainCoordinator = MainCoordinator(navigationController: navigationController, wallet: .just(wallet), navigation: self)
         childCoordinators = [mainCoordinator]
         mainCoordinator.start()
     }

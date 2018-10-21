@@ -50,6 +50,11 @@ public extension Address {
     init(keyPair: KeyPair, network: Network) {
         self.init(publicKey: keyPair.publicKey, network: network)
     }
+
+    init(privateKey: PrivateKey, network: Network = .default) {
+        let keyPair = KeyPair(private: privateKey)
+        self.init(keyPair: keyPair, network: network)
+    }
 }
 
 public extension Address {

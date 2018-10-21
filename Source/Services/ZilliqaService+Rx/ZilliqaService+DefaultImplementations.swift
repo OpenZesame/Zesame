@@ -13,48 +13,62 @@ import CryptoSwift
 
 public extension ZilliqaService {
 
-    func createNewWallet(done: @escaping Done<Wallet>) {
+    func createNewWallet(encryptionPassphrase: String, done: @escaping Done<Wallet>) {
+//        background {
+//            let privateKey = PrivateKey.generateNew()
+//            let keyPair = KeyPair(private: privateKey)
+//            let address = Address(keyPair: keyPair, network: Network.default)
+//            Keystore.from(address: address, privateKey: privateKey, encryptBy: encryptionPassphrase) {
+//                guard case .success(let keystore) = $0 else { done(Result.failure($0.error!)); return }
+//                let wallet = Wallet(keystore: keystore, address: address)
+//                main {
+//                    done(Result.success(wallet))
+//                }
+//            }
+//        }
+
         background {
-            let newWallet = Wallet(keyPair: KeyPair(private: PrivateKey.generateNew()), network: Network.testnet)
-            main {
-                done(Result.success(newWallet))
+            let privateKey = PrivateKey.generateNew()
+            self.importWalletFrom(privateKey: privateKey, newEncryptionPassphrase: encryptionPassphrase, done: done)
+        }
+    }
+
+    func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String, done: @escaping Done<Keystore>) {
+        Keystore.from(address: address, privateKey: privateKey, encryptBy: passphrase, done: done)
+    }
+
+    func importWalletFrom(privateKeyHex: HexString, newEncryptionPassphrase: String, done: @escaping Done<Wallet>) {
+        background {
+            guard let keyPair = KeyPair(privateKeyHex: privateKeyHex) else {
+                main {
+                    done(.failure(.walletImport(.badPrivateKeyHex)))
+                }
+                return
+            }
+            self.importWalletFrom(privateKey: keyPair.privateKey, newEncryptionPassphrase: newEncryptionPassphrase, done: done)
+        }
+    }
+
+    func importWalletFrom(privateKey: PrivateKey, newEncryptionPassphrase: String, done: @escaping Done<Wallet>) {
+        background {
+            let address = Address(privateKey: privateKey)
+            Keystore.from(address: address, privateKey: privateKey, encryptBy: newEncryptionPassphrase) {
+                guard case .success(let keystore) = $0 else { done(Result.failure($0.error!)); return }
+                let wallet = Wallet(keystore: keystore, address: address)
+                main {
+                    done(Result.success(wallet))
+                }
             }
         }
     }
 
-    func exportKeystore(from wallet: Wallet, encryptWalletBy passphrase: String, done: @escaping Done<Keystore>){
-        guard passphrase.count >= Keystore.minumumPasshraseLength else { done(.failure(.keystorePasshraseTooShort(provided: passphrase.count, minimum: Keystore.minumumPasshraseLength))); return }
-
-        // Same parameters used by Zilliqa Javascript SDK: https://github.com/Zilliqa/Zilliqa-Wallet/blob/master/src/app/zilliqa.service.ts#L142
-        let salt = try! securelyGenerateBytes(count: 32).asData
-        let kdfParams = Keystore.Crypto.KeyDerivationFunctionParameters(
-            costParameter: 2048,
-            blockSize: 1,
-            parallelizationParameter: 8,
-            lengthOfDerivedKey: 32,
-            saltHex: salt.asHex
-        )
-
-        Scrypt(kdfParameters: kdfParams).deriveKey(passphrase: passphrase) { derivedKey in
-            let keyStore = Keystore(from: derivedKey, for: wallet, parameters: kdfParams)
-            done(Result.success(keyStore))
-        }
-    }
-
     func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String, done: @escaping Done<Wallet>) {
-        guard passphrase.count >= Keystore.minumumPasshraseLength else { done(.failure(.keystorePasshraseTooShort(provided: passphrase.count, minimum: Keystore.minumumPasshraseLength))); return }
-
-        let encryptedPrivateKey = keyStore.crypto.encryptedPrivateKey
-
-        Scrypt(kdfParameters: keyStore.crypto.keyDerivationFunctionParameters).deriveKey(passphrase: passphrase) { derivedKey in
-            let mac = (derivedKey.asData.suffix(16) + encryptedPrivateKey).sha3(.sha256)
-            guard mac == keyStore.crypto.messageAuthenticationCode else { done(.failure(.walletImport(.incorrectPasshrase))); return }
-
-            let aesCtr = try! AES(key: derivedKey.asData.prefix(16).bytes, blockMode: CTR(iv: keyStore.crypto.cipherParameters.initializationVector.bytes))
-            let decryptedPrivateKey = try! aesCtr.decrypt(encryptedPrivateKey.bytes).asHex
-            let wallet = Wallet(privateKeyHex: decryptedPrivateKey)!
-            done(.success(wallet))
+        guard let address = Address(uncheckedString: keyStore.address) else {
+            done(.failure(.walletImport(.badAddress)))
+            return
         }
+        let wallet = Wallet(keystore: keyStore, address: address)
+        done(.success(wallet))
     }
 }
 

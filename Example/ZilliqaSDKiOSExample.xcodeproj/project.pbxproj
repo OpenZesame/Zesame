@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		483F0F752146E25400E6EE08 /* Driver+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F742146E25400E6EE08 /* Driver+Operator.swift */; };
 		484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B068520BA0D8800C4E50A /* AppDelegate.swift */; };
+		484DD376216A66B100FB82C8 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484DD375216A66B100FB82C8 /* BalanceView.swift */; };
+		484DD378216A66F000FB82C8 /* WalletBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484DD377216A66F000FB82C8 /* WalletBalanceView.swift */; };
 		484F7D7721441BF20023C6D4 /* SendCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7321441BF20023C6D4 /* SendCoordinator.swift */; };
 		484F7D7821441BF20023C6D4 /* SendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7421441BF20023C6D4 /* SendView.swift */; };
 		484F7D7921441BF20023C6D4 /* Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F7D7521441BF20023C6D4 /* Send.swift */; };
@@ -149,6 +151,8 @@
 		484B067F20BA0D8800C4E50A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		484B068520BA0D8800C4E50A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		484B068620BA0D8800C4E50A /* ZilliqaSDK-iOS-Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Example-Info.plist"; sourceTree = "<group>"; };
+		484DD375216A66B100FB82C8 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
+		484DD377216A66F000FB82C8 /* WalletBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletBalanceView.swift; sourceTree = "<group>"; };
 		484F7D7321441BF20023C6D4 /* SendCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendCoordinator.swift; sourceTree = "<group>"; };
 		484F7D7421441BF20023C6D4 /* SendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendView.swift; sourceTree = "<group>"; };
 		484F7D7521441BF20023C6D4 /* Send.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Send.swift; sourceTree = "<group>"; };
@@ -384,6 +388,8 @@
 			children = (
 				4850A405214C113000EBB85B /* LabelsView.swift */,
 				488A65812155AB2D0091FD03 /* WalletView.swift */,
+				484DD377216A66F000FB82C8 /* WalletBalanceView.swift */,
+				484DD375216A66B100FB82C8 /* BalanceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -865,6 +871,7 @@
 				48C8A00D2143CE3E0063B0FA /* StaticEmptyInitializable.swift in Sources */,
 				4850A406214C113000EBB85B /* LabelsView.swift in Sources */,
 				484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */,
+				484DD376216A66B100FB82C8 /* BalanceView.swift in Sources */,
 				48C89FE8214331CB0063B0FA /* CreateNewWallet.swift in Sources */,
 				48C89FE42143318E0063B0FA /* ChooseWalletCoordinator.swift in Sources */,
 				48C8A0092143CD8D0063B0FA /* RestoreWalletViewModel.swift in Sources */,
@@ -892,6 +899,7 @@
 				48C89FFD2143353C0063B0FA /* UIFont_Extension.swift in Sources */,
 				48C89FF62143326F0063B0FA /* UIButton+Styling.swift in Sources */,
 				4898FB4521542333009501DC /* StackViewStyling.swift in Sources */,
+				484DD378216A66F000FB82C8 /* WalletBalanceView.swift in Sources */,
 				48C8A001214335E70063B0FA /* AppNavigator.swift in Sources */,
 				48C89FEC214331F00063B0FA /* EmptyInitializable.swift in Sources */,
 				48AC6CCB2145AF3E00B4D036 /* UITabBarItem_Extension.swift in Sources */,

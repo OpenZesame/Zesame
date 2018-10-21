@@ -12,18 +12,24 @@ import RxSwift
 import JSONRPCKit
 import APIKit
 import Result
+import EllipticCurveKit
 
 extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObject) {
-
-    public func createNewWallet() -> Observable<Wallet> {
+    public func importWalletFrom(privateKeyHex: HexString, newEncryptionPassphrase: String) -> Observable<Wallet> {
         return callBase {
-            $0.createNewWallet(done: $1)
+            $0.importWalletFrom(privateKeyHex: privateKeyHex, newEncryptionPassphrase: newEncryptionPassphrase, done: $1)
         }
     }
 
-    public func exportKeystore(from wallet: Wallet, encryptWalletBy passphrase: String) -> Observable<Keystore> {
+    public func createNewWallet(encryptionPassphrase: String) -> Observable<Wallet> {
         return callBase {
-            $0.exportKeystore(from: wallet, encryptWalletBy: passphrase, done: $1)
+            $0.createNewWallet(encryptionPassphrase: encryptionPassphrase, done: $1)
+        }
+    }
+
+    public func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String) -> Observable<Keystore> {
+        return callBase {
+            $0.exportKeystore(address: address, privateKey: privateKey, encryptWalletBy: passphrase, done: $1)
         }
     }
 
@@ -36,6 +42,12 @@ extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObje
     public func getBalance(for address: Address) -> Observable<BalanceResponse> {
         return callBase {
             $0.getBalalance(for: address, done: $1)
+        }
+    }
+
+    public func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String) -> Observable<TransactionIdentifier> {
+        return callBase {
+            $0.sendTransaction(for: payment, keystore: keystore, passphrase: passphrase, done: $1)
         }
     }
 
