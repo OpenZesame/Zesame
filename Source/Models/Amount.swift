@@ -80,7 +80,7 @@ public extension Amount {
         do {
             try self = Amount(double: value)
         } catch {
-            fatalError("The `Double` value used to create amount was invalid, error: \(error)")
+            fatalError("The `Double` value (`\(value)`) used to create amount was invalid, error: \(error)")
         }
     }
 }
@@ -92,7 +92,19 @@ public extension Amount {
         do {
             try self = Amount(double: Double(value))
         } catch {
-            fatalError("The `Int` value used to create amount was invalid")
+            fatalError("The `Int` value (`\(value)`) used to create amount was invalid, error: \(error)")
+        }
+    }
+}
+
+extension Amount: ExpressibleByStringLiteral {}
+public extension Amount {
+    /// This `ExpressibleByStringLiteral` init can result in runtime crash if passed invalid values (since the protocol requires the initializer to be non failable, but the designated initializer is).
+    public init(stringLiteral value: String) {
+        do {
+            try self = Amount(string: value)
+        } catch {
+            fatalError("The `String` value (`\(value)`) used to create amount was invalid, error: \(error)")
         }
     }
 }
