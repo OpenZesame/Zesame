@@ -101,6 +101,18 @@
 		48D4114F2147205200E2F207 /* TransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D4114E2147205200E2F207 /* TransactionRequest.swift */; };
 		48D411502147205500E2F207 /* TransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D4114E2147205200E2F207 /* TransactionRequest.swift */; };
 		48D411522147206600E2F207 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D4114B2147202500E2F207 /* Transaction.swift */; };
+		48E00236217CBB900077E5CF /* KeyRestoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E00235217CBB900077E5CF /* KeyRestoration.swift */; };
+		48E00237217CBB900077E5CF /* KeyRestoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E00235217CBB900077E5CF /* KeyRestoration.swift */; };
+		48E0023A217CBBBB0077E5CF /* Wallet+Decrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E00239217CBBBB0077E5CF /* Wallet+Decrypt.swift */; };
+		48E0023B217CBBBB0077E5CF /* Wallet+Decrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E00239217CBBBB0077E5CF /* Wallet+Decrypt.swift */; };
+		48E0023E217CBBE00077E5CF /* Address+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E0023D217CBBE00077E5CF /* Address+Codable.swift */; };
+		48E0023F217CBBE00077E5CF /* Address+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E0023D217CBBE00077E5CF /* Address+Codable.swift */; };
+		48E00241217CBBF40077E5CF /* Wallet+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E00240217CBBF40077E5CF /* Wallet+Codable.swift */; };
+		48E00242217CBBF40077E5CF /* Wallet+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E00240217CBBF40077E5CF /* Wallet+Codable.swift */; };
+		48E00244217CBC140077E5CF /* Address+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E00243217CBC140077E5CF /* Address+Validation.swift */; };
+		48E00245217CBC140077E5CF /* Address+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E00243217CBC140077E5CF /* Address+Validation.swift */; };
+		48E00247217CBC300077E5CF /* Address+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E00246217CBC300077E5CF /* Address+HexString.swift */; };
+		48E00248217CBC300077E5CF /* Address+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E00246217CBC300077E5CF /* Address+HexString.swift */; };
 		48E76FB420B9D6210027A3FE /* ZilliqaSDK_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48ED060E20B8618F00C639E5 /* Zesame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48ED060520B8618F00C639E5 /* Zesame.framework */; };
 		48ED0E5020E7F150005DA19C /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A7820B811330027B72D /* Wallet.swift */; };
@@ -241,6 +253,12 @@
 		48C89FC42142C4F10063B0FA /* Zesame-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Zesame-Info.plist"; sourceTree = "<group>"; };
 		48D4114B2147202500E2F207 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		48D4114E2147205200E2F207 /* TransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRequest.swift; sourceTree = "<group>"; };
+		48E00235217CBB900077E5CF /* KeyRestoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyRestoration.swift; sourceTree = "<group>"; };
+		48E00239217CBBBB0077E5CF /* Wallet+Decrypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallet+Decrypt.swift"; sourceTree = "<group>"; };
+		48E0023D217CBBE00077E5CF /* Address+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Address+Codable.swift"; sourceTree = "<group>"; };
+		48E00240217CBBF40077E5CF /* Wallet+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallet+Codable.swift"; sourceTree = "<group>"; };
+		48E00243217CBC140077E5CF /* Address+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Address+Validation.swift"; sourceTree = "<group>"; };
+		48E00246217CBC300077E5CF /* Address+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Address+HexString.swift"; sourceTree = "<group>"; };
 		48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZilliqaSDK_macOS.h; sourceTree = "<group>"; };
 		48E849C62144404F00A06C40 /* EllipticCurveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EllipticCurveKit.framework; path = Carthage/Build/iOS/EllipticCurveKit.framework; sourceTree = "<group>"; };
 		48ED060520B8618F00C639E5 /* Zesame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Zesame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -433,6 +451,27 @@
 			path = Transaction;
 			sourceTree = "<group>";
 		};
+		48E00238217CBBAE0077E5CF /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				48F70A7820B811330027B72D /* Wallet.swift */,
+				48E00240217CBBF40077E5CF /* Wallet+Codable.swift */,
+				48E00239217CBBBB0077E5CF /* Wallet+Decrypt.swift */,
+			);
+			path = Wallet;
+			sourceTree = "<group>";
+		};
+		48E0023C217CBBC90077E5CF /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				481169A12167778900341F81 /* Address.swift */,
+				48E00243217CBC140077E5CF /* Address+Validation.swift */,
+				48E0023D217CBBE00077E5CF /* Address+Codable.swift */,
+				48E00246217CBC300077E5CF /* Address+HexString.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
 		48ED0E6620E80588005DA19C /* OLD */ = {
 			isa = PBXGroup;
 			children = (
@@ -558,6 +597,7 @@
 				48F70A7720B811290027B72D /* Wallet */,
 				48F70A7620B811150027B72D /* Payment */,
 				48F70A7B20B811A00027B72D /* Amount.swift */,
+				48E00235217CBB900077E5CF /* KeyRestoration.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -576,9 +616,9 @@
 		48F70A7720B811290027B72D /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				48E0023C217CBBC90077E5CF /* Address */,
+				48E00238217CBBAE0077E5CF /* Wallet */,
 				48196F282157C5C1009C40BB /* Keystore */,
-				48F70A7820B811330027B72D /* Wallet.swift */,
-				481169A12167778900341F81 /* Address.swift */,
 				48F70A7E20B812990027B72D /* Nonce.swift */,
 				484DD366216A4C1900FB82C8 /* KeyPair.swift */,
 				484DD369216A4C2E00FB82C8 /* WalletBalance.swift */,
@@ -767,18 +807,23 @@
 			files = (
 				48802D2621751EE9003A22FD /* Scrypt+KDFParameters.swift in Sources */,
 				48ED0E6D20E80731005DA19C /* BigNumber.swift in Sources */,
+				48E0023B217CBBBB0077E5CF /* Wallet+Decrypt.swift in Sources */,
 				483F0F9A2147091900E6EE08 /* DefaultZilliqaService.swift in Sources */,
 				48196F272157C574009C40BB /* ZilliqaService+DefaultImplementations.swift in Sources */,
 				483F0F7D2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */,
 				483F0F912147083800E6EE08 /* BalanceRequest.swift in Sources */,
+				48E0023F217CBBE00077E5CF /* Address+Codable.swift in Sources */,
 				48ED0E5320E7F158005DA19C /* Amount.swift in Sources */,
 				481169A32167778C00341F81 /* Address.swift in Sources */,
+				48E00237217CBB900077E5CF /* KeyRestoration.swift in Sources */,
 				48196F2B2157C5CA009C40BB /* Keystore.swift in Sources */,
 				484E09EE215440B4003D928E /* APIClient.swift in Sources */,
 				488A658C2157A1670091FD03 /* DispatchQueue+Sugar.swift in Sources */,
 				484E09EB21543F43003D928E /* MessageFromUnsignedTransaction.swift in Sources */,
+				48E00242217CBBF40077E5CF /* Wallet+Codable.swift in Sources */,
 				483F0F942147085500E6EE08 /* BalanceResponse.swift in Sources */,
 				483F0F8C214704D700E6EE08 /* Error.swift in Sources */,
+				48E00248217CBC300077E5CF /* Address+HexString.swift in Sources */,
 				48ED0E5020E7F150005DA19C /* Wallet.swift in Sources */,
 				484DD371216A4DE100FB82C8 /* Keystore+Wallet+Export.swift in Sources */,
 				48ED0E5220E7F155005DA19C /* Nonce.swift in Sources */,
@@ -796,6 +841,7 @@
 				48ED0E7020E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */,
 				48196F242157C480009C40BB /* Scrypt.swift in Sources */,
 				484DD36B216A4C2E00FB82C8 /* WalletBalance.swift in Sources */,
+				48E00245217CBC140077E5CF /* Address+Validation.swift in Sources */,
 				48D411502147205500E2F207 /* TransactionRequest.swift in Sources */,
 				488A65882155ACD20091FD03 /* ZilliqaService+Signing.swift in Sources */,
 			);
@@ -817,18 +863,23 @@
 			files = (
 				48ED0E6C20E80731005DA19C /* BigNumber.swift in Sources */,
 				483F0F992147091900E6EE08 /* DefaultZilliqaService.swift in Sources */,
+				48E0023A217CBBBB0077E5CF /* Wallet+Decrypt.swift in Sources */,
 				48196F262157C574009C40BB /* ZilliqaService+DefaultImplementations.swift in Sources */,
 				48D4114F2147205200E2F207 /* TransactionRequest.swift in Sources */,
 				483F0F7C2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */,
 				483F0F902147083800E6EE08 /* BalanceRequest.swift in Sources */,
+				48E0023E217CBBE00077E5CF /* Address+Codable.swift in Sources */,
 				48196F2A2157C5CA009C40BB /* Keystore.swift in Sources */,
 				484DD36D216A4DB900FB82C8 /* Keystore+Wallet+Import.swift in Sources */,
+				48E00236217CBB900077E5CF /* KeyRestoration.swift in Sources */,
 				484E09ED215440B1003D928E /* APIClient.swift in Sources */,
 				488A658B2157A1670091FD03 /* DispatchQueue+Sugar.swift in Sources */,
 				481169A22167778900341F81 /* Address.swift in Sources */,
 				48F70A7D20B812080027B72D /* Amount.swift in Sources */,
+				48E00241217CBBF40077E5CF /* Wallet+Codable.swift in Sources */,
 				484DD36A216A4C2E00FB82C8 /* WalletBalance.swift in Sources */,
 				484E09EA21543F3B003D928E /* MessageFromUnsignedTransaction.swift in Sources */,
+				48E00247217CBC300077E5CF /* Address+HexString.swift in Sources */,
 				483F0F932147085500E6EE08 /* BalanceResponse.swift in Sources */,
 				483F0F8B214704D700E6EE08 /* Error.swift in Sources */,
 				484DD370216A4DE100FB82C8 /* Keystore+Wallet+Export.swift in Sources */,
@@ -846,6 +897,7 @@
 				483F0F9C2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift in Sources */,
 				48196F232157C480009C40BB /* Scrypt.swift in Sources */,
 				484DD367216A4C1900FB82C8 /* KeyPair.swift in Sources */,
+				48E00244217CBC140077E5CF /* Address+Validation.swift in Sources */,
 				48ED0E6F20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */,
 				488A65872155ACD20091FD03 /* ZilliqaService+Signing.swift in Sources */,
 			);
@@ -881,10 +933,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 483B2CF72175127B004E07A4 /* Zesame-Mac.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 			};
 			name = Debug;
 		};
@@ -892,10 +940,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 483B2CF72175127B004E07A4 /* Zesame-Mac.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 			};
 			name = Release;
 		};
@@ -903,14 +947,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 483B2CF32175126B004E07A4 /* Zesame-Tests-Mac.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_NAME = ZesameTests;
-				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests/ZilliqaSDK macOS Tests-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -918,28 +954,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 483B2CF32175126B004E07A4 /* Zesame-Tests-Mac.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_NAME = ZesameTests;
-				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests/ZilliqaSDK macOS Tests-Bridging-Header.h";
 			};
 			name = Release;
 		};
 		48F70A2720B72DD00027B72D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
 		48F70A2820B72DD00027B72D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -947,10 +973,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 483B2CF62175127B004E07A4 /* Zesame-iOS.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 			};
 			name = Debug;
 		};
@@ -958,10 +980,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 483B2CF62175127B004E07A4 /* Zesame-iOS.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 			};
 			name = Release;
 		};
@@ -969,25 +987,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 483B2CF42175126B004E07A4 /* Zesame-Tests-iOS.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = NO;
-				DYLIB_COMPATIBILITY_VERSION = "";
-				DYLIB_CURRENT_VERSION = "";
-				DYLIB_INSTALL_NAME_BASE = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-					"$(FRAMEWORK_SEARCH_PATHS)",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
-				PRODUCT_NAME = ZesameTests;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -995,25 +994,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 483B2CF42175126B004E07A4 /* Zesame-Tests-iOS.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = NO;
-				DYLIB_COMPATIBILITY_VERSION = "";
-				DYLIB_CURRENT_VERSION = "";
-				DYLIB_INSTALL_NAME_BASE = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-					"$(FRAMEWORK_SEARCH_PATHS)",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
-				PRODUCT_NAME = ZesameTests;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

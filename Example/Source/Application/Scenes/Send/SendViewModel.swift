@@ -80,8 +80,8 @@ extension SendViewModel: ViewModelType {
 
         return Output(
             address: wallet.map { $0.address.checksummedHex },
-            nonce: walletBalance.map { "\($0.nonce)" },
-            balance: walletBalance.map { "\($0.balance) ZILs" },
+            nonce: walletBalance.map { "\($0.nonce.nonce)" },
+            balance: walletBalance.map { "\($0.balance)" },
             transactionId: transactionId
         )
     }

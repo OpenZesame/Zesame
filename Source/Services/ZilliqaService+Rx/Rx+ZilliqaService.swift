@@ -16,23 +16,6 @@ import EllipticCurveKit
 
 extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObject) {}
 public extension Reactive where Base: (ZilliqaService & AnyObject) {
-    func importWalletFrom(privateKeyHex: HexString, newEncryptionPassphrase: String) -> Observable<Wallet> {
-        return callBase {
-            $0.importWalletFrom(privateKeyHex: privateKeyHex, newEncryptionPassphrase: newEncryptionPassphrase, done: $1)
-        }
-    }
-
-    func importWalletFrom(keyStoreJSON: Data, encryptedBy passphrase: String) -> Observable<Wallet> {
-        return callBase {
-            $0.importWalletFrom(keyStoreJSON: keyStoreJSON, encryptedBy: passphrase, done: $1)
-        }
-    }
-
-    func importWalletFrom(keyStoreJSONString: String, encodedBy encoding: String.Encoding, encryptedBy passphrase: String) -> Observable<Wallet> {
-        return callBase {
-            $0.importWalletFrom(keyStoreJSONString: keyStoreJSONString, encodedBy: encoding, encryptedBy: passphrase, done: $1)
-        }
-    }
 
     func createNewWallet(encryptionPassphrase: String) -> Observable<Wallet> {
         return callBase {
@@ -40,15 +23,15 @@ public extension Reactive where Base: (ZilliqaService & AnyObject) {
         }
     }
 
-    func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String) -> Observable<Keystore> {
+    func restoreWallet(from restoration: KeyRestoration) -> Observable<Wallet>{
         return callBase {
-            $0.exportKeystore(address: address, privateKey: privateKey, encryptWalletBy: passphrase, done: $1)
+            $0.restoreWallet(from: restoration, done: $1)
         }
     }
 
-    func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String) -> Observable<Wallet> {
+    func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String) -> Observable<Keystore> {
         return callBase {
-            $0.importWalletFrom(keyStore: keyStore, encryptedBy: passphrase, done: $1)
+            $0.exportKeystore(address: address, privateKey: privateKey, encryptWalletBy: passphrase, done: $1)
         }
     }
 

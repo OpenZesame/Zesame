@@ -26,8 +26,6 @@
 		4898FB4521542333009501DC /* StackViewStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4898FB4421542333009501DC /* StackViewStyling.swift */; };
 		4898FB48215423D6009501DC /* ScrollViewOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4898FB47215423D6009501DC /* ScrollViewOwner.swift */; };
 		4898FB4A21542400009501DC /* ContentViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4898FB4921542400009501DC /* ContentViewProvider.swift */; };
-		489CDB9A2143E0CC00318450 /* Zesame-iOS-Example-Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B067B20BA0D2C00C4E50A /* Zesame-iOS-Example-Tests.swift */; };
-		489CDB9B2143E0D300318450 /* Zesame-iOS-Example-UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B067520BA0D2100C4E50A /* Zesame-iOS-Example-UITests.swift */; };
 		489CDBCF2143FF3E00318450 /* FilterNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489CDBCE2143FF3E00318450 /* FilterNil.swift */; };
 		48AC6CB9214533C500B4D036 /* Unsafe︕！Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CB8214533C500B4D036 /* Unsafe︕！Cache.swift */; };
 		48AC6CC22145AC4A00B4D036 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AC6CBE2145AC4A00B4D036 /* SettingsView.swift */; };
@@ -48,7 +46,6 @@
 		48C89FCD21432E2E0063B0FA /* ChooseWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCC21432E2E0063B0FA /* ChooseWalletViewModel.swift */; };
 		48C89FCF21432E440063B0FA /* CreateNewWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCE21432E440063B0FA /* CreateNewWalletViewModel.swift */; };
 		48C89FDB214331050063B0FA /* OpenWalletUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FDA214331050063B0FA /* OpenWalletUseCase.swift */; };
-		48C89FDE2143313B0063B0FA /* KeyRestoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FDD2143313B0063B0FA /* KeyRestoration.swift */; };
 		48C89FE0214331590063B0FA /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FDF214331590063B0FA /* Scene.swift */; };
 		48C89FE22143316B0063B0FA /* ChooseWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE12143316B0063B0FA /* ChooseWallet.swift */; };
 		48C89FE42143318E0063B0FA /* ChooseWalletCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FE32143318E0063B0FA /* ChooseWalletCoordinator.swift */; };
@@ -75,20 +72,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		484B064B20BA0C2F00C4E50A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 484B062E20BA0C2D00C4E50A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 484B063520BA0C2D00C4E50A;
-			remoteInfo = ZilliqaSDKiOSExample;
-		};
-		484B065620BA0C2F00C4E50A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 484B062E20BA0C2D00C4E50A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 484B063520BA0C2D00C4E50A;
-			remoteInfo = ZilliqaSDKiOSExample;
-		};
 		48BD4AD0215EA77B005F1B18 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 48BD4AC9215EA77B005F1B18 /* Zesame.xcodeproj */;
@@ -142,11 +125,6 @@
 /* Begin PBXFileReference section */
 		483F0F742146E25400E6EE08 /* Driver+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Driver+Operator.swift"; sourceTree = "<group>"; };
 		484B063620BA0C2D00C4E50A /* ZesameiOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZesameiOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		484B064A20BA0C2F00C4E50A /* ZesameiOSExample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZesameiOSExample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		484B065520BA0C2F00C4E50A /* ZesameiOSExample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZesameiOSExample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		484B067520BA0D2100C4E50A /* Zesame-iOS-Example-UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Zesame-iOS-Example-UITests.swift"; sourceTree = "<group>"; };
-		484B067A20BA0D2C00C4E50A /* ZilliqaSDK-iOS-Example-Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZilliqaSDK-iOS-Example-Tests-Info.plist"; sourceTree = "<group>"; };
-		484B067B20BA0D2C00C4E50A /* Zesame-iOS-Example-Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Zesame-iOS-Example-Tests.swift"; sourceTree = "<group>"; };
 		484B067D20BA0D8800C4E50A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		484B067F20BA0D8800C4E50A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		484B068520BA0D8800C4E50A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -161,7 +139,6 @@
 		4850A407214C122900EBB85B /* Makeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Makeable.swift; sourceTree = "<group>"; };
 		4850A409214C124400EBB85B /* ViewStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyling.swift; sourceTree = "<group>"; };
 		4850A40B214C125400EBB85B /* ViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyle.swift; sourceTree = "<group>"; };
-		485D289E216A41F6006F23E5 /* Zesame-iOS-Example-UITests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Zesame-iOS-Example-UITests-Info.plist"; sourceTree = "<group>"; };
 		48607BED215D2C5C001AD0D0 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		48607BF0215D4DD9001AD0D0 /* FormValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidator.swift; sourceTree = "<group>"; };
 		488A657C215593200091FD03 /* FormValidatorSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FormValidatorSwift.framework; path = Carthage/Build/iOS/FormValidatorSwift.framework; sourceTree = "<group>"; };
@@ -169,15 +146,7 @@
 		4898FB4421542333009501DC /* StackViewStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewStyling.swift; sourceTree = "<group>"; };
 		4898FB47215423D6009501DC /* ScrollViewOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewOwner.swift; sourceTree = "<group>"; };
 		4898FB4921542400009501DC /* ContentViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewProvider.swift; sourceTree = "<group>"; };
-		489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Debug.xcconfig"; sourceTree = "<group>"; };
-		489CDB9E2143E26C00318450 /* Example-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Common.xcconfig"; sourceTree = "<group>"; };
-		489CDB9F2143E26C00318450 /* Example-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Example-Release.xcconfig"; sourceTree = "<group>"; };
-		489CDBA12143E27500318450 /* ExampleTests-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExampleTests-Common.xcconfig"; sourceTree = "<group>"; };
-		489CDBA22143E27500318450 /* ExampleTests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExampleTests-Debug.xcconfig"; sourceTree = "<group>"; };
-		489CDBA32143E27500318450 /* ExampleTests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExampleTests-Release.xcconfig"; sourceTree = "<group>"; };
-		489CDBA52143E47300318450 /* ExampleUITests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExampleUITests-Release.xcconfig"; sourceTree = "<group>"; };
-		489CDBA62143E47300318450 /* ExampleUITests-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExampleUITests-Common.xcconfig"; sourceTree = "<group>"; };
-		489CDBA72143E47300318450 /* ExampleUITests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ExampleUITests-Debug.xcconfig"; sourceTree = "<group>"; };
+		489CDB9E2143E26C00318450 /* Example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Example.xcconfig; sourceTree = "<group>"; };
 		489CDBCE2143FF3E00318450 /* FilterNil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterNil.swift; sourceTree = "<group>"; };
 		48AC6CB8214533C500B4D036 /* Unsafe︕！Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Unsafe︕！Cache.swift"; sourceTree = "<group>"; };
 		48AC6CBE2145AC4A00B4D036 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -198,7 +167,6 @@
 		48C89FCC21432E2E0063B0FA /* ChooseWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWalletViewModel.swift; sourceTree = "<group>"; };
 		48C89FCE21432E440063B0FA /* CreateNewWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWalletViewModel.swift; sourceTree = "<group>"; };
 		48C89FDA214331050063B0FA /* OpenWalletUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWalletUseCase.swift; sourceTree = "<group>"; };
-		48C89FDD2143313B0063B0FA /* KeyRestoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyRestoration.swift; sourceTree = "<group>"; };
 		48C89FDF214331590063B0FA /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		48C89FE12143316B0063B0FA /* ChooseWallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWallet.swift; sourceTree = "<group>"; };
 		48C89FE32143318E0063B0FA /* ChooseWalletCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWalletCoordinator.swift; sourceTree = "<group>"; };
@@ -241,20 +209,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		484B064720BA0C2F00C4E50A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		484B065220BA0C2F00C4E50A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -263,8 +217,6 @@
 			children = (
 				484B069820BA104500C4E50A /* Dependencies */,
 				484B067C20BA0D8800C4E50A /* Source */,
-				484B067820BA0D2C00C4E50A /* Tests */,
-				484B067420BA0D2100C4E50A /* UITests */,
 				484B063720BA0C2D00C4E50A /* Products */,
 				484B06AA20BA107A00C4E50A /* Frameworks */,
 			);
@@ -274,46 +226,8 @@
 			isa = PBXGroup;
 			children = (
 				484B063620BA0C2D00C4E50A /* ZesameiOSExample.app */,
-				484B064A20BA0C2F00C4E50A /* ZesameiOSExample.xctest */,
-				484B065520BA0C2F00C4E50A /* ZesameiOSExample.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		484B067420BA0D2100C4E50A /* UITests */ = {
-			isa = PBXGroup;
-			children = (
-				489CDBA42143E47300318450 /* Configurations */,
-				484B067520BA0D2100C4E50A /* Zesame-iOS-Example-UITests.swift */,
-				484B067620BA0D2100C4E50A /* SupportingFiles */,
-			);
-			path = UITests;
-			sourceTree = "<group>";
-		};
-		484B067620BA0D2100C4E50A /* SupportingFiles */ = {
-			isa = PBXGroup;
-			children = (
-				485D289E216A41F6006F23E5 /* Zesame-iOS-Example-UITests-Info.plist */,
-			);
-			path = SupportingFiles;
-			sourceTree = "<group>";
-		};
-		484B067820BA0D2C00C4E50A /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				489CDBA02143E27500318450 /* Configurations */,
-				484B067920BA0D2C00C4E50A /* SupportingFiles */,
-				484B067B20BA0D2C00C4E50A /* Zesame-iOS-Example-Tests.swift */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		484B067920BA0D2C00C4E50A /* SupportingFiles */ = {
-			isa = PBXGroup;
-			children = (
-				484B067A20BA0D2C00C4E50A /* ZilliqaSDK-iOS-Example-Tests-Info.plist */,
-			);
-			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 		484B067C20BA0D8800C4E50A /* Source */ = {
@@ -414,29 +328,7 @@
 		489CDB9C2143E26C00318450 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */,
-				489CDB9E2143E26C00318450 /* Example-Common.xcconfig */,
-				489CDB9F2143E26C00318450 /* Example-Release.xcconfig */,
-			);
-			path = Configurations;
-			sourceTree = "<group>";
-		};
-		489CDBA02143E27500318450 /* Configurations */ = {
-			isa = PBXGroup;
-			children = (
-				489CDBA12143E27500318450 /* ExampleTests-Common.xcconfig */,
-				489CDBA22143E27500318450 /* ExampleTests-Debug.xcconfig */,
-				489CDBA32143E27500318450 /* ExampleTests-Release.xcconfig */,
-			);
-			path = Configurations;
-			sourceTree = "<group>";
-		};
-		489CDBA42143E47300318450 /* Configurations */ = {
-			isa = PBXGroup;
-			children = (
-				489CDBA52143E47300318450 /* ExampleUITests-Release.xcconfig */,
-				489CDBA62143E47300318450 /* ExampleUITests-Common.xcconfig */,
-				489CDBA72143E47300318450 /* ExampleUITests-Debug.xcconfig */,
+				489CDB9E2143E26C00318450 /* Example.xcconfig */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -577,7 +469,6 @@
 		48C89FDC214331110063B0FA /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				48C89FDD2143313B0063B0FA /* KeyRestoration.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -643,9 +534,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */ = {
+		484B063520BA0C2D00C4E50A /* Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 484B065E20BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExample" */;
+			buildConfigurationList = 484B065E20BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "Example" */;
 			buildPhases = (
 				484B063220BA0C2D00C4E50A /* Sources */,
 				484B063320BA0C2D00C4E50A /* Frameworks */,
@@ -658,46 +549,10 @@
 			dependencies = (
 				48BD4AD9215EA78E005F1B18 /* PBXTargetDependency */,
 			);
-			name = ZilliqaSDKiOSExample;
+			name = Example;
 			productName = ZilliqaSDKiOSExample;
 			productReference = 484B063620BA0C2D00C4E50A /* ZesameiOSExample.app */;
 			productType = "com.apple.product-type.application";
-		};
-		484B064920BA0C2F00C4E50A /* ZilliqaSDKiOSExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 484B066120BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExampleTests" */;
-			buildPhases = (
-				484B064620BA0C2F00C4E50A /* Sources */,
-				484B064720BA0C2F00C4E50A /* Frameworks */,
-				484B064820BA0C2F00C4E50A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				484B064C20BA0C2F00C4E50A /* PBXTargetDependency */,
-			);
-			name = ZilliqaSDKiOSExampleTests;
-			productName = ZilliqaSDKiOSExampleTests;
-			productReference = 484B064A20BA0C2F00C4E50A /* ZesameiOSExample.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		484B065420BA0C2F00C4E50A /* ZilliqaSDKiOSExampleUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 484B066420BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExampleUITests" */;
-			buildPhases = (
-				484B065120BA0C2F00C4E50A /* Sources */,
-				484B065220BA0C2F00C4E50A /* Frameworks */,
-				484B065320BA0C2F00C4E50A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				484B065720BA0C2F00C4E50A /* PBXTargetDependency */,
-			);
-			name = ZilliqaSDKiOSExampleUITests;
-			productName = ZilliqaSDKiOSExampleUITests;
-			productReference = 484B065520BA0C2F00C4E50A /* ZesameiOSExample.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -717,17 +572,9 @@
 							};
 						};
 					};
-					484B064920BA0C2F00C4E50A = {
-						CreatedOnToolsVersion = 9.4;
-						TestTargetID = 484B063520BA0C2D00C4E50A;
-					};
-					484B065420BA0C2F00C4E50A = {
-						CreatedOnToolsVersion = 9.4;
-						TestTargetID = 484B063520BA0C2D00C4E50A;
-					};
 				};
 			};
-			buildConfigurationList = 484B063120BA0C2D00C4E50A /* Build configuration list for PBXProject "ZilliqaSDKiOSExample" */;
+			buildConfigurationList = 484B063120BA0C2D00C4E50A /* Build configuration list for PBXProject "Example" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -746,9 +593,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */,
-				484B064920BA0C2F00C4E50A /* ZilliqaSDKiOSExampleTests */,
-				484B065420BA0C2F00C4E50A /* ZilliqaSDKiOSExampleUITests */,
+				484B063520BA0C2D00C4E50A /* Example */,
 			);
 		};
 /* End PBXProject section */
@@ -786,20 +631,6 @@
 
 /* Begin PBXResourcesBuildPhase section */
 		484B063420BA0C2D00C4E50A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		484B064820BA0C2F00C4E50A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		484B065320BA0C2F00C4E50A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -892,7 +723,6 @@
 				48C89FCB21432E220063B0FA /* ViewModelType.swift in Sources */,
 				48B16E3021452A2600177434 /* Never.swift in Sources */,
 				48C8A00B2143CDB50063B0FA /* RestoreWalletCoordinator.swift in Sources */,
-				48C89FDE2143313B0063B0FA /* KeyRestoration.swift in Sources */,
 				48C89FEE214331FE0063B0FA /* ViewModelled.swift in Sources */,
 				48AC6CC32145AC4A00B4D036 /* Settings.swift in Sources */,
 				48C8A00F2143CE490063B0FA /* Styling.swift in Sources */,
@@ -918,35 +748,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		484B064620BA0C2F00C4E50A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				489CDB9A2143E0CC00318450 /* Zesame-iOS-Example-Tests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		484B065120BA0C2F00C4E50A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				489CDB9B2143E0D300318450 /* Zesame-iOS-Example-UITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		484B064C20BA0C2F00C4E50A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */;
-			targetProxy = 484B064B20BA0C2F00C4E50A /* PBXContainerItemProxy */;
-		};
-		484B065720BA0C2F00C4E50A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 484B063520BA0C2D00C4E50A /* ZilliqaSDKiOSExample */;
-			targetProxy = 484B065620BA0C2F00C4E50A /* PBXContainerItemProxy */;
-		};
 		48BD4AD9215EA78E005F1B18 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Zesame iOS";
@@ -968,56 +772,26 @@
 /* Begin XCBuildConfiguration section */
 		484B065C20BA0C2F00C4E50A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
 		};
 		484B065D20BA0C2F00C4E50A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 489CDB9F2143E26C00318450 /* Example-Release.xcconfig */;
 			buildSettings = {
 			};
 			name = Release;
 		};
 		484B065F20BA0C2F00C4E50A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 489CDB9D2143E26C00318450 /* Example-Debug.xcconfig */;
+			baseConfigurationReference = 489CDB9E2143E26C00318450 /* Example.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
 		};
 		484B066020BA0C2F00C4E50A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 489CDB9F2143E26C00318450 /* Example-Release.xcconfig */;
-			buildSettings = {
-			};
-			name = Release;
-		};
-		484B066220BA0C2F00C4E50A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 489CDBA22143E27500318450 /* ExampleTests-Debug.xcconfig */;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		484B066320BA0C2F00C4E50A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 489CDBA32143E27500318450 /* ExampleTests-Release.xcconfig */;
-			buildSettings = {
-			};
-			name = Release;
-		};
-		484B066520BA0C2F00C4E50A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 489CDBA72143E47300318450 /* ExampleUITests-Debug.xcconfig */;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		484B066620BA0C2F00C4E50A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 489CDBA52143E47300318450 /* ExampleUITests-Release.xcconfig */;
+			baseConfigurationReference = 489CDB9E2143E26C00318450 /* Example.xcconfig */;
 			buildSettings = {
 			};
 			name = Release;
@@ -1025,7 +799,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		484B063120BA0C2D00C4E50A /* Build configuration list for PBXProject "ZilliqaSDKiOSExample" */ = {
+		484B063120BA0C2D00C4E50A /* Build configuration list for PBXProject "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				484B065C20BA0C2F00C4E50A /* Debug */,
@@ -1034,29 +808,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		484B065E20BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExample" */ = {
+		484B065E20BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				484B065F20BA0C2F00C4E50A /* Debug */,
 				484B066020BA0C2F00C4E50A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		484B066120BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				484B066220BA0C2F00C4E50A /* Debug */,
-				484B066320BA0C2F00C4E50A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		484B066420BA0C2F00C4E50A /* Build configuration list for PBXNativeTarget "ZilliqaSDKiOSExampleUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				484B066520BA0C2F00C4E50A /* Debug */,
-				484B066620BA0C2F00C4E50A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
