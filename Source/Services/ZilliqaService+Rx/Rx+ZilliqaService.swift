@@ -14,50 +14,46 @@ import APIKit
 import Result
 import EllipticCurveKit
 
-extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObject) {
-    public func importWalletFrom(privateKeyHex: HexString, newEncryptionPassphrase: String) -> Observable<Wallet> {
-        return callBase {
-            $0.importWalletFrom(privateKeyHex: privateKeyHex, newEncryptionPassphrase: newEncryptionPassphrase, done: $1)
-        }
-    }
+extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObject) {}
+public extension Reactive where Base: (ZilliqaService & AnyObject) {
 
-    public func createNewWallet(encryptionPassphrase: String) -> Observable<Wallet> {
+    func createNewWallet(encryptionPassphrase: String) -> Observable<Wallet> {
         return callBase {
             $0.createNewWallet(encryptionPassphrase: encryptionPassphrase, done: $1)
         }
     }
 
-    public func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String) -> Observable<Keystore> {
+    func restoreWallet(from restoration: KeyRestoration) -> Observable<Wallet>{
+        return callBase {
+            $0.restoreWallet(from: restoration, done: $1)
+        }
+    }
+
+    func exportKeystore(address: Address, privateKey: PrivateKey, encryptWalletBy passphrase: String) -> Observable<Keystore> {
         return callBase {
             $0.exportKeystore(address: address, privateKey: privateKey, encryptWalletBy: passphrase, done: $1)
         }
     }
 
-    public func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String) -> Observable<Wallet> {
-        return callBase {
-            $0.importWalletFrom(keyStore: keyStore, encryptedBy: passphrase, done: $1)
-        }
-    }
-
-    public func getBalance(for address: Address) -> Observable<BalanceResponse> {
+    func getBalance(for address: Address) -> Observable<BalanceResponse> {
         return callBase {
             $0.getBalalance(for: address, done: $1)
         }
     }
 
-    public func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String) -> Observable<TransactionIdentifier> {
+    func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String) -> Observable<TransactionIdentifier> {
         return callBase {
             $0.sendTransaction(for: payment, keystore: keystore, passphrase: passphrase, done: $1)
         }
     }
 
-    public func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier> {
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier> {
         return callBase {
             $0.sendTransaction(for: payment, signWith: keyPair, done: $1)
         }
     }
 
-    private func callBase<R>(call: @escaping (Base, @escaping Done<R>) -> Void) -> Observable<R> {
+    func callBase<R>(call: @escaping (Base, @escaping Done<R>) -> Void) -> Observable<R> {
         return Single.create { [weak base] single in
             guard let strongBase = base else { return Disposables.create {} }
             call(strongBase, {

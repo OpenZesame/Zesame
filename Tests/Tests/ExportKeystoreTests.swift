@@ -25,7 +25,8 @@ class ExportKeystoreTest: XCTestCase {
         let passphrase = "test_of_export_of_wallet_to_keystore_file_json_example_passphrase"
         let service = DefaultZilliqaService.shared
         let sempaphore = expectation(description: "importing wallet from keystore json")
-        service.importWalletFrom(keyStoreJSONString: keystoreWalletJSONString, encryptedBy: passphrase) {
+        let keyRestoration = try! KeyRestoration(keyStoreJSONString: keystoreWalletJSONString, encryptedBy: passphrase)
+        service.restoreWallet(from: keyRestoration) {
             switch $0 {
             case .success(let importedWallet):
                 XCTAssertEqual(importedWallet.keystore.crypto.encryptedPrivateKeyHex, expectedEncryptedPrivateKeyHex)

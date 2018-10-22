@@ -56,9 +56,12 @@ extension RestoreWalletViewModel: ViewModelType {
 
         let isRestoreButtonEnabled = Driver.combineLatest(validEncryptionPassphrase, validPrivateKey) { ($0, $1) }.map { $0 != nil && $1 != nil }
 
-        let wallet = Driver.combineLatest(validPrivateKey.filterNil(), validEncryptionPassphrase.filterNil()) { (privateKey: $0, encryptionKey: $1) }
+        let wallet = Driver.combineLatest(validPrivateKey.filterNil(), validEncryptionPassphrase.filterNil()) {
+            try? KeyRestoration(privateKeyHexString: $0, encryptBy: $1)
+        }.filterNil()
         .flatMapLatest {
-            self.service.importWalletFrom(privateKeyHex: $0.privateKey, newEncryptionPassphrase: $0.encryptionKey).asDriverOnErrorReturnEmpty()
+            self.service.restoreWallet(from: $0)
+                .asDriverOnErrorReturnEmpty()
         }
 
         input.restoreTrigger
