@@ -23,6 +23,7 @@ public struct Address {
     }
 }
 
+// MARK: - Convenience Initializers
 public extension Address {
 
     init(compressedHash: Data) throws {

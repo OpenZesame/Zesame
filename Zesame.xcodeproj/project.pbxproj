@@ -124,6 +124,10 @@
 		48ED0E6D20E80731005DA19C /* BigNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6B20E80731005DA19C /* BigNumber.swift */; };
 		48ED0E6F20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */; };
 		48ED0E7020E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */; };
+		48F06AC1217E596900303D1E /* Address+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F06AC0217E596900303D1E /* Address+CustomStringConvertible.swift */; };
+		48F06AC2217E596C00303D1E /* Address+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F06AC0217E596900303D1E /* Address+CustomStringConvertible.swift */; };
+		48F06AC4217E599E00303D1E /* Wallet+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F06AC3217E599E00303D1E /* Wallet+CustomStringConvertible.swift */; };
+		48F06AC5217E599E00303D1E /* Wallet+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F06AC3217E599E00303D1E /* Wallet+CustomStringConvertible.swift */; };
 		48F70A1F20B72DD00027B72D /* Zesame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F70A1520B72DD00027B72D /* Zesame.framework */; };
 		48F70A4820B7F4D00027B72D /* ZilliqaSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48F70A4B20B7F55B0027B72D /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F70A4A20B7F55B0027B72D /* Payment.swift */; };
@@ -265,6 +269,8 @@
 		48ED060D20B8618F00C639E5 /* ZesameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZesameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ED0E6B20E80731005DA19C /* BigNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigNumber.swift; sourceTree = "<group>"; };
 		48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt256+ExpressibleByStringLiteral.swift"; sourceTree = "<group>"; };
+		48F06AC0217E596900303D1E /* Address+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Address+CustomStringConvertible.swift"; sourceTree = "<group>"; };
+		48F06AC3217E599E00303D1E /* Wallet+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wallet+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		48F70A1520B72DD00027B72D /* Zesame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Zesame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A1E20B72DD00027B72D /* ZesameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZesameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZilliqaSDK.h; sourceTree = "<group>"; };
@@ -457,6 +463,7 @@
 				48F70A7820B811330027B72D /* Wallet.swift */,
 				48E00240217CBBF40077E5CF /* Wallet+Codable.swift */,
 				48E00239217CBBBB0077E5CF /* Wallet+Decrypt.swift */,
+				48F06AC3217E599E00303D1E /* Wallet+CustomStringConvertible.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -465,6 +472,7 @@
 			isa = PBXGroup;
 			children = (
 				481169A12167778900341F81 /* Address.swift */,
+				48F06AC0217E596900303D1E /* Address+CustomStringConvertible.swift */,
 				48E00243217CBC140077E5CF /* Address+Validation.swift */,
 				48E0023D217CBBE00077E5CF /* Address+Codable.swift */,
 				48E00246217CBC300077E5CF /* Address+HexString.swift */,
@@ -805,6 +813,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48F06AC2217E596C00303D1E /* Address+CustomStringConvertible.swift in Sources */,
 				48802D2621751EE9003A22FD /* Scrypt+KDFParameters.swift in Sources */,
 				48ED0E6D20E80731005DA19C /* BigNumber.swift in Sources */,
 				48E0023B217CBBBB0077E5CF /* Wallet+Decrypt.swift in Sources */,
@@ -829,6 +838,7 @@
 				48ED0E5220E7F155005DA19C /* Nonce.swift in Sources */,
 				484DD36E216A4DB900FB82C8 /* Keystore+Wallet+Import.swift in Sources */,
 				483F0F972147087700E6EE08 /* ZilliqaRequest.swift in Sources */,
+				48F06AC5217E599E00303D1E /* Wallet+CustomStringConvertible.swift in Sources */,
 				48D411522147206600E2F207 /* Transaction.swift in Sources */,
 				48ED0E5520E7F15D005DA19C /* Gas.swift in Sources */,
 				484E09F121544134003D928E /* DefaultAPIClient.swift in Sources */,
@@ -861,6 +871,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48F06AC1217E596900303D1E /* Address+CustomStringConvertible.swift in Sources */,
 				48ED0E6C20E80731005DA19C /* BigNumber.swift in Sources */,
 				483F0F992147091900E6EE08 /* DefaultZilliqaService.swift in Sources */,
 				48E0023A217CBBBB0077E5CF /* Wallet+Decrypt.swift in Sources */,
@@ -885,6 +896,7 @@
 				484DD370216A4DE100FB82C8 /* Keystore+Wallet+Export.swift in Sources */,
 				4847EE0F216141BB002FF978 /* Scrypt+KDFParameters.swift in Sources */,
 				48D4114C2147202500E2F207 /* Transaction.swift in Sources */,
+				48F06AC4217E599E00303D1E /* Wallet+CustomStringConvertible.swift in Sources */,
 				48F70A7A20B811370027B72D /* Wallet.swift in Sources */,
 				48F70A4B20B7F55B0027B72D /* Payment.swift in Sources */,
 				483F0F962147087700E6EE08 /* ZilliqaRequest.swift in Sources */,
