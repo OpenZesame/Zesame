@@ -47,13 +47,13 @@ public extension Reactive where Base: (ZilliqaService & AnyObject) {
         }
     }
 
-    func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String) -> Observable<TransactionIdentifier> {
+    func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String) -> Observable<TransactionResponse> {
         return callBase {
             $0.sendTransaction(for: payment, keystore: keystore, passphrase: passphrase, done: $1)
         }
     }
 
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier> {
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionResponse> {
         return callBase {
             $0.sendTransaction(for: payment, signWith: keyPair, done: $1)
         }
