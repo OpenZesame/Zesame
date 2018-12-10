@@ -21,7 +21,7 @@ func messageFromUnsignedTransaction(_ tx: Transaction, publicKey: PublicKey, has
         $0.senderpubkey = publicKey.data.compressed.asByteArray
         $0.amount = tx.payment.amount.as16BytesLongArray
         $0.gasprice = tx.payment.gasPrice.as16BytesLongArray
-        $0.gaslimit = tx.payment.gasLimit.asUInt64
+        $0.gaslimit = UInt64(tx.payment.gasLimit.amount)
         $0.code = formatCodeOrData(tx.code)
         $0.data = formatCodeOrData(tx.data)
     }
@@ -31,16 +31,12 @@ func messageFromUnsignedTransaction(_ tx: Transaction, publicKey: PublicKey, has
 
 // MARK: - Private format helpers
 private extension Amount {
-    var asUInt64: UInt64 {
-        return UInt64(amount)
-    }
-
     var asByteArray: ByteArray {
-        return BigNumber(amount).asTrimmedData().asByteArray
+        return amount.asTrimmedData().asByteArray
     }
 
     var as16BytesLongArray: ByteArray {
-        return BigNumber(asUInt64).as16BytesLongData().asByteArray
+        return amount.as16BytesLongData().asByteArray
     }
 }
 

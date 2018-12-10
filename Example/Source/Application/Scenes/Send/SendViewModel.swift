@@ -109,9 +109,9 @@ extension SendViewModel: ViewModelType {
         }
 
         let recipient = input.recepientAddress.map { Address(uncheckedString: $0) }.filterNil()
-        let amount = input.amountToSend.map { try? Amount(string: $0) }.filterNil()
-        let gasLimit = input.gasLimit.map { try? Amount(string: $0) }.filterNil()
-        let gasPrice = input.gasPrice.map { try? Amount(string: $0) }.filterNil()
+        let amount = input.amountToSend.map { try? Amount(decimalString: $0) }.filterNil()
+        let gasLimit = input.gasLimit.map { try? Amount(decimalString: $0) }.filterNil()
+        let gasPrice = input.gasPrice.map { try? Amount(decimalString: $0) }.filterNil()
 
         let payment = Driver.combineLatest(recipient, amount, gasLimit, gasPrice, balanceAndNonce) {
             Payment(to: $0, amount: $1, gasLimit: $2, gasPrice: $3, nonce: $4.nonce)
@@ -132,7 +132,7 @@ extension SendViewModel: ViewModelType {
             isFetchingBalance: activityIndicator.asDriver(),
             address: wallet.map { $0.address.checksummedHex },
             nonce: balanceAndNonce.map { "\($0.nonce.nonce)" },
-            balance: balanceAndNonce.map { "\($0.balance)" },
+            balance: balanceAndNonce.map { "\($0.balance.asDecimalString) Zil" },
             transactionId: transactionId
         )
     }

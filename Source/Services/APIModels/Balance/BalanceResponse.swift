@@ -17,7 +17,7 @@ extension Amount: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
-        try self.init(string: string)
+        try self.init(decimalString: string)
     }
 }
 
