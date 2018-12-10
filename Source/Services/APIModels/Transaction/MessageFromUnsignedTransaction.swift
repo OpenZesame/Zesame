@@ -51,15 +51,7 @@ private extension Data {
 }
 
 private extension BigNumber {
-    func asHexStringLength32(uppercased: Bool = true) -> String {
-        var hexString = toString(uppercased: uppercased, radix: 16)
-        while hexString.count < 32 {
-            hexString = "0\(hexString)"
-        }
-        return hexString
-    }
-
     func as16BytesLongData() -> Data {
-        return Data(hex: asHexStringLength32())
+        return Data(hex: String(asHexStringLength64().suffix(32)))
     }
 }
