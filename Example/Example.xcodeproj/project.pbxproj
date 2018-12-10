@@ -21,6 +21,7 @@
 		4850A40C214C125400EBB85B /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4850A40B214C125400EBB85B /* ViewStyle.swift */; };
 		48607BEE215D2C5C001AD0D0 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48607BED215D2C5C001AD0D0 /* SettingsCoordinator.swift */; };
 		48607BF1215D4DD9001AD0D0 /* FormValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48607BF0215D4DD9001AD0D0 /* FormValidator.swift */; };
+		4877B4F921BE83F200A94318 /* SwiftProtobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4877B4F521BE83F100A94318 /* SwiftProtobuf.framework */; };
 		488A6580215593200091FD03 /* FormValidatorSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 488A657C215593200091FD03 /* FormValidatorSwift.framework */; };
 		488A65822155AB2D0091FD03 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488A65812155AB2D0091FD03 /* WalletView.swift */; };
 		4898FB4521542333009501DC /* StackViewStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4898FB4421542333009501DC /* StackViewStyling.swift */; };
@@ -141,6 +142,7 @@
 		4850A40B214C125400EBB85B /* ViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyle.swift; sourceTree = "<group>"; };
 		48607BED215D2C5C001AD0D0 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		48607BF0215D4DD9001AD0D0 /* FormValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidator.swift; sourceTree = "<group>"; };
+		4877B4F521BE83F100A94318 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftProtobuf.framework; path = ../Carthage/Build/iOS/SwiftProtobuf.framework; sourceTree = "<group>"; };
 		488A657C215593200091FD03 /* FormValidatorSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FormValidatorSwift.framework; path = Carthage/Build/iOS/FormValidatorSwift.framework; sourceTree = "<group>"; };
 		488A65812155AB2D0091FD03 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
 		4898FB4421542333009501DC /* StackViewStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewStyling.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				48C89FBE2142BCF70063B0FA /* TinyConstraints.framework in Frameworks */,
 				48C89FBF2142BCF70063B0FA /* ViewComposer.framework in Frameworks */,
 				488A6580215593200091FD03 /* FormValidatorSwift.framework in Frameworks */,
+				4877B4F921BE83F200A94318 /* SwiftProtobuf.framework in Frameworks */,
 				48C89FC02142BCF70063B0FA /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,6 +268,7 @@
 		484B06AA20BA107A00C4E50A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4877B4F521BE83F100A94318 /* SwiftProtobuf.framework */,
 				488A657C215593200091FD03 /* FormValidatorSwift.framework */,
 				48C8A0172143D33E0063B0FA /* CryptoSwift.framework */,
 				48C89FB92142BCF70063B0FA /* RxCocoa.framework */,
@@ -660,6 +664,7 @@
 				"$(SRCROOT)/../Carthage/Build/iOS/JSONRPCKit.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/Result.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FormValidatorSwift.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/SwiftProtobuf.framework",
 			);
 			name = Carthage;
 			outputFileListPaths = (
@@ -677,6 +682,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/JSONRPCKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Result.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FormValidatorSwift.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftProtobuf.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

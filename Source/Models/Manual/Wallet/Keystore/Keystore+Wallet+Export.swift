@@ -16,8 +16,9 @@ public extension Keystore {
 
         // Same parameters used by Zilliqa Javascript SDK: https://github.com/Zilliqa/Zilliqa-Wallet/blob/master/src/app/zilliqa.service.ts#L142
         let salt = try! securelyGenerateBytes(count: 32).asData
+
         let kdfParams = Keystore.Crypto.KeyDerivationFunctionParameters(
-            costParameter: 2048,
+            costParameter: isDebug ? 2048 : 262144,
             blockSize: 1,
             parallelizationParameter: 8,
             lengthOfDerivedKey: 32,

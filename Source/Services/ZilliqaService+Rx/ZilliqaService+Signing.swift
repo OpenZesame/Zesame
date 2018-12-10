@@ -12,6 +12,7 @@ import Result
 public extension ZilliqaService {
 
     func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String, done: @escaping Done<TransactionResponse>) {
+        print("Sending payment: \(payment)")
         keystore.toKeypair(encryptedBy: passphrase) {
             guard case .success(let keyPair) = $0 else { done(Result.failure($0.error!)); return }
             self.sendTransaction(for: payment, signWith: keyPair, done: done)
@@ -23,17 +24,17 @@ public extension ZilliqaService {
         send(transaction: transaction, done: done)
     }
 
-    func sign(payment: Payment, using keyPair: KeyPair) -> Transaction {
+    func sign(payment: Payment, using keyPair: KeyPair) -> SignedTransaction {
 
-        let unsignedTransaction = UnsignedTransaction(payment: payment)
+        let transaction = Transaction(payment: payment)
 
-        let message = messageFromUnsignedTransaction(unsignedTransaction, publicKey: keyPair.publicKey)
+        let message = messageFromUnsignedTransaction(transaction, publicKey: keyPair.publicKey)
 
         let signature = sign(message: message, using: keyPair)
 
         assert(Signer.verify(message, wasSignedBy: signature, publicKey: keyPair.publicKey))
 
-        return Transaction(unsignedTransaction: unsignedTransaction, signedBy: keyPair.publicKey, signature: signature)
+        return SignedTransaction(transaction: transaction, signedBy: keyPair.publicKey, signature: signature)
     }
 
     func sign(message: Message, using keyPair: KeyPair) -> Signature {

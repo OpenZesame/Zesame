@@ -8,61 +8,136 @@
 
 import EllipticCurveKit
 
-func messageFromUnsignedTransaction(_ tx: UnsignedTransaction, publicKey: PublicKey, hasher: EllipticCurveKit.Hasher = DefaultHasher.sha256) -> Message {
-    let codeHex = formatCodeOrData(from: tx.code)
-    let dataHex = formatCodeOrData(from: tx.data)
-
-    let hexString = [
-        hex64I(tx.version),
-        hex64I(tx.nonce),
-        tx.to.case(.upper),
-        publicKey.hex.compressed.case(.lower),
-        hex64D(tx.amount).case(.lower),
-        hex64D(tx.gasPrice),
-        hex64D(tx.gasLimit),
-        eightChar(from: tx.code.count),
-        codeHex,
-        eightChar(from: tx.data.count),
-        dataHex,
-        ].joined()
-    return Message(hashedHex: hexString, hashedBy: hasher)!
-}
-
-extension String {
-    enum Case {
-        case lower, upper
-    }
-    func `case`(_ `case`: Case) -> String {
-        switch `case` {
-        case .lower: return lowercased()
-        case .upper: return uppercased()
+private extension BigNumber {
+    func asHexStringLength32(uppercased: Bool = true) -> String {
+        var hexString = toString(uppercased: uppercased, radix: 16)
+        while hexString.count < 32 {
+            hexString = "0\(hexString)"
         }
+        return hexString
+    }
+
+    func as16BytesLongData() -> Data {
+        return Data(hex: asHexStringLength32())
     }
 }
 
-private func hex64B(_ number: BigNumber) -> String {
-    let hex = number.asHexStringLength64()
-    assert(hex.count == 64)
-    return hex
+func messageFromUnsignedTransaction(_ tx: Transaction, publicKey: PublicKey, hasher: EllipticCurveKit.Hasher = DefaultHasher.sha256) -> Message {
+
+    func formatCodeOrData(_ string: String) -> Data {
+        return string.data(using: .utf8)!
+    }
+
+    func amountToIntTo16BytesLongData(_ amount: Amount) -> Data {
+        return BigNumber(amount.asUInt64).as16BytesLongData()
+    }
+
+    let protoTransaction = ProtoTransactionCoreInfo.with {
+        $0.version = tx.version
+        $0.nonce = tx.payment.nonce.nonce
+        $0.toaddr = BigNumber(hexString: tx.payment.recipient.checksummedHex)!.asTrimmedData()
+        $0.senderpubkey = publicKey.data.compressed.asByteArray
+        $0.amount = amountToIntTo16BytesLongData(tx.payment.amount).asByteArray
+        $0.gasprice = amountToIntTo16BytesLongData(tx.payment.gasPrice).asByteArray
+        $0.gaslimit = tx.payment.gasLimit.asUInt64
+        $0.code = formatCodeOrData(tx.code)
+        $0.data = formatCodeOrData(tx.data)
+
+    }
+
+    let protoBinaryData: Data
+    do {
+        protoBinaryData = try protoTransaction.serializedData()
+    } catch {
+        fatalError("Incorrect implementation, should be able to serialize into proto binary data")
+    }
+
+    return Message(hashedData: protoBinaryData, hashedBy: hasher)
 }
 
-private func hex64D(_ number: Double) -> String {
-    return hex64B(BigNumber(number))
+
+public struct SignedTransaction {
+
+    private let signature: String
+    private let transaction: Transaction
+    private let publicKeyCompressed: String
+
+    init(transaction: Transaction, signedBy publicKey: PublicKey, signature: Signature) {
+        self.transaction = transaction
+        self.publicKeyCompressed = publicKey.hex.compressed
+        self.signature = signature.asHexString()
+    }
 }
 
-private func hex64I(_ number: Int) -> String {
-    return hex64D(Double(number))
+extension SignedTransaction: Encodable {
+
+    enum CodingKeys: String, CodingKey {
+        case version, toAddr, nonce, pubKey, amount, gasPrice, gasLimit, code, data, signature
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        let tx = transaction
+        let p = tx.payment
+
+        try container.encode(tx.version, forKey: .version)
+        try container.encode(p.nonce.nonce, forKey: .nonce)
+        try container.encode(p.recipient, forKey: .toAddr)
+        try container.encode(publicKeyCompressed, forKey: .pubKey)
+
+        let k = CodingKeys.self
+        try zip(
+            [p.amount, p.gasPrice, p.gasLimit],
+            [k.amount, k.gasPrice, k.gasLimit]
+        ).forEach { (value, key) in
+            try container.encode(value.asUInt64.description, forKey: key)
+        }
+
+//        try container.encode(p.amount.asUInt64, forKey: .amount)
+//        try container.encode(p.gasPrice.asUInt64, forKey: .gasPrice)
+//        try container.encode(p.gasLimit.asUInt64, forKey: .gasLimit)
+
+        try container.encode(tx.code, forKey: .code)
+        try container.encode(tx.data, forKey: .data)
+        try container.encode(signature, forKey: .signature)
+
+    }
 }
 
-private func eightChar(from int: Int) -> String {
-    return String(format: "%08d", int)
+public struct Transaction {
+    let version: UInt32
+    let payment: Payment
+    let data: String
+    let code: String
+
+    init(payment: Payment, version: UInt32 = 1, data: String = "", code: String = "") {
+        self.version = version
+        self.payment = payment
+        self.data = data
+        self.code = code
+    }
 }
 
-private func formatCodeOrData(from string: String) -> String {
-    if let data = string.data(using: .utf8) {
-        return data.toHexString()
-    } else {
-        print("Failed to create Swift.Data from `code` or `data` having value: \n`\(string)`")
-        return ""
+// MARK: - Private format helpers
+private extension Amount {
+    var asUInt64: UInt64 {
+        return UInt64(amount)
+    }
+
+    var asByteArray: ByteArray {
+        return BigNumber(amount).asTrimmedData().asByteArray
+    }
+}
+
+private extension Data {
+    var asByteArray: ByteArray {
+        return ByteArray.with { $0.data = self }
+    }
+}
+
+private extension UInt64 {
+    var asByteArray: ByteArray {
+        return BigNumber(self).asTrimmedData().asByteArray
     }
 }

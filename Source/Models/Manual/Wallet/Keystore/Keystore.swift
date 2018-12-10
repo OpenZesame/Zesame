@@ -142,9 +142,7 @@ public extension Keystore.Crypto {
     }
 }
 
-
 extension Keystore: Codable, Equatable {}
-
 
 public extension Keystore {
     func toJson() -> [String: Any] {

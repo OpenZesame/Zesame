@@ -31,23 +31,9 @@ final class WalletBalanceView: UIStackView, StackViewStyling {
 
 }
 
-extension WalletBalanceView {
-
-    func populate(with walletBalance: WalletBalance) {
-        walletView.populate(with: walletBalance.wallet)
-        balanceView.populate(with: walletBalance)
-    }
-}
-
-
 import RxSwift
 import RxCocoa
 extension Reactive where Base == WalletBalanceView {
-    var wallet: Binder<WalletBalance> {
-        return Binder(base) {
-            $0.populate(with: $1)
-        }
-    }
 
     var address: Binder<String> {
         return Binder(base) {

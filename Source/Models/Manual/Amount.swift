@@ -9,18 +9,6 @@
 import Foundation
 import BigInt
 
-extension Double {
-    var decimal: Double {
-        return truncatingRemainder(dividingBy: 1)
-    }
-}
-
-private extension Amount {
-    static var inversionOfSmallestFraction: Double {
-        return pow(10, Double(Amount.decimals))
-    }
-}
-
 public struct Amount {
     public static let totalSupply: Double = 21000000000 // 21 billion Zillings is the total supply
     public static let decimals: Int = 12
@@ -115,3 +103,23 @@ extension Amount: CustomStringConvertible {
     }
 }
 
+
+extension Double {
+    var decimal: Double {
+        return truncatingRemainder(dividingBy: 1)
+    }
+}
+
+public extension Amount {
+    static var minimumAsDouble: Double {
+        return 1 / pow(10, Double(Amount.decimals))
+    }
+
+    static var maximumAsDouble: Double {
+        return Amount.totalSupply
+    }
+
+    static var inversionOfSmallestFraction: Double {
+        return pow(10, Double(Amount.decimals))
+    }
+}

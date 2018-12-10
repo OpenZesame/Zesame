@@ -12,7 +12,7 @@ import Result
 public extension Keystore {
 
     func toKeypair(encryptedBy passphrase: String, done: @escaping Done<KeyPair>) {
-        decryptPrivateKey(using: passphrase) {
+        decryptPrivateKeyWith(passphrase: passphrase) {
             switch $0 {
             case .failure(let error): done(Result.failure(error))
             case .success(let privateKeyHex):
@@ -22,7 +22,7 @@ public extension Keystore {
         }
     }
 
-    func decryptPrivateKey(using passphrase: String, done: @escaping Done<String>) {
+    func decryptPrivateKeyWith(passphrase: String, done: @escaping Done<String>) {
         guard passphrase.count >= Keystore.minumumPasshraseLength else { done(.failure(.keystorePasshraseTooShort(provided: passphrase.count, minimum: Keystore.minumumPasshraseLength))); return }
 
         let encryptedPrivateKey = crypto.encryptedPrivateKey

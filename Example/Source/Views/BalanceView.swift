@@ -32,12 +32,6 @@ final class BalanceView: UIStackView, StackViewStyling {
 
 
 extension BalanceView {
-
-    func populate(with walletBalance: WalletBalance) {
-        balanceLabels.setValue(walletBalance.balance)
-        nonceLabels.setValue(walletBalance.nonce.nonce)
-    }
-
     func setBalance(_ balance: String) {
         balanceLabels.setValue(balance)
     }

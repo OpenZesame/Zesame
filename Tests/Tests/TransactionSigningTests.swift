@@ -49,7 +49,7 @@ class TransactionSigningTests: XCTestCase {
             nonce: Nonce(3)
         )!
 
-        let unsignedTx = UnsignedTransaction(payment: payment, version: 0)
+        let unsignedTx = Transaction(payment: payment, version: 0)
 
         XCTAssertEqual(unsignedTx.amount, 15)
         XCTAssertEqual(unsignedTx.gasLimit, 1)

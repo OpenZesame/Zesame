@@ -12,8 +12,8 @@ import JSONRPCKit
 public struct TransactionRequest: JSONRPCKit.Request {
     public typealias Response = TransactionResponse
 
-    public let transaction: Transaction
-    public init(transaction: Transaction) {
+    public let transaction: SignedTransaction
+    public init(transaction: SignedTransaction) {
         self.transaction = transaction
     }
 }
@@ -24,6 +24,9 @@ public extension TransactionRequest {
     }
 
     var parameters: Encodable? {
+        let tx = try! JSONEncoder().encode(transaction)
+        let json = String(data: tx, encoding: .utf8)!
+        print("sending: \(json)")
         return [transaction]
     }
 }
