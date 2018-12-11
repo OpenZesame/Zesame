@@ -24,9 +24,6 @@ public extension TransactionRequest {
     }
 
     var parameters: Encodable? {
-        let tx = try! JSONEncoder().encode(transaction)
-        let json = String(data: tx, encoding: .utf8)!
-        print("sending: \(json)")
         return [transaction]
     }
 }
