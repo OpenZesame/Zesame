@@ -10,18 +10,18 @@ import Foundation
 import BigInt
 
 public struct Amount {
-    public static let totalSupply: BigNumber = 21000000000 // 21 billion Zillings is the total supply
+    public static let totalSupply: Int = 21_000_000_000 // 21 billion Zillings is the total supply
 
-    public let amount: BigNumber
+    public let amount: Int
 
-    public init(number amount: BigNumber) throws {
+    public init(number amount: Int) throws {
         guard amount >= 0 else { throw Error.amountWasNegative }
         guard amount <= Amount.totalSupply else { throw Error.amountExceededTotalSupply }
         self.amount = amount
     }
 
-    public init(decimalString: String) throws {
-        guard let number = BigNumber(decimalString: decimalString) else {
+    public init(string: String) throws {
+        guard let number = Int(string) else {
             throw Error.nonNumericString
         }
         try self.init(number: number)
@@ -39,7 +39,7 @@ public extension Amount {
     /// This `ExpressibleByIntegerLiteral` init can result in runtime crash if passed invalid values (since the protocol requires the initializer to be non failable, but the designated initializer is).
     public init(integerLiteral value: Int) {
         do {
-            try self = Amount(number: BigNumber(value))
+            try self = Amount(number: value)
         } catch {
             fatalError("The `Int` value (`\(value)`) used to create amount was invalid, error: \(error)")
         }
@@ -51,7 +51,7 @@ public extension Amount {
     /// This `ExpressibleByStringLiteral` init can result in runtime crash if passed invalid values (since the protocol requires the initializer to be non failable, but the designated initializer is).
     public init(stringLiteral value: String) {
         do {
-            guard let number = BigNumber(decimalString: value) else {
+            guard let number = Int(value) else {
                 throw Error.nonNumericString
             }
             try self = Amount(number: number)
@@ -61,8 +61,9 @@ public extension Amount {
     }
 }
 
+extension Amount: CustomStringConvertible {}
 public extension Amount {
-    var asDecimalString: String {
-        return amount.asDecimalString()
+    var description: String {
+        return "\(amount)"
     }
 }

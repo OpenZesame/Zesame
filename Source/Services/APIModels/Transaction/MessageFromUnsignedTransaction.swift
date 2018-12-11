@@ -31,12 +31,22 @@ func messageFromUnsignedTransaction(_ tx: Transaction, publicKey: PublicKey, has
 
 // MARK: - Private format helpers
 private extension Amount {
+
+    var asBigNumber: BigNumber {
+        return BigNumber(amount)
+    }
+
+    var asTrimmedData: Data {
+        return asBigNumber.asTrimmedData()
+    }
+
     var asByteArray: ByteArray {
-        return amount.asTrimmedData().asByteArray
+        return asTrimmedData.asByteArray
     }
 
     var as16BytesLongArray: ByteArray {
-        return amount.as16BytesLongData().asByteArray
+        let data = asBigNumber.as16BytesLongData()
+        return data.asByteArray
     }
 }
 
