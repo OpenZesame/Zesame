@@ -14,8 +14,8 @@ import APIKit
 import Result
 import EllipticCurveKit
 
-extension Reactive: ZilliqaServiceReactive where Base: (ZilliqaService & AnyObject) {}
-public extension Reactive where Base: (ZilliqaService & AnyObject) {
+extension Reactive: ZilliqaServiceReactive where Base: ZilliqaService {}
+public extension Reactive where Base: ZilliqaService {
 
     func verifyThat(encryptionPasshrase: String, canDecryptKeystore keystore: Keystore) -> Observable<Bool> {
         return callBase {

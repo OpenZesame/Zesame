@@ -14,7 +14,7 @@ import APIKit
 import RxSwift
 import CryptoSwift
 
-public protocol ZilliqaService {
+public protocol ZilliqaService: AnyObject {
     var apiClient: APIClient { get }
 
     func verifyThat(encryptionPasshrase: String, canDecryptKeystore: Keystore, done: @escaping Done<Bool>)

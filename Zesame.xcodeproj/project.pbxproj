@@ -84,6 +84,10 @@
 		4877B4F221BE495500A94318 /* messages.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4F021BE495500A94318 /* messages.pb.swift */; };
 		4877B4F421BE839C00A94318 /* SwiftProtobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4877B4F321BE839C00A94318 /* SwiftProtobuf.framework */; };
 		4877B4FB21BE8CD200A94318 /* SwiftProtobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4877B4FA21BE8CD200A94318 /* SwiftProtobuf.framework */; };
+		4877B50221BFA89400A94318 /* StatusOfTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B50121BFA89400A94318 /* StatusOfTransactionRequest.swift */; };
+		4877B50321BFA89400A94318 /* StatusOfTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B50121BFA89400A94318 /* StatusOfTransactionRequest.swift */; };
+		4877B50821BFBB8900A94318 /* Polling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B50721BFBB8900A94318 /* Polling.swift */; };
+		4877B50921BFBB8900A94318 /* Polling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B50721BFBB8900A94318 /* Polling.swift */; };
 		48802CDB21751A32003A22FD /* RxTest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48B5B2FB2148321500147005 /* RxTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		48802CDD21751A32003A22FD /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		48802CDE21751A32003A22FD /* APIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 483460AA2145C182007E5D5C /* APIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -257,6 +261,8 @@
 		4877B4F021BE495500A94318 /* messages.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = messages.pb.swift; sourceTree = "<group>"; };
 		4877B4F321BE839C00A94318 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftProtobuf.framework; path = Carthage/Build/iOS/SwiftProtobuf.framework; sourceTree = "<group>"; };
 		4877B4FA21BE8CD200A94318 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftProtobuf.framework; path = Carthage/Build/Mac/SwiftProtobuf.framework; sourceTree = "<group>"; };
+		4877B50121BFA89400A94318 /* StatusOfTransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusOfTransactionRequest.swift; sourceTree = "<group>"; };
+		4877B50721BFBB8900A94318 /* Polling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polling.swift; sourceTree = "<group>"; };
 		48802CE421751AB7003A22FD /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/Mac/Result.framework; sourceTree = "<group>"; };
 		48802CE521751AB7003A22FD /* APIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = APIKit.framework; path = Carthage/Build/Mac/APIKit.framework; sourceTree = "<group>"; };
 		48802CE621751AB7003A22FD /* JSONRPCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONRPCKit.framework; path = Carthage/Build/Mac/JSONRPCKit.framework; sourceTree = "<group>"; };
@@ -534,6 +540,7 @@
 				48196F252157C574009C40BB /* ZilliqaService+DefaultImplementations.swift */,
 				488A65862155ACD20091FD03 /* ZilliqaService+Signing.swift */,
 				483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */,
+				4877B50721BFBB8900A94318 /* Polling.swift */,
 			);
 			path = "ZilliqaService+Rx";
 			sourceTree = "<group>";
@@ -542,6 +549,7 @@
 			isa = PBXGroup;
 			children = (
 				48D4114E2147205200E2F207 /* TransactionRequest.swift */,
+				4877B50121BFA89400A94318 /* StatusOfTransactionRequest.swift */,
 				48A64009218645F300B08C67 /* TransactionResponse.swift */,
 				484E09E921543F3B003D928E /* MessageFromUnsignedTransaction.swift */,
 			);
@@ -864,11 +872,13 @@
 				488A658C2157A1670091FD03 /* DispatchQueue+Sugar.swift in Sources */,
 				4877B4C721BE2EFA00A94318 /* KeyRestoration.swift in Sources */,
 				4877B4D721BE2EFA00A94318 /* Keystore+Wallet+Export.swift in Sources */,
+				4877B50921BFBB8900A94318 /* Polling.swift in Sources */,
 				484E09EB21543F43003D928E /* MessageFromUnsignedTransaction.swift in Sources */,
 				4877B4D921BE2EFA00A94318 /* Nonce.swift in Sources */,
 				4877B4D521BE2EFA00A94318 /* Keystore+Wallet+Import.swift in Sources */,
 				4877B4DB21BE2EFA00A94318 /* Address+CustomStringConvertible.swift in Sources */,
 				483F0F942147085500E6EE08 /* BalanceResponse.swift in Sources */,
+				4877B50321BFA89400A94318 /* StatusOfTransactionRequest.swift in Sources */,
 				483F0F8C214704D700E6EE08 /* Error.swift in Sources */,
 				4877B4E721BE2EFA00A94318 /* Wallet+Decrypt.swift in Sources */,
 				4877B4E121BE2EFA00A94318 /* Address+HexString.swift in Sources */,
@@ -924,11 +934,13 @@
 				488A658B2157A1670091FD03 /* DispatchQueue+Sugar.swift in Sources */,
 				4877B4C621BE2EFA00A94318 /* KeyRestoration.swift in Sources */,
 				4877B4D621BE2EFA00A94318 /* Keystore+Wallet+Export.swift in Sources */,
+				4877B50821BFBB8900A94318 /* Polling.swift in Sources */,
 				484E09EA21543F3B003D928E /* MessageFromUnsignedTransaction.swift in Sources */,
 				4877B4D821BE2EFA00A94318 /* Nonce.swift in Sources */,
 				4877B4D421BE2EFA00A94318 /* Keystore+Wallet+Import.swift in Sources */,
 				4877B4DA21BE2EFA00A94318 /* Address+CustomStringConvertible.swift in Sources */,
 				483F0F932147085500E6EE08 /* BalanceResponse.swift in Sources */,
+				4877B50221BFA89400A94318 /* StatusOfTransactionRequest.swift in Sources */,
 				48A6400A218645F300B08C67 /* TransactionResponse.swift in Sources */,
 				4877B4E621BE2EFA00A94318 /* Wallet+Decrypt.swift in Sources */,
 				4877B4E021BE2EFA00A94318 /* Address+HexString.swift in Sources */,
