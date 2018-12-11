@@ -108,19 +108,17 @@ extension SendViewModel: ViewModelType {
                 .asDriverOnErrorReturnEmpty()
         }
 
-        let walletBalance = Driver.combineLatest(wallet, balanceAndNonce) { WalletBalance(wallet: $0, balanceResponse: $1) }
-
         let recipient = input.recepientAddress.map { Address(uncheckedString: $0) }.filterNil()
-        let amount = input.amountToSend.map { Double($0) }.filterNil()
-        let gasLimit = input.gasLimit.map { Double($0) }.filterNil()
-        let gasPrice = input.gasPrice.map { Double($0) }.filterNil()
+        let amount = input.amountToSend.map { try? Amount(string: $0) }.filterNil()
+        let gasLimit = input.gasLimit.map { try? Amount(string: $0) }.filterNil()
+        let gasPrice = input.gasPrice.map { try? Amount(string: $0) }.filterNil()
 
-        let payment = Driver.combineLatest(recipient, amount, gasLimit, gasPrice, walletBalance) {
+        let payment = Driver.combineLatest(recipient, amount, gasLimit, gasPrice, balanceAndNonce) {
             Payment(to: $0, amount: $1, gasLimit: $2, gasPrice: $3, nonce: $4.nonce)
-        }.filterNil()
+        }
 
         let transactionId: Driver<String> = input.sendTrigger
-            .withLatestFrom(Driver.combineLatest(payment, walletBalance, input.passphrase) { (payment: $0, keystore: $1.wallet.keystore, encyptedBy: $2) })
+            .withLatestFrom(Driver.combineLatest(payment, wallet, input.passphrase) { (payment: $0, keystore: $1.keystore, encyptedBy: $2) })
             .flatMapLatest {
                 self.service.sendTransaction(for: $0.payment, keystore: $0.keystore, passphrase: $0.encyptedBy)
                     .asDriverOnErrorReturnEmpty()
@@ -133,8 +131,8 @@ extension SendViewModel: ViewModelType {
         return Output(
             isFetchingBalance: activityIndicator.asDriver(),
             address: wallet.map { $0.address.checksummedHex },
-            nonce: walletBalance.map { "\($0.nonce.nonce)" },
-            balance: walletBalance.map { "\($0.balance)" },
+            nonce: balanceAndNonce.map { "\($0.nonce.nonce)" },
+            balance: balanceAndNonce.map { "\($0.balance) Zil" },
             transactionId: transactionId
         )
     }

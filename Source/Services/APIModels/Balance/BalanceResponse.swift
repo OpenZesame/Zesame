@@ -25,7 +25,7 @@ extension Amount: Decodable {
 extension Nonce: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        let nonce = try container.decode(Int.self)
+        let nonce = try container.decode(UInt64.self)
         self.init(nonce)
     }
 }

@@ -22,4 +22,6 @@ Pod::Spec.new do |s|
 
     # Used by this SDK making APIs reactive
     s.dependency 'RxSwift'
+
+    s.dependency 'SwiftProtobuf'
 end
