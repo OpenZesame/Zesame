@@ -43,7 +43,7 @@ public extension Reactive where Base: (ZilliqaService & AnyObject) {
 
     func getBalance(for address: Address) -> Observable<BalanceResponse> {
         return callBase {
-            $0.getBalalance(for: address, done: $1)
+            $0.getBalance(for: address, done: $1)
         }
     }
 
