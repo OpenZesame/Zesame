@@ -67,3 +67,5 @@ public extension Amount {
         return "\(amount)"
     }
 }
+
+extension Amount: Equatable {}

@@ -57,3 +57,15 @@ public extension Address {
         self.init(keyPair: keyPair, network: network)
     }
 }
+
+extension Address: Equatable {}
+
+extension Address: ExpressibleByStringLiteral {}
+public extension Address {
+     init(stringLiteral value: String) {
+        guard let address = Address(uncheckedString: value) else {
+            fatalError("Incorrect implementation, pass non address formed string to init")
+        }
+        self = address
+    }
+}

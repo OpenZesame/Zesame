@@ -27,3 +27,5 @@ extension Nonce: ExpressibleByIntegerLiteral {
         self.init(nonce)
     }
 }
+
+extension Nonce: Equatable {}
