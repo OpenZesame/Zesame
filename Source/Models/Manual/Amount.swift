@@ -69,3 +69,18 @@ public extension Amount {
 }
 
 extension Amount: Equatable {}
+
+extension Amount: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(amount.description)
+    }
+}
+
+extension Amount: Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let string = try container.decode(String.self)
+        try self.init(string: string)
+    }
+}

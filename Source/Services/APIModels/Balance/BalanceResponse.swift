@@ -13,15 +13,6 @@ public struct BalanceResponse: Decodable {
     public let nonce: Nonce
 }
 
-extension Amount: Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let string = try container.decode(String.self)
-        try self.init(string: string)
-    }
-}
-
-
 extension Nonce: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
