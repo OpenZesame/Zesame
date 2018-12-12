@@ -36,4 +36,12 @@ public protocol ZilliqaServiceReactive {
     func getBalance(for address: Address) -> Observable<BalanceResponse>
     func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String) -> Observable<TransactionResponse>
     func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionResponse>
+
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> Observable<TransactionReceipt>
+}
+
+public extension ZilliqaServiceReactive {
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String) -> Observable<TransactionReceipt> {
+        return hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: .twentyTimesLinearBackoff)
+    }
 }

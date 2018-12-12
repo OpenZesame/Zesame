@@ -17,6 +17,12 @@ import EllipticCurveKit
 extension Reactive: ZilliqaServiceReactive where Base: ZilliqaService {}
 public extension Reactive where Base: ZilliqaService {
 
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> Observable<TransactionReceipt> {
+        return callBase {
+            $0.hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: polling, done: $1)
+        }
+    }
+
     func verifyThat(encryptionPasshrase: String, canDecryptKeystore keystore: Keystore) -> Observable<Bool> {
         return callBase {
             $0.verifyThat(encryptionPasshrase: encryptionPasshrase, canDecryptKeystore: keystore, done: $1)

@@ -9,6 +9,16 @@
 import Foundation
 import JSONRPCKit
 
+// The receipt for a transaction that the network has reached consensus for.
+public struct TransactionReceipt {
+    public let transactionId: String
+    public let totalGasCost: Amount
+    public init(id: String, totalGasCost: Amount) {
+        self.transactionId = id
+        self.totalGasCost = totalGasCost
+    }
+}
+
 public struct StatusOfTransactionResponse: Decodable {
     public struct Receipt {
         public let totalGasCost: Amount
