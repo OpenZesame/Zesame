@@ -19,6 +19,13 @@ public struct TransactionReceipt {
     }
 }
 
+public extension TransactionReceipt {
+    init?(for id: String, pollResponse: StatusOfTransactionResponse) {
+        guard pollResponse.receipt.isSent else { return nil }
+        self.init(id: id, totalGasCost: pollResponse.receipt.totalGasCost)
+    }
+}
+
 public struct StatusOfTransactionResponse: Decodable {
     public struct Receipt {
         public let totalGasCost: Amount

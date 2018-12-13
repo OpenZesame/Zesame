@@ -13,6 +13,8 @@
 		48196F242157C480009C40BB /* Scrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48196F222157C480009C40BB /* Scrypt.swift */; };
 		48196F262157C574009C40BB /* ZilliqaService+DefaultImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48196F252157C574009C40BB /* ZilliqaService+DefaultImplementations.swift */; };
 		48196F272157C574009C40BB /* ZilliqaService+DefaultImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48196F252157C574009C40BB /* ZilliqaService+DefaultImplementations.swift */; };
+		4819BD9021C0DBD900443F2A /* ZilliqaService+PollTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4819BD8F21C0DBD900443F2A /* ZilliqaService+PollTransaction.swift */; };
+		4819BD9121C0DBD900443F2A /* ZilliqaService+PollTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4819BD8F21C0DBD900443F2A /* ZilliqaService+PollTransaction.swift */; };
 		483460A82145BD4A007E5D5C /* ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483460A72145BD4A007E5D5C /* ZilliqaService.swift */; };
 		483460A92145BD4C007E5D5C /* ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483460A72145BD4A007E5D5C /* ZilliqaService.swift */; };
 		483F0F7C2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */; };
@@ -209,6 +211,7 @@
 		481169A421677CC300341F81 /* AddressChecksumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressChecksumTests.swift; sourceTree = "<group>"; };
 		48196F222157C480009C40BB /* Scrypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrypt.swift; sourceTree = "<group>"; };
 		48196F252157C574009C40BB /* ZilliqaService+DefaultImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZilliqaService+DefaultImplementations.swift"; sourceTree = "<group>"; };
+		4819BD8F21C0DBD900443F2A /* ZilliqaService+PollTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZilliqaService+PollTransaction.swift"; sourceTree = "<group>"; };
 		483460A22145BD28007E5D5C /* JSONRPCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONRPCKit.framework; path = Carthage/Build/iOS/JSONRPCKit.framework; sourceTree = "<group>"; };
 		483460A32145BD28007E5D5C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		483460A72145BD4A007E5D5C /* ZilliqaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaService.swift; sourceTree = "<group>"; };
@@ -541,6 +544,7 @@
 				488A65862155ACD20091FD03 /* ZilliqaService+Signing.swift */,
 				483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */,
 				4877B50721BFBB8900A94318 /* Polling.swift */,
+				4819BD8F21C0DBD900443F2A /* ZilliqaService+PollTransaction.swift */,
 			);
 			path = "ZilliqaService+Rx";
 			sourceTree = "<group>";
@@ -899,6 +903,7 @@
 				4877B4E521BE2EFA00A94318 /* Wallet+Codable.swift in Sources */,
 				4877B4E321BE2EFA00A94318 /* Address+Codable.swift in Sources */,
 				488A65882155ACD20091FD03 /* ZilliqaService+Signing.swift in Sources */,
+				4819BD9121C0DBD900443F2A /* ZilliqaService+PollTransaction.swift in Sources */,
 				4877B4DD21BE2EFA00A94318 /* Address.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -961,6 +966,7 @@
 				4877B4E421BE2EFA00A94318 /* Wallet+Codable.swift in Sources */,
 				4877B4E221BE2EFA00A94318 /* Address+Codable.swift in Sources */,
 				488A65872155ACD20091FD03 /* ZilliqaService+Signing.swift in Sources */,
+				4819BD9021C0DBD900443F2A /* ZilliqaService+PollTransaction.swift in Sources */,
 				4877B4DC21BE2EFA00A94318 /* Address.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
