@@ -89,7 +89,7 @@ extension SendViewModel: ViewModelType {
         let address: Driver<String>
         let nonce: Driver<String>
         let balance: Driver<String>
-        let transactionId: Driver<String>
+        let receipt: Driver<String>
     }
 
     func transform(input: Input) -> Output {
@@ -102,10 +102,10 @@ extension SendViewModel: ViewModelType {
 
         let balanceAndNonce: Driver<BalanceResponse> = fetchTrigger.withLatestFrom(wallet) { _, w in w.address }
             .flatMapLatest {
-            self.service
-                .getBalance(for: $0)
-                .trackActivity(activityIndicator)
-                .asDriverOnErrorReturnEmpty()
+                self.service
+                    .getBalance(for: $0)
+                    .trackActivity(activityIndicator)
+                    .asDriverOnErrorReturnEmpty()
         }
 
         let recipient = input.recepientAddress.map { Address(uncheckedString: $0) }.filterNil()
@@ -119,23 +119,21 @@ extension SendViewModel: ViewModelType {
             Payment(to: $0, amount: $1, gasLimit: $2, gasPrice: $3, nonce: $4.nonce)
         }
 
-        let transactionId: Driver<String> = input.sendTrigger
+        let receipt: Driver<TransactionReceipt> = input.sendTrigger
             .withLatestFrom(Driver.combineLatest(payment, wallet, input.passphrase) { (payment: $0, keystore: $1.keystore, encyptedBy: $2) })
             .flatMapLatest {
                 self.service.sendTransaction(for: $0.payment, keystore: $0.keystore, passphrase: $0.encyptedBy)
-                    .asDriverOnErrorReturnEmpty()
-                    // Trigger fetching of balance after successfull send
-                    .do(onNext: { _ in
-                        fetchBalanceSubject.onNext(())
-                    })
-            }.map { $0.transactionIdentifier }
+                    .flatMapLatest {
+                        self.service.hasNetworkReachedConsensusYetForTransactionWith(id: $0.transactionIdentifier)
+                    } .asDriverOnErrorReturnEmpty()
+        }
 
         return Output(
             isFetchingBalance: activityIndicator.asDriver(),
             address: wallet.map { $0.address.checksummedHex },
             nonce: balanceAndNonce.map { "\($0.nonce.nonce)" },
             balance: balanceAndNonce.map { "\($0.balance) Zil" },
-            transactionId: transactionId
+            receipt: receipt.map { "Tx fee: \($0.totalGasCost) zil, for tx: \($0.transactionId)" }
         )
     }
 }
