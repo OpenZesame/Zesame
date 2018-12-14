@@ -8,18 +8,21 @@
 
 import Foundation
 
+
+
+
 public struct Payment {
     public let recipient: Address
     public let amount: Amount
     public let gasLimit: Amount
-    public let gasPrice: Amount
+    public let gasPrice: GasPrice
     public let nonce: Nonce
 
     public init(
         to recipient: Address,
         amount: Amount,
         gasLimit: Amount,
-        gasPrice: Amount,
+        gasPrice: GasPrice,
         nonce: Nonce = 0
         ) {
         self.recipient = recipient
@@ -27,9 +30,5 @@ public struct Payment {
         self.gasLimit = gasLimit
         self.gasPrice = gasPrice
         self.nonce = nonce.increasedByOne()
-
-        if gasPrice.amount < 100 {
-            print("⚠ Gas Price should be set to at least 100")
-        }
     }
 }

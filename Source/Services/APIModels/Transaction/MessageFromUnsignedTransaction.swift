@@ -30,7 +30,7 @@ func messageFromUnsignedTransaction(_ tx: Transaction, publicKey: PublicKey, has
 }
 
 // MARK: - Private format helpers
-private extension Amount {
+private extension ExpressibleByAmount {
 
     var asBigNumber: BigNumber {
         return BigNumber(amount)
