@@ -86,6 +86,7 @@ extension SendViewModel: ViewModelType {
 
     struct Output {
         let isFetchingBalance: Driver<Bool>
+        let isSendButtonEnabled: Driver<Bool>
         let address: Driver<String>
         let nonce: Driver<String>
         let balance: Driver<String>
@@ -108,19 +109,22 @@ extension SendViewModel: ViewModelType {
                     .asDriverOnErrorReturnEmpty()
         }
 
-        let recipient = input.recepientAddress.map { Address(uncheckedString: $0) }.filterNil()
+        let recipient = input.recepientAddress.map { Address(uncheckedString: $0) }
         let amount = input.amountToSend.asObservable().map { str -> Amount? in try Amount(string: str) }.catchError {
             print("Error: \($0)"); return .just(nil)
-            }.asDriverOnErrorReturnEmpty().filterNil()
-        let gasLimit = input.gasLimit.map { try? Amount(string: $0) }.filterNil()
-        let gasPrice = input.gasPrice.map { try? Amount(string: $0) }.filterNil()
+            }.asDriverOnErrorReturnEmpty()
+        let gasLimit = input.gasLimit.map { try? Amount(string: $0) }
+        let gasPrice = input.gasPrice.map { try? GasPrice(string: $0) }
 
-        let payment = Driver.combineLatest(recipient, amount, gasLimit, gasPrice, balanceAndNonce) {
-            Payment(to: $0, amount: $1, gasLimit: $2, gasPrice: $3, nonce: $4.nonce)
+        let payment: Driver<Payment?> = Driver.combineLatest(recipient, amount, gasLimit, gasPrice, balanceAndNonce) {
+            guard let to = $0, let amount = $1, let limit = $2, let price = $3, case let nonce = $4.nonce else {
+                return nil
+            }
+            return Payment(to: to, amount: amount, gasLimit: limit, gasPrice: price, nonce: nonce)
         }
 
         let receipt: Driver<TransactionReceipt> = input.sendTrigger
-            .withLatestFrom(Driver.combineLatest(payment, wallet, input.passphrase) { (payment: $0, keystore: $1.keystore, encyptedBy: $2) })
+            .withLatestFrom(Driver.combineLatest(payment.filterNil(), wallet, input.passphrase) { (payment: $0, keystore: $1.keystore, encyptedBy: $2) })
             .flatMapLatest {
                 self.service.sendTransaction(for: $0.payment, keystore: $0.keystore, passphrase: $0.encyptedBy)
                     .flatMapLatest {
@@ -130,6 +134,7 @@ extension SendViewModel: ViewModelType {
 
         return Output(
             isFetchingBalance: activityIndicator.asDriver(),
+            isSendButtonEnabled: payment.map { $0 != nil },
             address: wallet.map { $0.address.checksummedHex },
             nonce: balanceAndNonce.map { "\($0.nonce.nonce)" },
             balance: balanceAndNonce.map { "\($0.balance) Zil" },

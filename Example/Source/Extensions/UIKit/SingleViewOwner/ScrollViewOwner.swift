@@ -14,20 +14,22 @@ class ScrollView: UIScrollView {
 
     init() {
         super.init(frame: .zero)
-        setup()
+        privateSetup()
     }
 
     required init?(coder: NSCoder) { interfaceBuilderSucks }
+    func setup() {}
 }
 
 private extension ScrollView {
-    func setup() {
+    func privateSetup() {
         setupContentView()
         contentInsetAdjustmentBehavior = .never
         self.alwaysBounceVertical = true
         let refreshControl = UIRefreshControl(frame: .zero)
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl = refreshControl
+        setup()
     }
 
     func setupContentView() {

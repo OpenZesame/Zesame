@@ -40,7 +40,7 @@ extension SignedTransaction: Encodable {
 
         let k = CodingKeys.self
         try zip(
-            [p.amount, p.gasPrice, p.gasLimit],
+            Array<CustomStringConvertible>(arrayLiteral: p.amount, p.gasPrice, p.gasLimit),
             [k.amount, k.gasPrice, k.gasLimit]
             ).forEach { (value, key) in
                 try container.encode(value.description, forKey: key)
