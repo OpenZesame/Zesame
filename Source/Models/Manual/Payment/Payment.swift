@@ -28,6 +28,8 @@ public struct Payment {
         self.gasPrice = gasPrice
         self.nonce = nonce.increasedByOne()
 
-        assert(gasPrice.amount >= 100, "Gas Price should be set to at least 100")
+        if gasPrice.amount < 100 {
+            print("⚠ Gas Price should be set to at least 100")
+        }
     }
 }
