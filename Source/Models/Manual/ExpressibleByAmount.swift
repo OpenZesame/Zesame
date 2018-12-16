@@ -45,14 +45,10 @@ public extension ExpressibleByAmount {
             let significand = Value(string),
             case let value = significand * Self.powerFactor
             else {
-                print("☣️ AmountError.nonNumericString")
             throw AmountError.nonNumericString
         }
 
-        print("Value: \(value), significand: \(significand)")
-
         guard value <= Amount.totalSupply else {
-            print("☣️ AmountError.amountExceededTotalSupply")
             throw AmountError.amountExceededTotalSupply
         }
 

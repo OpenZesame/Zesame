@@ -18,14 +18,12 @@ public struct GasPrice: ExpressibleByAmount {
     public init(value gasPrice: Value) throws {
         let minimum = GasPrice.minimumValue
         guard gasPrice >= minimum else {
-            print("☣️ Error.tooSmall")
             throw Error.tooSmall(passed: gasPrice, shouldBeMin: minimum)
         }
 
         // verify less than total supply
         let inAmount = try GasPrice.express(value: gasPrice, in: Amount.self)
         guard inAmount.value <= Amount.totalSupply else {
-            print("☣️ AmountError.amountExceededTotalSupply")
             throw AmountError.amountExceededTotalSupply
 
         }

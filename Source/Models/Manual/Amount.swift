@@ -16,11 +16,9 @@ public struct Amount: ExpressibleByAmount {
 
     public init(value amount: Value) throws {
         guard amount >= 0 else {
-            print("☣️ AmountError.amountWasNegative")
             throw AmountError.amountWasNegative
         }
         guard amount <= Amount.totalSupply else {
-            print("☣️ AmountError.amountExceededTotalSupply")
             throw AmountError.amountExceededTotalSupply
         }
         self.value = amount
