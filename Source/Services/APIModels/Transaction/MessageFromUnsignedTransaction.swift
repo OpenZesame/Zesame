@@ -10,6 +10,8 @@ import EllipticCurveKit
 
 func messageFromUnsignedTransaction(_ tx: Transaction, publicKey: PublicKey, hasher: EllipticCurveKit.Hasher = DefaultHasher.sha256) -> Message {
 
+    print("preparing tx for signing: \(tx)")
+
     func formatCodeOrData(_ string: String) -> Data {
         return string.data(using: .utf8)!
     }
@@ -33,7 +35,7 @@ func messageFromUnsignedTransaction(_ tx: Transaction, publicKey: PublicKey, has
 private extension ExpressibleByAmount {
 
     var asBigNumber: BigNumber {
-        return BigNumber(value)
+        return BigNumber(Int(significand))
     }
 
     var asTrimmedData: Data {

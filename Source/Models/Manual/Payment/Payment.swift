@@ -8,9 +8,6 @@
 
 import Foundation
 
-
-
-
 public struct Payment {
     public let recipient: Address
     public let amount: Amount

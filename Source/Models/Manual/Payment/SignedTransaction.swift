@@ -48,12 +48,15 @@ extension SignedTransaction: Encodable {
         try container.encode(tx.code, forKey: .code)
         try container.encode(tx.data, forKey: .data)
         try container.encode(signature, forKey: .signature)
-
     }
 }
 
-private extension ExpressibleByAmount {
+extension ExpressibleByAmount {
     var encodableValue: String {
-        return Int(value).description
+        // The API expects the significand, i.e `GasPrice` is measured in 10^-12, so `150` gasPrice should be sent to API as
+        // the string representation of the integer (must be integer!) representation of `150`, and not the value transalted
+        // into Amount (which would be 1.5E-10).
+        // The requested `Amount` of a payment is measured as is, in 10^0, i.e. a factor of 1, also as strings of integers.
+        return Int(significand).description
     }
 }
