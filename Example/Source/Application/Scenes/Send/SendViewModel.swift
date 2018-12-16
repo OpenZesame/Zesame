@@ -110,10 +110,11 @@ extension SendViewModel: ViewModelType {
         }
 
         let recipient = input.recepientAddress.map { Address(uncheckedString: $0) }
-        let amount = input.amountToSend.asObservable().map { str -> Amount? in try Amount(string: str) }.catchError {
-            print("Error: \($0)"); return .just(nil)
-            }.asDriverOnErrorReturnEmpty()
+
+        let amount = input.amountToSend.map { try? Amount(string: $0) }
+
         let gasLimit = input.gasLimit.map { try? Amount(string: $0) }
+
         let gasPrice = input.gasPrice.map { try? GasPrice(string: $0) }
 
         let payment: Driver<Payment?> = Driver.combineLatest(recipient, amount, gasLimit, gasPrice, balanceAndNonce) {

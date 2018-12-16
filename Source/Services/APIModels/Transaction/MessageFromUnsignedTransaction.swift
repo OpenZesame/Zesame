@@ -21,7 +21,7 @@ func messageFromUnsignedTransaction(_ tx: Transaction, publicKey: PublicKey, has
         $0.senderpubkey = publicKey.data.compressed.asByteArray
         $0.amount = tx.payment.amount.as16BytesLongArray
         $0.gasprice = tx.payment.gasPrice.as16BytesLongArray
-        $0.gaslimit = UInt64(tx.payment.gasLimit.amount)
+        $0.gaslimit = UInt64(tx.payment.gasLimit.value)
         $0.code = formatCodeOrData(tx.code)
         $0.data = formatCodeOrData(tx.data)
     }
@@ -33,7 +33,7 @@ func messageFromUnsignedTransaction(_ tx: Transaction, publicKey: PublicKey, has
 private extension ExpressibleByAmount {
 
     var asBigNumber: BigNumber {
-        return BigNumber(amount)
+        return BigNumber(value)
     }
 
     var asTrimmedData: Data {

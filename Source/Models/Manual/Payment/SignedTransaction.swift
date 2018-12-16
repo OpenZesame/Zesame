@@ -38,17 +38,22 @@ extension SignedTransaction: Encodable {
         try container.encode(p.recipient, forKey: .toAddr)
         try container.encode(publicKeyCompressed, forKey: .pubKey)
 
-        let k = CodingKeys.self
         try zip(
-            Array<CustomStringConvertible>(arrayLiteral: p.amount, p.gasPrice, p.gasLimit),
-            [k.amount, k.gasPrice, k.gasLimit]
-            ).forEach { (value, key) in
-                try container.encode(value.description, forKey: key)
+            [p.amount.encodableValue, p.gasPrice.encodableValue, p.gasLimit.encodableValue],
+            [CodingKeys.amount, CodingKeys.gasPrice, CodingKeys.gasLimit]
+        ).forEach {
+            try container.encode($0, forKey: $1)
         }
 
         try container.encode(tx.code, forKey: .code)
         try container.encode(tx.data, forKey: .data)
         try container.encode(signature, forKey: .signature)
 
+    }
+}
+
+private extension ExpressibleByAmount {
+    var encodableValue: String {
+        return Int(value).description
     }
 }

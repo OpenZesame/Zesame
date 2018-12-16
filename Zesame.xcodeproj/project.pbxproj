@@ -139,6 +139,8 @@
 		48A6400B218645F300B08C67 /* TransactionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A64009218645F300B08C67 /* TransactionResponse.swift */; };
 		48B5B2F121482EC600147005 /* TransactionSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B5B2F021482EC600147005 /* TransactionSigningTests.swift */; };
 		48B5B2F221482EC600147005 /* TransactionSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B5B2F021482EC600147005 /* TransactionSigningTests.swift */; };
+		48D0880C21C5244000A88859 /* GasPriceAmountConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D0880B21C5244000A88859 /* GasPriceAmountConversionTests.swift */; };
+		48D0880D21C5244000A88859 /* GasPriceAmountConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D0880B21C5244000A88859 /* GasPriceAmountConversionTests.swift */; };
 		48D4114F2147205200E2F207 /* TransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D4114E2147205200E2F207 /* TransactionRequest.swift */; };
 		48D411502147205500E2F207 /* TransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D4114E2147205200E2F207 /* TransactionRequest.swift */; };
 		48E76FB420B9D6210027A3FE /* ZilliqaSDK_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -292,6 +294,7 @@
 		48B5B2F021482EC600147005 /* TransactionSigningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSigningTests.swift; sourceTree = "<group>"; };
 		48B5B2FB2148321500147005 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
 		48C89FC42142C4F10063B0FA /* Zesame-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Zesame-Info.plist"; sourceTree = "<group>"; };
+		48D0880B21C5244000A88859 /* GasPriceAmountConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceAmountConversionTests.swift; sourceTree = "<group>"; };
 		48D4114E2147205200E2F207 /* TransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRequest.swift; sourceTree = "<group>"; };
 		48E76FB120B9D6160027A3FE /* ZilliqaSDK_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZilliqaSDK_macOS.h; sourceTree = "<group>"; };
 		48E849C62144404F00A06C40 /* EllipticCurveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EllipticCurveKit.framework; path = Carthage/Build/iOS/EllipticCurveKit.framework; sourceTree = "<group>"; };
@@ -652,6 +655,7 @@
 				48B5B2EF21482EC600147005 /* ZilliqaSDK macOS Tests-Bridging-Header.h */,
 				488A658D2157BC5F0091FD03 /* ExportKeystoreTests.swift */,
 				481169A421677CC300341F81 /* AddressChecksumTests.swift */,
+				48D0880B21C5244000A88859 /* GasPriceAmountConversionTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -918,6 +922,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48B5B2F221482EC600147005 /* TransactionSigningTests.swift in Sources */,
+				48D0880D21C5244000A88859 /* GasPriceAmountConversionTests.swift in Sources */,
 				481169A621677CC300341F81 /* AddressChecksumTests.swift in Sources */,
 				488A658F2157BC5F0091FD03 /* ExportKeystoreTests.swift in Sources */,
 			);
@@ -982,6 +987,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48B5B2F121482EC600147005 /* TransactionSigningTests.swift in Sources */,
+				48D0880C21C5244000A88859 /* GasPriceAmountConversionTests.swift in Sources */,
 				481169A521677CC300341F81 /* AddressChecksumTests.swift in Sources */,
 				488A658E2157BC5F0091FD03 /* ExportKeystoreTests.swift in Sources */,
 			);

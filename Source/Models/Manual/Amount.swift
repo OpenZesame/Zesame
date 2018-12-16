@@ -10,15 +10,29 @@ import Foundation
 import BigInt
 
 public struct Amount: ExpressibleByAmount {
-    public typealias Number = Int
+    public static let totalSupply: Value = 21_000_000_000 // 21 billion Zillings is the total supply
 
-    public static let totalSupply: Number = 21_000_000_000 // 21 billion Zillings is the total supply
+    public let value: Value
 
-    public let amount: Number
+    public init(value amount: Value) throws {
+        guard amount >= 0 else {
+            print("☣️ AmountError.amountWasNegative")
+            throw AmountError.amountWasNegative
+        }
+        guard amount <= Amount.totalSupply else {
+            print("☣️ AmountError.amountExceededTotalSupply")
+            throw AmountError.amountExceededTotalSupply
+        }
+        self.value = amount
+    }
+}
 
-    public init(number amount: Number) throws {
-        guard amount >= 0 else { throw AmountError.amountWasNegative }
-        guard amount <= Amount.totalSupply else { throw AmountError.amountExceededTotalSupply }
-        self.amount = amount
+public extension Amount {
+    func asGasPrice() -> GasPrice {
+        do {
+            return try Amount.express(value: value, in: GasPrice.self)
+        } catch {
+            fatalError("Incorrect implementation, check the unit conversion")
+        }
     }
 }
