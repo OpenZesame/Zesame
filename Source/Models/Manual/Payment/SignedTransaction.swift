@@ -52,11 +52,20 @@ extension SignedTransaction: Encodable {
 }
 
 extension ExpressibleByAmount {
+
+    // The API expects integer representation of the significand, so e.g.
+    // `100` for GasPrice.
+    var valueForTransaction: Int {
+        return Int(significand)
+    }
+}
+
+private extension ExpressibleByAmount {
     var encodableValue: String {
-        // The API expects the significand, i.e `GasPrice` is measured in 10^-12, so `150` gasPrice should be sent to API as
-        // the string representation of the integer (must be integer!) representation of `150`, and not the value transalted
-        // into Amount (which would be 1.5E-10).
-        // The requested `Amount` of a payment is measured as is, in 10^0, i.e. a factor of 1, also as strings of integers.
-        return Int(significand).description
+        // The API expects strings representation of integer values
+        let stringRepresentationOfInteger = valueForTransaction.description
+        let decimalSeparator = Locale.current.decimalSeparator ?? "."
+        precondition(!stringRepresentationOfInteger.contains(decimalSeparator), "String should represent an integer")
+        return stringRepresentationOfInteger
     }
 }

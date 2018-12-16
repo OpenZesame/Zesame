@@ -94,7 +94,6 @@ public extension ExpressibleByAmount {
 
     @discardableResult
     static func validate(significand: Value) throws -> Value {
-        let value = significand / powerFactor
         guard significand <= Self.maxSignificand else {
             throw AmountError.tooLarge(max: Self.maxValue)
         }
