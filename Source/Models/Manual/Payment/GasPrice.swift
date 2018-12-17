@@ -9,19 +9,25 @@
 import Foundation
 
 public struct GasPrice: ExpressibleByAmount {
-    public enum Error: Swift.Error {
-        case tooSmall(passed: Number, shouldBeMin: Number)
+    public static let exponent: Int = -12
+    public static let minSignificand: Value = 100
+
+    public static var minValue: Value {
+        return minSignificand * powerFactor
     }
-    public let amount: Number
-    public init(number amount: Number) throws {
-        let minimum = GasPrice.minimumAmount
-        guard amount >= minimum else { throw Error.tooSmall(passed: amount, shouldBeMin: minimum) }
-        self.amount = amount
+
+    public let significand: Value
+    public init(validSignificand significand: Value) {
+        do {
+            self.significand = try GasPrice.validate(significand: significand)
+        } catch {
+            fatalError("Invalid significand passed")
+        }
     }
 }
+
 public extension GasPrice {
-    static var minimum: GasPrice {
-        return try! GasPrice(number: minimumAmount)
+    func asAmount() -> Amount {
+        return GasPrice.express(value: value, in: Amount.self)
     }
-    static let minimumAmount: Number = 100
 }
