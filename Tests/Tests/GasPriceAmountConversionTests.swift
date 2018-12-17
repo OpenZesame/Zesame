@@ -15,7 +15,7 @@ import XCTest
 class GasPriceAmountConversionTests: XCTestCase {
 
     func testGasToAmount() {
-        guard let gasPrice = try? GasPrice(value: Amount.totalSupply / GasPrice.powerFactor) else {
+        guard let gasPrice = try? GasPrice(significand: Amount.totalSupply / GasPrice.powerFactor) else {
             return XCTFail()
         }
 
@@ -25,6 +25,8 @@ class GasPriceAmountConversionTests: XCTestCase {
 
     func testGasPriceTo1Zil() {
         let gasPrice: GasPrice = 1_000_000_000_000
+        XCTAssertEqual(gasPrice.significand, 1_000_000_000_000)
+        XCTAssertEqual(gasPrice.value, 1.0)
         let asAmount = gasPrice.asAmount()
         XCTAssertEqual(asAmount.value, 1.0)
     }
@@ -32,7 +34,8 @@ class GasPriceAmountConversionTests: XCTestCase {
     func testAmount1ZilToGasPrice() {
         let amount: Amount = 1
         let asGasPrice = amount.asGasPrice()
-        XCTAssertEqual(asGasPrice.value, 1_000_000_000_000)
+        XCTAssertEqual(asGasPrice.significand, 1_000_000_000_000)
+        XCTAssertEqual(asGasPrice.value, 1)
     }
 
 }

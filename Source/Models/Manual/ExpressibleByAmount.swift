@@ -85,7 +85,7 @@ public extension ExpressibleByAmount {
 
 public extension ExpressibleByAmount {
     static func express<Unit>(value: Value, in unit: Unit.Type) -> Unit where Unit: ExpressibleByAmount {
-        return Unit(validSignificand: value * powerFactor/Unit.powerFactor)
+        return Unit(validSignificand: value / Unit.powerFactor)
     }
 }
 
@@ -162,10 +162,7 @@ public extension ExpressibleByAmount {
     /// This `ExpressibleByStringLiteral` init can result in runtime crash if passed invalid values (since the protocol requires the initializer to be non failable, but the designated initializer is).
     init(stringLiteral stringValue: String) {
         do {
-            guard let significand = Value(stringValue) else {
-                throw AmountError.nonNumericString
-            }
-            try self = Self(significand: significand)
+            try self = Self(string: stringValue)
         } catch {
             fatalError("The `String` value (`\(stringValue)`) used to create amount was invalid, error: \(error)")
         }
