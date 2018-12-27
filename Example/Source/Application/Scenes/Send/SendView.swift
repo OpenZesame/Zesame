@@ -17,11 +17,11 @@ final class SendView: ScrollingStackView {
     private lazy var walletBalanceView = WalletBalanceView()
 
     private lazy var recipientAddressField = UITextField.Style("To address", text: "74C544A11795905C2C9808F9E78D8156159D32E4").make()
-    private lazy var amountToSendField = UITextField.Style("Amount", text: "1234").make()
-    private lazy var gasExplainedLabel: UILabel = "Gas is measured in 10^-12"
-    private lazy var gasLimitField = UITextField.Style("Gas limit", text: "1").make()
-    private lazy var gasPriceField = UITextField.Style("Gas price (> \(GasPrice.minimum)", text: "150").make()
-    private lazy var encryptionPassphrase = UITextField.Style("Wallet Encryption Passphrase", text: "Apa").make()
+    private lazy var amountToSendField = UITextField.Style("ZilAmount", text: "1234").make()
+    private lazy var gasExplainedLabel = UILabel.Style("Gas is measured in \(Li.powerOf)").make()
+
+    private lazy var gasPriceField = UITextField.Style("Gas price (> \(GasPrice.minInLi)", text: "\(GasPrice.minInLi)").make()
+    private lazy var encryptionPassphrase = UITextField.Style("Wallet Encryption Passphrase", text: "Apabanan").make()
     private lazy var sendButton: UIButton = "Send"
     private lazy var transactionIdentifierLabel: UILabel = "No tx"
 
@@ -31,7 +31,6 @@ final class SendView: ScrollingStackView {
         recipientAddressField,
         amountToSendField,
         gasExplainedLabel,
-        gasLimitField,
         gasPriceField,
         encryptionPassphrase,
         sendButton,
@@ -53,7 +52,6 @@ extension SendView: ViewModelled {
             fetchBalanceTrigger: rx.pullToRefreshTrigger,
             recepientAddress: recipientAddressField.rx.text.orEmpty.asDriver(),
             amountToSend: amountToSendField.rx.text.orEmpty.asDriver(),
-            gasLimit: gasLimitField.rx.text.orEmpty.asDriver(),
             gasPrice: gasPriceField.rx.text.orEmpty.asDriver(),
             passphrase: encryptionPassphrase.rx.text.orEmpty.asDriver(),
             sendTrigger: sendButton.rx.tap.asDriver()

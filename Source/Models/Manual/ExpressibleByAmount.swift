@@ -9,176 +9,351 @@
 import Foundation
 import BigInt
 
-public enum AmountError: Swift.Error {
-    case nonNumericString
-    case tooSmall(min: Double)
-    case tooLarge(max: Double)
+public enum Unit: Int, Equatable, CustomStringConvertible {
+    case zil = 0
+    case li = -6
+    case qa = -12
 }
 
-public protocol ExpressibleByAmount: ExpressibleByIntegerLiteral, ExpressibleByStringLiteral, Comparable, Codable, CustomStringConvertible, CustomDebugStringConvertible {
-    typealias Value = Double
-
-    /// The unit used to measure the amount. If the `Self` is `Amount` to send to address then the exponent is
-    /// the default of `0`, meaning that we measure in whole Zillings. But we might measure `GasPrice` in units
-    /// being worth less, being measure in units of 10^-12, then this property will have the value `-12`
-    static var exponent: Int { get }
-    static var minSignificand: Value { get }
-    static var minValue: Value { get }
-    static var maxSignificand: Value { get }
-    static var maxValue: Value { get }
-
-    var significand: Value { get }
-
-    init(validSignificand: Value)
-    init(significand: Value) throws
-    init(string: String) throws
-}
-
-public extension ExpressibleByAmount {
-    static var exponent: Int { return 0 }
-
-    /// The decimal exponentiation of the exponent, i.e. the value resulting from 10^exponent
-    /// see `exponent` property for more info.
-    static var powerFactor: Double {
-        return pow(10, Double(exponent))
-    }
-}
-
-public extension ExpressibleByAmount {
-    var value: Value {
-        return significand * Self.powerFactor
-    }
-}
-
-public extension ExpressibleByAmount {
-
-    static var totalSupply: Value {
-        return 21_000_000_000 // 21 billion Zillings is the total supply
+public extension Unit {
+    var exponent: Int {
+        return rawValue
     }
 
-    static var maxSignificand: Value {
-        return maxValue / powerFactor
+    var powerOf: String {
+        return "10^\(exponent)"
     }
 
-    static var minSignificand: Value {
-        return minValue / powerFactor
-    }
-
-    static var minValue: Value {
-        return 0
-    }
-
-    static var maxValue: Value {
-        return totalSupply
-    }
-}
-
-public extension ExpressibleByAmount {
-    static var minimum: Self {
-        return Self(validSignificand: minSignificand)
-    }
-
-    static var maximum: Self {
-        return Self(validSignificand: maxSignificand)
-    }
-}
-
-public extension ExpressibleByAmount {
-    static func express<Unit>(value: Value, in unit: Unit.Type) -> Unit where Unit: ExpressibleByAmount {
-        return Unit(validSignificand: value / Unit.powerFactor)
-    }
-}
-
-// MARK: - Initializers
-public extension ExpressibleByAmount {
-
-    @discardableResult
-    static func validate(significand: Value) throws -> Value {
-        guard significand <= Self.maxSignificand else {
-            throw AmountError.tooLarge(max: Self.maxValue)
+    var name: String {
+        switch self {
+        case .zil: return "zil"
+        case .li: return "li"
+        case .qa: return "qa"
         }
+    }
+}
 
-        guard significand >= Self.minSignificand else {
-            throw AmountError.tooSmall(min: Self.minValue)
-        }
+public extension Unit {
+    var description: String {
+        return name
+    }
+}
+
+public protocol ExpressibleByAmount: Numeric, Comparable, CustomStringConvertible, CustomDebugStringConvertible, ExpressibleByFloatLiteral, ExpressibleByStringLiteral where Magnitude == Significand {
+
+
+    typealias Significand = Double
+
+    static var unit: Unit { get }
+    static var minSignificand: Significand { get }
+    static var min: Self { get }
+    static var maxSignificand: Significand { get }
+    static var max: Self { get }
+    var significand: Significand { get }
+    init(significand: Significand)
+
+    init(_ validating: Significand) throws
+    init(_ validating: Int) throws
+    init(_ validating: String) throws
+
+    var inLi: Li { get }
+    var inZil: Zil { get }
+    var inQa: Qa { get }
+    init(zil: Zil) throws
+    init(li: Li) throws
+    init(qa: Qa) throws
+    init(zil zilString: String) throws
+    init(li liString: String) throws
+    init(qa qaString: String) throws
+}
+
+public extension Li {
+     var inLi: Li { return self }
+}
+
+public extension Zil {
+    var inZil: Zil { return self }
+}
+
+public extension Qa {
+    var inQa: Qa { return self }
+}
+
+public extension ExpressibleByAmount {
+    var magnitude: Magnitude {
         return significand
     }
 
-    init(significand: Value) throws {
-        self.init(validSignificand: try Self.validate(significand: significand))
+    init?<T>(exactly source: T) where T : BinaryInteger {
+        guard let significand = Significand(exactly: source) else {
+            return nil
+        }
+        do {
+            self = try Self(significand)
+        } catch {
+            return nil
+        }
+    }
+}
+
+public extension ExpressibleByAmount {
+
+    static var minSignificand: Significand { return 0 }
+    static var min: Self { return Self(significand: minSignificand) }
+
+    static var maxSignificand: Significand {
+        return Zil.express(21_000_000_000, in: Self.unit)
     }
 
-    init(string: String) throws {
-        guard let significand = Value(string) else {
+    static var max: Self { return Self(significand: maxSignificand) }
+
+    var unit: Unit { return Self.unit }
+
+    func valueMeasured(in unit: Unit) -> Significand {
+        return Self.express(significand, in: unit)
+    }
+
+    static func express(_ input: Significand, in unit: Unit) -> Significand {
+        return input / pow(10, Significand(unit.exponent - Self.unit.exponent))
+    }
+}
+
+public extension ExpressibleByAmount {
+    static var powerOf: String {
+        return unit.powerOf
+    }
+}
+
+public enum AmountError: Swift.Error {
+    case tooSmall(minSignificandIs: Double)
+    case tooLarge(maxSignificandIs: Double)
+    case nonNumericString
+}
+
+public extension ExpressibleByAmount {
+
+    static func validate(significand: Significand) throws -> Significand {
+        guard significand >= minSignificand else {
+            throw AmountError.tooSmall(minSignificandIs: minSignificand)
+        }
+
+        guard significand <= maxSignificand else {
+            throw AmountError.tooLarge(maxSignificandIs: maxSignificand)
+        }
+
+        return significand
+    }
+
+    init(_ unvalidatedSignificand: Significand) throws {
+        let validated = try Self.validate(significand: unvalidatedSignificand)
+        self.init(significand: validated)
+    }
+
+    init(_ unvalidatedSignificand: Int) throws {
+      try self.init(Significand(unvalidatedSignificand))
+    }
+
+    init(_ unvalidatedSignificand: String) throws {
+        guard let unvalidatedDouble = Significand(unvalidatedSignificand) else {
             throw AmountError.nonNumericString
         }
-
-        try self.init(significand: significand)
+        try self.init(unvalidatedDouble)
     }
 
-    init(significand int: Int) throws {
-        try self.init(significand: Value(int))
+    init(floatLiteral double: Double) {
+        do {
+            try self = Self(double)
+        } catch {
+            fatalError("The `Double` value (`\(double)`) passed was invalid, error: \(error)")
+        }
+    }
+
+    init(integerLiteral int: Int) {
+        do {
+            try self = Self(Significand(int))
+        } catch {
+            fatalError("The `Int` value (`\(int)`) passed was invalid, error: \(error)")
+        }
+    }
+
+    init(stringLiteral string: String) {
+        do {
+            try self = Self(string)
+        } catch {
+            fatalError("The `String` value (`\(string)`) passed was invalid, error: \(error)")
+        }
     }
 }
 
-// MARK: - Comparable
 public extension ExpressibleByAmount {
+    init(zil: Zil) throws {
+        try self.init(zil.valueMeasured(in: Self.unit))
+    }
+
+    init(li: Li) throws {
+        try self.init(li.valueMeasured(in: Self.unit))
+    }
+
+    init(qa: Qa) throws {
+        try self.init(qa.valueMeasured(in: Self.unit))
+    }
+}
+
+
+public extension ExpressibleByAmount {
+    init(zil zilString: String) throws {
+        try self.init(zil: try Zil(zilString))
+    }
+
+    init(li liString: String) throws {
+        try self.init(li: try Li(liString))
+    }
+
+    init(qa qaString: String) throws {
+        try self.init(qa: try Qa(qaString))
+    }
+}
+
+
+public extension ExpressibleByAmount {
+
+    private static func oper(_ lhs: Self, _ rhs: Self, calc: (Significand, Significand) -> Significand) -> Self {
+        return Self.init(significand: calc(lhs.significand, rhs.significand))
+    }
+
+    static func * (lhs: Self, rhs: Self) -> Self {
+        return oper(lhs, rhs) { $0 * $1 }
+    }
+
+    static func *= (lhs: inout Self, rhs: Self) {
+        lhs = lhs * rhs
+    }
+
+    static func + (lhs: Self, rhs: Self) -> Self {
+        return oper(lhs, rhs) { $0 + $1 }
+    }
+
+    static func += (lhs: inout Self, rhs: Self) {
+        lhs = lhs + rhs
+    }
+
+    static func - (lhs: Self, rhs: Self) -> Self {
+        return oper(lhs, rhs) { $0 - $1 }
+    }
+
+    static func -= (lhs: inout Self, rhs: Self) {
+        lhs = lhs - rhs
+    }
+}
+
+public struct Zil: ExpressibleByAmount {
+    public static let unit: Unit = .zil
+    public static var totalSupply = Zil.max
+    public let significand: Significand
+
+    public init(significand: Significand) {
+        do {
+            self.significand = try Zil.validate(significand: significand)
+        } catch {
+            fatalError("Invalid significand passed")
+        }
+    }
+}
+
+public struct Li: ExpressibleByAmount {
+    public static let unit: Unit = .li
+    public let significand: Significand
+
+    public init(significand: Significand) {
+        do {
+            self.significand = try Li.validate(significand: significand)
+        } catch {
+            fatalError("Invalid significand passed")
+        }
+    }
+}
+
+public struct Qa: ExpressibleByAmount {
+
+    public static let unit: Unit = .qa
+    public let significand: Significand
+
+    public init(significand: Significand) {
+        do {
+            self.significand = try Qa.validate(significand: significand)
+        } catch {
+            fatalError("Invalid significand passed")
+        }
+    }
+}
+
+// Comparable
+public extension ExpressibleByAmount {
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        let unitUsedForComparision: Unit = .qa
+        return lhs.valueMeasured(in: unitUsedForComparision) == rhs.valueMeasured(in: unitUsedForComparision)
+    }
+
     static func < (lhs: Self, rhs: Self) -> Bool {
-        return lhs.value < rhs.value
+        let unitUsedForComparision: Unit = .qa
+        return lhs.valueMeasured(in: unitUsedForComparision) < rhs.valueMeasured(in: unitUsedForComparision)
     }
 }
 
-// MARK: - Encodable
-public extension ExpressibleByAmount {
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(value.description)
-    }
+public func == <A, B>(lhs: A, rhs: B) -> Bool where A: ExpressibleByAmount, B: ExpressibleByAmount {
+    return lhs.inQa == rhs.inQa
 }
 
-// MARK: - Decodable
-public extension ExpressibleByAmount {
-     init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let string = try container.decode(String.self)
-        try self.init(string: string)
-    }
+public func <= <A, B>(lhs: A, rhs: B) -> Bool where A: ExpressibleByAmount, B: ExpressibleByAmount {
+    return lhs.inQa <= rhs.inQa
 }
 
-// MARK: - ExpressibleByIntegerLiteral
-public extension ExpressibleByAmount {
-    /// This `ExpressibleByIntegerLiteral` init can result in runtime crash if passed invalid values (since the protocol requires the initializer to be non failable, but the designated initializer is).
-    init(integerLiteral integerValue: Int) {
-        do {
-            try self = Self(significand: integerValue)
-        } catch {
-            fatalError("The `Int` value (`\(integerValue)`) used to create amount was invalid, error: \(error)")
-        }
-    }
+public func >= <A, B>(lhs: A, rhs: B) -> Bool where A: ExpressibleByAmount, B: ExpressibleByAmount {
+    return lhs.inQa >= rhs.inQa
 }
 
-// MARK: - ExpressibleByStringLiteral
-public extension ExpressibleByAmount {
-    /// This `ExpressibleByStringLiteral` init can result in runtime crash if passed invalid values (since the protocol requires the initializer to be non failable, but the designated initializer is).
-    init(stringLiteral stringValue: String) {
-        do {
-            try self = Self(string: stringValue)
-        } catch {
-            fatalError("The `String` value (`\(stringValue)`) used to create amount was invalid, error: \(error)")
-        }
-    }
+public func != <A, B>(lhs: A, rhs: B) -> Bool where A: ExpressibleByAmount, B: ExpressibleByAmount {
+    return lhs.inQa != rhs.inQa
 }
 
-// MARK: - CustomStringConvertible
+public func > <A, B>(lhs: A, rhs: B) -> Bool where A: ExpressibleByAmount, B: ExpressibleByAmount {
+    return lhs.inQa > rhs.inQa
+}
+
+public func < <A, B>(lhs: A, rhs: B) -> Bool where A: ExpressibleByAmount, B: ExpressibleByAmount {
+    return lhs.inQa < rhs.inQa
+}
+
+public func - <A, B>(lhs: A, rhs: B) -> A where A: ExpressibleByAmount, B: ExpressibleByAmount {
+    return try! lhs - A.init(rhs.valueMeasured(in: B.unit))
+}
+
+// CustomStringConvertiblbe
 public extension ExpressibleByAmount {
     var description: String {
-        return value.description
+        return "\(significand) \(unit.name) (E\(unit.exponent))"
     }
 }
 
-// MARK: - CustomDebugStringConvertible
+
+// CustomDebugStringConvertible
 public extension ExpressibleByAmount {
     var debugDescription: String {
-        return "\(significand)E\(Self.exponent)"
+        return "\(description) (value in zil: \(valueMeasured(in: .zil)))"
+    }
+}
+
+public extension ExpressibleByAmount {
+    var inZil: Zil {
+        return Zil(significand: valueMeasured(in: .zil))
+    }
+
+    var inLi: Li {
+        return Li(significand: valueMeasured(in: .li))
+    }
+
+    var inQa: Qa {
+        return Qa(significand: valueMeasured(in: .qa))
     }
 }
