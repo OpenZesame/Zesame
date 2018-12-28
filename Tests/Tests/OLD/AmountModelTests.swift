@@ -13,17 +13,17 @@ import XCTest
 class AmountModelTests: XCTestCase {
 
     func testCreatingValidAmountUsingDesignatedInitializer() {
-        let amount = try? Amount(double: 1)
+        let amount = try? ZilAmount(double: 1)
         XCTAssertTrue(amount?.amount == 1)
     }
 
     func testCreatingValidAmountUsingExpressibleByFloatLiteralInitializer() {
-        let amount: Amount = 1.0
+        let amount: ZilAmount = 1.0
         XCTAssertTrue(amount.amount == 1)
     }
 
     func testCreatingValidAmountUsingExpressibleByIntegerLiteralInitializer() {
-        let amount: Amount = 1
+        let amount: ZilAmount = 1
         XCTAssertTrue(amount.amount == 1)
     }
 }

@@ -15,7 +15,7 @@ class PaymentModelTests: XCTestCase {
     func testCreatingValidPaymentUsingDesignatedInitializer() {
         guard
             let address = try? Address(double: addressAsDouble),
-            let amount = try? Amount(double: 1),
+            let amount = try? ZilAmount(double: 1),
             let gas = try? Gas(rawPrice: 1, rawLimit: 1)
             else {
                 XCTFail("Should have been possible to create address, amount of gas using valid values")
