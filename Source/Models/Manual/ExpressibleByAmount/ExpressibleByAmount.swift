@@ -8,6 +8,13 @@
 
 import Foundation
 
+/// A type representing an Zilliqa amount in any denominator, specified by the `Unit` and the value measured
+/// in said unit by the `Magnitude`. For convenience any type can be converted to the default units, such as
+/// Zil, Li, and Qa. Any type can also be initialized from said units. Since the type conforms to `Numeric`
+/// protocol we can perform arthimetic between two instances of the same type, but thanks to convenience
+/// functions we can also perform artithmetic between two different types, e.g. Zil(2) + Li(3_000_000) // 5 Zil
+/// We can also compare them of course. An extension on The Zil.Magnitude allows for syntax like 3.zil
+/// analogously for Li and Qa.
 public protocol ExpressibleByAmount: Numeric,
 Codable,
 Comparable,
@@ -47,152 +54,11 @@ where Magnitude == Double {
     init(qa qaString: String) throws
 }
 
-
-
-
-public extension ExpressibleByAmount where Magnitude == Zil.Magnitude {
-    static var maxMagnitude: Magnitude {
-        return Zil.express(Zil.Magnitude(floatLiteral: 21_000_000_000), in: Self.unit)
-    }
-}
-
+// MARK: - Convenience
 public extension ExpressibleByAmount {
-
-    static var minMagnitude: Magnitude { return 0 }
-    static var min: Self { return Self(magnitude: minMagnitude) }
-
-    static var max: Self { return Self(magnitude: maxMagnitude) }
-
     var unit: Unit { return Self.unit }
 
-    func valueMeasured(in unit: Unit) -> Magnitude {
-        return Self.express(magnitude, in: unit)
-    }
-
-    static func express(_ input: Magnitude, in unit: Unit) -> Magnitude {
-        return Magnitude.init(floatLiteral: input / pow(10, Double(unit.exponent - Self.unit.exponent)))
-    }
-
-    init(_ unvalidatedMagnitude: String) throws {
-        guard let unvalidatedDouble = Double(unvalidatedMagnitude) else {
-            throw AmountError.nonNumericString
-        }
-        try self.init(Magnitude.init(floatLiteral: unvalidatedDouble))
-    }
-
-    init(floatLiteral double: Double) {
-        do {
-            try self = Self.init(Magnitude.init(floatLiteral: double))
-        } catch {
-            fatalError("The `Double` value (`\(double)`) passed was invalid, error: \(error)")
-        }
-    }
-}
-
-public extension ExpressibleByAmount {
     static var powerOf: String {
         return unit.powerOf
-    }
-}
-
-
-
-public extension ExpressibleByAmount {
-
-    static func validate(magnitude: Magnitude) throws -> Magnitude {
-        guard magnitude >= minMagnitude else {
-            throw AmountError.tooSmall(minMagnitudeIs: minMagnitude)
-        }
-
-        guard magnitude <= maxMagnitude else {
-            throw AmountError.tooLarge(maxMagnitudeIs: maxMagnitude)
-        }
-
-        return magnitude
-    }
-
-    init(_ unvalidatedMagnitude: Magnitude) throws {
-        let validated = try Self.validate(magnitude: unvalidatedMagnitude)
-        self.init(magnitude: validated)
-    }
-
-    init(_ unvalidatedMagnitude: Int) throws {
-        try self.init(Magnitude(unvalidatedMagnitude))
-    }
-
-    init(integerLiteral int: Int) {
-        do {
-            try self = Self(int)
-        } catch {
-            fatalError("The `Int` value (`\(int)`) passed was invalid, error: \(error)")
-        }
-    }
-
-    init(stringLiteral string: String) {
-        do {
-            try self = Self(string)
-        } catch {
-            fatalError("The `String` value (`\(string)`) passed was invalid, error: \(error)")
-        }
-    }
-}
-
-public extension ExpressibleByAmount where Magnitude == Zil.Magnitude {
-    var inZil: Zil {
-        return Zil(magnitude: valueMeasured(in: .zil))
-    }
-
-    init(zil: Zil) throws {
-        try self.init(zil.valueMeasured(in: Self.unit))
-    }
-}
-
-public extension ExpressibleByAmount where Magnitude == Li.Magnitude {
-    var inLi: Li {
-        return Li(magnitude: valueMeasured(in: .li))
-    }
-
-    init(li: Li) throws {
-        try self.init(li.valueMeasured(in: Self.unit))
-    }
-}
-
-public extension ExpressibleByAmount where Magnitude == Qa.Magnitude {
-    var inQa: Qa {
-        return Qa(magnitude: valueMeasured(in: .qa))
-    }
-
-    init(qa: Qa) throws {
-        try self.init(qa.valueMeasured(in: Self.unit))
-    }
-}
-
-public extension ExpressibleByAmount {
-    init(zil zilString: String) throws {
-        try self.init(zil: try Zil(zilString))
-    }
-
-    init(li liString: String) throws {
-        try self.init(li: try Li(liString))
-    }
-
-    init(qa qaString: String) throws {
-        try self.init(qa: try Qa(qaString))
-    }
-}
-
-
-// CustomStringConvertiblbe
-public extension ExpressibleByAmount {
-    var description: String {
-        return "\(magnitude) \(unit.name) (E\(unit.exponent))"
-    }
-}
-
-
-// CustomDebugStringConvertible
-public extension ExpressibleByAmount {
-    var debugDescription: String {
-        return "\(description) (value in zil: \(valueMeasured(in: .zil)))"
     }
 }
