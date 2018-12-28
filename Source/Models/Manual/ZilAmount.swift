@@ -8,13 +8,14 @@
 
 import Foundation
 
-public struct ZilAmount: AmountConvertible {
-    public static let minAmount = Zil.min
-    public static let maxAmount = Zil.max
+public struct ZilAmount: ExpressibleByAmount {
+    public typealias Magnitude = Zil.Magnitude
+    public static let minMagnitude = Zil.min
+    public static let maxMagnitude = Zil.max
+    public static let unit: Unit = .zil
+    public let magnitude: Magnitude
 
-    public let amount: Zil
-
-    public init(amount: Zil) {
-        self.amount = amount
+    public init(magnitude: Magnitude) {
+        self.magnitude = magnitude
     }
 }

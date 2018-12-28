@@ -38,6 +38,8 @@
 		4847EE0C21614196002FF978 /* DerivedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4847EE0B21614196002FF978 /* DerivedKey.swift */; };
 		4847EE0D2161419A002FF978 /* DerivedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4847EE0B21614196002FF978 /* DerivedKey.swift */; };
 		4847EE0F216141BB002FF978 /* Scrypt+KDFParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4847EE0E216141BB002FF978 /* Scrypt+KDFParameters.swift */; };
+		484D1AC621D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1AC521D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift */; };
+		484D1AC721D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1AC521D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift */; };
 		484E09EA21543F3B003D928E /* MessageFromUnsignedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09E921543F3B003D928E /* MessageFromUnsignedTransaction.swift */; };
 		484E09EB21543F43003D928E /* MessageFromUnsignedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09E921543F3B003D928E /* MessageFromUnsignedTransaction.swift */; };
 		484E09ED215440B1003D928E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09EC215440B1003D928E /* APIClient.swift */; };
@@ -137,7 +139,7 @@
 		488A658F2157BC5F0091FD03 /* ExportKeystoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488A658D2157BC5F0091FD03 /* ExportKeystoreTests.swift */; };
 		48A6400A218645F300B08C67 /* TransactionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A64009218645F300B08C67 /* TransactionResponse.swift */; };
 		48A6400B218645F300B08C67 /* TransactionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A64009218645F300B08C67 /* TransactionResponse.swift */; };
-		48A96C0C21D4EEF5003F733E /* AmountConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A96C0B21D4EEF5003F733E /* AmountConvertible.swift */; };
+		48A96C0C21D4EEF5003F733E /* ExpressibleByAmount+Codabble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codabble.swift */; };
 		48A96C1121D51FF9003F733E /* GasLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A96C1021D51FF9003F733E /* GasLimit.swift */; };
 		48A96C1221D51FF9003F733E /* GasLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A96C1021D51FF9003F733E /* GasLimit.swift */; };
 		48B5B2F121482EC600147005 /* TransactionSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B5B2F021482EC600147005 /* TransactionSigningTests.swift */; };
@@ -245,6 +247,7 @@
 		4847EE0A21613972002FF978 /* ZesameTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZesameTests-Info.plist"; sourceTree = "<group>"; };
 		4847EE0B21614196002FF978 /* DerivedKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DerivedKey.swift; sourceTree = "<group>"; };
 		4847EE0E216141BB002FF978 /* Scrypt+KDFParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Scrypt+KDFParameters.swift"; sourceTree = "<group>"; };
+		484D1AC521D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+Arithmetic.swift"; sourceTree = "<group>"; };
 		484E09E921543F3B003D928E /* MessageFromUnsignedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromUnsignedTransaction.swift; sourceTree = "<group>"; };
 		484E09EC215440B1003D928E /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		484E09EF21544134003D928E /* DefaultAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAPIClient.swift; sourceTree = "<group>"; };
@@ -294,7 +297,7 @@
 		488A658A2157A1670091FD03 /* DispatchQueue+Sugar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Sugar.swift"; sourceTree = "<group>"; };
 		488A658D2157BC5F0091FD03 /* ExportKeystoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportKeystoreTests.swift; sourceTree = "<group>"; };
 		48A64009218645F300B08C67 /* TransactionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionResponse.swift; sourceTree = "<group>"; };
-		48A96C0B21D4EEF5003F733E /* AmountConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountConvertible.swift; sourceTree = "<group>"; };
+		48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codabble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+Codabble.swift"; sourceTree = "<group>"; };
 		48A96C1021D51FF9003F733E /* GasLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasLimit.swift; sourceTree = "<group>"; };
 		48B5B2EE21482EC600147005 /* ZilliqaSDK iOS Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDK iOS Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		48B5B2EF21482EC600147005 /* ZilliqaSDK macOS Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDK macOS Tests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -458,8 +461,9 @@
 			children = (
 				4877B4A821BE2EFA00A94318 /* ZilAmount.swift */,
 				48A96C1021D51FF9003F733E /* GasLimit.swift */,
-				48A96C0B21D4EEF5003F733E /* AmountConvertible.swift */,
+				48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codabble.swift */,
 				4819BDBB21C3F03900443F2A /* ExpressibleByAmount.swift */,
+				484D1AC521D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift */,
 				4877B4A921BE2EFA00A94318 /* KeyRestoration.swift */,
 				4877B4AA21BE2EFA00A94318 /* Payment */,
 				4877B4AF21BE2EFA00A94318 /* Wallet */,
@@ -920,6 +924,7 @@
 				48196F242157C480009C40BB /* Scrypt.swift in Sources */,
 				4877B4D321BE2EFA00A94318 /* Keystore.swift in Sources */,
 				4877B4EB21BE2EFA00A94318 /* Wallet.swift in Sources */,
+				484D1AC721D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift in Sources */,
 				48D411502147205500E2F207 /* TransactionRequest.swift in Sources */,
 				4877B4E521BE2EFA00A94318 /* Wallet+Codable.swift in Sources */,
 				4877B4E321BE2EFA00A94318 /* Address+Codable.swift in Sources */,
@@ -965,7 +970,7 @@
 				4877B50821BFBB8900A94318 /* Polling.swift in Sources */,
 				484E09EA21543F3B003D928E /* MessageFromUnsignedTransaction.swift in Sources */,
 				4877B4D821BE2EFA00A94318 /* Nonce.swift in Sources */,
-				48A96C0C21D4EEF5003F733E /* AmountConvertible.swift in Sources */,
+				48A96C0C21D4EEF5003F733E /* ExpressibleByAmount+Codabble.swift in Sources */,
 				4819BDB921C3EFEF00443F2A /* GasPrice.swift in Sources */,
 				4877B4D421BE2EFA00A94318 /* Keystore+Wallet+Import.swift in Sources */,
 				4877B4DA21BE2EFA00A94318 /* Address+CustomStringConvertible.swift in Sources */,
@@ -990,6 +995,7 @@
 				4877B4EA21BE2EFA00A94318 /* Wallet.swift in Sources */,
 				48ED0E6F20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */,
 				4877B4E421BE2EFA00A94318 /* Wallet+Codable.swift in Sources */,
+				484D1AC621D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift in Sources */,
 				4877B4E221BE2EFA00A94318 /* Address+Codable.swift in Sources */,
 				488A65872155ACD20091FD03 /* ZilliqaService+Signing.swift in Sources */,
 				4819BD9021C0DBD900443F2A /* ZilliqaService+PollTransaction.swift in Sources */,

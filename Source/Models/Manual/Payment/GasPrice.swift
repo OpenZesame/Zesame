@@ -8,18 +8,32 @@
 
 import Foundation
 
-public struct GasPrice: AmountConvertible {
-    public static let minAmount: Qa = 1_000_000_000
-    public static let maxAmount = Qa.max
-    public let amount: Qa
+public extension ExpressibleByAmount where Magnitude: ExpressibleByAmount {
+    public static var unit: Unit {
+        return Magnitude.unit
+    }
+}
 
-    public init(amount: Qa) {
-        self.amount = amount
+public struct GasPrice: ExpressibleByAmount {
+    public typealias Magnitude = Qa.Magnitude
+    public static let minMagnitude: Magnitude = 1_000_000_000
+    public static let maxMagnitude = Qa.max
+    public static let unit: Unit = .qa
+    public let magnitude: Magnitude
+
+    public init(magnitude: Magnitude) {
+        self.magnitude = magnitude
+    }
+}
+
+public extension GasPrice {
+    var amount: Qa.Magnitude {
+        return magnitude
     }
 }
 
 public extension GasPrice {
     static var minInLi: Int {
-        return Int(minAmount.inLi.significand)
+        return Int(GasPrice.min.inLi.magnitude)
     }
 }

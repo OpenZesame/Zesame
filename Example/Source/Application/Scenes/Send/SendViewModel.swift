@@ -110,7 +110,7 @@ extension SendViewModel: ViewModelType {
 
         let recipient = input.recepientAddress.map { Address(uncheckedString: $0) }
 
-        let amount = input.amountToSend.map { try? ZilAmount(string: $0) }
+        let amount = input.amountToSend.map { try? ZilAmount(zil: $0) }
 
         let gasPrice = input.gasPrice.map { try? GasPrice(li: $0) }
 
@@ -135,7 +135,7 @@ extension SendViewModel: ViewModelType {
             isSendButtonEnabled: payment.map { $0 != nil },
             address: wallet.map { $0.address.checksummedHex },
             nonce: balanceAndNonce.map { "\($0.nonce.nonce)" },
-            balance: balanceAndNonce.map { "\(Int($0.balance.amount.inZil.significand)) Zil" },
+            balance: balanceAndNonce.map { "\(Int($0.balance.inZil.magnitude)) Zil" },
             receipt: receipt.map { "Tx fee: \($0.totalGasCost) zil, for tx: \($0.transactionId)" }
         )
     }

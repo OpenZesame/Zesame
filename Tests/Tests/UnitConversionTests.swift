@@ -69,4 +69,51 @@ class UnitConversionTests: XCTestCase {
         XCTAssertTrue(try! Li(1) > Qa(999999))
         XCTAssertTrue(try! Li(1) < Qa(9999990))
     }
+
+    func testAdditionOfDifferentUnits() {
+        let zil: Zil = 2
+        let li: Li = 600_007
+        let qa: Qa = 500_002_000_123
+        let amount = zil + qa + li
+        XCTAssertEqual(amount.inQa, 3_100_009_000_123)
+    }
+
+    func testZilAmountLiteral() {
+        let amount: ZilAmount = 15
+        XCTAssertEqual(amount, 15)
+    }
+
+    func testGasPriceMinimum() {
+        XCTAssertEqual(GasPrice.min.inLi, 1000)
+        XCTAssertEqual(GasPrice.minInLi, Int(GasPrice.min.inLi.magnitude))
+    }
+
+    func testZilAmountAndZil() {
+        let foo: ZilAmount = 123
+        let bar: Zil = 123
+        XCTAssertTrue(foo == bar)
+    }
+
+    func testGasPriceAndQa() {
+        let foo: GasPrice = 123_000_000_000
+        let bar: Qa = 123_000_000_000
+        XCTAssertTrue(foo == bar)
+    }
+
+    func testTooSmallGasPrice() {
+        var didThrowError = false
+        do {
+            let _ = try GasPrice(999_000_000)
+        } catch let error as AmountError  {
+            didThrowError = true
+            switch error {
+            case .tooSmall(let min):
+                XCTAssertEqual(min, GasPrice.min.magnitude)
+            default: XCTFail()
+            }
+        } catch {
+            return XCTFail()
+        }
+        XCTAssertTrue(didThrowError)
+    }
 }

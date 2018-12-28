@@ -16,10 +16,10 @@ class TransactionCostTests: XCTestCase {
     func testTotalAmount() {
 
         let amount: ZilAmount = 21_000_000_000
-        XCTAssertEqual(amount.amount.significand, 21_000_000_000)
-        XCTAssertEqual(amount.amount.significand, amount.amount.inZil.significand)
-        XCTAssertEqual(Zil.max.significand, Zil.maxSignificand)
-        XCTAssertEqual(Zil.max.significand, amount.inZil.significand)
+        XCTAssertEqual(amount.magnitude, 21_000_000_000)
+        XCTAssertEqual(amount.magnitude, amount.inZil.magnitude)
+        XCTAssertEqual(Zil.max.magnitude, Zil.maxMagnitude)
+        XCTAssertEqual(Zil.max.magnitude, amount.inZil.magnitude)
         XCTAssertEqual(Zil.max, amount.inZil)
     }
 
@@ -36,7 +36,7 @@ class TransactionCostTests: XCTestCase {
             didThrowError = true
             switch error {
             case .tooLarge(let max):
-                XCTAssertEqual(max, Zil.maxSignificand)
+                XCTAssertEqual(max, Zil.maxMagnitude)
             default: XCTFail()
             }
         } catch {
@@ -48,12 +48,12 @@ class TransactionCostTests: XCTestCase {
     func testExceedingTotalSupplyStringLiteral() {
         var didThrowError = false
         do {
-            let _ = try Payment.estimatedTotalCostOfTransaction(amount: "20999999999", gasPrice: "1000001", gasLimit: 1000000)
+            let _ = try Payment.estimatedTotalCostOfTransaction(amount: "20999999999", gasPrice: "1000000000001")
         } catch let error as AmountError  {
             didThrowError = true
             switch error {
             case .tooLarge(let max):
-                XCTAssertEqual(max, Zil.maxSignificand)
+                XCTAssertEqual(max, Zil.maxMagnitude)
             default: XCTFail()
             }
         } catch {

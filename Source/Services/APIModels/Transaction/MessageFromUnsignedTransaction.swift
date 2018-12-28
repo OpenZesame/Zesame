@@ -19,8 +19,8 @@ func messageFromUnsignedTransaction(_ tx: Transaction, publicKey: PublicKey, has
         $0.nonce = tx.payment.nonce.nonce
         $0.toaddr = Data(hex: tx.payment.recipient.checksummedHex)
         $0.senderpubkey = publicKey.data.compressed.asByteArray
-        $0.amount = tx.payment.amount.amount.as16BytesLongArray
-        $0.gasprice = tx.payment.gasPrice.amount.as16BytesLongArray
+        $0.amount = tx.payment.amount.as16BytesLongArray
+        $0.gasprice = tx.payment.gasPrice.as16BytesLongArray
         $0.gaslimit = UInt64(tx.payment.gasLimit)
         $0.code = formatCodeOrData(tx.code)
         $0.data = formatCodeOrData(tx.data)

@@ -30,27 +30,22 @@ public struct Payment {
     }
 }
 
-
 public extension Payment {
     static func estimatedTotalTransactionFee(gasPrice: GasPrice, gasLimit: GasLimit = .defaultGasLimit) -> Qa {
-        return (gasLimit * gasPrice).inQa
+        return Qa(magnitude: Qa.Magnitude(gasLimit) * gasPrice.amount.magnitude)
     }
 
     static func estimatedTotalCostOfTransaction(amount: ZilAmount, gasPrice: GasPrice, gasLimit: GasLimit = .defaultGasLimit) throws -> ZilAmount {
 
         let fee = estimatedTotalTransactionFee(gasPrice: gasPrice, gasLimit: gasLimit)
         let amountInQa = amount.inQa
-        let totalInQaAsSignificand: Qa.Significand = amountInQa.significand + fee.significand
+        let totalInQaAsMagnitude: Qa.Magnitude = amountInQa.magnitude + fee.magnitude
 
-        let totalSupplyInQaAsSignificand: Qa.Significand = Zil.totalSupply.inQa.significand
+        let totalSupplyInQaAsMagnitude: Qa.Magnitude = Zil.totalSupply.inQa.magnitude
 
-//        print("fee: \(fee)")
-//        print("total: \(totalInQa)")
-//        print("totalSupply: \(totalSupplyInQa)")
+        let tooLargeError = AmountError.tooLarge(maxMagnitudeIs: Zil.maxMagnitude.asDouble)
 
-        let tooLargeError = AmountError.tooLarge(maxSignificandIs: Zil.maxSignificand)
-
-        guard totalInQaAsSignificand < totalSupplyInQaAsSignificand else {
+        guard totalInQaAsMagnitude < totalSupplyInQaAsMagnitude else {
             throw tooLargeError
         }
 
@@ -59,16 +54,16 @@ public extension Payment {
         // 21E9 so we lose the 1E-12 part. Thus we subtract 21E9
         // to be able to keep the 1E-12 part and compare it against
         // the transaction cost. Ugly, but it works...
-        if totalInQaAsSignificand == totalSupplyInQaAsSignificand {
+        if totalInQaAsMagnitude == totalSupplyInQaAsMagnitude {
             print("totalInZil == totalSupplyInZil")
-            let subtractedTotalSupplyFromAmount = totalInQaAsSignificand - totalSupplyInQaAsSignificand
-            if (subtractedTotalSupplyFromAmount + fee.significand) != fee.significand {
+            let subtractedTotalSupplyFromAmount = totalInQaAsMagnitude - totalSupplyInQaAsMagnitude
+            if (subtractedTotalSupplyFromAmount + fee.magnitude) != fee.magnitude {
                 throw tooLargeError
             }
         } else {
             print("totalInZil != totalSupplyInZil")
         }
 
-        return try ZilAmount(qa: Qa(totalInQaAsSignificand))
+        return try ZilAmount(qa: Qa(totalInQaAsMagnitude))
     }
 }

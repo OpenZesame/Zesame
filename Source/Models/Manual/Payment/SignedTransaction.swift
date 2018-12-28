@@ -39,7 +39,7 @@ extension SignedTransaction: Encodable {
         try container.encode(publicKeyCompressed, forKey: .pubKey)
 
         try zip(
-            [p.amount.amount.encodableValue, p.gasPrice.amount.encodableValue],
+            [p.amount.encodableValue, p.gasPrice.encodableValue],
             [CodingKeys.amount, CodingKeys.gasPrice]
         ).forEach {
             try container.encode($0, forKey: $1)
@@ -54,10 +54,10 @@ extension SignedTransaction: Encodable {
 
 extension ExpressibleByAmount {
 
-    // The API expects integer representation of the significand, so e.g.
+    // The API expects integer representation of the magnitude, so e.g.
     // `100` for GasPrice.
     var valueForTransaction: Int {
-        return Int(inQa.significand)
+        return Int(inQa.magnitude)
     }
 }
 
