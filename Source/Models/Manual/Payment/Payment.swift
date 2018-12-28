@@ -43,7 +43,7 @@ public extension Payment {
 
         let totalSupplyInQaAsMagnitude: Qa.Magnitude = Zil.totalSupply.inQa.magnitude
 
-        let tooLargeError = AmountError.tooLarge(maxMagnitudeIs: Zil.maxMagnitude.asDouble)
+        let tooLargeError = AmountError.tooLarge(maxMagnitudeIs: Zil.maxMagnitude)
 
         guard totalInQaAsMagnitude < totalSupplyInQaAsMagnitude else {
             throw tooLargeError

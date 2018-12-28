@@ -39,26 +39,7 @@ public extension Unit {
     }
 }
 
-public protocol ExpressibleByLiterals {
-    var asDouble: Double { get }
-    init(double: Double)
-    init(int: Int)
-}
-
-public extension ExpressibleByLiterals {
-    public init(int: Int) {
-        self.init(double: Double(int))
-    }
-}
-
-extension Double: ExpressibleByLiterals {
-    public var asDouble: Double { return self }
-    public init(double: Double) {
-        self = double
-    }
-}
-
-public protocol ExpressibleByAmount: Numeric, Codable, Comparable, CustomStringConvertible, CustomDebugStringConvertible, ExpressibleByFloatLiteral, ExpressibleByStringLiteral where Magnitude: ExpressibleByLiterals & ExpressibleByFloatLiteral {
+public protocol ExpressibleByAmount: Numeric, Codable, Comparable, CustomStringConvertible, CustomDebugStringConvertible, ExpressibleByFloatLiteral, ExpressibleByStringLiteral where Magnitude == Double {
 
     static var unit: Unit { get }
     static var minMagnitude: Magnitude { get }
@@ -111,7 +92,7 @@ public extension ExpressibleByAmount {
 
 public extension ExpressibleByAmount where Magnitude == Zil.Magnitude {
     static var maxMagnitude: Magnitude {
-        return Zil.express(Zil.Magnitude(double: 21_000_000_000), in: Self.unit)
+        return Zil.express(Zil.Magnitude(floatLiteral: 21_000_000_000), in: Self.unit)
     }
 }
 
@@ -129,8 +110,22 @@ public extension ExpressibleByAmount {
     }
 
     static func express(_ input: Magnitude, in unit: Unit) -> Magnitude {
-        let double: Double = input.asDouble / pow(10, Double(unit.exponent - Self.unit.exponent))
-        return Magnitude(double: double)
+        return Magnitude.init(floatLiteral: input / pow(10, Double(unit.exponent - Self.unit.exponent)))
+    }
+
+    init(_ unvalidatedMagnitude: String) throws {
+        guard let unvalidatedDouble = Double(unvalidatedMagnitude) else {
+            throw AmountError.nonNumericString
+        }
+        try self.init(Magnitude.init(floatLiteral: unvalidatedDouble))
+    }
+
+    init(floatLiteral double: Double) {
+        do {
+            try self = Self.init(Magnitude.init(floatLiteral: double))
+        } catch {
+            fatalError("The `Double` value (`\(double)`) passed was invalid, error: \(error)")
+        }
     }
 }
 
@@ -150,11 +145,11 @@ public extension ExpressibleByAmount {
 
     static func validate(magnitude: Magnitude) throws -> Magnitude {
         guard magnitude >= minMagnitude else {
-            throw AmountError.tooSmall(minMagnitudeIs: minMagnitude.asDouble)
+            throw AmountError.tooSmall(minMagnitudeIs: minMagnitude)
         }
 
         guard magnitude <= maxMagnitude else {
-            throw AmountError.tooLarge(maxMagnitudeIs: maxMagnitude.asDouble)
+            throw AmountError.tooLarge(maxMagnitudeIs: maxMagnitude)
         }
 
         return magnitude
@@ -166,22 +161,7 @@ public extension ExpressibleByAmount {
     }
 
     init(_ unvalidatedMagnitude: Int) throws {
-        try self.init(Magnitude(int: unvalidatedMagnitude))
-    }
-
-    init(_ unvalidatedMagnitude: String) throws {
-        guard let unvalidatedDouble = Double(unvalidatedMagnitude) else {
-            throw AmountError.nonNumericString
-        }
-        try self.init(Magnitude(double: unvalidatedDouble))
-    }
-
-    init(floatLiteral double: Double) {
-        do {
-            try self = Self.init(Magnitude(double: double))
-        } catch {
-            fatalError("The `Double` value (`\(double)`) passed was invalid, error: \(error)")
-        }
+        try self.init(Magnitude(unvalidatedMagnitude))
     }
 
     init(integerLiteral int: Int) {

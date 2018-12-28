@@ -8,12 +8,6 @@
 
 import Foundation
 
-public extension ExpressibleByAmount where Magnitude: ExpressibleByAmount {
-    public static var unit: Unit {
-        return Magnitude.unit
-    }
-}
-
 public struct GasPrice: ExpressibleByAmount {
     public typealias Magnitude = Qa.Magnitude
     public static let minMagnitude: Magnitude = 1_000_000_000
