@@ -56,7 +56,7 @@
 		484D1ADE21D69EB200589E38 /* ExpressibleByAmount+Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1ADC21D69EB200589E38 /* ExpressibleByAmount+Numeric.swift */; };
 		484D1AE021D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1ADF21D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift */; };
 		484D1AE121D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1ADF21D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift */; };
-		484D1AE221D69F9800589E38 /* ExpressibleByAmount+Codabble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codabble.swift */; };
+		484D1AE221D69F9800589E38 /* ExpressibleByAmount+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codable.swift */; };
 		484D1AE421D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1AE321D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift */; };
 		484D1AE521D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1AE321D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift */; };
 		484D1AE721D6A1B800589E38 /* ExpressibleByAmount+CustomDebugStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1AE621D6A1B800589E38 /* ExpressibleByAmount+CustomDebugStringConvertible.swift */; };
@@ -168,7 +168,7 @@
 		488A658F2157BC5F0091FD03 /* ExportKeystoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488A658D2157BC5F0091FD03 /* ExportKeystoreTests.swift */; };
 		48A6400A218645F300B08C67 /* TransactionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A64009218645F300B08C67 /* TransactionResponse.swift */; };
 		48A6400B218645F300B08C67 /* TransactionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A64009218645F300B08C67 /* TransactionResponse.swift */; };
-		48A96C0C21D4EEF5003F733E /* ExpressibleByAmount+Codabble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codabble.swift */; };
+		48A96C0C21D4EEF5003F733E /* ExpressibleByAmount+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codable.swift */; };
 		48A96C1121D51FF9003F733E /* GasLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A96C1021D51FF9003F733E /* GasLimit.swift */; };
 		48A96C1221D51FF9003F733E /* GasLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A96C1021D51FF9003F733E /* GasLimit.swift */; };
 		48B5B2F121482EC600147005 /* TransactionSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B5B2F021482EC600147005 /* TransactionSigningTests.swift */; };
@@ -340,7 +340,7 @@
 		488A658A2157A1670091FD03 /* DispatchQueue+Sugar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Sugar.swift"; sourceTree = "<group>"; };
 		488A658D2157BC5F0091FD03 /* ExportKeystoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportKeystoreTests.swift; sourceTree = "<group>"; };
 		48A64009218645F300B08C67 /* TransactionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionResponse.swift; sourceTree = "<group>"; };
-		48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codabble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+Codabble.swift"; sourceTree = "<group>"; };
+		48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+Codable.swift"; sourceTree = "<group>"; };
 		48A96C1021D51FF9003F733E /* GasLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasLimit.swift; sourceTree = "<group>"; };
 		48B5B2EE21482EC600147005 /* ZilliqaSDK iOS Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDK iOS Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		48B5B2EF21482EC600147005 /* ZilliqaSDK macOS Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZilliqaSDK macOS Tests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -465,7 +465,7 @@
 				484D1ACF21D69E2300589E38 /* Units */,
 				484D1ACC21D69E1300589E38 /* AmountError.swift */,
 				484D1AD921D69E9500589E38 /* ExpressibleByAmount+Compare+AandB.swift */,
-				48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codabble.swift */,
+				48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codable.swift */,
 				484D1AC521D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift */,
 				4819BDBB21C3F03900443F2A /* ExpressibleByAmount.swift */,
 				484D1AEF21D6A21C00589E38 /* ExpressibleByAmount+Initializers.swift */,
@@ -969,7 +969,7 @@
 				484D1AF421D6A33900589E38 /* Double+Zil_Li_Qa.swift in Sources */,
 				484E09EE215440B4003D928E /* APIClient.swift in Sources */,
 				4877B4C921BE2EFA00A94318 /* Transaction.swift in Sources */,
-				484D1AE221D69F9800589E38 /* ExpressibleByAmount+Codabble.swift in Sources */,
+				484D1AE221D69F9800589E38 /* ExpressibleByAmount+Codable.swift in Sources */,
 				484D1ADE21D69EB200589E38 /* ExpressibleByAmount+Numeric.swift in Sources */,
 				484D1AE821D6A1B800589E38 /* ExpressibleByAmount+CustomDebugStringConvertible.swift in Sources */,
 				488A658C2157A1670091FD03 /* DispatchQueue+Sugar.swift in Sources */,
@@ -1063,7 +1063,7 @@
 				484E09EA21543F3B003D928E /* MessageFromUnsignedTransaction.swift in Sources */,
 				484D1AD421D69E4600589E38 /* Li.swift in Sources */,
 				4877B4D821BE2EFA00A94318 /* Nonce.swift in Sources */,
-				48A96C0C21D4EEF5003F733E /* ExpressibleByAmount+Codabble.swift in Sources */,
+				48A96C0C21D4EEF5003F733E /* ExpressibleByAmount+Codable.swift in Sources */,
 				4819BDB921C3EFEF00443F2A /* GasPrice.swift in Sources */,
 				484D1AF021D6A21C00589E38 /* ExpressibleByAmount+Initializers.swift in Sources */,
 				4877B4D421BE2EFA00A94318 /* Keystore+Wallet+Import.swift in Sources */,
