@@ -137,4 +137,90 @@ class UnitConversionTests: XCTestCase {
         }
         XCTAssertTrue(didThrowError)
     }
+
+    func testBoundString() {
+        let qaString = "18446744073637511711"
+        XCTAssertEqual(
+            try ZilAmount(zil: Zil(qa: try Qa(magnitude: qaString))),
+            try ZilAmount(zil: try Zil(qa: qaString))
+        )
+        XCTAssertEqual(
+            try ZilAmount(zil: try Zil(qa: qaString)),
+            try ZilAmount(qa: qaString)
+        )
+        do {
+            let amount = try ZilAmount(qa: qaString)
+            XCTAssertEqual(amount.inQa.magnitude, 18446744073637511711)
+        } catch {
+            XCTFail()
+        }
+    }
+
+    func testUnboundString() {
+        let qaString = "18446744073637511711"
+        do {
+            let zil = try Zil(qa: qaString)
+            XCTAssertEqual(zil.inQa.magnitude, 18446744073637511711)
+        } catch {
+            XCTFail()
+        }
+    }
+
+    func testZilExceedingZilAmountMaxSinceZilIsUnbound() {
+        XCTAssertEqual((ZilAmount.max.inZil + 1).magnitude, 21_000_000_001)
+    }
+
+    func testNegativeAmountForZilSinceItIsUnbound() {
+        let two: Zil = 2
+        XCTAssertEqual(two.inLi.magnitude, 2_000_000)
+        XCTAssertEqual(two.inLi, 2_000_000)
+        let negOne: Zil = two - 3
+        XCTAssertEqual(negOne, -1)
+        // test literal
+        XCTAssertEqual(two - 3, -1)
+    }
+
+    func testZilStringInits() {
+        XCTAssertEqual(try Zil(zil: "1"), 1)
+        XCTAssertLessThan(try Zil(zil: "1"), 2)
+        XCTAssertGreaterThan(try Zil(zil: "3"), 2)
+
+        XCTAssertEqual(try Zil(li: "100000"), 0.1)
+        XCTAssertLessThan(try Zil(li: "100000"), 0.11)
+        XCTAssertGreaterThan(try Zil(li: "120000"), 0.11)
+
+        XCTAssertEqual(try Zil(qa: "1000000000"), 0.001)
+        XCTAssertLessThan(try Zil(qa: "1000000000"), 0.0011)
+        XCTAssertGreaterThan(try Zil(qa: "2000000000"), 0.0019)
+    }
+
+    func testLiStringInits() {
+        XCTAssertEqual(try Li(zil: "0.01"), 10000)
+        XCTAssertLessThan(try Li(zil: "0.01"), 100000)
+        XCTAssertGreaterThan(try Li(zil: "0.11"), 100000)
+
+        XCTAssertEqual(try Li(li: "5"), 5)
+        XCTAssertLessThan(try Li(li: "5"), 6)
+        XCTAssertGreaterThan(try Li(li: "5"), 4)
+
+        XCTAssertEqual(try Li(qa: "1000"), 0.001)
+        XCTAssertLessThan(try Li(qa: "1000"), 0.0011)
+        XCTAssertGreaterThan(try Li(qa: "1000"), 0.0009)
+    }
+
+    func testQaStringInits() {
+        XCTAssertEqual(try Qa(zil: "1"), 1_000_000_000_000)
+        XCTAssertLessThan(try Qa(zil: "1"), 1_000_000_000_001)
+        XCTAssertGreaterThan(try Qa(zil: "1.000000000001"), 1_000_000_000_000)
+
+        XCTAssertEqual(try Qa(li: "1"), 1_000_000)
+        XCTAssertLessThan(try Qa(li: "1"), 1_000_001)
+        XCTAssertGreaterThan(try Qa(li: "2"), 1_999_999)
+
+        XCTAssertEqual(try Qa(qa: "1"), 1)
+        XCTAssertLessThan(try Qa(qa: "1"), 2)
+        XCTAssertGreaterThan(try Qa(qa: "100"), 99)
+        XCTAssertLessThan(try Qa(qa: "100"), 101)
+
+    }
 }

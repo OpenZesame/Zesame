@@ -17,20 +17,10 @@ public extension ExpressibleByAmount {
 }
 
 // MARK: - Decodable
-public extension ExpressibleByAmount where Self: Bound {
+public extension ExpressibleByAmount {
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        let string = try container.decode(String.self)
-        let zil = try Zil(qa: string)
-        try self.init(zil: zil)
-    }
-}
-
-public extension ExpressibleByAmount where Self: Unbound {
-    init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let string = try container.decode(String.self)
-        let zil = try Zil(qa: string)
-        self.init(zil: zil)
+        let qaString = try container.decode(String.self)
+        try self.init(qa: qaString)
     }
 }

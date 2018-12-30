@@ -92,13 +92,13 @@ public extension ExpressibleByAmount where Self: Bound {
     }
 
     init(zil zilString: String) throws {
-        try self.init(zil: try Zil(zil: zilString))
+        try self.init(zil: try Zil(magnitude: zilString))
     }
     init(li liString: String) throws {
-        try self.init(li: try Li(li: liString))
+        try self.init(li: try Li(magnitude: liString))
     }
     init(qa qaString: String) throws {
-        try self.init(qa: try Qa(qa: qaString))
+        try self.init(qa: try Qa(magnitude: qaString))
     }
 
     init<UE>(_ unbound: UE) throws where UE: Unbound & ExpressibleByAmount {
@@ -168,12 +168,14 @@ public extension ExpressibleByAmount where Self: Unbound {
     }
 
     init(zil zilString: String) throws {
-        self.init(zil: try Zil(zil: zilString))
+        self.init(zil: try Zil(magnitude: zilString))
     }
+
     init(li liString: String) throws {
-        self.init(li: try Li(li: liString))
+        self.init(li: try Li(magnitude: liString))
     }
+
     init(qa qaString: String) throws {
-        self.init(qa: try Qa(qa: qaString))
+        self.init(qa: try Qa(magnitude: qaString))
     }
 }
