@@ -19,26 +19,14 @@ public extension ExpressibleByAmount {
     }
 
     var inZil: Zil {
-        return Zil(magnitude: valueMeasured(in: .zil))
-    }
-
-    init(zil: Zil) throws {
-        try self.init(zil.valueMeasured(in: Self.unit))
+        return Zil(valueMeasured(in: .zil))
     }
 
     var inLi: Li {
-        return Li(magnitude: valueMeasured(in: .li))
-    }
-
-    init(li: Li) throws {
-        try self.init(li.valueMeasured(in: Self.unit))
+        return Li(valueMeasured(in: .li))
     }
 
     var inQa: Qa {
-        return Qa(magnitude: valueMeasured(in: .qa))
-    }
-
-    init(qa: Qa) throws {
-        try self.init(qa.valueMeasured(in: Self.unit))
+        return Qa(valueMeasured(in: .qa))
     }
 }
