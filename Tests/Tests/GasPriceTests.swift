@@ -31,6 +31,14 @@ class GasPriceTests: XCTestCase {
 
     func testMaxGasPriceIs10Zil() {
         XCTAssertEqual(GasPrice.max.magnitude, Zil(10).inQa.magnitude)
+        XCTAssertEqual(GasPrice.max.inZil, 10)
+        XCTAssertEqual(GasPrice.max.magnitude, 10_000_000_000_000)
+    }
+
+    func testMinGasPriceIs1000Li() {
+        XCTAssertEqual(GasPrice.min.magnitude, Li(1000).inQa.magnitude)
+        XCTAssertEqual(GasPrice.min.inLi, 1000)
+        XCTAssertEqual(GasPrice.min.magnitude, 1_000_000_000)
     }
 
     func testMaxGasPrice() {

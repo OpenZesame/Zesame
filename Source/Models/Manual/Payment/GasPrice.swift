@@ -17,7 +17,7 @@ public struct GasPrice: ExpressibleByAmount, AdjustableUpperbound, AdjustableLow
 
     /// By default GasPrice has a lowerobund of 1000 Li, i.e 1 000 000 000 Qa, this can be changed.
     public static let minMagnitudeDefault: Magnitude = Li(1000).inQa.magnitude
-    public static var minMagnitude = maxMagnitudeDefault {
+    public static var minMagnitude = minMagnitudeDefault {
         willSet {
             guard newValue <= maxMagnitude else {
                 fatalError("Cannot set minMagnitude to greater than maxMagnitude")
