@@ -19,14 +19,14 @@ public extension ExpressibleByAmount {
     }
 
     var inZil: Zil {
-        return Zil(valid: valueMeasured(in: .zil))
+        return Zil(valueMeasured(in: .zil))
     }
 
     var inLi: Li {
-        return Li(valid: valueMeasured(in: .li))
+        return Li(valueMeasured(in: .li))
     }
 
     var inQa: Qa {
-        return Qa(valid: valueMeasured(in: .qa))
+        return Qa(valueMeasured(in: .qa))
     }
 }

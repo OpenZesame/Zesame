@@ -11,19 +11,19 @@ import Foundation
 // MARK: - Magnitude
 public extension Zil.Magnitude {
     var zil: Zil {
-        return Zil(valid: self)
+        return Zil(self)
     }
 }
 
 public extension Li.Magnitude {
     var li: Li {
-        return Li(valid: self)
+        return Li(self)
     }
 }
 
 public extension Qa.Magnitude {
     var qa: Qa {
-        return Qa(valid: self)
+        return Qa(self)
     }
 }
 

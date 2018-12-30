@@ -10,7 +10,7 @@ import Foundation
 
 private extension ExpressibleByAmount where Self: Bound {
     static func oper(_ lhs: Self, _ rhs: Self, calc: (Magnitude, Magnitude) -> Magnitude) throws -> Self {
-        return try Self.init(magnitude: calc(lhs.magnitude, rhs.magnitude))
+        return try Self.init(calc(lhs.magnitude, rhs.magnitude))
     }
 }
 
@@ -31,7 +31,6 @@ public extension NoUpperbound where Self: ExpressibleByAmount {
         return Self.init(valid: lhs.magnitude + rhs.magnitude)
     }
 }
-
 
 public extension Upperbound where Self: ExpressibleByAmount {
     static func + (lhs: Self, rhs: Self) throws -> Self {

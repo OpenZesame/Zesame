@@ -11,9 +11,16 @@ import Foundation
 public protocol Bound {
     associatedtype Magnitude: Comparable & Numeric
 
-    init(magnitude: Magnitude) throws
-    init(magnitude: Int) throws
+    init(_ magnitude: Magnitude) throws
+    init(_ magnitude: Int) throws
     init(zil: Zil) throws
     init(li: Li) throws
     init(qa: Qa) throws
+}
+
+public extension Bound where Self: AdjustableLowerbound, Self: AdjustableUpperbound {
+    static func restoreDefaultBounds() {
+        restoreDefaultMax()
+        restoreDefaultMin()
+    }
 }

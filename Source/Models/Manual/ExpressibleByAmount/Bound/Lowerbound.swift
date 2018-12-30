@@ -17,7 +17,7 @@ public protocol Lowerbound: Bound {
 extension Lowerbound where Self: ExpressibleByAmount {
     public static var min: Self {
         do {
-            return try Self(magnitude: minMagnitude)
+            return try Self(minMagnitude)
         } catch {
             fatalError("We should always be able to create lower bound")
         }

@@ -9,14 +9,39 @@
 import Foundation
 
 
-public extension ExpressibleByAmount {
+public extension ExpressibleByAmount where Self: Upperbound, Self: Lowerbound {
 
     static func validate(magnitude: Magnitude) throws -> Magnitude {
         try AnyLowerbound(self).throwErrorIfNotWithinBounds(magnitude)
         try AnyUpperbound(self).throwErrorIfNotWithinBounds(magnitude)
         return magnitude
     }
+}
 
+public extension ExpressibleByAmount where Self: Upperbound & NoLowerbound {
+
+    static func validate(magnitude: Magnitude) throws -> Magnitude {
+        try AnyUpperbound(self).throwErrorIfNotWithinBounds(magnitude)
+        return magnitude
+    }
+}
+
+public extension ExpressibleByAmount where Self: Lowerbound, Self: NoUpperbound {
+
+    static func validate(magnitude: Magnitude) throws -> Magnitude {
+        try AnyLowerbound(self).throwErrorIfNotWithinBounds(magnitude)
+        return magnitude
+    }
+}
+
+public extension ExpressibleByAmount where Self: Unbound {
+
+    static func validate(magnitude: Magnitude) throws -> Magnitude {
+        return magnitude
+    }
+}
+
+public extension ExpressibleByAmount {
     static func validate(magnitude string: String) throws -> Magnitude {
         guard let magnitude = Magnitude(string) else {
             throw AmountError<Self>.nonNumericString
@@ -29,22 +54,18 @@ public extension ExpressibleByAmount {
 public extension ExpressibleByAmount where Self: Bound {
 
 
-    init(magnitude: Magnitude) throws {
+    init(_ magnitude: Magnitude) throws {
         let validated = try Self.validate(magnitude: magnitude)
         self.init(valid: validated)
     }
 
-    init(magnitude int: Int) throws {
-        do {
-            try self = Self.init(magnitude: Magnitude(int))
-        } catch {
-            fatalError("The `Int` value (`\(int)`) passed was invalid, error: \(error)")
-        }
+    init(_ magnitude: Int) throws {
+        try self.init(Magnitude(magnitude))
     }
 
     init(floatLiteral double: Double) {
         do {
-            try self = Self.init(magnitude: double)
+            try self = Self.init(double)
         } catch {
             fatalError("The `Double` value (`\(double)`) passed was invalid, error: \(error)")
         }
@@ -52,14 +73,14 @@ public extension ExpressibleByAmount where Self: Bound {
 
     init(integerLiteral int: Int) {
         do {
-            try self = Self.init(magnitude: Magnitude(int))
+            try self = Self.init(Magnitude(int))
         } catch {
             fatalError("The `Int` value (`\(int)`) passed was invalid, error: \(error)")
         }
     }
 
     init(magnitude string: String) throws {
-        try self.init(magnitude: try Self.validate(magnitude: string))
+        try self.init(try Self.validate(magnitude: string))
     }
 
     init(stringLiteral string: String) {
@@ -81,7 +102,8 @@ public extension ExpressibleByAmount where Self: Bound {
     }
 
     init<UE>(_ unbound: UE) throws where UE: Unbound & ExpressibleByAmount {
-        try self.init(magnitude: unbound.valueMeasured(in: Self.unit))
+        try self.init(unbound.valueMeasured(in: Self.unit))
+        print("self.magnitude is: \(self.magnitude), unit: \(self.unit)")
     }
 
     init(zil: Zil) throws {
@@ -102,16 +124,12 @@ public extension ExpressibleByAmount where Self: Bound {
 
 public extension ExpressibleByAmount where Self: Unbound {
 
-    init(magnitude: Magnitude) {
-        self.init(valid: magnitude)
-    }
-
     init(magnitude int: Int) {
-        self.init(magnitude: Magnitude(int))
+        self.init(valid: Magnitude(int))
     }
 
     init(floatLiteral double: Double) {
-        self.init(magnitude: double)
+        self.init(valid: double)
     }
 
     init(integerLiteral int: Int) {
@@ -119,7 +137,7 @@ public extension ExpressibleByAmount where Self: Unbound {
     }
 
     init(magnitude string: String) throws {
-        self.init(magnitude: try Self.validate(magnitude: string))
+        self.init(valid: try Self.validate(magnitude: string))
     }
 
     init(stringLiteral string: String) {
@@ -131,7 +149,7 @@ public extension ExpressibleByAmount where Self: Unbound {
     }
 
     init<UE>(_ unbound: UE) where UE: Unbound & ExpressibleByAmount {
-        self.init(magnitude: unbound.valueMeasured(in: Self.unit))
+        self.init(valid: unbound.valueMeasured(in: Self.unit))
     }
 
     init(zil: Zil) {

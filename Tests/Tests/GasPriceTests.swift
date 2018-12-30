@@ -13,9 +13,24 @@ import XCTest
 
 class GasPriceTests: XCTestCase {
 
-    override func setUp() {
-        GasPrice.restoreDefaultMax()
+
+    private func restoreBounds() {
+        GasPrice.restoreDefaultBounds()
         XCTAssertEqual(GasPrice.maxMagnitude, GasPrice.maxMagnitudeDefault)
+        XCTAssertEqual(GasPrice.minMagnitude, GasPrice.minMagnitudeDefault)
+    }
+
+    override func setUp() {
+        restoreBounds()
+    }
+
+
+    override func tearDown() {
+        restoreBounds()
+    }
+
+    func testMaxGasPriceIs10Zil() {
+        XCTAssertEqual(GasPrice.max.magnitude, Zil(10).inQa.magnitude)
     }
 
     func testMaxGasPrice() {
@@ -30,7 +45,7 @@ class GasPriceTests: XCTestCase {
     func testExceedingMaxGasPriceThrowsError() {
         var didThrowError = false
         do {
-             let _ = try GasPrice(zil: 11)
+             let _ = try GasPrice.init(zil: 11)
         } catch let error as AmountError<GasPrice>  {
             didThrowError = true
             switch error {
@@ -45,7 +60,7 @@ class GasPriceTests: XCTestCase {
     }
 
     func testDefaultMaxMagnitudeIs10Zil() {
-        try! XCTAssertTrue(GasPrice.max == Zil(10))
+        XCTAssertTrue(GasPrice.max == Zil(10))
     }
 
     func testDecreasingMaxPrice() {

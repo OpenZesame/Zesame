@@ -10,7 +10,7 @@ import Foundation
 
 public protocol Unbound: NoLowerbound & NoUpperbound {
     associatedtype Magnitude: Comparable & Numeric
-    init(magnitude: Magnitude)
+    init(_ magnitude: Magnitude)
     init(magnitude: Int)
     init(zil: Zil)
     init(li: Li)
@@ -20,7 +20,7 @@ public protocol Unbound: NoLowerbound & NoUpperbound {
 extension Upperbound where Self: ExpressibleByAmount {
     public static var max: Self {
         do {
-            return try Self(magnitude: maxMagnitude)
+            return try Self(maxMagnitude)
         } catch {
             fatalError("We should always be able to create upper bound")
         }

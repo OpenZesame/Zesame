@@ -14,60 +14,60 @@ import XCTest
 class UnitConversionTests: XCTestCase {
 
     func testZilToLi() {
-        XCTAssertEqual(try! Zil(1).inLi, try! Li(1000000))
+        XCTAssertEqual(Zil(1).inLi, Li(1000000))
     }
 
     func testZilToQa() {
-        XCTAssertEqual(try! Zil(1).inQa, try! Qa(1000000000000))
+        XCTAssertEqual(Zil(1).inQa, Qa(1000000000000))
     }
 
     func testLiToQa() {
-        XCTAssertEqual(try! Li(1).inQa, try! Qa(1000000))
+        XCTAssertEqual(Li(1).inQa, Qa(1000000))
     }
 
     func testLiFromQa() {
-        XCTAssertEqual(try! Li(qa: 1000000), 1)
+        XCTAssertEqual(Li(qa: 1000000), 1)
     }
 
     func testLiToZil() {
-        XCTAssertEqual(try! Li(1).inZil, try! Zil(0.000001))
+        XCTAssertEqual(Li(1).inZil, Zil(0.000001))
     }
 
     func testZilFromLi() {
-        XCTAssertEqual(try! Zil(li: 1000000), 1)
+        XCTAssertEqual(Zil(li: 1000000), 1)
     }
 
     func testZilFromQa() {
-        XCTAssertEqual(try! Zil(qa: 1000000000), 0.001)
+        XCTAssertEqual(Zil(qa: 1000000000), 0.001)
     }
 
     func testStringToZil() {
-        XCTAssertEqual("1", try! Zil(1))
+        XCTAssertEqual("1", Zil(1))
     }
 
     func testStringToLi() {
-        XCTAssertEqual("1", try! Li(1))
+        XCTAssertEqual("1", Li(1))
     }
 
     func testStringToQa() {
-        XCTAssertEqual("1", try! Qa(1))
+        XCTAssertEqual("1", Qa(1))
     }
     func testCompareZilAndLi() {
-        XCTAssertTrue(try! Zil(1) > Li(2))
-        XCTAssertTrue(try! Zil(1) > Li(999999))
-        XCTAssertTrue(try! Zil(1) < Li(9999990))
+        XCTAssertTrue(Zil(1) > Li(2))
+        XCTAssertTrue(Zil(1) > Li(999999))
+        XCTAssertTrue(Zil(1) < Li(9999990))
     }
 
     func testCompareZilAndQa() {
-        XCTAssertTrue(try! Zil(1) > Qa(2))
-        XCTAssertTrue(try! Zil(1) > Qa(999999999999))
-        XCTAssertTrue(try! Zil(1) < Qa(9999999999990))
+        XCTAssertTrue(Zil(1) > Qa(2))
+        XCTAssertTrue(Zil(1) > Qa(999999999999))
+        XCTAssertTrue(Zil(1) < Qa(9999999999990))
     }
 
     func testCompareLiAndQa() {
-        XCTAssertTrue(try! Li(1) > Qa(2))
-        XCTAssertTrue(try! Li(1) > Qa(999999))
-        XCTAssertTrue(try! Li(1) < Qa(9999990))
+        XCTAssertTrue(Li(1) > Qa(2))
+        XCTAssertTrue(Li(1) > Qa(999999))
+        XCTAssertTrue(Li(1) < Qa(9999990))
     }
 
     func testAdditionOfDifferentUnits() {
@@ -79,7 +79,7 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testAdditionOfUpperboundOverflow() {
-        let foo: ZilAmount = ZilAmount.max - 1
+        let foo: ZilAmount = try! ZilAmount.max - 1
         let bar: ZilAmount = 2
         var didThrowError = false
 

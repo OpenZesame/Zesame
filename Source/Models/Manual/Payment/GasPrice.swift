@@ -8,12 +8,25 @@
 
 import Foundation
 
-public struct GasPrice: ExpressibleByAmount, AdjustableUpperbound, Lowerbound {
+public struct GasPrice: ExpressibleByAmount, AdjustableUpperbound, AdjustableLowerbound {
+
     public typealias Magnitude = Qa.Magnitude
-    public static let minMagnitude: Magnitude = 1_000_000_000
+    public static let unit: Unit = .qa
+
+    public let magnitude: Magnitude
+
+    /// By default GasPrice has a lowerobund of 1000 Li, i.e 1 000 000 000 Qa, this can be changed.
+    public static let minMagnitudeDefault: Magnitude = Li(1000).inQa.magnitude
+    public static var minMagnitude = maxMagnitudeDefault {
+        willSet {
+            guard newValue <= maxMagnitude else {
+                fatalError("Cannot set minMagnitude to greater than maxMagnitude")
+            }
+        }
+    }
 
     /// By default GasPrice has an upperbound of 10 Zil, this can be changed.
-    public static let maxMagnitudeDefault: Magnitude = Zil(valid: 10).inQa.magnitude
+    public static let maxMagnitudeDefault: Magnitude = Zil(10).inQa.magnitude
     public static var maxMagnitude = maxMagnitudeDefault {
         willSet {
             guard newValue >= minMagnitude else {
@@ -21,8 +34,6 @@ public struct GasPrice: ExpressibleByAmount, AdjustableUpperbound, Lowerbound {
             }
         }
     }
-    public static let unit: Unit = .qa
-    public let magnitude: Magnitude
 
     public init(valid magnitude: Magnitude) {
         do {

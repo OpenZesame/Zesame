@@ -32,7 +32,7 @@ public struct Payment {
 
 public extension Payment {
     static func estimatedTotalTransactionFee(gasPrice: GasPrice, gasLimit: GasLimit = .defaultGasLimit) -> Qa {
-        return Qa(magnitude: Qa.Magnitude(gasLimit) * gasPrice.amount.magnitude)
+        return Qa(GasPrice.Magnitude(gasLimit) * gasPrice.magnitude)
     }
 
     static func estimatedTotalCostOfTransaction(amount: ZilAmount, gasPrice: GasPrice, gasLimit: GasLimit = .defaultGasLimit) throws -> ZilAmount {

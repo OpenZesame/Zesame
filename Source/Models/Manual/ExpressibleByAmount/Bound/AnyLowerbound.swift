@@ -23,7 +23,7 @@ public struct AnyLowerbound {
         }
     }
 
-    init<E>(_ type: E.Type) where E: ExpressibleByAmount {
+    init<E>(_ type: E.Type) where E: ExpressibleByAmount & NoLowerbound {
         self._withinBounds = { ignoredValue in
             // no lower bound, do not throw, just return
             return

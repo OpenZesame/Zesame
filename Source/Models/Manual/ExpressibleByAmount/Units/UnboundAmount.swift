@@ -19,4 +19,9 @@ public struct UnboundAmount<UnitSpecifyingType: UnitSpecifying>: ExpressibleByAm
     public init(valid magnitude: Magnitude) {
         self.magnitude = magnitude
     }
+    
+    public init(_ magnitude: Magnitude) {
+        self.init(valid: magnitude)
+    }
+
 }
