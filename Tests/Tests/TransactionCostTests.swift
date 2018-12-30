@@ -18,9 +18,6 @@ class TransactionCostTests: XCTestCase {
         let amount: ZilAmount = 21_000_000_000
         XCTAssertEqual(amount.magnitude, 21_000_000_000)
         XCTAssertEqual(amount.magnitude, amount.inZil.magnitude)
-        XCTAssertEqual(Zil.max.magnitude, Zil.maxMagnitude)
-        XCTAssertEqual(Zil.max.magnitude, amount.inZil.magnitude)
-        XCTAssertEqual(Zil.max, amount.inZil)
     }
 
     func testGasPrice() {
@@ -32,11 +29,11 @@ class TransactionCostTests: XCTestCase {
         var didThrowError = false
         do {
             let _ = try Payment.estimatedTotalCostOfTransaction(amount: 20_999_999_999, gasPrice: 1_000_000_000_001)
-        } catch let error as AmountError  {
+        } catch let error as AmountError<ZilAmount>  {
             didThrowError = true
             switch error {
             case .tooLarge(let max):
-                XCTAssertEqual(max, Zil.maxMagnitude)
+                XCTAssertEqual(max, ZilAmount.max)
             default: XCTFail()
             }
         } catch {
@@ -49,11 +46,11 @@ class TransactionCostTests: XCTestCase {
         var didThrowError = false
         do {
             let _ = try Payment.estimatedTotalCostOfTransaction(amount: "20999999999", gasPrice: "1000000000001")
-        } catch let error as AmountError  {
+        } catch let error as AmountError<ZilAmount>  {
             didThrowError = true
             switch error {
             case .tooLarge(let max):
-                XCTAssertEqual(max, Zil.maxMagnitude)
+                XCTAssertEqual(max, ZilAmount.max)
             default: XCTFail()
             }
         } catch {

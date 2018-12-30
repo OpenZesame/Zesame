@@ -78,6 +78,27 @@ class UnitConversionTests: XCTestCase {
         XCTAssertEqual(amount.inQa, 3_100_009_000_123)
     }
 
+    func testAdditionOfUpperboundOverflow() {
+        let foo: ZilAmount = ZilAmount.max - 1
+        let bar: ZilAmount = 2
+        var didThrowError = false
+
+        do {
+            let sum = try foo + bar
+            XCTFail("Fail, should have thrown error, sum was: \(sum)")
+        } catch let error as AmountError<ZilAmount>  {
+            didThrowError = true
+            switch error {
+            case .tooLarge(let max):
+                XCTAssertEqual(max, 21_000_000_000)
+            default: XCTFail()
+            }
+        } catch {
+            return XCTFail()
+        }
+        XCTAssertTrue(didThrowError)
+    }
+
     func testZilAmountLiteral() {
         let amount: ZilAmount = 15
         XCTAssertEqual(amount, 15)
@@ -85,7 +106,7 @@ class UnitConversionTests: XCTestCase {
 
     func testGasPriceMinimum() {
         XCTAssertEqual(GasPrice.min.inLi, 1000)
-        XCTAssertEqual(GasPrice.minInLi, Int(GasPrice.min.inLi.magnitude))
+        XCTAssertEqual(GasPrice.minInLiAsInt, Int(GasPrice.min.inLi.magnitude))
     }
 
     func testZilAmountAndZil() {
@@ -104,11 +125,11 @@ class UnitConversionTests: XCTestCase {
         var didThrowError = false
         do {
             let _ = try GasPrice(999_000_000)
-        } catch let error as AmountError  {
+        } catch let error as AmountError<GasPrice>  {
             didThrowError = true
             switch error {
             case .tooSmall(let min):
-                XCTAssertEqual(min, GasPrice.min.magnitude)
+                XCTAssertEqual(min, GasPrice.min)
             default: XCTFail()
             }
         } catch {

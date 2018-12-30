@@ -8,69 +8,154 @@
 
 import Foundation
 
+
 public extension ExpressibleByAmount {
 
     static func validate(magnitude: Magnitude) throws -> Magnitude {
-        guard magnitude >= minMagnitude else {
-            throw AmountError.tooSmall(minMagnitudeIs: minMagnitude)
-        }
-
-        guard magnitude <= maxMagnitude else {
-            throw AmountError.tooLarge(maxMagnitudeIs: maxMagnitude)
-        }
-
+        try AnyLowerbound(self).throwErrorIfNotWithinBounds(magnitude)
+        try AnyUpperbound(self).throwErrorIfNotWithinBounds(magnitude)
         return magnitude
     }
 
-    init(_ unvalidatedMagnitude: String) throws {
-        guard let unvalidatedDouble = Double(unvalidatedMagnitude) else {
-            throw AmountError.nonNumericString
+    static func validate(magnitude string: String) throws -> Magnitude {
+        guard let magnitude = Magnitude(string) else {
+            throw AmountError<Self>.nonNumericString
         }
-        try self.init(Magnitude.init(floatLiteral: unvalidatedDouble))
+        return try validate(magnitude: magnitude)
     }
 
-    init(floatLiteral double: Double) {
+}
+
+public extension ExpressibleByAmount where Self: Bound {
+
+
+    init(magnitude: Magnitude) throws {
+        let validated = try Self.validate(magnitude: magnitude)
+        self.init(valid: validated)
+    }
+
+    init(magnitude int: Int) throws {
         do {
-            try self = Self.init(Magnitude.init(floatLiteral: double))
-        } catch {
-            fatalError("The `Double` value (`\(double)`) passed was invalid, error: \(error)")
-        }
-    }
-
-    init(_ unvalidatedMagnitude: Magnitude) throws {
-        let validated = try Self.validate(magnitude: unvalidatedMagnitude)
-        self.init(magnitude: validated)
-    }
-
-    init(_ unvalidatedMagnitude: Int) throws {
-        try self.init(Magnitude(unvalidatedMagnitude))
-    }
-
-    init(integerLiteral int: Int) {
-        do {
-            try self = Self(int)
+            try self = Self.init(magnitude: Magnitude(int))
         } catch {
             fatalError("The `Int` value (`\(int)`) passed was invalid, error: \(error)")
         }
     }
 
+    init(floatLiteral double: Double) {
+        do {
+            try self = Self.init(magnitude: double)
+        } catch {
+            fatalError("The `Double` value (`\(double)`) passed was invalid, error: \(error)")
+        }
+    }
+
+    init(integerLiteral int: Int) {
+        do {
+            try self = Self.init(magnitude: Magnitude(int))
+        } catch {
+            fatalError("The `Int` value (`\(int)`) passed was invalid, error: \(error)")
+        }
+    }
+
+    init(magnitude string: String) throws {
+        try self.init(magnitude: try Self.validate(magnitude: string))
+    }
+
     init(stringLiteral string: String) {
         do {
-            try self = Self(string)
+            try self = Self(magnitude: string)
         } catch {
             fatalError("The `String` value (`\(string)`) passed was invalid, error: \(error)")
         }
     }
 
     init(zil zilString: String) throws {
-        try self.init(zil: try Zil(zilString))
+        try self.init(zil: try Zil(zil: zilString))
     }
-
     init(li liString: String) throws {
-        try self.init(li: try Li(liString))
+        try self.init(li: try Li(li: liString))
+    }
+    init(qa qaString: String) throws {
+        try self.init(qa: try Qa(qa: qaString))
     }
 
+    init<UE>(_ unbound: UE) throws where UE: Unbound & ExpressibleByAmount {
+        try self.init(magnitude: unbound.valueMeasured(in: Self.unit))
+    }
+
+    init(zil: Zil) throws {
+        // using init:unbound
+        try self.init(zil)
+    }
+
+    init(li: Li) throws {
+        // using init:unbound
+        try self.init(li)
+    }
+
+    init(qa: Qa) throws {
+        // using init:unbound
+        try self.init(qa)
+    }
+}
+
+public extension ExpressibleByAmount where Self: Unbound {
+
+    init(magnitude: Magnitude) {
+        self.init(valid: magnitude)
+    }
+
+    init(magnitude int: Int) {
+        self.init(magnitude: Magnitude(int))
+    }
+
+    init(floatLiteral double: Double) {
+        self.init(magnitude: double)
+    }
+
+    init(integerLiteral int: Int) {
+        self.init(magnitude: int)
+    }
+
+    init(magnitude string: String) throws {
+        self.init(magnitude: try Self.validate(magnitude: string))
+    }
+
+    init(stringLiteral string: String) {
+        do {
+            try self = Self(magnitude: string)
+        } catch {
+            fatalError("The `String` value (`\(string)`) passed was invalid, error: \(error)")
+        }
+    }
+
+    init<UE>(_ unbound: UE) where UE: Unbound & ExpressibleByAmount {
+        self.init(magnitude: unbound.valueMeasured(in: Self.unit))
+    }
+
+    init(zil: Zil) {
+        // using init:unbound
+        self.init(zil)
+    }
+
+    init(li: Li) {
+        // using init:unbound
+        self.init(li)
+    }
+
+    init(qa: Qa) {
+        // using init:unbound
+        self.init(qa)
+    }
+
+    init(zil zilString: String) throws {
+        self.init(zil: try Zil(zil: zilString))
+    }
+    init(li liString: String) throws {
+        self.init(li: try Li(li: liString))
+    }
     init(qa qaString: String) throws {
-        try self.init(qa: try Qa(qaString))
+        self.init(qa: try Qa(qa: qaString))
     }
 }
