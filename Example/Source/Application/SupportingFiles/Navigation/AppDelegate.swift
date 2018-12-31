@@ -12,7 +12,7 @@ import Zesame
 @UIApplicationMain
 class AppDelegate: UIResponder {
     var window: UIWindow?
-
+    fileprivate let zilliqaService = DefaultZilliqaService(environment: ZilliqaEnvironment.testnet(.staging))
     private lazy var appCoordinator: AppCoordinator = {
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
@@ -25,5 +25,19 @@ extension AppDelegate: UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         appCoordinator.start()
         return true
+    }
+}
+
+extension AppDelegate {
+
+    static var shared: AppDelegate {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("incorrect impl")
+        }
+        return appDelegate
+    }
+
+    static var zilliqaSerivce: DefaultZilliqaService {
+        return shared.zilliqaService
     }
 }
