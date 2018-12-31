@@ -38,7 +38,7 @@ extension CreateNewWalletCoordinator: CreateNewWalletNavigator {
     }
 
     func toCreateWallet() {
-        let viewModel = CreateNewWalletViewModel(navigator: self, service: DefaultZilliqaService.shared.rx)
+        let viewModel = CreateNewWalletViewModel(navigator: self, service: AppDelegate.zilliqaSerivce.rx)
         let vc = CreateNewWallet(viewModel: viewModel)
         navigationController?.pushViewController(vc, animated: true)
     }

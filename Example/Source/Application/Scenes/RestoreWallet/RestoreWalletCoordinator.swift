@@ -33,7 +33,7 @@ extension RestoreWalletCoordinator: RestoreWalletNavigator {
     }
 
     func toRestoreWallet() {
-        let viewModel = RestoreWalletViewModel(navigator: self, service: DefaultZilliqaService.shared.rx)
+        let viewModel = RestoreWalletViewModel(navigator: self, service: AppDelegate.zilliqaSerivce.rx)
         let vc = RestoreWallet(viewModel: viewModel)
         navigationController?.pushViewController(vc, animated: true)
     }

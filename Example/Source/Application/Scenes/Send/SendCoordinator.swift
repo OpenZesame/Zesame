@@ -38,7 +38,7 @@ extension SendCoordinator: SendNavigator {
     func toSend() {
         navigationController?.pushViewController(
             Send(
-                viewModel: SendViewModel(navigator: self, wallet: wallet, service: DefaultZilliqaService.shared.rx)
+                viewModel: SendViewModel(navigator: self, wallet: wallet, service: AppDelegate.zilliqaSerivce.rx)
             ),
             animated: true
         )
