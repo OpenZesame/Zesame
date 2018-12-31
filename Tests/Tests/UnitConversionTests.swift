@@ -121,8 +121,39 @@ class UnitConversionTests: XCTestCase {
         XCTAssertTrue(foo == bar)
     }
 
-    func testConversionFromDecimalZil() {
-        XCTAssertEqual(Zil(0.1).valueMeasured(in: .li), 10000)
+    func testConversionFromDecimalZilToLi() {
+        XCTAssertEqual(Zil(0.1).valueMeasured(in: .li), 100000)
+    }
+
+    func testConversionFromDecimalZilToQa() {
+        XCTAssertEqual(Zil(0.000000000001).valueMeasured(in: .qa), 1)
+        XCTAssertEqual(Zil(10.000000000001).valueMeasured(in: .qa), 10000000000001)
+        XCTAssertGreaterThan(Zil(10.000000000002).valueMeasured(in: .qa), 10000000000001)
+        XCTAssertLessThan(Zil(9.000000000001).valueMeasured(in: .qa), 10000000000001)
+
+        // using init:amount
+
+        XCTAssertEqual(Qa(amount: Zil(0.000000000001)), 1)
+        XCTAssertEqual(Qa(amount: Zil(10.000000000001)), 10000000000001)
+        XCTAssertGreaterThan(Qa(amount: Zil(10.000000000002)), 10000000000001)
+        XCTAssertLessThan(Qa(amount: Zil(9.000000000001)), 10000000000001)
+
+        // using `as`
+        XCTAssertEqual(Zil(0.000000000001).as(Qa.self), 1)
+        XCTAssertEqual(Zil(10.000000000001).as(Qa.self), 10000000000001)
+        XCTAssertGreaterThan(Zil(10.000000000002).as(Qa.self), 10000000000001)
+        XCTAssertLessThan(Zil(9.000000000001).as(Qa.self), 10000000000001)
+
+        // using `inQa`
+        XCTAssertEqual(Zil(0.000000000001).inQa, 1)
+        XCTAssertEqual(Zil(10.000000000001).inQa, 10000000000001)
+        XCTAssertGreaterThan(Zil(10.000000000002).inQa, 10000000000001)
+        XCTAssertLessThan(Zil(9.000000000001).inQa, 10000000000001)
+    }
+
+
+    func testConversionFromDecimalLi() {
+        XCTAssertEqual(Li(0.1).valueMeasured(in: .qa), 100000)
     }
 
     func testTooSmallGasPrice() {
