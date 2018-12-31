@@ -101,24 +101,23 @@ public extension ExpressibleByAmount where Self: Bound {
         try self.init(qa: try Qa(magnitude: qaString))
     }
 
-    init<UE>(_ unbound: UE) throws where UE: Unbound & ExpressibleByAmount {
+    init<UE>(amount unbound: UE) throws where UE: Unbound & ExpressibleByAmount {
         try self.init(unbound.valueMeasured(in: Self.unit))
-        print("self.magnitude is: \(self.magnitude), unit: \(self.unit)")
     }
 
     init(zil: Zil) throws {
         // using init:unbound
-        try self.init(zil)
+        try self.init(amount: zil)
     }
 
     init(li: Li) throws {
         // using init:unbound
-        try self.init(li)
+        try self.init(amount: li)
     }
 
     init(qa: Qa) throws {
         // using init:unbound
-        try self.init(qa)
+        try self.init(amount: qa)
     }
 }
 
@@ -148,23 +147,20 @@ public extension ExpressibleByAmount where Self: Unbound {
         }
     }
 
-    init<UE>(_ unbound: UE) where UE: Unbound & ExpressibleByAmount {
+    init<UE>(amount unbound: UE) where UE: Unbound & ExpressibleByAmount {
         self.init(valid: unbound.valueMeasured(in: Self.unit))
     }
 
     init(zil: Zil) {
-        // using init:unbound
-        self.init(zil)
+        self.init(amount: zil)
     }
 
     init(li: Li) {
-        // using init:unbound
-        self.init(li)
+        self.init(amount: li)
     }
 
     init(qa: Qa) {
-        // using init:unbound
-        self.init(qa)
+        self.init(amount: qa)
     }
 
     init(zil zilString: String) throws {

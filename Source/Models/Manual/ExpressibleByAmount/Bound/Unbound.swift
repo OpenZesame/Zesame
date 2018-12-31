@@ -12,6 +12,7 @@ public protocol Unbound: NoLowerbound & NoUpperbound {
     associatedtype Magnitude: Comparable & Numeric
     init(_ magnitude: Magnitude)
     init(magnitude: Int)
+    init<UE>(amount unbound: UE) where UE: Unbound & ExpressibleByAmount
     init(zil: Zil)
     init(li: Li)
     init(qa: Qa)

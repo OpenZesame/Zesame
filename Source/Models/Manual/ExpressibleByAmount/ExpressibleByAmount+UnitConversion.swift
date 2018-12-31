@@ -19,14 +19,28 @@ public extension ExpressibleByAmount {
     }
 
     var inZil: Zil {
-        return Zil(valueMeasured(in: .zil))
+        return Zil(valid: valueMeasured(in: .zil))
     }
 
     var inLi: Li {
-        return Li(valueMeasured(in: .li))
+        return Li(valid: valueMeasured(in: .li))
     }
 
     var inQa: Qa {
-        return Qa(valueMeasured(in: .qa))
+        return Qa(valid: valueMeasured(in: .qa))
     }
 }
+
+//public extension ExpressibleByAmount {
+//    func `as`<E>(_ type: E.Type) -> E where E: ExpressibleByAmount {
+//        return E.init(valid: valueMeasured(in: E.unit))
+//    }
+//
+//    func `as`<U>(_ type: U.Type) -> U where U: Unbound & ExpressibleByAmount {
+//        return U.init(valueMeasured(in: U.unit))
+//    }
+//
+//    func `as`<B>(_ type: B.Type) throws -> B where B: Bound & ExpressibleByAmount {
+//        return try B.init(valueMeasured(in: B.unit))
+//    }
+//}

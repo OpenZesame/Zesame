@@ -121,6 +121,10 @@ class UnitConversionTests: XCTestCase {
         XCTAssertTrue(foo == bar)
     }
 
+    func testConversionFromDecimalZil() {
+        XCTAssertEqual(Zil(0.1).valueMeasured(in: .li), 10000)
+    }
+
     func testTooSmallGasPrice() {
         var didThrowError = false
         do {

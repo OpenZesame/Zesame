@@ -13,6 +13,7 @@ public protocol Bound {
 
     init(_ magnitude: Magnitude) throws
     init(_ magnitude: Int) throws
+    init<UE>(amount unbound: UE) throws where UE: Unbound & ExpressibleByAmount
     init(zil: Zil) throws
     init(li: Li) throws
     init(qa: Qa) throws
