@@ -135,7 +135,7 @@ extension SendViewModel: ViewModelType {
             isSendButtonEnabled: payment.map { $0 != nil },
             address: wallet.map { $0.address.checksummedHex },
             nonce: balanceAndNonce.map { "\($0.nonce.nonce)" },
-            balance: balanceAndNonce.map { "\(Int($0.balance.inZil.magnitude)) Zil" },
+            balance: balanceAndNonce.map { "\($0.balance.zilString)" },
             receipt: receipt.map { "Tx fee: \($0.totalGasCost) zil, for tx: \($0.transactionId)" }
         )
     }

@@ -29,6 +29,11 @@ class UnitConversionTests: XCTestCase {
         XCTAssertEqual(Li(qa: 1000000), 1)
     }
 
+    func testZilEMinus5() {
+        XCTAssertEqual(try Zil.toQa(double: 0.000001), 1_000_000)
+        XCTAssertEqual(Zil(0.000001).qa, 1_000_000)
+    }
+
     func testLiToZil() {
         XCTAssertEqual(Li(1).inZil, Zil(0.000001))
     }
@@ -86,13 +91,8 @@ class UnitConversionTests: XCTestCase {
         do {
             let sum = try foo + bar
             XCTFail("Fail, should have thrown error, sum was: \(sum)")
-        } catch let error as AmountError<ZilAmount>  {
+        } catch let _ as AmountError<ZilAmount>  {
             didThrowError = true
-            switch error {
-            case .tooLarge(let max):
-                XCTAssertEqual(max, 21_000_000_000)
-            default: XCTFail()
-            }
         } catch {
             return XCTFail()
         }
@@ -106,7 +106,6 @@ class UnitConversionTests: XCTestCase {
 
     func testGasPriceMinimum() {
         XCTAssertEqual(GasPrice.min.inLi, 1000)
-        XCTAssertEqual(GasPrice.minInLiAsInt, Int(GasPrice.min.inLi.magnitude))
     }
 
     func testZilAmountAndZil() {
@@ -121,16 +120,30 @@ class UnitConversionTests: XCTestCase {
         XCTAssertTrue(foo == bar)
     }
 
+    func testZilStringFromLi() {
+        XCTAssertEqual(Li(7_654_321).zilString, "7.654321")
+        XCTAssertEqual(Li(654_321).zilString, "0.654321")
+    }
+
+    func testZilStringFromQa() {
+        XCTAssertEqual(Qa(1).zilString, "0.000000000001")
+        XCTAssertEqual(Qa(123456).zilString, "0.000000123456")
+    }
+
+    func testLiValue() {
+        XCTAssertEqual(Li(0.01).qa, 10000)
+    }
+
     func testConversionFromDecimalZilToLi() {
-        XCTAssertEqual(Zil(0.1).valueMeasured(in: .li), 100000)
+        XCTAssertEqual(Zil(0.1).qa, 100_000_000_000)
+        XCTAssertEqual(Li(100000).qa, 100_000_000_000)
+    }
+
+    func testSmallDecimals() {
+        XCTAssertEqual(Zil(0.000000000001).qa, 1)
     }
 
     func testConversionFromDecimalZilToQa() {
-        XCTAssertEqual(Zil(0.000000000001).valueMeasured(in: .qa), 1)
-        XCTAssertEqual(Zil(10.000000000001).valueMeasured(in: .qa), 10000000000001)
-        XCTAssertGreaterThan(Zil(10.000000000002).valueMeasured(in: .qa), 10000000000001)
-        XCTAssertLessThan(Zil(9.000000000001).valueMeasured(in: .qa), 10000000000001)
-
         // using init:amount
 
         XCTAssertEqual(Qa(amount: Zil(0.000000000001)), 1)
@@ -153,7 +166,7 @@ class UnitConversionTests: XCTestCase {
 
 
     func testConversionFromDecimalLi() {
-        XCTAssertEqual(Li(0.1).valueMeasured(in: .qa), 100000)
+        XCTAssertEqual(Li(0.1).qa, 100000)
     }
 
     func testTooSmallGasPrice() {
@@ -176,7 +189,7 @@ class UnitConversionTests: XCTestCase {
     func testBoundString() {
         let qaString = "18446744073637511711"
         XCTAssertEqual(
-            try ZilAmount(zil: Zil(qa: try Qa(magnitude: qaString))),
+            try ZilAmount(zil: Zil(qa: try Qa(qaString))),
             try ZilAmount(zil: try Zil(qa: qaString))
         )
         XCTAssertEqual(
@@ -185,7 +198,7 @@ class UnitConversionTests: XCTestCase {
         )
         do {
             let amount = try ZilAmount(qa: qaString)
-            XCTAssertEqual(amount.inQa.magnitude, 18446744073637511711)
+            XCTAssertEqual(amount.qaString, "18446744073637511711")
         } catch {
             XCTFail()
         }
@@ -195,20 +208,24 @@ class UnitConversionTests: XCTestCase {
         let qaString = "18446744073637511711"
         do {
             let zil = try Zil(qa: qaString)
-            XCTAssertEqual(zil.inQa.magnitude, 18446744073637511711)
+            XCTAssertEqual(zil.qaString, "18446744073637511711")
         } catch {
             XCTFail()
         }
     }
 
+    func testStringZilMaxAmount() {
+        XCTAssertEqual(ZilAmount.max.zilString, "21000000000")
+    }
+
     func testZilExceedingZilAmountMaxSinceZilIsUnbound() {
-        XCTAssertEqual((ZilAmount.max.inZil + 1).magnitude, 21_000_000_001)
+        XCTAssertEqual(ZilAmount.max.inZil + 1, 21000000001)
     }
 
     func testNegativeAmountForZilSinceItIsUnbound() {
         let two: Zil = 2
-        XCTAssertEqual(two.inLi.magnitude, 2_000_000)
-        XCTAssertEqual(two.inLi, 2_000_000)
+        XCTAssertEqual(two.zilString, "2")
+        XCTAssertEqual(two.liString, "2000000")
         let negOne: Zil = two - 3
         XCTAssertEqual(negOne, -1)
         // test literal
@@ -246,7 +263,7 @@ class UnitConversionTests: XCTestCase {
     func testQaStringInits() {
         XCTAssertEqual(try Qa(zil: "1"), 1_000_000_000_000)
         XCTAssertLessThan(try Qa(zil: "1"), 1_000_000_000_001)
-        XCTAssertGreaterThan(try Qa(zil: "1.000000000001"), 1_000_000_000_000)
+        XCTAssertGreaterThan(try Qa.init(zil: "1.000000000001"), 1_000_000_000_000)
 
         XCTAssertEqual(try Qa(li: "1"), 1_000_000)
         XCTAssertLessThan(try Qa(li: "1"), 1_000_001)
