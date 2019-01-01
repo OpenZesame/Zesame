@@ -8,8 +8,8 @@
 
 import Foundation
 
-public extension ExpressibleByAmount {
-    var description: String {
-        return "\(value) \(unit.name) (E\(unit.exponent))"
-    }
-}
+//public extension ExpressibleByAmount {
+//    var description: String {
+//        return "\(value) \(unit.name) (E\(unit.exponent))"
+//    }
+//}

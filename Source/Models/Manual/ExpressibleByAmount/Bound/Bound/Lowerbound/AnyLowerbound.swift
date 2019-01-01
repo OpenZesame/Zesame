@@ -15,8 +15,7 @@ public struct AnyLowerbound {
             guard let value = $0 as? L.Magnitude else {
                 fatalError("incorrect implementation")
             }
-            guard value >= L.minMagnitude else {
-                print("☣️ value: \(value) is smaller than L.minMagnitude: \(L.minMagnitude)")
+            guard value >= L.minInQa else {
                 throw AmountError<L>.tooSmall(min: L.min)
             }
             // Yes is within bounds

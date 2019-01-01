@@ -17,8 +17,7 @@ class TransactionCostTests: XCTestCase {
     func testTotalAmount() {
 
         let amount: ZilAmount = 21_000_000_000
-        XCTAssertEqual(amount.value, 21_000_000_000)
-        XCTAssertEqual(amount.qa, "21_000_000_000_000_000_000_000")
+        XCTAssertEqual(amount.qa, "21000000000000000000000")
     }
 
     func testGasPrice() {

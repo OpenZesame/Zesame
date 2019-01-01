@@ -40,14 +40,3 @@ public extension ExpressibleByAmount where Self: Unbound {
         return value
     }
 }
-
-public extension ExpressibleByAmount {
-    static func validate(value string: String) throws -> Magnitude {
-        guard let value = Magnitude(string) else {
-            throw AmountError<Self>.nonNumericString
-        }
-        return try validate(value: value)
-    }
-
-}
-

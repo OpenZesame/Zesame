@@ -9,11 +9,14 @@
 import Foundation
 
 public struct ZilAmount: ExpressibleByAmount, Upperbound, Lowerbound {
-    public typealias Magnitude = Zil.Magnitude
-    public static let minMagnitude: Zil.Magnitude = 0
 
-    public static let maxMagnitude: Zil.Magnitude = 21_000_000_000
+    public typealias Magnitude = Zil.Magnitude
+
     public static let unit: Unit = .zil
+
+    public static let minInQa: Zil.Magnitude = 0
+    public static let maxInQa: Zil.Magnitude = "21000000000000000000000"
+
     public let qa: Magnitude
 
     public init(qa: Magnitude) throws {

@@ -7,34 +7,74 @@
 //
 
 import Foundation
+import BigInt
 
 internal extension ExpressibleByAmount {
-    static func toQa(_ value: Magnitude) -> Magnitude {
-        return express(value, in: .qa)
+    static func toQa(magnitude: Magnitude) -> Magnitude {
+        let exponentDiff = abs(Unit.qa.exponent - Self.unit.exponent)
+        let powerFactor = BigNumber(10).power(exponentDiff)
+        return magnitude * powerFactor
+    }
+
+    static func toQa(double: Double) throws -> Magnitude {
+        return try express(double: double, in: .qa)
+    }
+}
+
+
+
+internal extension Double {
+    var isInteger: Bool {
+        return floor(self) == ceil(self)
+    }
+}
+
+public enum DivisionError: Swift.Error {
+    case remainderOfDivisionNonZero
+}
+
+internal extension ExpressibleByAmount {
+    func decimalValue(in targetUnit: Unit) -> Double? {
+        guard targetUnit.exponent > self.unit.exponent else {
+            return nil
+        }
+
+        guard qa <= BigInt(Double.greatestFiniteMagnitude) else {
+            return nil
+        }
+
+        let qaFittingInDouble = Double(qa)
+
+        guard qaFittingInDouble.isInteger else {
+            return nil
+        }
+
+        let exponentDiff = abs(Qa.unit.exponent - targetUnit.exponent)
+        let powerFactor = pow(10, Double(exponentDiff))
+
+        let decimalValueInTargetUnit = qaFittingInDouble / powerFactor
+        return decimalValueInTargetUnit
     }
 }
 
 // Unit conversion
 public extension ExpressibleByAmount {
 
-    var value: Magnitude {
-        return valueMeasured(in: unit)
-    }
-
-    func valueMeasured(in unit: Unit) -> Magnitude {
-        return Self.express(qa, in: unit)
-    }
-
-    static func express(_ input: Magnitude, in unit: Unit) -> Magnitude {
-        let exponentDiff = abs(unit.exponent - self.unit.exponent)
-        let powerFactor = BigNumber(10).power(exponentDiff)  //pow(10, Double(exponentDiff))
+    static func express(double: Double, in targetUnit: Unit) throws -> Magnitude {
+        let exponentDiff = abs(targetUnit.exponent - self.unit.exponent)
+        let powerFactor = pow(10, Double(exponentDiff))
         // Instead of doing input / pow(10, Double(unit.exponent - Self.unit.exponent))
         // which may result in precision loss we perform either division or multiplication
-        if unit > self.unit {
-            return input / powerFactor
+        let value: Double
+        if targetUnit.exponent > self.unit.exponent {
+            value = double / powerFactor
+            guard value.isInteger else {
+                throw DivisionError.remainderOfDivisionNonZero
+            }
         } else {
-            return input * powerFactor
+            value = double * powerFactor
         }
+        return Magnitude(value)
     }
 
     var inZil: Zil {

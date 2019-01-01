@@ -15,13 +15,13 @@ public protocol Bound {
     init(qa: Magnitude) throws
 
     /// Most important "convenience" init
-    init(value: Magnitude) throws
+    init(_ value: Magnitude) throws
 
     /// Various convenience inits
-    init(value double: Double) throws
-    init(value int: Int) throws
-    init(value string: String) throws
-    init<UE>(other: UE) throws where UE: ExpressibleByAmount & Unbound
+    init(_ doubleValue: Double) throws
+    init(_ intValue: Int) throws
+    init(_ stringValue: String) throws
+    init<UE>(amount: UE) throws where UE: ExpressibleByAmount & Unbound
     init(zil: Zil) throws
     init(li: Li) throws
     init(qa: Qa) throws
@@ -32,13 +32,13 @@ public protocol Bound {
 
 public extension ExpressibleByAmount where Self: Bound {
     /// Most important "convenience" init
-    init(value: Magnitude) throws {
-        try self.init(qa: Self.toQa(value))
+    init(_ value: Magnitude) throws {
+        try self.init(qa: Self.toQa(magnitude: value))
     }
 
     init(valid: Magnitude) {
         do {
-            try self.init(value: valid)
+            try self.init(valid)
         } catch {
             fatalError("The value `valid` (`\(valid)`) passed was invalid, error: \(error)")
         }
@@ -47,48 +47,59 @@ public extension ExpressibleByAmount where Self: Bound {
 
 public extension ExpressibleByAmount where Self: Bound {
 
-    init(value double: Double) throws {
-        try self.init(value: Magnitude(double))
+    init(_ doubleValue: Double) throws {
+        try self.init(qa: Self.toQa(double: doubleValue))
     }
 
-    init(value int: Int) throws {
-        try self.init(value: Magnitude(int))
+    init(_ intValue: Int) throws {
+        try self.init(Magnitude(intValue))
     }
 
-    init(value string: String) throws {
-        try self.init(value: try Self.validate(value: string))
+//    init(_ stringValue: String) throws {
+//        try self.init(try Self.validate(value: stringValue))
+//    }
+
+    init(_ stringValue: String) throws {
+        if let value = Magnitude(decimalString: stringValue) {
+//            self = try Self.init(mag)
+           try self.init(try Self.validate(value: value))
+        } else if let double = Double(stringValue) {
+            try self.init(double)
+        } else {
+            throw AmountError<Self>.nonNumericString
+        }
     }
 }
 
 public extension ExpressibleByAmount where Self: Bound {
-    init<UE>(other: UE) throws where UE: ExpressibleByAmount & Unbound {
-        try self.init(qa: other.qa)
+    init<UE>(amount: UE) throws where UE: ExpressibleByAmount & Unbound {
+        try self.init(qa: amount.qa)
     }
 
     init(zil: Zil) throws {
-        try self.init(other: zil)
+        try self.init(amount: zil)
     }
 
     init(li: Li) throws {
-        try self.init(other: li)
+        try self.init(amount: li)
     }
 
     init(qa: Qa) throws {
-        try self.init(other: qa)
+        try self.init(amount: qa)
     }
 }
 
 public extension ExpressibleByAmount where Self: Bound {
     init(zil zilString: String) throws {
-        try self.init(zil: try Zil(value: zilString))
+        try self.init(zil: try Zil(zilString))
     }
 
     init(li liString: String) throws {
-        try self.init(li: try Li(value: liString))
+        try self.init(li: try Li(liString))
     }
 
     init(qa qaString: String) throws {
-        try self.init(qa: try Qa(value: qaString))
+        try self.init(qa: try Qa(qaString))
     }
 }
 
@@ -96,7 +107,7 @@ public extension ExpressibleByAmount where Self: Bound {
 public extension ExpressibleByAmount where Self: Bound {
     init(floatLiteral double: Double) {
         do {
-            try self.init(value: double)
+            try self.init(double)
         } catch {
             fatalError("The `Double` value (`\(double)`) passed was invalid, error: \(error)")
         }
@@ -107,7 +118,7 @@ public extension ExpressibleByAmount where Self: Bound {
 public extension ExpressibleByAmount where Self: Bound {
     init(integerLiteral int: Int) {
         do {
-            try self.init(value: int)
+            try self.init(int)
         } catch {
             fatalError("The `Int` value (`\(int)`) passed was invalid, error: \(error)")
         }
@@ -118,7 +129,7 @@ public extension ExpressibleByAmount where Self: Bound {
 public extension ExpressibleByAmount where Self: Bound {
     init(stringLiteral string: String) {
         do {
-            try self = Self(value: string)
+            try self = Self(string)
         } catch {
             fatalError("The `String` value (`\(string)`) passed was invalid, error: \(error)")
         }

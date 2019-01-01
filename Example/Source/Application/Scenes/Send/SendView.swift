@@ -20,7 +20,7 @@ final class SendView: ScrollingStackView {
     private lazy var amountToSendField = UITextField.Style("ZilAmount", text: "1234").make()
     private lazy var gasExplainedLabel = UILabel.Style("Gas is measured in \(Li.powerOf)").make()
 
-    private lazy var gasPriceField = UITextField.Style("Gas price (> \(GasPrice.minInLiAsInt)", text: "\(GasPrice.minInLiAsInt)").make()
+    private lazy var gasPriceField = UITextField.Style("Gas price (> \(GasPrice.min.liString)", text: "\(GasPrice.min.liString)").make()
     private lazy var encryptionPassphrase = UITextField.Style("Wallet Encryption Passphrase", text: "Apabanan").make()
     private lazy var sendButton: UIButton = "Send"
     private lazy var transactionIdentifierLabel: UILabel = "No tx"

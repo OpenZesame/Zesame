@@ -51,8 +51,7 @@ import BigInt
 private extension ExpressibleByAmount {
 
     func asData(minByteCount: Int? = nil) -> Data {
-        let bigInt = BigInt(decimalString: valueForTransaction)!
-        return bigInt.asData(minByteCount: minByteCount)
+        return qa.asData(minByteCount: minByteCount)
     }
 
     var asByteArray: ByteArray {

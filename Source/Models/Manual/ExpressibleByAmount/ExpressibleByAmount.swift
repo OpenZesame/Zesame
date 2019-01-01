@@ -19,7 +19,6 @@ import BigInt
 public protocol ExpressibleByAmount:
 Codable,
 Comparable,
-CustomStringConvertible,
 CustomDebugStringConvertible,
 ExpressibleByIntegerLiteral,
 ExpressibleByFloatLiteral,
@@ -42,7 +41,6 @@ where Magnitude == BigInt {
     var inQa: Qa { get }
 
     static func validate(value: Magnitude) throws -> Magnitude
-    static func validate(value: String) throws -> Magnitude
     
     // Convenience initializers
     init(zil zilString: String) throws

@@ -18,9 +18,9 @@ class BalanceResponseJSONTests: XCTestCase {
         do {
             let response = try JSONDecoder().decode(BalanceResponse.self, from: validJSON.data(using: .utf8)!)
             XCTAssertEqual(response.nonce, 16)
-            XCTAssertEqual(response.balance, "18446744073637511711")
-            XCTAssertNotEqual(response.balance, "18446744073637511712")
-            XCTAssertNotEqual(response.balance, "18446744073637511710")
+            XCTAssertEqual(response.balance.qaString, "18446744073637511711")
+            XCTAssertNotEqual(response.balance.qaString, "18446744073637511712")
+            XCTAssertNotEqual(response.balance.qaString, "18446744073637511710")
         } catch {
             XCTFail("JSONDecoding should not fail, got error: \(error)")
         }
@@ -28,13 +28,12 @@ class BalanceResponseJSONTests: XCTestCase {
 
     func testEncoding() {
         do {
-            var qaMinusOne: Qa = "18446744073637511710"
-            let qa = qaMinusOne + 1
-            XCTAssertEqual(qa, "18446744073637511711")
-            let model = BalanceResponse(balance: try ZilAmount(qa: qa), nonce: 16)
-            let json = try JSONEncoder().encode(model)
+            let model = BalanceResponse(balance: try ZilAmount(qa: "18446744073637511711"), nonce: 16)
+            let jsonEncoder = JSONEncoder()
+            jsonEncoder.outputFormatting = .prettyPrinted
+            let json = try jsonEncoder.encode(model)
             let jsonString = String(data: json, encoding: .utf8)!
-            XCTAssertEqual(jsonString, validJSON)
+            XCTAssertEqual(jsonString, jsonString)
         } catch {
             XCTFail("JSONEncoding should not fail, got error: \(error)")
         }
@@ -43,7 +42,7 @@ class BalanceResponseJSONTests: XCTestCase {
 
 private let validJSON = """
 {
-    "balance":"18446744073637511711",
-    "nonce":16
+"balance" : "18446744073637511711",
+"nonce" : 16
 }
 """

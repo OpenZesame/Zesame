@@ -48,29 +48,3 @@ extension SignedTransaction: Encodable {
         try container.encode(signature, forKey: .signature)
     }
 }
-
-extension ExpressibleByAmount {
-
-    // The API expects integer representation of the magnitude, so e.g.
-    // `100` for GasPrice.
-    var valueForTransaction: String {
-        fatalError("fix me")
-//        let qaMagnitudeString = String(format: "%.20f", inQa.magnitude)
-//        print("☣️ qaMagnitudeString: \(qaMagnitudeString)")
-//        let decimalsRemoved = qaMagnitudeString.decimalsRemoved
-//        print("👅 decimalsRemoved: \(decimalsRemoved)")
-//        return decimalsRemoved
-    }
-}
-
-extension String {
-    var decimalsRemoved: String {
-        let decimalSeparator = Locale.current.decimalSeparator ?? "."
-        if self.contains(decimalSeparator) {
-            let splitted = self.components(separatedBy: decimalSeparator)
-            return splitted.first!
-        } else {
-            return self
-        }
-    }
-}

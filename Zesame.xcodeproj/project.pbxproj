@@ -23,8 +23,8 @@
 		483460A92145BD4C007E5D5C /* ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483460A72145BD4A007E5D5C /* ZilliqaService.swift */; };
 		483C9C9F21D93C1E0059B0AF /* BalanceResponseJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C9C9E21D93C1E0059B0AF /* BalanceResponseJSONTests.swift */; };
 		483C9CA021D93C1E0059B0AF /* BalanceResponseJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C9C9E21D93C1E0059B0AF /* BalanceResponseJSONTests.swift */; };
-		483C9CA621DA72440059B0AF /* ExpressiblyByAmountCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C9CA521DA72440059B0AF /* ExpressiblyByAmountCodableTests.swift */; };
-		483C9CA721DA72440059B0AF /* ExpressiblyByAmountCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C9CA521DA72440059B0AF /* ExpressiblyByAmountCodableTests.swift */; };
+		483C9CB121DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C9CB021DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift */; };
+		483C9CB221DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C9CB021DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift */; };
 		483F0F7C2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */; };
 		483F0F7D2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */; };
 		483F0F8B214704D700E6EE08 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F8A214704D700E6EE08 /* Error.swift */; };
@@ -205,8 +205,8 @@
 		48ED060E20B8618F00C639E5 /* Zesame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48ED060520B8618F00C639E5 /* Zesame.framework */; };
 		48ED0E6C20E80731005DA19C /* BigNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6B20E80731005DA19C /* BigNumber.swift */; };
 		48ED0E6D20E80731005DA19C /* BigNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6B20E80731005DA19C /* BigNumber.swift */; };
-		48ED0E6F20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */; };
-		48ED0E7020E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */; };
+		48ED0E6F20E80754005DA19C /* BigUInt+String+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6E20E80754005DA19C /* BigUInt+String+Init.swift */; };
+		48ED0E7020E80754005DA19C /* BigUInt+String+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48ED0E6E20E80754005DA19C /* BigUInt+String+Init.swift */; };
 		48F70A1F20B72DD00027B72D /* Zesame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F70A1520B72DD00027B72D /* Zesame.framework */; };
 		48F70A4820B7F4D00027B72D /* ZilliqaSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -287,7 +287,7 @@
 		483B2CF72175127B004E07A4 /* Zesame-Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-Mac.xcconfig"; sourceTree = "<group>"; };
 		483B2CF82175127B004E07A4 /* Zesame-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Zesame-Shared.xcconfig"; sourceTree = "<group>"; };
 		483C9C9E21D93C1E0059B0AF /* BalanceResponseJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceResponseJSONTests.swift; sourceTree = "<group>"; };
-		483C9CA521DA72440059B0AF /* ExpressiblyByAmountCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressiblyByAmountCodableTests.swift; sourceTree = "<group>"; };
+		483C9CB021DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressibleByAmountToStringTests.swift; sourceTree = "<group>"; };
 		483F0F7B2146F9FA00E6EE08 /* Rx+ZilliqaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+ZilliqaService.swift"; sourceTree = "<group>"; };
 		483F0F7E2146FB8D00E6EE08 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		483F0F7F2146FB8D00E6EE08 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
@@ -388,7 +388,7 @@
 		48ED060520B8618F00C639E5 /* Zesame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Zesame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ED060D20B8618F00C639E5 /* ZesameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZesameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48ED0E6B20E80731005DA19C /* BigNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigNumber.swift; sourceTree = "<group>"; };
-		48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt256+ExpressibleByStringLiteral.swift"; sourceTree = "<group>"; };
+		48ED0E6E20E80754005DA19C /* BigUInt+String+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BigUInt+String+Init.swift"; sourceTree = "<group>"; };
 		48F70A1520B72DD00027B72D /* Zesame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Zesame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A1E20B72DD00027B72D /* ZesameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZesameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZilliqaSDK.h; sourceTree = "<group>"; };
@@ -475,6 +475,46 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		483C9CAC21DBAA5C0059B0AF /* Bound */ = {
+			isa = PBXGroup;
+			children = (
+				483C9CAE21DBAA820059B0AF /* Uppperbound */,
+				483C9CAD21DBAA6D0059B0AF /* Lowerbound */,
+				486C2A2C21D91C1100C0F7FA /* Bound.swift */,
+			);
+			path = Bound;
+			sourceTree = "<group>";
+		};
+		483C9CAD21DBAA6D0059B0AF /* Lowerbound */ = {
+			isa = PBXGroup;
+			children = (
+				486C2A4421D91CB700C0F7FA /* AnyLowerbound.swift */,
+				486C2A3221D91C2C00C0F7FA /* AdjustableLowerbound.swift */,
+				486C2A2F21D91C2000C0F7FA /* Lowerbound.swift */,
+			);
+			path = Lowerbound;
+			sourceTree = "<group>";
+		};
+		483C9CAE21DBAA820059B0AF /* Uppperbound */ = {
+			isa = PBXGroup;
+			children = (
+				486C2A3821D91C6000C0F7FA /* Upperbound.swift */,
+				486C2A4721D91CC500C0F7FA /* AnyUpperbound.swift */,
+				486C2A4121D91C8300C0F7FA /* AdjustableUpperbound.swift */,
+			);
+			path = Uppperbound;
+			sourceTree = "<group>";
+		};
+		483C9CAF21DBAA990059B0AF /* Unbound */ = {
+			isa = PBXGroup;
+			children = (
+				486C2A3521D91C5200C0F7FA /* NoLowerbound.swift */,
+				486C2A3B21D91C6B00C0F7FA /* NoUpperbound.swift */,
+				486C2A3E21D91C7700C0F7FA /* Unbound.swift */,
+			);
+			path = Unbound;
+			sourceTree = "<group>";
+		};
 		483F0F822146FBCA00E6EE08 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -526,16 +566,8 @@
 		486C2A2B21D91C0400C0F7FA /* Bound */ = {
 			isa = PBXGroup;
 			children = (
-				486C2A2C21D91C1100C0F7FA /* Bound.swift */,
-				486C2A2F21D91C2000C0F7FA /* Lowerbound.swift */,
-				486C2A3521D91C5200C0F7FA /* NoLowerbound.swift */,
-				486C2A3821D91C6000C0F7FA /* Upperbound.swift */,
-				486C2A3B21D91C6B00C0F7FA /* NoUpperbound.swift */,
-				486C2A4121D91C8300C0F7FA /* AdjustableUpperbound.swift */,
-				486C2A3E21D91C7700C0F7FA /* Unbound.swift */,
-				486C2A3221D91C2C00C0F7FA /* AdjustableLowerbound.swift */,
-				486C2A4421D91CB700C0F7FA /* AnyLowerbound.swift */,
-				486C2A4721D91CC500C0F7FA /* AnyUpperbound.swift */,
+				483C9CAF21DBAA990059B0AF /* Unbound */,
+				483C9CAC21DBAA5C0059B0AF /* Bound */,
 			);
 			path = Bound;
 			sourceTree = "<group>";
@@ -721,7 +753,7 @@
 			isa = PBXGroup;
 			children = (
 				48ED0E6B20E80731005DA19C /* BigNumber.swift */,
-				48ED0E6E20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift */,
+				48ED0E6E20E80754005DA19C /* BigUInt+String+Init.swift */,
 			);
 			path = BigNumber;
 			sourceTree = "<group>";
@@ -792,8 +824,8 @@
 				488A658D2157BC5F0091FD03 /* ExportKeystoreTests.swift */,
 				481169A421677CC300341F81 /* AddressChecksumTests.swift */,
 				48D0880B21C5244000A88859 /* UnitConversionTests.swift */,
+				483C9CB021DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift */,
 				483C9C9E21D93C1E0059B0AF /* BalanceResponseJSONTests.swift */,
-				483C9CA521DA72440059B0AF /* ExpressiblyByAmountCodableTests.swift */,
 				48D0880E21C677C000A88859 /* TransactionCostTests.swift */,
 				486C2A2221D8C57900C0F7FA /* GasPriceTests.swift */,
 			);
@@ -1059,7 +1091,7 @@
 				483460A92145BD4C007E5D5C /* ZilliqaService.swift in Sources */,
 				484D1AD521D69E4600589E38 /* Li.swift in Sources */,
 				483F0F9D2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift in Sources */,
-				48ED0E7020E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */,
+				48ED0E7020E80754005DA19C /* BigUInt+String+Init.swift in Sources */,
 				484D1AEB21D6A1E800589E38 /* ExpressibleByAmount+UnitConversion.swift in Sources */,
 				48196F242157C480009C40BB /* Scrypt.swift in Sources */,
 				486C2A4021D91C7700C0F7FA /* Unbound.swift in Sources */,
@@ -1092,7 +1124,7 @@
 				48D0880D21C5244000A88859 /* UnitConversionTests.swift in Sources */,
 				481169A621677CC300341F81 /* AddressChecksumTests.swift in Sources */,
 				483C9CA021D93C1E0059B0AF /* BalanceResponseJSONTests.swift in Sources */,
-				483C9CA721DA72440059B0AF /* ExpressiblyByAmountCodableTests.swift in Sources */,
+				483C9CB221DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift in Sources */,
 				488A658F2157BC5F0091FD03 /* ExportKeystoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1164,7 +1196,7 @@
 				4877B4EA21BE2EFA00A94318 /* Wallet.swift in Sources */,
 				486C2A3C21D91C6B00C0F7FA /* NoUpperbound.swift in Sources */,
 				484D1AE421D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift in Sources */,
-				48ED0E6F20E80754005DA19C /* UInt256+ExpressibleByStringLiteral.swift in Sources */,
+				48ED0E6F20E80754005DA19C /* BigUInt+String+Init.swift in Sources */,
 				4877B4E421BE2EFA00A94318 /* Wallet+Codable.swift in Sources */,
 				484D1ADA21D69E9500589E38 /* ExpressibleByAmount+Compare+AandB.swift in Sources */,
 				486C2A4521D91CB700C0F7FA /* AnyLowerbound.swift in Sources */,
@@ -1186,7 +1218,7 @@
 				48D0880C21C5244000A88859 /* UnitConversionTests.swift in Sources */,
 				481169A521677CC300341F81 /* AddressChecksumTests.swift in Sources */,
 				483C9C9F21D93C1E0059B0AF /* BalanceResponseJSONTests.swift in Sources */,
-				483C9CA621DA72440059B0AF /* ExpressiblyByAmountCodableTests.swift in Sources */,
+				483C9CB121DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift in Sources */,
 				488A658E2157BC5F0091FD03 /* ExportKeystoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1263,7 +1295,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};

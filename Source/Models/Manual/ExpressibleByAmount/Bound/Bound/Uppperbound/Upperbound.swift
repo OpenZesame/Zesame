@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol Upperbound: Bound {
-    static var maxMagnitude: Magnitude { get }
+    static var maxInQa: Magnitude { get }
     static var max: Self { get }
     static func + (lhs: Self, rhs: Self) throws -> Self
     static func * (lhs: Self, rhs: Self) throws -> Self
@@ -17,6 +17,6 @@ public protocol Upperbound: Bound {
 
 extension Upperbound where Self: ExpressibleByAmount {
     public static var max: Self {
-        return try! Self(value: maxMagnitude)
+        return try! Self(qa: maxInQa)
     }
 }

@@ -15,8 +15,7 @@ public struct AnyUpperbound {
             guard let value = $0 as? L.Magnitude else {
                 fatalError("incorrect implementation")
             }
-            guard value <= L.maxMagnitude else {
-                print("☣️ value: \(value) is larger than L.maxMagnitude: \(L.maxMagnitude)")
+            guard value <= L.maxInQa else {
                 throw AmountError<L>.tooLarge(max: L.max)
             }
             // Yes is within bounds
