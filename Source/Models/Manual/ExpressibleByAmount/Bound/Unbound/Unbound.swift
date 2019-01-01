@@ -44,7 +44,7 @@ public extension ExpressibleByAmount where Self: Unbound {
 public extension ExpressibleByAmount where Self: Unbound {
 
     init(_ doubleValue: Double) {
-        self.init(qa: try! Self.toQa(double: doubleValue))
+        self.init(qa: Self.toQa(double: doubleValue))
     }
 
     init(_ intValue: Int) {

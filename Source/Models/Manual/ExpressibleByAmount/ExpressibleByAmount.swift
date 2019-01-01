@@ -25,7 +25,7 @@ ExpressibleByFloatLiteral,
 ExpressibleByStringLiteral
 where Magnitude == BigInt {
 
-    associatedtype Magnitude: Comparable & Numeric
+    associatedtype Magnitude
 
     // These are the two most important properties of the `ExpressibleByAmount` protocol,
     // the unit in which the value - the magnitude is measured.

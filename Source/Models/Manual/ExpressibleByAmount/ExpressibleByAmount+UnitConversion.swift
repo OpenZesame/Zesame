@@ -16,21 +16,15 @@ internal extension ExpressibleByAmount {
         return magnitude * powerFactor
     }
 
-    static func toQa(double: Double) throws -> Magnitude {
-        return try express(double: double, in: .qa)
+    static func toQa(double: Double) -> Magnitude {
+        return express(double: double, in: .qa)
     }
 }
-
-
 
 internal extension Double {
     var isInteger: Bool {
         return floor(self) == ceil(self)
     }
-}
-
-public enum DivisionError: Swift.Error {
-    case remainderOfDivisionNonZero
 }
 
 internal extension ExpressibleByAmount {
@@ -60,7 +54,7 @@ internal extension ExpressibleByAmount {
 // Unit conversion
 public extension ExpressibleByAmount {
 
-    static func express(double: Double, in targetUnit: Unit) throws -> Magnitude {
+    static func express(double: Double, in targetUnit: Unit) -> Magnitude {
         let exponentDiff = abs(targetUnit.exponent - self.unit.exponent)
         let powerFactor = pow(10, Double(exponentDiff))
         // Instead of doing input / pow(10, Double(unit.exponent - Self.unit.exponent))
@@ -68,9 +62,7 @@ public extension ExpressibleByAmount {
         let value: Double
         if targetUnit.exponent > self.unit.exponent {
             value = double / powerFactor
-            guard value.isInteger else {
-                throw DivisionError.remainderOfDivisionNonZero
-            }
+            assert(value.isInteger, "should be integer")
         } else {
             value = double * powerFactor
         }

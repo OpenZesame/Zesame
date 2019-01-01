@@ -30,7 +30,7 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testZilEMinus5() {
-        XCTAssertEqual(try Zil.toQa(double: 0.000001), 1_000_000)
+        XCTAssertEqual(Zil.toQa(double: 0.000001), 1_000_000)
         XCTAssertEqual(Zil(0.000001).qa, 1_000_000)
     }
 
@@ -86,17 +86,12 @@ class UnitConversionTests: XCTestCase {
     func testAdditionOfUpperboundOverflow() {
         let foo: ZilAmount = try! ZilAmount.max - 1
         let bar: ZilAmount = 2
-        var didThrowError = false
-
         do {
             let sum = try foo + bar
             XCTFail("Fail, should have thrown error, sum was: \(sum)")
-        } catch let _ as AmountError<ZilAmount>  {
-            didThrowError = true
         } catch {
-            return XCTFail()
+            XCTAssertTrue(error is AmountError<ZilAmount>)
         }
-        XCTAssertTrue(didThrowError)
     }
 
     func testZilAmountLiteral() {
