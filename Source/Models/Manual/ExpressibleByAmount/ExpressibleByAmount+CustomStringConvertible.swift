@@ -10,6 +10,6 @@ import Foundation
 
 public extension ExpressibleByAmount {
     var description: String {
-        return "\(magnitude) \(unit.name) (E\(unit.exponent))"
+        return "\(value) \(unit.name) (E\(unit.exponent))"
     }
 }

@@ -38,12 +38,9 @@ extension SignedTransaction: Encodable {
         try container.encode(p.recipient, forKey: .toAddr)
         try container.encode(publicKeyCompressed, forKey: .pubKey)
 
-        try zip(
-            [p.amount.encodableValue, p.gasPrice.encodableValue],
-            [CodingKeys.amount, CodingKeys.gasPrice]
-        ).forEach {
-            try container.encode($0, forKey: $1)
-        }
+        try container.encode(p.amount, forKey: .amount)
+        try container.encode(p.gasPrice, forKey: .gasPrice)
+
 
         try container.encode(p.gasLimit.description, forKey: .gasLimit)
         try container.encode(tx.code, forKey: .code)
@@ -56,16 +53,24 @@ extension ExpressibleByAmount {
 
     // The API expects integer representation of the magnitude, so e.g.
     // `100` for GasPrice.
-    var valueForTransaction: Int {
-        return Int(inQa.magnitude)
+    var valueForTransaction: String {
+        fatalError("fix me")
+//        let qaMagnitudeString = String(format: "%.20f", inQa.magnitude)
+//        print("☣️ qaMagnitudeString: \(qaMagnitudeString)")
+//        let decimalsRemoved = qaMagnitudeString.decimalsRemoved
+//        print("👅 decimalsRemoved: \(decimalsRemoved)")
+//        return decimalsRemoved
     }
 }
 
-private extension ExpressibleByAmount {
-    var encodableValue: String {
-        // The API expects strings representation of integer values
+extension String {
+    var decimalsRemoved: String {
         let decimalSeparator = Locale.current.decimalSeparator ?? "."
-        precondition(!valueForTransaction.description.contains(decimalSeparator), "String should represent an integer")
-        return valueForTransaction.description
+        if self.contains(decimalSeparator) {
+            let splitted = self.components(separatedBy: decimalSeparator)
+            return splitted.first!
+        } else {
+            return self
+        }
     }
 }

@@ -14,13 +14,9 @@ public struct ZilAmount: ExpressibleByAmount, Upperbound, Lowerbound {
 
     public static let maxMagnitude: Zil.Magnitude = 21_000_000_000
     public static let unit: Unit = .zil
-    public let magnitude: Magnitude
+    public let qa: Magnitude
 
-    public init(valid magnitude: Magnitude) {
-        do {
-            self.magnitude = try ZilAmount.validate(magnitude: magnitude)
-        } catch {
-            fatalError("Invalid magnitude passed: `\(magnitude)`, error: `\(error)`")
-        }
+    public init(qa: Magnitude) throws {
+         self.qa = try ZilAmount.validate(value: qa)
     }
 }

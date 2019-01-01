@@ -12,9 +12,21 @@ import Foundation
 public extension ExpressibleByAmount {
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        try container.encode(Int(magnitude))
+        try container.encode(encodableValue)
     }
 }
+
+private extension ExpressibleByAmount {
+    var encodableValue: String {
+        // The API expects strings representation of integer values
+        let decimalSeparator = Locale.current.decimalSeparator ?? "."
+        let valueToEncode = valueForTransaction
+        print("✅ valueToEncode: \(valueToEncode)")
+        precondition(!valueToEncode.contains(decimalSeparator), "String should not contain any decimals")
+        return valueToEncode
+    }
+}
+
 
 // MARK: - Decodable
 public extension ExpressibleByAmount {

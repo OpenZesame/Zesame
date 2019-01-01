@@ -11,37 +11,37 @@ import Foundation
 // MARK: - Magnitude
 public extension Zil.Magnitude {
     var zil: Zil {
-        return Zil(self)
+        return Zil(value: self)
     }
 }
 
 public extension Li.Magnitude {
     var li: Li {
-        return Li(self)
+        return Li(value: self)
     }
 }
 
 public extension Qa.Magnitude {
     var qa: Qa {
-        return Qa(self)
+        return Qa(value: self)
     }
 }
 
 // MARK: Integer
 public extension Int {
     var zil: Zil {
-        return Zil(magnitude: self)
+        return Zil(value: self)
     }
 }
 
 public extension Int {
     var li: Li {
-        return Li(magnitude: self)
+        return Li(value: self)
     }
 }
 
 public extension Int {
     var qa: Qa {
-        return Qa(magnitude: self)
+        return Qa(value: self)
     }
 }

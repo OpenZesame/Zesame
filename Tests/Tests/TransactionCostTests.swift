@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BigInt
 import XCTest
 
 @testable import Zesame
@@ -16,13 +17,17 @@ class TransactionCostTests: XCTestCase {
     func testTotalAmount() {
 
         let amount: ZilAmount = 21_000_000_000
-        XCTAssertEqual(amount.magnitude, 21_000_000_000)
-        XCTAssertEqual(amount.magnitude, amount.inZil.magnitude)
+        XCTAssertEqual(amount.value, 21_000_000_000)
+        XCTAssertEqual(amount.qa, "21_000_000_000_000_000_000_000")
     }
 
     func testGasPrice() {
         let gasPrice: GasPrice = 1_100_000_000_000
         XCTAssertEqual(gasPrice.inZil, 1.1)
+    }
+
+    func testWorking() {
+        XCTAssertEqual(Zil(10).qa, BigInt(10_000_000_000_000))
     }
 
     func testExceedingTotalSupplyIntegerLiteral() {

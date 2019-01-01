@@ -106,7 +106,6 @@ class UnitConversionTests: XCTestCase {
 
     func testGasPriceMinimum() {
         XCTAssertEqual(GasPrice.min.inLi, 1000)
-        XCTAssertEqual(GasPrice.minInLiAsInt, Int(GasPrice.min.inLi.magnitude))
     }
 
     func testZilAmountAndZil() {
@@ -185,7 +184,7 @@ class UnitConversionTests: XCTestCase {
         )
         do {
             let amount = try ZilAmount(qa: qaString)
-            XCTAssertEqual(amount.inQa.magnitude, 18446744073637511711)
+            XCTAssertEqual(amount, "18446744073637511711")
         } catch {
             XCTFail()
         }
@@ -195,19 +194,19 @@ class UnitConversionTests: XCTestCase {
         let qaString = "18446744073637511711"
         do {
             let zil = try Zil(qa: qaString)
-            XCTAssertEqual(zil.inQa.magnitude, 18446744073637511711)
+            XCTAssertEqual(zil, "18446744073637511711")
         } catch {
             XCTFail()
         }
     }
 
     func testZilExceedingZilAmountMaxSinceZilIsUnbound() {
-        XCTAssertEqual((ZilAmount.max.inZil + 1).magnitude, 21_000_000_001)
+        XCTAssertEqual((ZilAmount.max.inZil + 1).qa, 21_000_000_001)
     }
 
     func testNegativeAmountForZilSinceItIsUnbound() {
         let two: Zil = 2
-        XCTAssertEqual(two.inLi.magnitude, 2_000_000)
+        XCTAssertEqual(two.inLi.qa, 2_000_000)
         XCTAssertEqual(two.inLi, 2_000_000)
         let negOne: Zil = two - 3
         XCTAssertEqual(negOne, -1)

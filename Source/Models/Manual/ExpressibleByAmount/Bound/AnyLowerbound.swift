@@ -16,6 +16,7 @@ public struct AnyLowerbound {
                 fatalError("incorrect implementation")
             }
             guard value >= L.minMagnitude else {
+                print("☣️ value: \(value) is smaller than L.minMagnitude: \(L.minMagnitude)")
                 throw AmountError<L>.tooSmall(min: L.min)
             }
             // Yes is within bounds
