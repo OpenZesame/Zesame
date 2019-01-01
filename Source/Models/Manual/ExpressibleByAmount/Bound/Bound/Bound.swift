@@ -55,13 +55,8 @@ public extension ExpressibleByAmount where Self: Bound {
         try self.init(Magnitude(intValue))
     }
 
-//    init(_ stringValue: String) throws {
-//        try self.init(try Self.validate(value: stringValue))
-//    }
-
     init(_ stringValue: String) throws {
         if let value = Magnitude(decimalString: stringValue) {
-//            self = try Self.init(mag)
            try self.init(try Self.validate(value: value))
         } else if let double = Double(stringValue) {
             try self.init(double)

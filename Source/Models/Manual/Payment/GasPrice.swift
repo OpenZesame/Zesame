@@ -26,7 +26,7 @@ public struct GasPrice: ExpressibleByAmount, AdjustableUpperbound, AdjustableLow
     }
 
     /// By default GasPrice has an upperbound of 10 Zil, this can be changed.
-    public static let maxInQaDefault: Magnitude = 10_000_000_000_000_000
+    public static let maxInQaDefault: Magnitude = 10_000_000_000_000
     public static var maxInQa = maxInQaDefault {
         willSet {
             guard newValue >= minInQa else {

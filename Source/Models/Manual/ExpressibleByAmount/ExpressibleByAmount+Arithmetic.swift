@@ -27,16 +27,11 @@ public extension ExpressibleByAmount where Self: Bound {
 }
 
 public extension ExpressibleByAmount where Self: Unbound {
-//    static func qaFrom(_ lhs: Self, _ rhs: Self, calc: (Magnitude, Magnitude) -> Magnitude) -> Self {
-//        return Self.init(qa: calc(lhs.qa, rhs.qa))
-//    }
 
     static func - (lhs: Self, rhs: Self) -> Self {
         return qaFrom(lhs, rhs) { $0 - $1 }
     }
-//}
 
-//private extension ExpressibleByAmount where Self: NoUpperbound {
     private static func qaFrom(_ lhs: Self, _ rhs: Self, calc: (Magnitude, Magnitude) -> Magnitude) -> Self {
         return Self.init(qa: calc(lhs.qa, rhs.qa))
     }
@@ -49,15 +44,6 @@ public extension ExpressibleByAmount where Self: Unbound {
         return Self.init(qa: lhs.qa * rhs.qa)
     }
 }
-
-//public extension ExpressibleByAmount where Self: Upperbound {
-//
-//}
-//
-//
-//public extension ExpressibleByAmount where Self: Lowerbound {
-//
-//}
 
 public func + <A, B>(lhs: A, rhs: B) throws -> A where A: ExpressibleByAmount & Bound, B: ExpressibleByAmount {
     return try A(qa: lhs.qa + rhs.qa)

@@ -59,8 +59,6 @@
 		484D1AE021D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1ADF21D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift */; };
 		484D1AE121D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1ADF21D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift */; };
 		484D1AE221D69F9800589E38 /* ExpressibleByAmount+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A96C0B21D4EEF5003F733E /* ExpressibleByAmount+Codable.swift */; };
-		484D1AE421D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1AE321D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift */; };
-		484D1AE521D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1AE321D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift */; };
 		484D1AE721D6A1B800589E38 /* ExpressibleByAmount+CustomDebugStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1AE621D6A1B800589E38 /* ExpressibleByAmount+CustomDebugStringConvertible.swift */; };
 		484D1AE821D6A1B800589E38 /* ExpressibleByAmount+CustomDebugStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1AE621D6A1B800589E38 /* ExpressibleByAmount+CustomDebugStringConvertible.swift */; };
 		484D1AEA21D6A1E800589E38 /* ExpressibleByAmount+UnitConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484D1AE921D6A1E800589E38 /* ExpressibleByAmount+UnitConversion.swift */; };
@@ -308,7 +306,6 @@
 		484D1AD621D69E7000589E38 /* Qa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Qa.swift; sourceTree = "<group>"; };
 		484D1AD921D69E9500589E38 /* ExpressibleByAmount+Compare+AandB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+Compare+AandB.swift"; sourceTree = "<group>"; };
 		484D1ADF21D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+Comparable.swift"; sourceTree = "<group>"; };
-		484D1AE321D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		484D1AE621D6A1B800589E38 /* ExpressibleByAmount+CustomDebugStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+CustomDebugStringConvertible.swift"; sourceTree = "<group>"; };
 		484D1AE921D6A1E800589E38 /* ExpressibleByAmount+UnitConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+UnitConversion.swift"; sourceTree = "<group>"; };
 		484D1AEF21D6A21C00589E38 /* ExpressibleByAmount+Validate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+Validate.swift"; sourceTree = "<group>"; };
@@ -545,7 +542,6 @@
 				484D1AEF21D6A21C00589E38 /* ExpressibleByAmount+Validate.swift */,
 				484D1AE921D6A1E800589E38 /* ExpressibleByAmount+UnitConversion.swift */,
 				484D1AE621D6A1B800589E38 /* ExpressibleByAmount+CustomDebugStringConvertible.swift */,
-				484D1AE321D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift */,
 				484D1ADF21D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift */,
 			);
 			path = ExpressibleByAmount;
@@ -1101,7 +1097,6 @@
 				4877B4EB21BE2EFA00A94318 /* Wallet.swift in Sources */,
 				484D1AC721D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift in Sources */,
 				486C2A3D21D91C6B00C0F7FA /* NoUpperbound.swift in Sources */,
-				484D1AE521D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift in Sources */,
 				484D1AD821D69E7000589E38 /* Qa.swift in Sources */,
 				48D411502147205500E2F207 /* TransactionRequest.swift in Sources */,
 				4877B4E521BE2EFA00A94318 /* Wallet+Codable.swift in Sources */,
@@ -1195,7 +1190,6 @@
 				4877B4D221BE2EFA00A94318 /* Keystore.swift in Sources */,
 				4877B4EA21BE2EFA00A94318 /* Wallet.swift in Sources */,
 				486C2A3C21D91C6B00C0F7FA /* NoUpperbound.swift in Sources */,
-				484D1AE421D6A1A400589E38 /* ExpressibleByAmount+CustomStringConvertible.swift in Sources */,
 				48ED0E6F20E80754005DA19C /* BigUInt+String+Init.swift in Sources */,
 				4877B4E421BE2EFA00A94318 /* Wallet+Codable.swift in Sources */,
 				484D1ADA21D69E9500589E38 /* ExpressibleByAmount+Compare+AandB.swift in Sources */,

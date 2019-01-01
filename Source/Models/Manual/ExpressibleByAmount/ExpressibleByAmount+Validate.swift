@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public extension ExpressibleByAmount where Self: Upperbound, Self: Lowerbound {
 
     static func validate(value: Magnitude) throws -> Magnitude {

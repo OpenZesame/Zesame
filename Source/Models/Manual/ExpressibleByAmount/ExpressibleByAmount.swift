@@ -48,10 +48,6 @@ where Magnitude == BigInt {
     init(qa qaString: String) throws
 }
 
-//public extension ExpressibleByAmount {
-//    var magnitude: Magnitude { fatalError("fix me") }
-//}
-
 public extension ExpressibleByAmount {
     var unit: Unit { return Self.unit }
 

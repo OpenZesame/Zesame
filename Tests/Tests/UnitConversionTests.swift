@@ -30,12 +30,8 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testZilEMinus5() {
-        do {
-            XCTAssertEqual(try Zil.toQa(double: 0.000001), 1_000_000)
-        } catch {
-            return XCTFail()
-        }
-        XCTAssertEqual(Zil.init(0.000001).qa, 1_000_000)
+        XCTAssertEqual(try Zil.toQa(double: 0.000001), 1_000_000)
+        XCTAssertEqual(Zil(0.000001).qa, 1_000_000)
     }
 
     func testLiToZil() {
