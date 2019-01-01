@@ -365,7 +365,6 @@
 		48802D1921751D37003A22FD /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/Mac/RxCocoa.framework; sourceTree = "<group>"; };
 		48802D1A21751D37003A22FD /* EllipticCurveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EllipticCurveKit.framework; path = Carthage/Build/Mac/EllipticCurveKit.framework; sourceTree = "<group>"; };
 		48802D1B21751D37003A22FD /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/Mac/RxTest.framework; sourceTree = "<group>"; };
-		48838C9420B9F64800C18DC2 /* WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTests.swift; sourceTree = "<group>"; };
 		488A65862155ACD20091FD03 /* ZilliqaService+Signing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZilliqaService+Signing.swift"; sourceTree = "<group>"; };
 		488A658A2157A1670091FD03 /* DispatchQueue+Sugar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Sugar.swift"; sourceTree = "<group>"; };
 		488A658D2157BC5F0091FD03 /* ExportKeystoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportKeystoreTests.swift; sourceTree = "<group>"; };
@@ -389,12 +388,6 @@
 		48F70A1520B72DD00027B72D /* Zesame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Zesame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A1E20B72DD00027B72D /* ZesameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZesameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F70A3320B72E8A0027B72D /* ZilliqaSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZilliqaSDK.h; sourceTree = "<group>"; };
-		48F70A3620B72E930027B72D /* AddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressTests.swift; sourceTree = "<group>"; };
-		48F70A5020B7FE590027B72D /* GasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasTests.swift; sourceTree = "<group>"; };
-		48F70A5320B7FFC10027B72D /* GasPriceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceTests.swift; sourceTree = "<group>"; };
-		48F70A5520B7FFDE0027B72D /* GasLimitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasLimitTests.swift; sourceTree = "<group>"; };
-		48F70A5720B801A90027B72D /* PaymentModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModelTests.swift; sourceTree = "<group>"; };
-		48F70A5920B802E70027B72D /* AmountModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -731,20 +724,6 @@
 			path = Transaction;
 			sourceTree = "<group>";
 		};
-		48ED0E6620E80588005DA19C /* OLD */ = {
-			isa = PBXGroup;
-			children = (
-				48F70A3620B72E930027B72D /* AddressTests.swift */,
-				48F70A5920B802E70027B72D /* AmountModelTests.swift */,
-				48F70A5020B7FE590027B72D /* GasTests.swift */,
-				48F70A5320B7FFC10027B72D /* GasPriceTests.swift */,
-				48F70A5520B7FFDE0027B72D /* GasLimitTests.swift */,
-				48F70A5720B801A90027B72D /* PaymentModelTests.swift */,
-				48838C9420B9F64800C18DC2 /* WalletTests.swift */,
-			);
-			path = OLD;
-			sourceTree = "<group>";
-		};
 		48ED0E6A20E80720005DA19C /* BigNumber */ = {
 			isa = PBXGroup;
 			children = (
@@ -813,7 +792,6 @@
 		48F70A3520B72E930027B72D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				48ED0E6620E80588005DA19C /* OLD */,
 				48B5B2F021482EC600147005 /* TransactionSigningTests.swift */,
 				48B5B2EE21482EC600147005 /* ZilliqaSDK iOS Tests-Bridging-Header.h */,
 				48B5B2EF21482EC600147005 /* ZilliqaSDK macOS Tests-Bridging-Header.h */,
