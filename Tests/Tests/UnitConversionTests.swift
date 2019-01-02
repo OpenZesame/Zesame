@@ -146,12 +146,6 @@ class UnitConversionTests: XCTestCase {
         XCTAssertGreaterThan(Qa(amount: Zil(10.000000000002)), 10000000000001)
         XCTAssertLessThan(Qa(amount: Zil(9.000000000001)), 10000000000001)
 
-        // using `as`
-        XCTAssertEqual(Zil(0.000000000001).as(Qa.self), 1)
-        XCTAssertEqual(Zil(10.000000000001).as(Qa.self), 10000000000001)
-        XCTAssertGreaterThan(Zil(10.000000000002).as(Qa.self), 10000000000001)
-        XCTAssertLessThan(Zil(9.000000000001).as(Qa.self), 10000000000001)
-
         // using `inQa`
         XCTAssertEqual(Zil(0.000000000001).inQa, 1)
         XCTAssertEqual(Zil(10.000000000001).inQa, 10000000000001)
