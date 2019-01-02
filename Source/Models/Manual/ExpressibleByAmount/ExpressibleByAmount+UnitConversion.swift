@@ -69,15 +69,15 @@ public extension ExpressibleByAmount {
         return Magnitude(value)
     }
 
-    var inZil: Zil {
+    var asZil: Zil {
         return Zil(qa: qa)
     }
 
-    var inLi: Li {
+    var asLi: Li {
         return Li(qa: qa)
     }
 
-    var inQa: Qa {
+    var asQa: Qa {
         return Qa(qa: qa)
     }
 }

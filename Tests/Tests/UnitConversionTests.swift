@@ -14,15 +14,15 @@ import XCTest
 class UnitConversionTests: XCTestCase {
 
     func testZilToLi() {
-        XCTAssertEqual(Zil(1).inLi, Li(1000000))
+        XCTAssertEqual(Zil(1).asLi, Li(1000000))
     }
 
     func testZilToQa() {
-        XCTAssertEqual(Zil(1).inQa, Qa(1000000000000))
+        XCTAssertEqual(Zil(1).asQa, Qa(1000000000000))
     }
 
     func testLiToQa() {
-        XCTAssertEqual(Li(1).inQa, Qa(1000000))
+        XCTAssertEqual(Li(1).asQa, Qa(1000000))
     }
 
     func testLiFromQa() {
@@ -35,7 +35,7 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testLiToZil() {
-        XCTAssertEqual(Li(1).inZil, Zil(0.000001))
+        XCTAssertEqual(Li(1).asZil, Zil(0.000001))
     }
 
     func testZilFromLi() {
@@ -80,7 +80,7 @@ class UnitConversionTests: XCTestCase {
         let li: Li = 600_007
         let qa: Qa = 500_002_000_123
         let amount = zil + qa + li
-        XCTAssertEqual(amount.inQa, 3_100_009_000_123)
+        XCTAssertEqual(amount.asQa, 3_100_009_000_123)
     }
 
     func testAdditionOfUpperboundOverflow() {
@@ -100,7 +100,7 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testGasPriceMinimum() {
-        XCTAssertEqual(GasPrice.min.inLi, 1000)
+        XCTAssertEqual(GasPrice.min.asLi, 1000)
     }
 
     func testZilAmountAndZil() {
@@ -146,11 +146,11 @@ class UnitConversionTests: XCTestCase {
         XCTAssertGreaterThan(Qa(amount: Zil(10.000000000002)), 10000000000001)
         XCTAssertLessThan(Qa(amount: Zil(9.000000000001)), 10000000000001)
 
-        // using `inQa`
-        XCTAssertEqual(Zil(0.000000000001).inQa, 1)
-        XCTAssertEqual(Zil(10.000000000001).inQa, 10000000000001)
-        XCTAssertGreaterThan(Zil(10.000000000002).inQa, 10000000000001)
-        XCTAssertLessThan(Zil(9.000000000001).inQa, 10000000000001)
+        // using `asQa`
+        XCTAssertEqual(Zil(0.000000000001).asQa, 1)
+        XCTAssertEqual(Zil(10.000000000001).asQa, 10000000000001)
+        XCTAssertGreaterThan(Zil(10.000000000002).asQa, 10000000000001)
+        XCTAssertLessThan(Zil(9.000000000001).asQa, 10000000000001)
     }
 
 
@@ -208,7 +208,7 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testZilExceedingZilAmountMaxSinceZilIsUnbound() {
-        XCTAssertEqual(ZilAmount.max.inZil + 1, 21000000001)
+        XCTAssertEqual(ZilAmount.max.asZil + 1, 21000000001)
     }
 
     func testNegativeAmountForZilSinceItIsUnbound() {

@@ -29,21 +29,21 @@ class GasPriceTests: XCTestCase {
 
     func testMaxGasPriceIs10Zil() {
         XCTAssertEqual(GasPrice.max.qa, Zil(10).qa)
-        XCTAssertEqual(GasPrice.max.inZil, 10)
+        XCTAssertEqual(GasPrice.max.asZil, 10)
         XCTAssertEqual(GasPrice.max.qa, 10_000_000_000_000)
     }
 
     func testMinGasPriceIs1000Li() {
         XCTAssertEqual(GasPrice.min.qa, Li(1000).qa)
         XCTAssertEqual(GasPrice.min.liString, "1000")
-        XCTAssertEqual(GasPrice.min.inLi, 1000)
+        XCTAssertEqual(GasPrice.min.asLi, 1000)
         XCTAssertEqual(GasPrice.min.qa, 1_000_000_000)
     }
 
     func testMaxGasPrice() {
         do {
             let tenZil = try GasPrice(zil: 10)
-            XCTAssertEqual(tenZil.inLi, 10_000_000)
+            XCTAssertEqual(tenZil.asLi, 10_000_000)
         } catch {
             return XCTFail()
         }
@@ -72,7 +72,7 @@ class GasPriceTests: XCTestCase {
     }
 
     func testDecreasingMaxPrice() {
-        let newMaxInQa: GasPrice.Magnitude = (GasPrice.min.inLi + 1.li).qa
+        let newMaxInQa: GasPrice.Magnitude = (GasPrice.min.asLi + 1.li).qa
         GasPrice.maxInQa = newMaxInQa
         XCTAssertEqual(GasPrice.maxInQa, 1_001_000_000)
 
@@ -99,7 +99,7 @@ class GasPriceTests: XCTestCase {
 
         do {
             let tenZil = try GasPrice(zil: 1336)
-            XCTAssertEqual(tenZil.inLi, 1_336_000_000)
+            XCTAssertEqual(tenZil.asLi, 1_336_000_000)
         } catch {
             return XCTFail()
         }

@@ -22,7 +22,7 @@ class TransactionCostTests: XCTestCase {
 
     func testGasPrice() {
         let gasPrice: GasPrice = 1_100_000_000_000
-        XCTAssertEqual(gasPrice.inZil, 1.1)
+        XCTAssertEqual(gasPrice.asZil, 1.1)
     }
 
     func testWorking() {
