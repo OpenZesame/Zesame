@@ -81,13 +81,3 @@ public extension ExpressibleByAmount {
         return Qa(qa: qa)
     }
 }
-
-public extension ExpressibleByAmount {
-    func `as`<E>(_ type: E.Type) -> E where E: ExpressibleByAmount {
-        return E.init(valid: qa)
-    }
-
-    func `as`<B>(_ type: B.Type) throws -> B where B: Bound & ExpressibleByAmount {
-        return try B.init(qa: qa)
-    }
-}
