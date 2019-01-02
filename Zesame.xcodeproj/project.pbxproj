@@ -73,6 +73,8 @@
 		484E09EE215440B4003D928E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09EC215440B1003D928E /* APIClient.swift */; };
 		484E09F021544134003D928E /* DefaultAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09EF21544134003D928E /* DefaultAPIClient.swift */; };
 		484E09F121544134003D928E /* DefaultAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484E09EF21544134003D928E /* DefaultAPIClient.swift */; };
+		485AA28D21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AA28C21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift */; };
+		485AA28E21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AA28C21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift */; };
 		486C2A2321D8C57900C0F7FA /* GasPriceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486C2A2221D8C57900C0F7FA /* GasPriceTests.swift */; };
 		486C2A2421D8C57900C0F7FA /* GasPriceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486C2A2221D8C57900C0F7FA /* GasPriceTests.swift */; };
 		486C2A2D21D91C1100C0F7FA /* Bound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486C2A2C21D91C1100C0F7FA /* Bound.swift */; };
@@ -313,6 +315,7 @@
 		484E09E921543F3B003D928E /* MessageFromUnsignedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromUnsignedTransaction.swift; sourceTree = "<group>"; };
 		484E09EC215440B1003D928E /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		484E09EF21544134003D928E /* DefaultAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAPIClient.swift; sourceTree = "<group>"; };
+		485AA28C21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountFromStringContainingWhitespaces.swift; sourceTree = "<group>"; };
 		486C2A2221D8C57900C0F7FA /* GasPriceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceTests.swift; sourceTree = "<group>"; };
 		486C2A2C21D91C1100C0F7FA /* Bound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bound.swift; sourceTree = "<group>"; };
 		486C2A2F21D91C2000C0F7FA /* Lowerbound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lowerbound.swift; sourceTree = "<group>"; };
@@ -802,6 +805,7 @@
 				483C9C9E21D93C1E0059B0AF /* BalanceResponseJSONTests.swift */,
 				48D0880E21C677C000A88859 /* TransactionCostTests.swift */,
 				486C2A2221D8C57900C0F7FA /* GasPriceTests.swift */,
+				485AA28C21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1095,6 +1099,7 @@
 				486C2A2421D8C57900C0F7FA /* GasPriceTests.swift in Sources */,
 				48D0881221C6780400A88859 /* TransactionCostTests.swift in Sources */,
 				48D0880D21C5244000A88859 /* UnitConversionTests.swift in Sources */,
+				485AA28E21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift in Sources */,
 				481169A621677CC300341F81 /* AddressChecksumTests.swift in Sources */,
 				483C9CA021D93C1E0059B0AF /* BalanceResponseJSONTests.swift in Sources */,
 				483C9CB221DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift in Sources */,
@@ -1188,6 +1193,7 @@
 				486C2A2321D8C57900C0F7FA /* GasPriceTests.swift in Sources */,
 				48D0881121C6780300A88859 /* TransactionCostTests.swift in Sources */,
 				48D0880C21C5244000A88859 /* UnitConversionTests.swift in Sources */,
+				485AA28D21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift in Sources */,
 				481169A521677CC300341F81 /* AddressChecksumTests.swift in Sources */,
 				483C9C9F21D93C1E0059B0AF /* BalanceResponseJSONTests.swift in Sources */,
 				483C9CB121DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift in Sources */,
