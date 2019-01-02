@@ -141,10 +141,10 @@ class UnitConversionTests: XCTestCase {
     func testConversionFromDecimalZilToQa() {
         // using init:amount
 
-        XCTAssertEqual(Qa(amount: Zil(0.000000000001)), 1)
-        XCTAssertEqual(Qa(amount: Zil(10.000000000001)), 10000000000001)
-        XCTAssertGreaterThan(Qa(amount: Zil(10.000000000002)), 10000000000001)
-        XCTAssertLessThan(Qa(amount: Zil(9.000000000001)), 10000000000001)
+        XCTAssertEqual(Qa(Zil(0.000000000001)), 1)
+        XCTAssertEqual(Qa(Zil(10.000000000001)), 10000000000001)
+        XCTAssertGreaterThan(Qa(Zil(10.000000000002)), 10000000000001)
+        XCTAssertLessThan(Qa(Zil(9.000000000001)), 10000000000001)
 
         // using `asQa`
         XCTAssertEqual(Zil(0.000000000001).asQa, 1)
