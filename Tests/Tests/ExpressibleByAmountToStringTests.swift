@@ -28,6 +28,35 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         }
     }
 
+    func testSmallZilAmountAsZilString() {
+        XCTAssertEqual(try ZilAmount(0.1).asString(in: .zil), "0")
+        XCTAssertEqual(try ZilAmount(0.1).asString(in: .zil, roundingIfNeeded: .down), "0")
+        XCTAssertEqual(try ZilAmount(0.1).asString(in: .zil, roundingIfNeeded: .up), "1")
+        XCTAssertEqual(try ZilAmount(0.49).asString(in: .zil), "0")
+        XCTAssertEqual(try ZilAmount(0.5).asString(in: .zil), "1")
+        XCTAssertEqual(try ZilAmount(0.51).asString(in: .zil), "1")
+        XCTAssertEqual(try ZilAmount(0).asString(in: .zil), "0")
+        XCTAssertEqual(try ZilAmount(1).asString(in: .zil), "1")
+        XCTAssertEqual(try ZilAmount(9).asString(in: .zil), "9")
+    }
+
+
+    func testSmallLiAsLiString() {
+        XCTAssertEqual(Li(0.1).asString(in: .li), "0")
+        XCTAssertEqual(Li(0.1).asString(in: .zil), "0.0000001")
+        XCTAssertEqual(Li(0.49).asString(in: .li), "0")
+        XCTAssertEqual(Li(0.5).asString(in: .li), "1")
+        XCTAssertEqual(Li(0.51).asString(in: .li), "1")
+        XCTAssertEqual(Li(0.51).asString(in: .zil), "0.00000051")
+        XCTAssertEqual(Li(0).asString(in: .li), "0")
+        XCTAssertEqual(Li(1).asString(in: .li), "1")
+        XCTAssertEqual(Li(9).asString(in: .li), "9")
+    }
+
+    func testMazZilAmountAsZilString() {
+        XCTAssertEqual(try ZilAmount(21_000_000_000).asString(in: .zil), "21000000000")
+    }
+
     func test10LiInQaAsString() {
         XCTAssertEqual(Qa(10000000).asString(in: .li), "10")
     }
