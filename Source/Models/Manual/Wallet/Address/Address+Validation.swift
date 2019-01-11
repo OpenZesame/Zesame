@@ -17,19 +17,22 @@ public extension Address {
         case containsInvalidCharacters
     }
 
+    // Checksums a Zilliqa address, implementation is based on Javascript library:
+    // https://github.com/Zilliqa/Zilliqa-JavaScript-Library/blob/9368fb34a0d443797adc1ecbcb9728db9ce75e97/packages/zilliqa-js-crypto/src/util.ts#L76-L96
     static func checksum(address hex: HexString) -> String {
-        let hash = EllipticCurveKit.Crypto.hash(Data(hex: hex), function: HashFunction.sha256).asHex
+        let numberFromHash = EllipticCurveKit.Crypto.hash(Data(hex: hex), function: HashFunction.sha256).asNumber
         let address = hex.lowercased().droppingLeading0x()
         var checksummed = ""
         for (i, character) in address.enumerated() {
-            let index = String.Index(encodedOffset: i)
             let string = String(character)
-            let integer = Int(String(hash[index]), radix: 16)!
-            if integer >= 8 {
-                checksummed += string.uppercased()
-            } else {
+            let characterIsLetter = CharacterSet.letters.isSuperset(of: CharacterSet(charactersIn: string))
+            guard characterIsLetter else {
                 checksummed += string
+                continue
             }
+            let andOperand: Number = Number(2).power(255 - 6 * i)
+            let shouldUppercase = (numberFromHash & andOperand) >= 1
+            checksummed += shouldUppercase ? string.uppercased() : string.lowercased()
         }
         return checksummed
     }

@@ -29,77 +29,95 @@ final class AddressChecksumTests: XCTestCase {
 
 extension AddressChecksumTests {
     private func performTestChecksum(vector: Vector) {
-        XCTAssertFalse(Address.isAddressChecksummed(vector.bad))
-        XCTAssertTrue(Address.isAddressChecksummed(vector.good))
-        XCTAssertTrue(Address.isAddressChecksummed(vector.goodWithoutLeading0x))
-        let checksummed = Address.checksum(address: vector.original)
-        XCTAssertEqual(checksummed, vector.goodWithoutLeading0x)
+        XCTAssertFalse(Address.isAddressChecksummed(vector.ethereumChecksummed))
+        XCTAssertFalse(Address.isAddressChecksummed(vector.ethereumChecksummedWithoutLeading0x))
+        XCTAssertTrue(Address.isAddressChecksummed(vector.zilliqaChecksummed))
+        XCTAssertTrue(Address.isAddressChecksummed(vector.zilliqaChecksummedWithoutLeading0x))
+        XCTAssertEqual(Address.checksum(address: vector.notChecksummed), vector.zilliqaChecksummedWithoutLeading0x)
     }
 }
 
-/// Vectors from Zilliqa JS Library
-/// https://github.com/Zilliqa/Zilliqa-JavaScript-Library/blob/6ca504238a4bcee275014523176225114ed09d4a/src/__tests__/checksum.fixtures.ts
-typealias Vector = (original: String, goodWithoutLeading0x: String, good: String, bad: String)
-let vectors = [
-    (
-        original: "4BAF5FADA8E5DB92C3D3242618C5B47133AE003C",
-        goodWithoutLeading0x:"4BaF5fADa8E5Db92c3D3242618c5b47133Ae003c",
-        good:   "0x4BaF5fADa8E5Db92c3D3242618c5b47133Ae003c",
-        bad:    "0x4baF5fADa8E5Db92c3D3242618c5b47133Ae003c"// first b is lowercase
-    ),
-    (
-        original: "448261915A80CDE9BDE7C7A791685200D3A0BF4E",
-        goodWithoutLeading0x:"448261915a80CDe9bde7C7A791685200d3A0BF4e",
-        good:   "0x448261915a80CDe9bde7C7A791685200d3A0BF4e",
-        bad:    "0x448261915a80cDe9bde7C7A791685200d3A0BF4e"// first c is lowercase
-    ),
-    (
-        original: "DED02FD979FC2E55C0243BD2F52DF022C40ADA1E",
-        goodWithoutLeading0x:"DED02FD979fC2e55c0243Bd2f52DF022C40aDa1E",
-        good:   "0xDED02FD979fC2e55c0243Bd2f52DF022C40aDa1E",
-        bad:    "0xdED02FD979fC2e55c0243Bd2f52DF022C40aDa1E"// first d is lowercase
-    ),
-    (
-        original: "13F06E60297BEA6A3C402F6F64C416A6B31E586E",
-        goodWithoutLeading0x:"13f06E60297bEA6A3C402F6F64c416a6B31e586e",
-        good:   "0x13f06E60297bEA6A3C402F6F64c416a6B31e586e",
-        bad:    "0x13F06E60297bEA6A3C402F6F64c416a6B31e586e"// first f is uppercase
-    ),
-    (
-        original: "1A90C25307C3CC71958A83FA213A2362D859CF33",
-        goodWithoutLeading0x:"1a90c25307c3Cc71958A83fa213a2362D859cF33",
-        good:   "0x1a90c25307c3Cc71958A83fa213a2362D859cF33",
-        bad:    "0x1A90c25307c3Cc71958A83fa213a2362D859cF33"// first a is uppercase
 
+/// Vectors from Zilliqa JS Library
+/// https://github.com/Zilliqa/Zilliqa-JavaScript-Library/blob/9368fb34a0d443797adc1ecbcb9728db9ce75e97/packages/zilliqa-js-crypto/test/checksum.fixtures.ts
+typealias Vector = (
+    notChecksummed: String,
+    zilliqaChecksummed: String,
+    zilliqaChecksummedWithoutLeading0x: String,
+    ethereumChecksummed: String,
+    ethereumChecksummedWithoutLeading0x: String
+)
+
+let vectors: [Vector] = [
+    (
+        notChecksummed: "4BAF5FADA8E5DB92C3D3242618C5B47133AE003C",
+        zilliqaChecksummed: "0x4BAF5faDA8e5Db92C3d3242618c5B47133AE003C",
+        zilliqaChecksummedWithoutLeading0x: "4BAF5faDA8e5Db92C3d3242618c5B47133AE003C",
+        ethereumChecksummed: "0x4BaF5fADa8E5Db92c3D3242618c5b47133Ae003c",
+        ethereumChecksummedWithoutLeading0x: "4BaF5fADa8E5Db92c3D3242618c5b47133Ae003c"
     ),
     (
-        original: "625ABAEBD87DAE9AB128F3B3AE99688813D9C5DF",
-        goodWithoutLeading0x:"625aBAEBd87Dae9AB128F3b3ae99688813d9C5Df",
-        good:   "0x625aBAEBd87Dae9AB128F3b3ae99688813d9C5Df",
-        bad:    "0x625AbAEBd87Dae9AB128F3b3ae99688813d9C5Df"// first A is uppercase, b is lowercase
+        notChecksummed: "448261915A80CDE9BDE7C7A791685200D3A0BF4E",
+        zilliqaChecksummed: "0x448261915a80cdE9BDE7C7a791685200D3A0bf4E",
+        zilliqaChecksummedWithoutLeading0x: "448261915a80cdE9BDE7C7a791685200D3A0bf4E",
+        ethereumChecksummedWithoutLeading0x: "448261915a80CDe9bde7C7A791685200d3A0BF4e",
+        ethereumChecksummed: "0x448261915a80CDe9bde7C7A791685200d3A0BF4e"
     ),
     (
-        original: "36BA34097F861191C48C839C9B1A8B5912F583CF",
-        goodWithoutLeading0x:"36BA34097f861191c48c839c9B1A8B5912f583cf",
-        good:   "0x36BA34097f861191c48c839c9B1A8B5912f583cf",
-        bad:    "0x36bA34097f861191c48c839c9B1A8B5912f583cF"// first b is lowercase, last F is uppercase
+        notChecksummed: "DED02FD979FC2E55C0243BD2F52DF022C40ADA1E",
+        zilliqaChecksummed: "0xDed02fD979fC2e55c0243bd2F52df022c40ADa1E",
+        zilliqaChecksummedWithoutLeading0x: "Ded02fD979fC2e55c0243bd2F52df022c40ADa1E",
+        ethereumChecksummedWithoutLeading0x: "DED02FD979fC2e55c0243Bd2f52DF022C40aDa1E",
+        ethereumChecksummed: "0xDED02FD979fC2e55c0243Bd2f52DF022C40aDa1E"
     ),
     (
-        original: "D2453AE76C9A86AAE544FCA699DBDC5C576AEF3A",
-        goodWithoutLeading0x:"D2453AE76c9a86AAE544FCa699DBdC5C576aEf3A",
-        good:   "0xD2453AE76c9a86AAE544FCa699DBdC5C576aEf3A",
-        bad:    "0xd2453aE76c9a86AaE544FCA699DBdC5C576Aef3A"// random lowercase / upperacase
+        notChecksummed: "13F06E60297BEA6A3C402F6F64C416A6B31E586E",
+        zilliqaChecksummed: "0x13F06E60297bea6A3c402F6f64c416A6b31e586e",
+        zilliqaChecksummedWithoutLeading0x: "13F06E60297bea6A3c402F6f64c416A6b31e586e",
+        ethereumChecksummedWithoutLeading0x: "13f06E60297bEA6A3C402F6F64c416a6B31e586e",
+        ethereumChecksummed: "0x13f06E60297bEA6A3C402F6F64c416a6B31e586e"
     ),
     (
-        original: "72220E84947C36118CDBC580454DFAA3B918CD97",
-        goodWithoutLeading0x:"72220E84947c36118CDbc580454DfaA3B918cd97",
-        good:   "0x72220E84947c36118CDbc580454DfaA3B918cd97",
-        bad:    "0x72220e84947C36118cdBC580454dFAa3b918CD97"// inverted cases
+        notChecksummed: "1A90C25307C3CC71958A83FA213A2362D859CF33",
+        zilliqaChecksummed: "0x1a90C25307C3Cc71958A83fa213A2362D859CF33",
+        zilliqaChecksummedWithoutLeading0x: "1a90C25307C3Cc71958A83fa213A2362D859CF33",
+        ethereumChecksummedWithoutLeading0x: "1a90c25307c3Cc71958A83fa213a2362D859cF33",
+        ethereumChecksummed: "0x1a90c25307c3Cc71958A83fa213a2362D859cF33"
     ),
     (
-        original: "50F92304C892D94A385CA6CE6CD6950CE9A36839",
-        goodWithoutLeading0x:"50f92304c892d94A385Ca6ce6cD6950ce9A36839",
-        good:   "0x50f92304c892d94A385Ca6ce6cD6950ce9A36839",
-        bad:    "0x50F92304c892D94A385Ca6ce6CD6950ce9A36839"// random lowercase / upperacase
+        notChecksummed: "625ABAEBD87DAE9AB128F3B3AE99688813D9C5DF",
+        zilliqaChecksummed: "0x625ABAebd87daE9ab128f3B3AE99688813d9C5dF",
+        zilliqaChecksummedWithoutLeading0x: "625ABAebd87daE9ab128f3B3AE99688813d9C5dF",
+        ethereumChecksummedWithoutLeading0x: "625aBAEBd87Dae9AB128F3b3ae99688813d9C5Df",
+        ethereumChecksummed: "0x625aBAEBd87Dae9AB128F3b3ae99688813d9C5Df"
+    ),
+    (
+        notChecksummed: "36BA34097F861191C48C839C9B1A8B5912F583CF",
+        zilliqaChecksummed: "0x36Ba34097f861191C48C839c9b1a8B5912f583cF",
+        zilliqaChecksummedWithoutLeading0x: "36Ba34097f861191C48C839c9b1a8B5912f583cF",
+        ethereumChecksummedWithoutLeading0x: "36BA34097f861191c48c839c9B1A8B5912f583cf",
+        ethereumChecksummed: "0x36BA34097f861191c48c839c9B1A8B5912f583cf"
+    ),
+    (
+        notChecksummed: "D2453AE76C9A86AAE544FCA699DBDC5C576AEF3A",
+        zilliqaChecksummed: "0xD2453Ae76C9A86AAe544fca699DbDC5c576aEf3A",
+        zilliqaChecksummedWithoutLeading0x: "D2453Ae76C9A86AAe544fca699DbDC5c576aEf3A",
+        ethereumChecksummedWithoutLeading0x: "D2453AE76c9a86AAE544FCa699DBdC5C576aEf3A",
+        ethereumChecksummed: "0xD2453AE76c9a86AAE544FCa699DBdC5C576aEf3A"
+    ),
+    (
+        notChecksummed: "72220E84947C36118CDBC580454DFAA3B918CD97",
+        zilliqaChecksummed: "0x72220e84947c36118cDbC580454DFaa3b918cD97",
+        zilliqaChecksummedWithoutLeading0x: "72220e84947c36118cDbC580454DFaa3b918cD97",
+        ethereumChecksummedWithoutLeading0x: "72220E84947c36118CDbc580454DfaA3B918cd97",
+        ethereumChecksummed: "0x72220E84947c36118CDbc580454DfaA3B918cd97"
+    ),
+    (
+        notChecksummed: "50F92304C892D94A385CA6CE6CD6950CE9A36839",
+        zilliqaChecksummed: "0x50f92304c892D94A385cA6cE6CD6950ce9A36839",
+        zilliqaChecksummedWithoutLeading0x: "50f92304c892D94A385cA6cE6CD6950ce9A36839",
+        ethereumChecksummedWithoutLeading0x: "50f92304c892d94A385Ca6ce6cD6950ce9A36839",
+        ethereumChecksummed: "0x50f92304c892d94A385Ca6ce6cD6950ce9A36839"
     )
-];
+]
+
