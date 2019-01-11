@@ -32,19 +32,19 @@ class TransactionSigningTests: XCTestCase {
             nonce: Nonce(3)
         )
 
-        let unsignedTx = Transaction(payment: payment, version: 0)
+        let unsignedTx = Transaction(payment: payment)
 
         XCTAssertEqual(unsignedTx.payment.amount, 15)
         XCTAssertEqual(unsignedTx.payment.gasLimit, 1)
         XCTAssertEqual(unsignedTx.payment.gasPrice, 1_000_000_000)
         XCTAssertEqual(unsignedTx.payment.nonce, 4)
-        XCTAssertEqual(unsignedTx.version, 0)
+        XCTAssertEqual(unsignedTx.version, 65537)
         XCTAssertEqual(unsignedTx.payment.recipient, "9cA91eB535fb92FDA5094110fDAeb752EdB9B039")
 
         let message = messageFromUnsignedTransaction(unsignedTx, publicKey: publicKey)
         let signature = service.sign(message: message, using: keyPair)
 
-        let expectedSignature = "7F971AAC7727896A18F95205512044D653DC8964360FA90D497475CEA9698D033334A5989467FF835FBD737646FC9B988C5B8E9796315150467642F9EC48C89E"
+        let expectedSignature = "349A9085A4F4455B7F334A42D8C7DE552A377093BC55FDA20EBF7ADA9FDCFB92108A5956B16FD2334F6D83201E7B999164223765A3DDCBAFC69D215922DC1F80"
 
         XCTAssertEqual(signature.asHexString(), expectedSignature)
 
