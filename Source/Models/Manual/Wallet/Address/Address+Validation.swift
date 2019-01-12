@@ -15,6 +15,7 @@ public extension Address {
         case tooLong
         case tooShort
         case containsInvalidCharacters
+        case addressNotChecksummed
     }
 
     // Checksums a Zilliqa address, implementation is based on Javascript library:

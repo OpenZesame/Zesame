@@ -17,9 +17,22 @@ public struct Address {
     /// which checksum has been confirmed to be correct.
     public let checksummedHex: HexString
 
-    public init(hexString: HexString) throws {
+    public enum NonChecksummedStrategy {
+        case throwErrorIfNotChecksummed
+        case autoChecksum
+    }
+
+    public init(hexString: HexString, nonChecksummedStrategy: NonChecksummedStrategy = .throwErrorIfNotChecksummed) throws {
         try Address.validateAddress(hexString: hexString)
-        self.checksummedHex = Address.checksum(address: hexString)
+
+        if Address.isAddressChecksummed(hexString) {
+            self.checksummedHex = hexString
+        } else  {
+            switch nonChecksummedStrategy {
+            case .throwErrorIfNotChecksummed: throw Address.Error.addressNotChecksummed
+            case .autoChecksum: self.checksummedHex = Address.checksum(address: hexString)
+            }
+        }
     }
 }
 
@@ -32,7 +45,7 @@ public extension Address {
 
     init?(uncheckedString: String) {
         do {
-            try self.init(hexString: uncheckedString)
+            try self.init(hexString: uncheckedString, nonChecksummedStrategy: .autoChecksum)
         } catch {
             return nil
         }
