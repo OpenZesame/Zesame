@@ -10,38 +10,26 @@ import XCTest
 import EllipticCurveKit
 @testable import Zesame
 
-// Some uninteresting Zilliqa TESTNET private key, containing worthless TEST tokens.
-private let privateKeyHex = "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638"
 private let service = DefaultZilliqaService.shared
 
 class TransactionSigningTests: XCTestCase {
 
     func testTransactionSigning() {
 
-        let privateKey = PrivateKey(hex: privateKeyHex)!
+        // Some uninteresting Zilliqa TESTNET private key, that might contain some worthless TEST tokens.
+        let privateKey = PrivateKey(hex: "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638")!
         let publicKey = PublicKey(privateKey: privateKey)
-        let keyPair = KeyPair(privateKeyHex: privateKeyHex)!
-        let recipient = try! Address(string: "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039")
 
-        let payment = Payment(
-            to: recipient,
+        let unsignedTx = Transaction(payment: Payment(
+            to: try! Address(string: "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039"),
             amount: 15,
             gasLimit: 1,
             gasPrice: GasPrice.min,
             nonce: Nonce(3)
-        )
-
-        let unsignedTx = Transaction(payment: payment)
-
-        XCTAssertEqual(unsignedTx.payment.amount, 15)
-        XCTAssertEqual(unsignedTx.payment.gasLimit, 1)
-        XCTAssertEqual(unsignedTx.payment.gasPrice, 1_000_000_000)
-        XCTAssertEqual(unsignedTx.payment.nonce, 4)
-        XCTAssertEqual(unsignedTx.version, 65537)
-        XCTAssertTrue(unsignedTx.payment.recipient.asString == "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039")
+        ))
 
         let message = messageFromUnsignedTransaction(unsignedTx, publicKey: publicKey)
-        let signature = service.sign(message: message, using: keyPair)
+        let signature = service.sign(message: message, using: KeyPair(private: privateKey, public: publicKey))
 
         let signedTransaction = SignedTransaction(transaction: unsignedTx, signedBy: publicKey, signature: signature)
         let jsonEncoder = JSONEncoder()
