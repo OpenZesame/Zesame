@@ -13,26 +13,30 @@ import RxCocoa
 final class LabelsView: UIStackView {
 
     fileprivate let titleLabel: UILabel
-    fileprivate let valueLabel: UILabel
+    fileprivate let valueTextView: UITextView
 
     init(
         titleStyle: UILabel.Style? = nil,
-        valueStyle: UILabel.Style? = nil,
+        valueStyle: UITextView.Style? = nil,
         stackViewStyle: UIStackView.Style? = nil
         ) {
 
         let defaultTitleStyle = UILabel.Style(font: .boldSystemFont(ofSize: 16), textColor: .black)
-        let defaultvalueStyle = UILabel.Style(font: .systemFont(ofSize: 12), textColor: .darkGray)
+        let defaultvalueStyle = UITextView.Style(
+            font: .systemFont(ofSize: 12),
+            textColor: .darkGray,
+            isEditable: false,
+            isScrollEnabled: false
+        )
         let defaultStackViewStyle = UIStackView.Style(spacing: 8, margin: 0)
 
         self.titleLabel = titleStyle.merged(other: defaultTitleStyle, mode: .overrideOther).make()
-        self.valueLabel = valueStyle.merged(other: defaultvalueStyle, mode: .overrideOther).make()
-
+        self.valueTextView = valueStyle.merged(other: defaultvalueStyle, mode: .overrideOther).make()
 
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         apply(style: stackViewStyle.merged(other: defaultStackViewStyle, mode: .overrideOther))
-        [valueLabel, titleLabel].forEach { insertArrangedSubview($0, at: 0) }
+        [valueTextView, titleLabel].forEach { insertArrangedSubview($0, at: 0) }
     }
 
     required init(coder: NSCoder) { interfaceBuilderSucks }
@@ -41,12 +45,12 @@ final class LabelsView: UIStackView {
 extension LabelsView {
 
     func setValue(_ value: CustomStringConvertible) {
-        valueLabel.text = value.description
+        valueTextView.text = value.description
     }
 
 }
 
 extension Reactive where Base == LabelsView {
     var title: Binder<String?> { return base.titleLabel.rx.text }
-    var value: Binder<String?> { return base.valueLabel.rx.text }
+    var value: ControlProperty<String?> { return base.valueTextView.rx.text }
 }

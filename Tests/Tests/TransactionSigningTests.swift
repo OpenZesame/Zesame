@@ -21,8 +21,7 @@ class TransactionSigningTests: XCTestCase {
         let privateKey = PrivateKey(hex: privateKeyHex)!
         let publicKey = PublicKey(privateKey: privateKey)
         let keyPair = KeyPair(privateKeyHex: privateKeyHex)!
-
-        let recipient = try! Address(hexString: "9CA91EB535FB92FDA5094110FDAEB752EDB9B039")
+        let recipient = try! Address(string: "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039")
 
         let payment = Payment(
             to: recipient,
@@ -39,7 +38,7 @@ class TransactionSigningTests: XCTestCase {
         XCTAssertEqual(unsignedTx.payment.gasPrice, 1_000_000_000)
         XCTAssertEqual(unsignedTx.payment.nonce, 4)
         XCTAssertEqual(unsignedTx.version, 65537)
-        XCTAssertEqual(unsignedTx.payment.recipient, "9cA91eB535fb92FDA5094110fDAeb752EdB9B039")
+        XCTAssertTrue(unsignedTx.payment.recipient.asString == "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039")
 
         let message = messageFromUnsignedTransaction(unsignedTx, publicKey: publicKey)
         let signature = service.sign(message: message, using: keyPair)

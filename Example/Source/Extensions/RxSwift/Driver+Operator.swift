@@ -21,5 +21,5 @@ func --> (driver: Driver<String>, label: UILabel) -> Disposable {
     return driver --> label.rx.text
 }
 func --> (driver: Driver<String>, labels: LabelsView) -> Disposable {
-    return driver --> labels.rx.value
+    return driver.drive(labels.rx.value)
 }
