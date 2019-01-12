@@ -9,25 +9,33 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import Zesame
 
 final class SettingsViewModel {
     private let bag = DisposeBag()
     
     private weak var navigation: SettingsNavigator?
+    private let service: ZilliqaServiceReactive
+    private let wallet: Driver<Wallet>
 
-    init(navigation: SettingsNavigator) {
+    init(navigation: SettingsNavigator, wallet: Observable<Wallet>, service: ZilliqaServiceReactive) {
         self.navigation = navigation
+        self.service = service
+        self.wallet = wallet.asDriverOnErrorReturnEmpty()
     }
 }
 
 extension SettingsViewModel: ViewModelType {
 
     struct Input {
+        let passphrase: Driver<String>
+        let revealPrivateKeyTrigger: Driver<Void>
         let removeWalletTrigger: Driver<Void>
     }
 
     struct Output {
         let appVersion: Driver<String>
+        let privateKey: Driver<String>
     }
 
     func transform(input: Input) -> Output {
@@ -47,8 +55,13 @@ extension SettingsViewModel: ViewModelType {
         }()
         let appVersion = Driver<String?>.just(appVersionString).filterNil()
 
+        let privateKey = input.revealPrivateKeyTrigger.withLatestFrom(input.passphrase).withLatestFrom(wallet) { (passphrase: $0, wallet: $1) }.flatMapLatest { [unowned self] in
+            self.service.extractKeyPairFrom(wallet: $0.wallet, encryptedBy: $0.passphrase).asDriverOnErrorReturnEmpty()
+            }.map { $0.privateKey.asHexStringLength64() }
+
         return Output(
-            appVersion: appVersion
+            appVersion: appVersion,
+            privateKey: privateKey
         )
     }
 }

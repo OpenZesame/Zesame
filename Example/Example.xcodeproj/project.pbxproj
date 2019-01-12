@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4832A78B21EA76B800816D9D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832A78A21EA76B800816D9D /* ActivityIndicator.swift */; };
 		483F0F752146E25400E6EE08 /* Driver+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483F0F742146E25400E6EE08 /* Driver+Operator.swift */; };
 		484B068720BA0D9600C4E50A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484B068520BA0D8800C4E50A /* AppDelegate.swift */; };
 		484DD376216A66B100FB82C8 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484DD375216A66B100FB82C8 /* BalanceView.swift */; };
@@ -125,6 +126,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4832A78A21EA76B800816D9D /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		483F0F742146E25400E6EE08 /* Driver+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Driver+Operator.swift"; sourceTree = "<group>"; };
 		484B063620BA0C2D00C4E50A /* ZesameiOSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZesameiOSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		484B067D20BA0D8800C4E50A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				489CDBCE2143FF3E00318450 /* FilterNil.swift */,
+				4832A78A21EA76B800816D9D /* ActivityIndicator.swift */,
 				483F0F742146E25400E6EE08 /* Driver+Operator.swift */,
 				48BB6345215E72480039E937 /* Driver+Empty.swift */,
 			);
@@ -724,6 +727,7 @@
 				484F7D7821441BF20023C6D4 /* SendView.swift in Sources */,
 				484F7D7721441BF20023C6D4 /* SendCoordinator.swift in Sources */,
 				48C89FEA214331DA0063B0FA /* CreateNewWalletView.swift in Sources */,
+				4832A78B21EA76B800816D9D /* ActivityIndicator.swift in Sources */,
 				484F7D7A21441BF20023C6D4 /* SendViewModel.swift in Sources */,
 				489CDBCF2143FF3E00318450 /* FilterNil.swift in Sources */,
 				48AC6CC92145AF1B00B4D036 /* MainCoordinator.swift in Sources */,
