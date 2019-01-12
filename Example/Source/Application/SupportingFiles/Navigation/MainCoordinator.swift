@@ -33,7 +33,7 @@ final class MainCoordinator: Coordinator {
         // SETTINGS
         let settingsNavigationController = UINavigationController()
         settingsNavigationController.tabBarItem = UITabBarItem("Settings")
-        start(coordinator: SettingsCoordinator(navigationController: settingsNavigationController, navigation: navigation))
+        start(coordinator: SettingsCoordinator(navigationController: settingsNavigationController, navigation: navigation, wallet: wallet))
 
         tabBarController.viewControllers = [
             sendNavigationController,

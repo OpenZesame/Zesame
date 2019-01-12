@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Zesame
 
 protocol SettingsNavigator: AnyObject {
     func toSettings()
@@ -20,10 +21,12 @@ final class SettingsCoordinator: AnyCoordinator {
     private weak var navigationController: UINavigationController?
 
     private weak var navigation: AppNavigation?
+    private let wallet: Observable<Wallet>
 
-    init(navigationController: UINavigationController?, navigation: AppNavigation) {
+    init(navigationController: UINavigationController?, navigation: AppNavigation, wallet: Observable<Wallet>) {
         self.navigationController = navigationController
         self.navigation = navigation
+        self.wallet = wallet
     }
 }
 
@@ -42,7 +45,7 @@ extension SettingsCoordinator: SettingsNavigator {
     func toSettings() {
         navigationController?.pushViewController(
             Settings(
-                viewModel: SettingsViewModel(navigation: self)
+                viewModel: SettingsViewModel(navigation: self, wallet: wallet, service: AppDelegate.zilliqaSerivce.rx)
             ),
             animated: true
         )

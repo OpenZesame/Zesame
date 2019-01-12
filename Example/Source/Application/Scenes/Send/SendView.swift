@@ -21,7 +21,7 @@ final class SendView: ScrollingStackView {
     private lazy var gasExplainedLabel = UILabel.Style("Gas is measured in Li (\(Li.powerOf))").make()
 
     private lazy var gasPriceField = UITextField.Style("Gas price (> \(GasPrice.min.liString)", text: "\(GasPrice.min.liString)").make()
-    private lazy var encryptionPassphrase = UITextField.Style("Wallet Encryption Passphrase", text: "Apabanan").make()
+    private lazy var encryptionPassphrase = UITextField.Style("Wallet Encryption Passphrase", text: "Nosnosnos").make()
     private lazy var sendButton: UIButton = "Send"
     private lazy var transactionIdentifierLabel: UILabel = "No tx"
 

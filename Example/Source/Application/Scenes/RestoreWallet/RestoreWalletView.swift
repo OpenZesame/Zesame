@@ -12,8 +12,8 @@ import RxSwift
 final class RestoreWalletView: ScrollingStackView {
 
     private lazy var privateKeyField: UITextField = "Private Key"
-    private lazy var encryptionPassphraseField: UITextField = "Encryption passphrase"
-    private lazy var confirmEncryptionPassphraseField: UITextField = "Confirm encryption passphrase"
+    private lazy var encryptionPassphraseField = UITextField.Style("Encryption passphrase", text: "Nosnosnos").make()
+    private lazy var confirmEncryptionPassphraseField = UITextField.Style("Confirm encryption passphrase", text: "Nosnosnos").make()
     private lazy var restoreWalletButton = UIButton.Style("Restore Wallet", isEnabled: false).make()
 
     lazy var stackViewStyle: UIStackView.Style = [

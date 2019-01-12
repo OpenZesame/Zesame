@@ -13,7 +13,15 @@ import RxCocoa
 // MARK: - SettingsView
 final class SettingsView: ScrollingStackView {
 
-    private lazy var removeWalletButton: UIButton = "Remove Wallet"
+
+    private lazy var passphraseToDecryptWalletField = UITextField.Style("Passphrase", text: "Nosnosnos").make()
+    private lazy var revealPrivateKeyButton: UIButton = "Reveal private key"
+
+    private lazy var privateKeyLabels = LabelsView(
+        titleStyle: "Private key",
+        valueStyle: "🤷‍♀️",
+        stackViewStyle: UIStackView.Style(alignment: .center)
+    )
 
     private lazy var appVersionLabels = LabelsView(
         titleStyle: "App Version",
@@ -21,10 +29,15 @@ final class SettingsView: ScrollingStackView {
         stackViewStyle: UIStackView.Style(alignment: .center)
     )
 
+    private lazy var removeWalletButton: UIButton = "Remove Wallet"
+
     lazy var stackViewStyle: UIStackView.Style = [
-        removeWalletButton,
+        passphraseToDecryptWalletField,
+        revealPrivateKeyButton,
+        privateKeyLabels,
         appVersionLabels,
-        .spacer
+        .spacer,
+        removeWalletButton
     ]
 }
 
@@ -34,12 +47,15 @@ extension SettingsView: ViewModelled {
 
     func populate(with viewModel: ViewModel.Output) -> [Disposable] { 
         return [
+            viewModel.privateKey --> privateKeyLabels,
         	viewModel.appVersion --> appVersionLabels
         ]
     }
 
     var inputFromView: ViewModel.Input {
         return ViewModel.Input(
+            passphrase: passphraseToDecryptWalletField.rx.text.orEmpty.asDriver(),
+            revealPrivateKeyTrigger: revealPrivateKeyButton.rx.tap.asDriver(),
             removeWalletTrigger: removeWalletButton.rx.tap.asDriver()
         )
     }
