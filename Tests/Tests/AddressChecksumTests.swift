@@ -60,6 +60,18 @@ typealias Vector = (
     ethereumChecksummedWithoutLeading0x: HexStringConvertible
 )
 
+extension String: HexStringConvertible {
+    public var hexString: HexString {
+        do {
+            return try HexString(self)
+        } catch {
+            XCTFail("String: `\(self)` is not valid HexString, error: \(error)")
+            return "not a hex string"
+        }
+    }
+}
+
+
 let vectors: [Vector] = [
     (
         notChecksummed: "4BAF5FADA8E5DB92C3D3242618C5B47133AE003C",

@@ -27,9 +27,6 @@ public struct Payment {
         self.gasLimit = gasLimit
         self.gasPrice = gasPrice
         self.nonce = nonce.increasedByOne()
-
-        // Assert correctness of `asString`, that it is indeed checksummed
-        assert(AddressChecksummed.isChecksummed(hexString: self.recipient.asString))
     }
 }
 

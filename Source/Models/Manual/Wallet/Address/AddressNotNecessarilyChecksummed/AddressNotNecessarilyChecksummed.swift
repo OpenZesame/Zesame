@@ -19,29 +19,6 @@ public struct AddressNotNecessarilyChecksummed: AddressChecksummedConvertible {
     }
 }
 
-public extension AddressNotNecessarilyChecksummed {
-    public init(string: String) throws {
-        do {
-            let hexString = try HexString(string)
-            try self.init(hexString: hexString)
-        } catch {
-            fatalError("Unexpected error:\(error)")
-        }
-    }
-
-    public static let lengthOfValidAddresses: Int = 40
-    static func validate(hexString: HexStringConvertible) throws {
-        let length = hexString.length
-        if length < lengthOfValidAddresses {
-            throw Address.Error.tooShort
-        }
-        if length > lengthOfValidAddresses {
-            throw Address.Error.tooLong
-        }
-        // is valid
-    }
-}
-
 // MARK: - AddressChecksummedConvertible
 public extension AddressNotNecessarilyChecksummed {
     var checksummedAddress: AddressChecksummed {
@@ -54,15 +31,5 @@ public extension AddressNotNecessarilyChecksummed {
     }
 }
 
+// MARK: - Equatable
 extension AddressNotNecessarilyChecksummed: Equatable {}
-
-extension AddressNotNecessarilyChecksummed: ExpressibleByStringLiteral {}
-public extension AddressNotNecessarilyChecksummed {
-    init(stringLiteral value: String) {
-        do {
-            try self.init(string: value)
-        } catch {
-            fatalError("Error: \(error)")
-        }
-    }
-}

@@ -12,10 +12,6 @@ import EllipticCurveKit
 
 // MARK: - Validation
 public extension AddressChecksummed {
-    public enum Error: Swift.Error {
-        case notChecksummed
-    }
-
     static func isChecksummed(hexString: HexStringConvertible) -> Bool {
         guard
             hexString.isValidAddressButNotNecessarilyChecksummed,
@@ -24,7 +20,6 @@ public extension AddressChecksummed {
             else { return false }
         return true
     }
-
 
     // Checksums a Zilliqa address, implementation is based on Javascript library:
     // https://github.com/Zilliqa/Zilliqa-JavaScript-Library/blob/9368fb34a0d443797adc1ecbcb9728db9ce75e97/packages/zilliqa-js-crypto/src/util.ts#L76-L96

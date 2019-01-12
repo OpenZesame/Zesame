@@ -15,7 +15,7 @@ public struct AddressChecksummed: AddressChecksummedConvertible {
     // AddressChecksummedConvertible init
     public init(hexString: HexStringConvertible) throws {
         guard AddressChecksummed.isChecksummed(hexString: hexString) else {
-            throw Error.notChecksummed
+            throw Address.Error.notChecksummed
         }
         self.checksummed = hexString.hexString
     }
