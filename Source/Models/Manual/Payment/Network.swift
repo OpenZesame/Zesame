@@ -9,6 +9,7 @@
 import Foundation
 import EllipticCurveKit
 
+/// ⚠️ THE VALUES ARE NOT CONFIRMED
 public enum Network: UInt32 {
     case mainnet = 1
     case testnet = 2
@@ -22,7 +23,10 @@ public extension Network {
 
 public extension Network {
 
-    var chainId: UInt32 { return rawValue }
+    var chainId: UInt32 {
+        print("⚠️ Using uncofirmed chain id. Verify that this is the correct chain id before launch.")
+        return rawValue
+    }
 
     func compressedHashForAddressFromPublicKey(_ publicKey: PublicKey) -> Data {
         // Actually using Bitcoin `mainnet` settings for address formatting. As of not not related to `Zesame.Network`
