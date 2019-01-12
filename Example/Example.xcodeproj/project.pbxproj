@@ -69,6 +69,7 @@
 		48C8A00F2143CE490063B0FA /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A00E2143CE490063B0FA /* Styling.swift */; };
 		48C8A0112143CE8F0063B0FA /* UIColor_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0102143CE8F0063B0FA /* UIColor_Extension.swift */; };
 		48C8A0132143CF6C0063B0FA /* RestoreWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0122143CF6C0063B0FA /* RestoreWallet.swift */; };
+		48CAF98221EA4CA50047E53F /* UITextView+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF98121EA4CA50047E53F /* UITextView+Styling.swift */; };
 		48D0E6D9215B5DCF00D5D670 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D0E6D8215B5DCF00D5D670 /* HistoryView.swift */; };
 /* End PBXBuildFile section */
 
@@ -192,6 +193,7 @@
 		48C8A0102143CE8F0063B0FA /* UIColor_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_Extension.swift; sourceTree = "<group>"; };
 		48C8A0122143CF6C0063B0FA /* RestoreWallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreWallet.swift; sourceTree = "<group>"; };
 		48C8A0172143D33E0063B0FA /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = ../Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
+		48CAF98121EA4CA50047E53F /* UITextView+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Styling.swift"; sourceTree = "<group>"; };
 		48D0E6D8215B5DCF00D5D670 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		48F03F9C2142686900A13E5E /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = ../Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
 		48F03F9D2142686A00A13E5E /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = ../Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 			children = (
 				48C89FF52143326F0063B0FA /* UIButton+Styling.swift */,
 				48C469F421445417008D0DD7 /* UILabel+Styling.swift */,
+				48CAF98121EA4CA50047E53F /* UITextView+Styling.swift */,
 				48C89FF82143328E0063B0FA /* UIStackView+Styling.swift */,
 				48C8A0022143C5B20063B0FA /* UITextField+Styling.swift */,
 			);
@@ -744,6 +747,7 @@
 				4850A408214C122900EBB85B /* Makeable.swift in Sources */,
 				48C469F521445417008D0DD7 /* UILabel+Styling.swift in Sources */,
 				48C89FFF2143355A0063B0FA /* UIView+Spacer.swift in Sources */,
+				48CAF98221EA4CA50047E53F /* UITextView+Styling.swift in Sources */,
 				483F0F752146E25400E6EE08 /* Driver+Operator.swift in Sources */,
 				48C89FCD21432E2E0063B0FA /* ChooseWalletViewModel.swift in Sources */,
 				48C89FF92143328E0063B0FA /* UIStackView+Styling.swift in Sources */,

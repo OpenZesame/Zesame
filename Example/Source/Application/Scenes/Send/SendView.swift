@@ -16,9 +16,9 @@ final class SendView: ScrollingStackView {
 
     private lazy var walletBalanceView = WalletBalanceView()
 
-    private lazy var recipientAddressField = UITextField.Style("To address", text: "74C544A11795905C2C9808F9E78D8156159D32E4").make()
+    private lazy var recipientAddressField = UITextField.Style("To address", text: "74c544a11795905C2c9808F9e78d8156159d32e4").make()
     private lazy var amountToSendField = UITextField.Style("ZilAmount", text: "1234").make()
-    private lazy var gasExplainedLabel = UILabel.Style("Gas is measured in \(Li.powerOf)").make()
+    private lazy var gasExplainedLabel = UILabel.Style("Gas is measured in Li (\(Li.powerOf))").make()
 
     private lazy var gasPriceField = UITextField.Style("Gas price (> \(GasPrice.min.liString)", text: "\(GasPrice.min.liString)").make()
     private lazy var encryptionPassphrase = UITextField.Style("Wallet Encryption Passphrase", text: "Apabanan").make()
