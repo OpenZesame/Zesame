@@ -105,10 +105,15 @@ extension SendViewModel: ViewModelType {
                 self.service
                     .getBalance(for: $0)
                     .trackActivity(activityIndicator)
+                    .do(onNext: {
+                        print("Got balance: \($0)")
+                    }, onError: {
+                        print("Failed to get balance, error \($0)")
+                    })
                     .asDriverOnErrorReturnEmpty()
         }
 
-        let recipient = input.recepientAddress.map { Address(uncheckedString: $0) }
+        let recipient = input.recepientAddress.map { try? Address(string: $0) }
 
         let amount = input.amountToSend.map { try? ZilAmount(zil: $0) }
 
@@ -124,7 +129,13 @@ extension SendViewModel: ViewModelType {
         let receipt: Driver<TransactionReceipt> = input.sendTrigger
             .withLatestFrom(Driver.combineLatest(payment.filterNil(), wallet, input.passphrase) { (payment: $0, keystore: $1.keystore, encyptedBy: $2) })
             .flatMapLatest {
-                self.service.sendTransaction(for: $0.payment, keystore: $0.keystore, passphrase: $0.encyptedBy)
+                print("Trying to pay: \($0.payment)")
+                return self.service.sendTransaction(for: $0.payment, keystore: $0.keystore, passphrase: $0.encyptedBy)
+                    .do(onNext: {
+                        print("Sent tx id: \($0.transactionIdentifier)")
+                    }, onError: {
+                        print("Failed to send transaction, error: \($0)")
+                    })
                     .flatMapLatest {
                         self.service.hasNetworkReachedConsensusYetForTransactionWith(id: $0.transactionIdentifier)
                     } .asDriverOnErrorReturnEmpty()
@@ -133,7 +144,7 @@ extension SendViewModel: ViewModelType {
         return Output(
             isFetchingBalance: activityIndicator.asDriver(),
             isSendButtonEnabled: payment.map { $0 != nil },
-            address: wallet.map { $0.address.checksummedHex },
+            address: wallet.map { $0.address.asString },
             nonce: balanceAndNonce.map { "\($0.nonce.nonce)" },
             balance: balanceAndNonce.map { "\($0.balance.zilString)" },
             receipt: receipt.map { "Tx fee: \($0.totalGasCost) zil, for tx: \($0.transactionId)" }

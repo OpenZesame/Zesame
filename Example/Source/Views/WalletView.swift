@@ -13,13 +13,7 @@ import Zesame
 final class WalletView: UIStackView, StackViewStyling {
 
     private lazy var addressLabels = LabelsView(
-        titleStyle: "Your Public Address",
-        valueStyle: UILabel.Style(numberOfLines: 0)
-    )
-
-    private lazy var publicKeyLabels = LabelsView(
-        titleStyle: "Your Public Key (compressed)",
-        valueStyle: UILabel.Style(numberOfLines: 0)
+        titleStyle: "Your Public Address"
     )
 
     init() {
@@ -35,15 +29,17 @@ final class WalletView: UIStackView, StackViewStyling {
     // MARK: - StackViewStyling
     lazy var stackViewStyle = UIStackView.Style([
         addressLabels
-//        publicKeyLabels
         ], spacing: 16, margin: 0)
 }
 
 extension WalletView {
 
     func populate(with wallet: Wallet) {
-        addressLabels.setValue(wallet.address.checksummedHex)
-//        publicKeyLabels.setValue(wallet.keystore.)
+        setAddress(wallet.address)
+    }
+
+    func setAddress(_ address: AddressChecksummedConvertible) {
+        setAddress(address.checksummedAddress.checksummed.value)
     }
 
     func setAddress(_ address: String) {

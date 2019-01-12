@@ -25,15 +25,27 @@ final class AddressChecksumTests: XCTestCase {
             performTestChecksum(vector: $0)
         }
     }
+
+    func testSomeAddresses() {
+        XCTAssertTrue(AddressChecksummed.isChecksummed(hexString: "F510333720c5Dd3c3C08bC8e085e8c981ce74691"))
+        XCTAssertTrue(AddressChecksummed.isChecksummed(hexString: "74c544a11795905C2c9808F9e78d8156159d32e4"))
+        XCTAssertTrue(AddressChecksummed.isChecksummed(hexString: "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039"))
+    }
 }
 
 extension AddressChecksumTests {
     private func performTestChecksum(vector: Vector) {
-        XCTAssertFalse(Address.isAddressChecksummed(vector.ethereumChecksummed))
-        XCTAssertFalse(Address.isAddressChecksummed(vector.ethereumChecksummedWithoutLeading0x))
-        XCTAssertTrue(Address.isAddressChecksummed(vector.zilliqaChecksummed))
-        XCTAssertTrue(Address.isAddressChecksummed(vector.zilliqaChecksummedWithoutLeading0x))
-        XCTAssertEqual(Address.checksum(address: vector.notChecksummed), vector.zilliqaChecksummedWithoutLeading0x)
+
+        func isValid(_ hexString: HexStringConvertible) -> Bool {
+            return AddressChecksummed.isChecksummed(hexString: hexString)
+        }
+
+        XCTAssertFalse(isValid(vector.ethereumChecksummed))
+        XCTAssertFalse(isValid(vector.ethereumChecksummedWithoutLeading0x))
+        XCTAssertTrue(isValid(vector.zilliqaChecksummed))
+        XCTAssertTrue(isValid(vector.zilliqaChecksummedWithoutLeading0x))
+
+        XCTAssertTrue(AddressChecksummed.checksummedHexstringFrom(hexString: vector.notChecksummed) == vector.zilliqaChecksummedWithoutLeading0x)
     }
 }
 
@@ -41,11 +53,11 @@ extension AddressChecksumTests {
 /// Vectors from Zilliqa JS Library
 /// https://github.com/Zilliqa/Zilliqa-JavaScript-Library/blob/9368fb34a0d443797adc1ecbcb9728db9ce75e97/packages/zilliqa-js-crypto/test/checksum.fixtures.ts
 typealias Vector = (
-    notChecksummed: String,
-    zilliqaChecksummed: String,
-    zilliqaChecksummedWithoutLeading0x: String,
-    ethereumChecksummed: String,
-    ethereumChecksummedWithoutLeading0x: String
+    notChecksummed: HexStringConvertible,
+    zilliqaChecksummed: HexStringConvertible,
+    zilliqaChecksummedWithoutLeading0x: HexStringConvertible,
+    ethereumChecksummed: HexStringConvertible,
+    ethereumChecksummedWithoutLeading0x: HexStringConvertible
 )
 
 let vectors: [Vector] = [

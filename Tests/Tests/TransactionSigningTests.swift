@@ -38,7 +38,7 @@ class TransactionSigningTests: XCTestCase {
         XCTAssertEqual(unsignedTx.payment.gasPrice, 1_000_000_000)
         XCTAssertEqual(unsignedTx.payment.nonce, 4)
         XCTAssertEqual(unsignedTx.version, 0)
-        XCTAssertEqual(unsignedTx.payment.recipient, "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039")
+        XCTAssertTrue(unsignedTx.payment.recipient == "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039")
 
         let message = messageFromUnsignedTransaction(unsignedTx, publicKey: publicKey)
         let signature = service.sign(message: message, using: keyPair)

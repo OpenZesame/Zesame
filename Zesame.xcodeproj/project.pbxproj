@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4805A7F521EA10E9008D6778 /* Address+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F021EA10E9008D6778 /* Address+CustomStringConvertible.swift */; };
+		4805A7F621EA10E9008D6778 /* Address+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F021EA10E9008D6778 /* Address+CustomStringConvertible.swift */; };
+		4805A7F721EA10E9008D6778 /* AddressNotChecksummed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F121EA10E9008D6778 /* AddressNotChecksummed.swift */; };
+		4805A7F821EA10E9008D6778 /* AddressNotChecksummed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F121EA10E9008D6778 /* AddressNotChecksummed.swift */; };
+		4805A7FB21EA10E9008D6778 /* HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F321EA10E9008D6778 /* HexString.swift */; };
+		4805A7FC21EA10E9008D6778 /* HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F321EA10E9008D6778 /* HexString.swift */; };
+		4805A7FD21EA10E9008D6778 /* AddressNotChecksummed+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F421EA10E9008D6778 /* AddressNotChecksummed+Codable.swift */; };
+		4805A7FE21EA10E9008D6778 /* AddressNotChecksummed+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F421EA10E9008D6778 /* AddressNotChecksummed+Codable.swift */; };
 		481169A521677CC300341F81 /* AddressChecksumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481169A421677CC300341F81 /* AddressChecksumTests.swift */; };
 		481169A621677CC300341F81 /* AddressChecksumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481169A421677CC300341F81 /* AddressChecksumTests.swift */; };
 		48196F232157C480009C40BB /* Scrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48196F222157C480009C40BB /* Scrypt.swift */; };
@@ -119,16 +127,6 @@
 		4877B4D721BE2EFA00A94318 /* Keystore+Wallet+Export.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4B421BE2EFA00A94318 /* Keystore+Wallet+Export.swift */; };
 		4877B4D821BE2EFA00A94318 /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4B521BE2EFA00A94318 /* Nonce.swift */; };
 		4877B4D921BE2EFA00A94318 /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4B521BE2EFA00A94318 /* Nonce.swift */; };
-		4877B4DA21BE2EFA00A94318 /* Address+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4B721BE2EFA00A94318 /* Address+CustomStringConvertible.swift */; };
-		4877B4DB21BE2EFA00A94318 /* Address+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4B721BE2EFA00A94318 /* Address+CustomStringConvertible.swift */; };
-		4877B4DC21BE2EFA00A94318 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4B821BE2EFA00A94318 /* Address.swift */; };
-		4877B4DD21BE2EFA00A94318 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4B821BE2EFA00A94318 /* Address.swift */; };
-		4877B4DE21BE2EFA00A94318 /* Address+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4B921BE2EFA00A94318 /* Address+Validation.swift */; };
-		4877B4DF21BE2EFA00A94318 /* Address+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4B921BE2EFA00A94318 /* Address+Validation.swift */; };
-		4877B4E021BE2EFA00A94318 /* Address+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4BA21BE2EFA00A94318 /* Address+HexString.swift */; };
-		4877B4E121BE2EFA00A94318 /* Address+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4BA21BE2EFA00A94318 /* Address+HexString.swift */; };
-		4877B4E221BE2EFA00A94318 /* Address+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4BB21BE2EFA00A94318 /* Address+Codable.swift */; };
-		4877B4E321BE2EFA00A94318 /* Address+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4BB21BE2EFA00A94318 /* Address+Codable.swift */; };
 		4877B4E421BE2EFA00A94318 /* Wallet+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4BD21BE2EFA00A94318 /* Wallet+Codable.swift */; };
 		4877B4E521BE2EFA00A94318 /* Wallet+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4BD21BE2EFA00A94318 /* Wallet+Codable.swift */; };
 		4877B4E621BE2EFA00A94318 /* Wallet+Decrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4877B4BE21BE2EFA00A94318 /* Wallet+Decrypt.swift */; };
@@ -270,6 +268,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4805A7F021EA10E9008D6778 /* Address+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+CustomStringConvertible.swift"; sourceTree = "<group>"; };
+		4805A7F121EA10E9008D6778 /* AddressNotChecksummed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressNotChecksummed.swift; sourceTree = "<group>"; };
+		4805A7F321EA10E9008D6778 /* HexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexString.swift; sourceTree = "<group>"; };
+		4805A7F421EA10E9008D6778 /* AddressNotChecksummed+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AddressNotChecksummed+Codable.swift"; sourceTree = "<group>"; };
 		481169A421677CC300341F81 /* AddressChecksumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressChecksumTests.swift; sourceTree = "<group>"; };
 		48196F222157C480009C40BB /* Scrypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrypt.swift; sourceTree = "<group>"; };
 		48196F252157C574009C40BB /* ZilliqaService+DefaultImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZilliqaService+DefaultImplementations.swift"; sourceTree = "<group>"; };
@@ -340,11 +342,6 @@
 		4877B4B321BE2EFA00A94318 /* Keystore+Wallet+Import.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Keystore+Wallet+Import.swift"; sourceTree = "<group>"; };
 		4877B4B421BE2EFA00A94318 /* Keystore+Wallet+Export.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Keystore+Wallet+Export.swift"; sourceTree = "<group>"; };
 		4877B4B521BE2EFA00A94318 /* Nonce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nonce.swift; sourceTree = "<group>"; };
-		4877B4B721BE2EFA00A94318 /* Address+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+CustomStringConvertible.swift"; sourceTree = "<group>"; };
-		4877B4B821BE2EFA00A94318 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
-		4877B4B921BE2EFA00A94318 /* Address+Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+Validation.swift"; sourceTree = "<group>"; };
-		4877B4BA21BE2EFA00A94318 /* Address+HexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+HexString.swift"; sourceTree = "<group>"; };
-		4877B4BB21BE2EFA00A94318 /* Address+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Address+Codable.swift"; sourceTree = "<group>"; };
 		4877B4BD21BE2EFA00A94318 /* Wallet+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Wallet+Codable.swift"; sourceTree = "<group>"; };
 		4877B4BE21BE2EFA00A94318 /* Wallet+Decrypt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Wallet+Decrypt.swift"; sourceTree = "<group>"; };
 		4877B4BF21BE2EFA00A94318 /* Wallet+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Wallet+CustomStringConvertible.swift"; sourceTree = "<group>"; };
@@ -447,6 +444,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4805A7EE21EA10E9008D6778 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				4805A7F321EA10E9008D6778 /* HexString.swift */,
+				4805A7EF21EA10E9008D6778 /* AddressNotChecksummed */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		4805A7EF21EA10E9008D6778 /* AddressNotChecksummed */ = {
+			isa = PBXGroup;
+			children = (
+				4805A7F021EA10E9008D6778 /* Address+CustomStringConvertible.swift */,
+				4805A7F121EA10E9008D6778 /* AddressNotChecksummed.swift */,
+				4805A7F421EA10E9008D6778 /* AddressNotChecksummed+Codable.swift */,
+			);
+			path = AddressNotChecksummed;
+			sourceTree = "<group>";
+		};
 		48196F212157C471009C40BB /* Cryptography */ = {
 			isa = PBXGroup;
 			children = (
@@ -631,10 +647,10 @@
 		4877B4AF21BE2EFA00A94318 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				4805A7EE21EA10E9008D6778 /* Address */,
 				4877B4B021BE2EFA00A94318 /* KeyPair.swift */,
 				4877B4B121BE2EFA00A94318 /* Keystore */,
 				4877B4B521BE2EFA00A94318 /* Nonce.swift */,
-				4877B4B621BE2EFA00A94318 /* Address */,
 				4877B4BC21BE2EFA00A94318 /* Wallet */,
 			);
 			path = Wallet;
@@ -648,18 +664,6 @@
 				4877B4B421BE2EFA00A94318 /* Keystore+Wallet+Export.swift */,
 			);
 			path = Keystore;
-			sourceTree = "<group>";
-		};
-		4877B4B621BE2EFA00A94318 /* Address */ = {
-			isa = PBXGroup;
-			children = (
-				4877B4B721BE2EFA00A94318 /* Address+CustomStringConvertible.swift */,
-				4877B4B821BE2EFA00A94318 /* Address.swift */,
-				4877B4B921BE2EFA00A94318 /* Address+Validation.swift */,
-				4877B4BA21BE2EFA00A94318 /* Address+HexString.swift */,
-				4877B4BB21BE2EFA00A94318 /* Address+Codable.swift */,
-			);
-			path = Address;
 			sourceTree = "<group>";
 		};
 		4877B4BC21BE2EFA00A94318 /* Wallet */ = {
@@ -1022,7 +1026,7 @@
 				4877B4C521BE2EFA00A94318 /* ZilAmount.swift in Sources */,
 				486C2A2E21D91C1100C0F7FA /* Bound.swift in Sources */,
 				48ED0E6D20E80731005DA19C /* BigNumber.swift in Sources */,
-				4877B4DF21BE2EFA00A94318 /* Address+Validation.swift in Sources */,
+				4805A7FC21EA10E9008D6778 /* HexString.swift in Sources */,
 				486C2A4921D91CC500C0F7FA /* AnyUpperbound.swift in Sources */,
 				483F0F9A2147091900E6EE08 /* DefaultZilliqaService.swift in Sources */,
 				4877B4A121BE29C400A94318 /* DetectConfiguration.swift in Sources */,
@@ -1050,12 +1054,10 @@
 				484D1AF121D6A21C00589E38 /* ExpressibleByAmount+Validate.swift in Sources */,
 				486C2A3421D91C2C00C0F7FA /* AdjustableLowerbound.swift in Sources */,
 				4877B4D521BE2EFA00A94318 /* Keystore+Wallet+Import.swift in Sources */,
-				4877B4DB21BE2EFA00A94318 /* Address+CustomStringConvertible.swift in Sources */,
 				483F0F942147085500E6EE08 /* BalanceResponse.swift in Sources */,
 				4877B50321BFA89400A94318 /* StatusOfTransactionRequest.swift in Sources */,
 				483F0F8C214704D700E6EE08 /* Error.swift in Sources */,
 				4877B4E721BE2EFA00A94318 /* Wallet+Decrypt.swift in Sources */,
-				4877B4E121BE2EFA00A94318 /* Address+HexString.swift in Sources */,
 				48A6400B218645F300B08C67 /* TransactionResponse.swift in Sources */,
 				4877B4E921BE2EFA00A94318 /* Wallet+CustomStringConvertible.swift in Sources */,
 				4877B4CD21BE2EFA00A94318 /* SignedTransaction.swift in Sources */,
@@ -1066,9 +1068,12 @@
 				484E09F121544134003D928E /* DefaultAPIClient.swift in Sources */,
 				486C2A4321D91C8300C0F7FA /* AdjustableUpperbound.swift in Sources */,
 				4847EE0D2161419A002FF978 /* DerivedKey.swift in Sources */,
+				4805A7F821EA10E9008D6778 /* AddressNotChecksummed.swift in Sources */,
 				483460A92145BD4C007E5D5C /* ZilliqaService.swift in Sources */,
 				484D1AD521D69E4600589E38 /* Li.swift in Sources */,
+				4805A7FE21EA10E9008D6778 /* AddressNotChecksummed+Codable.swift in Sources */,
 				483F0F9D2147093D00E6EE08 /* ZilliqaService+APIKit+ErrorMapping.swift in Sources */,
+				4805A7F621EA10E9008D6778 /* Address+CustomStringConvertible.swift in Sources */,
 				48ED0E7020E80754005DA19C /* BigUInt+String+Init.swift in Sources */,
 				484D1AEB21D6A1E800589E38 /* ExpressibleByAmount+UnitConversion.swift in Sources */,
 				48196F242157C480009C40BB /* Scrypt.swift in Sources */,
@@ -1083,10 +1088,8 @@
 				48D411502147205500E2F207 /* TransactionRequest.swift in Sources */,
 				4877B4E521BE2EFA00A94318 /* Wallet+Codable.swift in Sources */,
 				486C2A4621D91CB700C0F7FA /* AnyLowerbound.swift in Sources */,
-				4877B4E321BE2EFA00A94318 /* Address+Codable.swift in Sources */,
 				488A65882155ACD20091FD03 /* ZilliqaService+Signing.swift in Sources */,
 				4819BD9121C0DBD900443F2A /* ZilliqaService+PollTransaction.swift in Sources */,
-				4877B4DD21BE2EFA00A94318 /* Address.swift in Sources */,
 				484D1AE121D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1116,7 +1119,7 @@
 				4877B4C421BE2EFA00A94318 /* ZilAmount.swift in Sources */,
 				486C2A2D21D91C1100C0F7FA /* Bound.swift in Sources */,
 				483F0F992147091900E6EE08 /* DefaultZilliqaService.swift in Sources */,
-				4877B4DE21BE2EFA00A94318 /* Address+Validation.swift in Sources */,
+				4805A7FB21EA10E9008D6778 /* HexString.swift in Sources */,
 				486C2A4821D91CC500C0F7FA /* AnyUpperbound.swift in Sources */,
 				48196F262157C574009C40BB /* ZilliqaService+DefaultImplementations.swift in Sources */,
 				4877B4A021BE29C200A94318 /* DetectConfiguration.swift in Sources */,
@@ -1145,12 +1148,10 @@
 				484D1AF021D6A21C00589E38 /* ExpressibleByAmount+Validate.swift in Sources */,
 				486C2A3321D91C2C00C0F7FA /* AdjustableLowerbound.swift in Sources */,
 				4877B4D421BE2EFA00A94318 /* Keystore+Wallet+Import.swift in Sources */,
-				4877B4DA21BE2EFA00A94318 /* Address+CustomStringConvertible.swift in Sources */,
 				483F0F932147085500E6EE08 /* BalanceResponse.swift in Sources */,
 				4877B50221BFA89400A94318 /* StatusOfTransactionRequest.swift in Sources */,
 				48A6400A218645F300B08C67 /* TransactionResponse.swift in Sources */,
 				4877B4E621BE2EFA00A94318 /* Wallet+Decrypt.swift in Sources */,
-				4877B4E021BE2EFA00A94318 /* Address+HexString.swift in Sources */,
 				483F0F8B214704D700E6EE08 /* Error.swift in Sources */,
 				484D1ACA21D69DE500589E38 /* Unit.swift in Sources */,
 				4877B4E821BE2EFA00A94318 /* Wallet+CustomStringConvertible.swift in Sources */,
@@ -1160,9 +1161,12 @@
 				4847EE0F216141BB002FF978 /* Scrypt+KDFParameters.swift in Sources */,
 				4819BDBC21C3F03900443F2A /* ExpressibleByAmount.swift in Sources */,
 				486C2A4221D91C8300C0F7FA /* AdjustableUpperbound.swift in Sources */,
+				4805A7F721EA10E9008D6778 /* AddressNotChecksummed.swift in Sources */,
 				483F0F962147087700E6EE08 /* ZilliqaRequest.swift in Sources */,
 				484E09F021544134003D928E /* DefaultAPIClient.swift in Sources */,
+				4805A7FD21EA10E9008D6778 /* AddressNotChecksummed+Codable.swift in Sources */,
 				4847EE0C21614196002FF978 /* DerivedKey.swift in Sources */,
+				4805A7F521EA10E9008D6778 /* Address+CustomStringConvertible.swift in Sources */,
 				484D1AE021D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift in Sources */,
 				484D1AEA21D6A1E800589E38 /* ExpressibleByAmount+UnitConversion.swift in Sources */,
 				483460A82145BD4A007E5D5C /* ZilliqaService.swift in Sources */,
@@ -1178,10 +1182,8 @@
 				484D1ADA21D69E9500589E38 /* ExpressibleByAmount+Compare+AandB.swift in Sources */,
 				486C2A4521D91CB700C0F7FA /* AnyLowerbound.swift in Sources */,
 				484D1AC621D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift in Sources */,
-				4877B4E221BE2EFA00A94318 /* Address+Codable.swift in Sources */,
 				488A65872155ACD20091FD03 /* ZilliqaService+Signing.swift in Sources */,
 				4819BD9021C0DBD900443F2A /* ZilliqaService+PollTransaction.swift in Sources */,
-				4877B4DC21BE2EFA00A94318 /* Address.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

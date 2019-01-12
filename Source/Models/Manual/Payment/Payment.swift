@@ -9,24 +9,27 @@
 import Foundation
 
 public struct Payment {
-    public let recipient: Address
+    public let recipient: AddressChecksummed
     public let amount: ZilAmount
     public let gasLimit: GasLimit
     public let gasPrice: GasPrice
     public let nonce: Nonce
 
     public init(
-        to recipient: Address,
+        to recipient: AddressChecksummedConvertible,
         amount: ZilAmount,
         gasLimit: GasLimit = .defaultGasLimit,
         gasPrice: GasPrice,
         nonce: Nonce = 0
         ) {
-        self.recipient = recipient
+        self.recipient = recipient.checksummedAddress
         self.amount = amount
         self.gasLimit = gasLimit
         self.gasPrice = gasPrice
         self.nonce = nonce.increasedByOne()
+
+        // Assert correctness of `asString`, that it is indeed checksummed
+        assert(AddressChecksummed.isChecksummed(hexString: self.recipient.asString))
     }
 }
 
