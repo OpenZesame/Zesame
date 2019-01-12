@@ -26,6 +26,7 @@ final class AddressValidationTests: XCTestCase {
             let address = try Address(string: "f510333720c5Dd3c3C08bC8e085e8c981ce74691")
             XCTAssertFalse(address.isChecksummed)
             XCTAssertTrue(AddressChecksummed.isChecksummed(hexString: address.checksummedAddress) )
+            XCTAssertEqual(Address.checksummed(address.checksummedAddress), try Address(string: "F510333720c5Dd3c3C08bC8e085e8c981ce74691"))
         } catch {
             return XCTFail("Test should not throw")
         }
