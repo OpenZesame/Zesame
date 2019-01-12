@@ -10,7 +10,17 @@ import Foundation
 
 public enum Address {
     case checksummed(AddressChecksummed)
-    case notNecessarilyChecksummed(AddressNotChecksummed)
+    case notNecessarilyChecksummed(AddressNotNecessarilyChecksummed)
+}
+
+// MARK: - Validation
+public extension Address {
+    public enum Error: Swift.Error {
+        case tooLong
+        case tooShort
+        case notHexadecimal
+        case notChecksummed
+    }
 }
 
 public extension Address {
@@ -22,7 +32,7 @@ public extension Address {
                 fatalError("Hexstring was checksummed: `\(hexString)`, unexpexted error: `\(error)`")
             }
         } else {
-            self = .notNecessarilyChecksummed(try AddressNotChecksummed(hexString: hexString))
+            self = .notNecessarilyChecksummed(try AddressNotNecessarilyChecksummed(hexString: hexString))
         }
     }
 }

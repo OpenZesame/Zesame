@@ -40,7 +40,7 @@ public extension HexStringConvertible {
 
     var isValidAddressButNotNecessarilyChecksummed: Bool {
         do {
-            try AddressNotChecksummed.validate(hexString: self)
+            try AddressNotNecessarilyChecksummed.validate(hexString: self)
             // passed validation
             return true
         } catch {

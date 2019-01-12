@@ -17,15 +17,11 @@ extension CharacterSet {
 
 public struct HexString {
 
-    public enum Error: Swift.Error {
-        case notHexadecimal
-    }
-
     public let value: String
     init(_ value: String) throws {
         let value = value.droppingLeading0x()
         guard CharacterSet.hexadecimalDigits.isSuperset(of: CharacterSet(charactersIn: value)) else {
-            throw Error.notHexadecimal
+            throw Address.Error.notHexadecimal
         }
         self.value = value
     }

@@ -57,7 +57,7 @@ public extension ZilliqaService {
                     }
                 }
             case .privateKey(let privateKey, let newPassphrase):
-                let address = AddressNotChecksummed(privateKey: privateKey)
+                let address = AddressNotNecessarilyChecksummed(privateKey: privateKey)
                 Keystore.from(address: address, privateKey: privateKey, encryptBy: newPassphrase) {
                     guard case .success(let keystore) = $0 else { done(Result.failure($0.error!)); return }
                     main {

@@ -8,8 +8,8 @@
 
 import Foundation
 
-extension AddressNotChecksummed: CustomStringConvertible {}
-public extension AddressNotChecksummed {
+extension AddressNotNecessarilyChecksummed: CustomStringConvertible {}
+public extension AddressNotNecessarilyChecksummed {
     var description: String {
         return hexString.description
     }

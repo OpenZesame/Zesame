@@ -1,5 +1,5 @@
 //
-//  Address+Codable.swift
+//  AddressChecksummed+Codable.swift
 //  Zesame
 //
 //  Created by Alexander Cyon on 2018-10-21.
