@@ -35,6 +35,10 @@
 		4832A77A21EA625900816D9D /* Address+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832A77821EA625900816D9D /* Address+CustomStringConvertible.swift */; };
 		4832A77C21EA627B00816D9D /* Address+HexStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832A77B21EA627B00816D9D /* Address+HexStringConvertible.swift */; };
 		4832A77D21EA627B00816D9D /* Address+HexStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832A77B21EA627B00816D9D /* Address+HexStringConvertible.swift */; };
+		4832A78521EA6AAA00816D9D /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832A78421EA6AAA00816D9D /* Version.swift */; };
+		4832A78621EA6AAA00816D9D /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832A78421EA6AAA00816D9D /* Version.swift */; };
+		4832A78821EA6ABE00816D9D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832A78721EA6ABE00816D9D /* Network.swift */; };
+		4832A78921EA6ABE00816D9D /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832A78721EA6ABE00816D9D /* Network.swift */; };
 		483460A82145BD4A007E5D5C /* ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483460A72145BD4A007E5D5C /* ZilliqaService.swift */; };
 		483460A92145BD4C007E5D5C /* ZilliqaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483460A72145BD4A007E5D5C /* ZilliqaService.swift */; };
 		483C9C9F21D93C1E0059B0AF /* BalanceResponseJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C9C9E21D93C1E0059B0AF /* BalanceResponseJSONTests.swift */; };
@@ -316,6 +320,8 @@
 		4832A77521EA624B00816D9D /* Address+ExpressibleByStringLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Address+ExpressibleByStringLiteral.swift"; sourceTree = "<group>"; };
 		4832A77821EA625900816D9D /* Address+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Address+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		4832A77B21EA627B00816D9D /* Address+HexStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Address+HexStringConvertible.swift"; sourceTree = "<group>"; };
+		4832A78421EA6AAA00816D9D /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		4832A78721EA6ABE00816D9D /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		483460A22145BD28007E5D5C /* JSONRPCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSONRPCKit.framework; path = Carthage/Build/iOS/JSONRPCKit.framework; sourceTree = "<group>"; };
 		483460A32145BD28007E5D5C /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		483460A72145BD4A007E5D5C /* ZilliqaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZilliqaService.swift; sourceTree = "<group>"; };
@@ -692,6 +698,8 @@
 				4877B4A821BE2EFA00A94318 /* ZilAmount.swift */,
 				48A96C1021D51FF9003F733E /* GasLimit.swift */,
 				4877B4AB21BE2EFA00A94318 /* Transaction.swift */,
+				4832A78721EA6ABE00816D9D /* Network.swift */,
+				4832A78421EA6AAA00816D9D /* Version.swift */,
 				4877B4AC21BE2EFA00A94318 /* Payment.swift */,
 				4877B4AD21BE2EFA00A94318 /* SignedTransaction.swift */,
 			);
@@ -1137,6 +1145,7 @@
 				4832A77721EA624B00816D9D /* Address+ExpressibleByStringLiteral.swift in Sources */,
 				483F0F7D2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */,
 				483F0F912147083800E6EE08 /* BalanceRequest.swift in Sources */,
+				4832A78621EA6AAA00816D9D /* Version.swift in Sources */,
 				4877B4CB21BE2EFA00A94318 /* Payment.swift in Sources */,
 				484D1AF421D6A33900589E38 /* Double+Zil_Li_Qa.swift in Sources */,
 				484E09EE215440B4003D928E /* APIClient.swift in Sources */,
@@ -1202,6 +1211,7 @@
 				486C2A3D21D91C6B00C0F7FA /* NoUpperbound.swift in Sources */,
 				484D1AD821D69E7000589E38 /* Qa.swift in Sources */,
 				48D411502147205500E2F207 /* TransactionRequest.swift in Sources */,
+				4832A78921EA6ABE00816D9D /* Network.swift in Sources */,
 				4877B4E521BE2EFA00A94318 /* Wallet+Codable.swift in Sources */,
 				486C2A4621D91CB700C0F7FA /* AnyLowerbound.swift in Sources */,
 				488A65882155ACD20091FD03 /* ZilliqaService+Signing.swift in Sources */,
@@ -1247,6 +1257,7 @@
 				4832A77621EA624B00816D9D /* Address+ExpressibleByStringLiteral.swift in Sources */,
 				483F0F7C2146F9FA00E6EE08 /* Rx+ZilliqaService.swift in Sources */,
 				483F0F902147083800E6EE08 /* BalanceRequest.swift in Sources */,
+				4832A78521EA6AAA00816D9D /* Version.swift in Sources */,
 				4877B4CA21BE2EFA00A94318 /* Payment.swift in Sources */,
 				484D1AF321D6A33900589E38 /* Double+Zil_Li_Qa.swift in Sources */,
 				484E09ED215440B1003D928E /* APIClient.swift in Sources */,
@@ -1312,6 +1323,7 @@
 				486C2A3C21D91C6B00C0F7FA /* NoUpperbound.swift in Sources */,
 				48ED0E6F20E80754005DA19C /* BigUInt+String+Init.swift in Sources */,
 				4877B4E421BE2EFA00A94318 /* Wallet+Codable.swift in Sources */,
+				4832A78821EA6ABE00816D9D /* Network.swift in Sources */,
 				484D1ADA21D69E9500589E38 /* ExpressibleByAmount+Compare+AandB.swift in Sources */,
 				486C2A4521D91CB700C0F7FA /* AnyLowerbound.swift in Sources */,
 				484D1AC621D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift in Sources */,

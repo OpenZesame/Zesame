@@ -43,18 +43,30 @@ class TransactionSigningTests: XCTestCase {
         let message = messageFromUnsignedTransaction(unsignedTx, publicKey: publicKey)
         let signature = service.sign(message: message, using: keyPair)
 
-        let expectedSignature = "349A9085A4F4455B7F334A42D8C7DE552A377093BC55FDA20EBF7ADA9FDCFB92108A5956B16FD2334F6D83201E7B999164223765A3DDCBAFC69D215922DC1F80"
-
-        XCTAssertEqual(signature.asHexString(), expectedSignature)
-
-        func signatureForManipulatedMessage(onlyUppercased shouldUppercase: Bool) -> String {
-            let msg = message.description
-            let manipulatedRaw = shouldUppercase ? msg.uppercased() : msg.lowercased()
-            let manipulated = Message(hashedHex: manipulatedRaw, hashedBy: EllipticCurveKit.DefaultHasher.sha256)!
-            return service.sign(message: manipulated, using: keyPair).asHexString()
+        let signedTransaction = SignedTransaction(transaction: unsignedTx, signedBy: publicKey, signature: signature)
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.outputFormatting = .prettyPrinted
+        do {
+            let transactionJSONData = try jsonEncoder.encode(signedTransaction)
+            let transactionJSONString = String(data: transactionJSONData, encoding: .utf8)!
+            XCTAssertEqual(transactionJSONString, expectedTransactionJSONString)
+        } catch {
+            return XCTFail("Should not throw, unexpected error: \(error)")
         }
-
-        XCTAssertEqual(signatureForManipulatedMessage(onlyUppercased: true), expectedSignature)
-        XCTAssertEqual(signatureForManipulatedMessage(onlyUppercased: false), expectedSignature)
     }
 }
+
+private let expectedTransactionJSONString = """
+{
+  "amount" : "15000000000000",
+  "toAddr" : "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039",
+  "pubKey" : "034AE47910D58B9BDE819C3CFFA8DE4441955508DB00AA2540DB8E6BF6E99ABC1B",
+  "data" : "",
+  "code" : "",
+  "signature" : "349A9085A4F4455B7F334A42D8C7DE552A377093BC55FDA20EBF7ADA9FDCFB92108A5956B16FD2334F6D83201E7B999164223765A3DDCBAFC69D215922DC1F80",
+  "gasLimit" : "1",
+  "version" : 65537,
+  "gasPrice" : "1000000000",
+  "nonce" : 4
+}
+"""

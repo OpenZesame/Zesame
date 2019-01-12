@@ -42,7 +42,7 @@ class BalanceResponseJSONTests: XCTestCase {
 
 private let validJSON = """
 {
-"balance" : "18446744073637511711",
-"nonce" : 16
+    "balance" : "18446744073637511711",
+    "nonce" : 16
 }
 """
