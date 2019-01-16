@@ -12,7 +12,7 @@ import EllipticCurveKit
 /// ⚠️ THE VALUES ARE NOT CONFIRMED
 public enum Network: UInt32 {
     case mainnet = 1
-    case testnet = 2
+    case testnet = 62
 }
 
 public extension Network {
