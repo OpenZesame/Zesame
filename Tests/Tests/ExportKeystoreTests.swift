@@ -24,7 +24,7 @@ class ExportKeystoreTest: XCTestCase {
 
         let expectedEncryptedPrivateKeyHex = "80fe61275f7a4078c7fcaafeda0c108f1b79335fa320b0d4b07bcba128f0bdd5"
         let passphrase = "test_of_export_of_wallet_to_keystore_file_json_example_passphrase"
-        let service = DefaultZilliqaService.shared
+        let service = DefaultZilliqaService(network: .testnet(.prod))
         let sempaphore = expectation(description: "importing wallet from keystore json")
         let keyRestoration = try! KeyRestoration(keyStoreJSONString: keystoreWalletJSONString, encryptedBy: passphrase)
         service.restoreWallet(from: keyRestoration) {

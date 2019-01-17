@@ -10,7 +10,8 @@ import XCTest
 import EllipticCurveKit
 @testable import Zesame
 
-private let service = DefaultZilliqaService.shared
+private let network: Network = .mainnet
+private let service = DefaultZilliqaService(network: network)
 
 class TransactionSigningTests: XCTestCase {
 
@@ -20,13 +21,16 @@ class TransactionSigningTests: XCTestCase {
         let privateKey = PrivateKey(hex: "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638")!
         let publicKey = PublicKey(privateKey: privateKey)
 
-        let unsignedTx = Transaction(payment: Payment(
-            to: try! Address(string: "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039"),
-            amount: 15,
-            gasLimit: 1,
-            gasPrice: GasPrice.min,
-            nonce: Nonce(3)
-        ))
+        let unsignedTx = Transaction(
+            payment: Payment(
+                to: try! Address(string: "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039"),
+                amount: 15,
+                gasLimit: 1,
+                gasPrice: GasPrice.min,
+                nonce: Nonce(3)
+            ),
+            network: network
+        )
 
         let message = messageFromUnsignedTransaction(unsignedTx, publicKey: publicKey)
         let signature = service.sign(message: message, using: KeyPair(private: privateKey, public: publicKey))
