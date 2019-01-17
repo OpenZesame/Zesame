@@ -9,7 +9,6 @@
 import UIKit
 
 import RxSwift
-import TinyConstraints
 
 /// Use typealias when you don't require a subclass. If your use case requires subclass, inherit from `SceneController`.
 typealias Scene<View: UIView & ViewModelled> = SceneController<View>
