@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TinyConstraints
 
 typealias ScrollingStackView = ScrollView & StackViewStyling
 
