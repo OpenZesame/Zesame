@@ -11,10 +11,10 @@ import Foundation
 public struct Transaction {
     let version: Version
     let payment: Payment
-    let data: String
-    let code: String
+    let data: String?
+    let code: String?
 
-    init(payment: Payment, version: Version = .default, data: String = "", code: String = "") {
+    init(payment: Payment, version: Version = .default, data: String? = nil, code: String? = nil) {
         self.version = version
         self.payment = payment
         self.data = data

@@ -10,9 +10,29 @@ import Foundation
 import EllipticCurveKit
 
 /// ⚠️ THE VALUES ARE NOT CONFIRMED
-public enum Network: UInt32 {
+public enum Network: UInt32, Decodable {
     case mainnet = 1
-    case testnet = 62
+    case testnet = 2
+}
+
+// MARK: - Encodable
+public extension Network {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(chainId)
+    }
+}
+
+// MARK: - Decodable
+public extension Network {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let chainId = try container.decode(UInt32.self)
+        guard let network = Network(rawValue: chainId) else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Received new chain id: \(chainId), you need to add this to the enum `Network`")
+        }
+        self = network
+    }
 }
 
 public extension Network {
