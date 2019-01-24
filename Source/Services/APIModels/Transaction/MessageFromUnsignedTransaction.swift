@@ -30,8 +30,12 @@ func messageFromUnsignedTransaction(_ tx: Transaction, publicKey: PublicKey, has
         $0.amount = tx.payment.amount.as16BytesLongArray
         $0.gasprice = tx.payment.gasPrice.as16BytesLongArray
         $0.gaslimit = UInt64(tx.payment.gasLimit)
-        $0.code = formatCodeOrData(tx.code)
-        $0.data = formatCodeOrData(tx.data)
+        if let code = tx.code {
+            $0.code = formatCodeOrData(code)
+        }
+        if let data = tx.data {
+            $0.data = formatCodeOrData(data)
+        }
     }
 
     return Message(hashedData: try! protoTransaction.serializedData(), hashedBy: hasher)

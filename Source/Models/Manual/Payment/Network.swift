@@ -17,35 +17,34 @@
 import Foundation
 import EllipticCurveKit
 
-public enum Network {
-    case mainnet
-    case testnet(Testnet)
-    public enum Testnet {
-        case prod
-        case staging
+public enum Network: UInt32, Decodable {
+    case mainnet = 1
+    case testnet = 2
+}
+
+// MARK: - Decodable
+public extension Network {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let chainIdAsString = try container.decode(String.self)
+        guard let chainId = UInt32(chainIdAsString) else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unable to parse chain id string (`\(chainIdAsString)`) as integer")
+        }
+        guard let network = Network(rawValue: chainId) else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Received new chain id: \(chainId), you need to add this to the enum `Network`")
+        }
+        self = network
     }
 }
 
 public extension Network {
-    var baseURL: URL {
-        let baseUrlString: String
-        switch self {
-        case .mainnet: baseUrlString = "https://api.zilliqa.com"
-        case .testnet(let testnet):
-            switch testnet {
-            case .prod:
-                // Before mainnet launch testnet prod is "borrowing" that url.
-                return Network.mainnet.baseURL
-            case .staging: baseUrlString = "https://staging-api.aws.zilliqa.com"
-            }
-        }
-        return URL(string: baseUrlString)!
+    static var `default`: Network {
+        return .mainnet
     }
-    
+}
+
+public extension Network {
     var chainId: UInt32 {
-        switch self {
-        case .mainnet: return 1
-        case .testnet: return 62
-        }
+        return rawValue
     }
 }

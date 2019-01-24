@@ -25,6 +25,13 @@ import EllipticCurveKit
 extension Reactive: ZilliqaServiceReactive where Base: ZilliqaService {}
 public extension Reactive where Base: ZilliqaService {
 
+    func getNetworkFromAPI() -> Observable<NetworkResponse> {
+        return callBase {
+            $0.getNetworkFromAPI(done: $1)
+        }
+    }
+
+
     func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> Observable<TransactionReceipt> {
         return callBase {
             $0.hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: polling, done: $1)
@@ -61,15 +68,15 @@ public extension Reactive where Base: ZilliqaService {
         }
     }
 
-    func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String) -> Observable<TransactionResponse> {
+    func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String, network: Network) -> Observable<TransactionResponse> {
         return callBase {
-            $0.sendTransaction(for: payment, keystore: keystore, passphrase: passphrase, done: $1)
+            $0.sendTransaction(for: payment, keystore: keystore, passphrase: passphrase, network: network, done: $1)
         }
     }
 
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionResponse> {
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> Observable<TransactionResponse> {
         return callBase {
-            $0.sendTransaction(for: payment, signWith: keyPair, done: $1)
+            $0.sendTransaction(for: payment, signWith: keyPair, network: network, done: $1)
         }
     }
 

@@ -16,16 +16,11 @@
 
 import Foundation
 
-public struct Transaction {
-    let version: Version
-    let payment: Payment
-    let data: String?
-    let code: String?
+public struct NetworkResponse: Decodable {
+    public let network: Network
 
-    init(payment: Payment, version: Version, data: String? = nil, code: String? = nil) {
-        self.version = version
-        self.payment = payment
-        self.data = data
-        self.code = code
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.network = try container.decode(Network.self)
     }
 }

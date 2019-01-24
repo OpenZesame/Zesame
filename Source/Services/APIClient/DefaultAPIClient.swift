@@ -29,8 +29,8 @@ public final class DefaultAPIClient: APIClient {
 }
 
 public extension DefaultAPIClient {
-    convenience init(network: Network) {
-        self.init(baseURL: network.baseURL)
+    convenience init(endpoint: ZilliqaAPIEndpoint) {
+        self.init(baseURL: endpoint.baseURL)
     }
 }
 

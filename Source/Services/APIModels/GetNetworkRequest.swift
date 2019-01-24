@@ -15,17 +15,18 @@
 //
 
 import Foundation
+import JSONRPCKit
 
-public struct Transaction {
-    let version: Version
-    let payment: Payment
-    let data: String?
-    let code: String?
+public struct GetNetworkRequest: JSONRPCKit.Request {
+    public typealias Response = NetworkResponse
+}
 
-    init(payment: Payment, version: Version, data: String? = nil, code: String? = nil) {
-        self.version = version
-        self.payment = payment
-        self.data = data
-        self.code = code
+public extension GetNetworkRequest {
+    var method: String {
+        return "GetNetworkId"
+    }
+
+    var parameters: Encodable? {
+        return [""]
     }
 }

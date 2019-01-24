@@ -19,7 +19,7 @@ import EllipticCurveKit
 @testable import Zesame
 
 private let network: Network = .mainnet
-private let service = DefaultZilliqaService(network: network)
+private let service = DefaultZilliqaService(endpoint: .testnet)
 
 class TransactionSigningTests: XCTestCase {
 
@@ -37,7 +37,7 @@ class TransactionSigningTests: XCTestCase {
                 gasPrice: GasPrice.min,
                 nonce: Nonce(3)
             ),
-            network: network
+            version: Version(network: network)
         )
 
         let message = messageFromUnsignedTransaction(unsignedTx, publicKey: publicKey)
@@ -61,9 +61,9 @@ private let expectedTransactionJSONString = """
   "amount" : "15000000000000",
   "toAddr" : "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039",
   "pubKey" : "034AE47910D58B9BDE819C3CFFA8DE4441955508DB00AA2540DB8E6BF6E99ABC1B",
-  "data" : "",
-  "code" : "",
-  "signature" : "349A9085A4F4455B7F334A42D8C7DE552A377093BC55FDA20EBF7ADA9FDCFB92108A5956B16FD2334F6D83201E7B999164223765A3DDCBAFC69D215922DC1F80",
+  "data" : null,
+  "code" : null,
+  "signature" : "1727048B9F200D07E6E2D8EFF6BA3E54BF491589CCB55D872E242505B72E6CA74E022AC954DF21420AF8737C89A7E9048B75B531F6865B78B1E2A864169ED64D",
   "gasLimit" : "1",
   "version" : 65537,
   "gasPrice" : "1000000000",

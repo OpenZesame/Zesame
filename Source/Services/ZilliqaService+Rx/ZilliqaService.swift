@@ -23,8 +23,9 @@ import RxSwift
 import CryptoSwift
 
 public protocol ZilliqaService: AnyObject {
-    var network: Network { get }
     var apiClient: APIClient { get }
+
+    func getNetworkFromAPI(done: @escaping Done<NetworkResponse>)
 
     func verifyThat(encryptionPasshrase: String, canDecryptKeystore: Keystore, done: @escaping Done<Bool>)
     func createNewWallet(encryptionPassphrase: String, done: @escaping Done<Wallet>)
@@ -36,6 +37,8 @@ public protocol ZilliqaService: AnyObject {
 }
 
 public protocol ZilliqaServiceReactive {
+
+    func getNetworkFromAPI() -> Observable<NetworkResponse>
     func verifyThat(encryptionPasshrase: String, canDecryptKeystore: Keystore) -> Observable<Bool>
     func createNewWallet(encryptionPassphrase: String) -> Observable<Wallet>
     func restoreWallet(from restoration: KeyRestoration) -> Observable<Wallet>
@@ -43,8 +46,8 @@ public protocol ZilliqaServiceReactive {
     func extractKeyPairFrom(keystore: Keystore, encryptedBy passphrase: String) -> Observable<KeyPair>
 
     func getBalance(for address: AddressChecksummedConvertible) -> Observable<BalanceResponse>
-    func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String) -> Observable<TransactionResponse>
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionResponse>
+    func sendTransaction(for payment: Payment, keystore: Keystore, passphrase: String, network: Network) -> Observable<TransactionResponse>
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> Observable<TransactionResponse>
 
     func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> Observable<TransactionReceipt>
 }
