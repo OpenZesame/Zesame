@@ -20,7 +20,7 @@ import Zesame
 @UIApplicationMain
 class AppDelegate: UIResponder {
     var window: UIWindow?
-    fileprivate let zilliqaService = DefaultZilliqaService(network: .testnet(.prod))
+    fileprivate let zilliqaService = DefaultZilliqaService(endpoint: .testnet)
     private lazy var appCoordinator: AppCoordinator = {
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window

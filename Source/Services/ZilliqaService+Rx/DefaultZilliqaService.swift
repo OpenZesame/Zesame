@@ -23,11 +23,15 @@ import EllipticCurveKit
 public final class DefaultZilliqaService: ZilliqaService, ReactiveCompatible {
 
     public let apiClient: APIClient
-    public let network: Network
 
-    public init(network: Network, apiClient: APIClient? = nil) {
-        self.network = network
-        self.apiClient = apiClient ?? DefaultAPIClient(network: network)
+    public init(apiClient: APIClient) {
+        self.apiClient = apiClient
+    }
+}
+
+public extension DefaultZilliqaService {
+    convenience init(endpoint: ZilliqaAPIEndpoint) {
+        self.init(apiClient: DefaultAPIClient(endpoint: endpoint))
     }
 }
 

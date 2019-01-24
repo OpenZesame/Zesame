@@ -22,7 +22,7 @@ public struct Transaction {
     let data: String?
     let code: String?
 
-    init(payment: Payment, version: Version = .default, data: String? = nil, code: String? = nil) {
+    init(payment: Payment, version: Version, data: String? = nil, code: String? = nil) {
         self.version = version
         self.payment = payment
         self.data = data
