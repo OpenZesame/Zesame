@@ -29,7 +29,7 @@ final class SendView: ScrollingStackView {
     private lazy var gasExplainedLabel = UILabel.Style("Gas is measured in Li (\(Li.powerOf))").make()
 
     private lazy var gasPriceField = UITextField.Style("Gas price (> \(GasPrice.min.liString)", text: "\(GasPrice.min.liString)").make()
-    private lazy var encryptionPassphrase = UITextField.Style("Wallet Encryption Passphrase", text: "Nosnosnos").make()
+    private lazy var encryptionPassword = UITextField.Style("Wallet Encryption Password", text: "Nosnosnos").make()
     private lazy var sendButton: UIButton = "Send"
     private lazy var transactionIdentifierLabel: UILabel = "No tx"
 
@@ -40,7 +40,7 @@ final class SendView: ScrollingStackView {
         amountToSendField,
         gasExplainedLabel,
         gasPriceField,
-        encryptionPassphrase,
+        encryptionPassword,
         sendButton,
         transactionIdentifierLabel,
         .spacer
@@ -61,7 +61,7 @@ extension SendView: ViewModelled {
             recepientAddress: recipientAddressField.rx.text.orEmpty.asDriver(),
             amountToSend: amountToSendField.rx.text.orEmpty.asDriver(),
             gasPrice: gasPriceField.rx.text.orEmpty.asDriver(),
-            passphrase: encryptionPassphrase.rx.text.orEmpty.asDriver(),
+            password: encryptionPassword.rx.text.orEmpty.asDriver(),
             sendTrigger: sendButton.rx.tap.asDriver()
         )
     }

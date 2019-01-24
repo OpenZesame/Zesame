@@ -20,14 +20,14 @@ import RxSwift
 final class RestoreWalletView: ScrollingStackView {
 
     private lazy var privateKeyField: UITextField = "Private Key"
-    private lazy var encryptionPassphraseField = UITextField.Style("Encryption passphrase", text: "Nosnosnos").make()
-    private lazy var confirmEncryptionPassphraseField = UITextField.Style("Confirm encryption passphrase", text: "Nosnosnos").make()
+    private lazy var encryptionPasswordField = UITextField.Style("Encryption password", text: "Nosnosnos").make()
+    private lazy var confirmEncryptionPasswordField = UITextField.Style("Confirm encryption password", text: "Nosnosnos").make()
     private lazy var restoreWalletButton = UIButton.Style("Restore Wallet", isEnabled: false).make()
 
     lazy var stackViewStyle: UIStackView.Style = [
         privateKeyField,
-        encryptionPassphraseField,
-        confirmEncryptionPassphraseField,
+        encryptionPasswordField,
+        confirmEncryptionPasswordField,
         restoreWalletButton,
         .spacer
     ]
@@ -38,8 +38,8 @@ extension RestoreWalletView: ViewModelled {
     var inputFromView: ViewModel.Input {
         return ViewModel.Input(
             privateKey: privateKeyField.rx.text.asDriver(),
-            encryptionPassphrase: encryptionPassphraseField.rx.text.asDriver(),
-            confirmEncryptionPassphrase: confirmEncryptionPassphraseField.rx.text.asDriver(),
+            encryptionPassword: encryptionPasswordField.rx.text.asDriver(),
+            confirmEncryptionPassword: confirmEncryptionPasswordField.rx.text.asDriver(),
             restoreTrigger: restoreWalletButton.rx.tap.asDriver()
         )
     }

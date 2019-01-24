@@ -20,15 +20,15 @@ import RxSwift
 final class CreateNewWalletView: ScrollingStackView {
 
 //    private lazy var walletView = WalletView()
-    private lazy var encryptionPassphraseField: UITextField = "Encryption passphrase"
-    private lazy var confirmEncryptionPassphraseField: UITextField = "Confirm encryption passphrase"
+    private lazy var encryptionPasswordField: UITextField = "Encryption password"
+    private lazy var confirmEncryptionPasswordField: UITextField = "Confirm encryption password"
     private lazy var createNewWalletButton = UIButton.Style("Create New Wallet", isEnabled: false).make()
 
     // MARK: - StackViewStyling
     lazy var stackViewStyle: UIStackView.Style = [
 //        walletView,
-        encryptionPassphraseField,
-        confirmEncryptionPassphraseField,
+        encryptionPasswordField,
+        confirmEncryptionPasswordField,
         createNewWalletButton,
         .spacer
     ]
@@ -39,8 +39,8 @@ extension CreateNewWalletView: ViewModelled {
     typealias ViewModel = CreateNewWalletViewModel
     var inputFromView: ViewModel.Input {
         return ViewModel.Input(
-            encryptionPassphrase: encryptionPassphraseField.rx.text.asDriver(),
-            confirmedEncryptionPassphrase: confirmEncryptionPassphraseField.rx.text.asDriver(),
+            encryptionPassword: encryptionPasswordField.rx.text.asDriver(),
+            confirmedEncryptionPassword: confirmEncryptionPasswordField.rx.text.asDriver(),
             createWalletTrigger: createNewWalletButton.rx.tap.asDriver()
         )
     }

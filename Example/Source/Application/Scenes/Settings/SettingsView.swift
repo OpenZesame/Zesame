@@ -22,7 +22,7 @@ import RxCocoa
 final class SettingsView: ScrollingStackView {
 
 
-    private lazy var passphraseToDecryptWalletField = UITextField.Style("Passphrase", text: "Nosnosnos").make()
+    private lazy var passwordToDecryptWalletField = UITextField.Style("Password", text: "Nosnosnos").make()
     private lazy var revealPrivateKeyButton: UIButton = "Reveal private key"
 
     private lazy var privateKeyLabels = LabelsView(
@@ -40,7 +40,7 @@ final class SettingsView: ScrollingStackView {
     private lazy var removeWalletButton: UIButton = "Remove Wallet"
 
     lazy var stackViewStyle: UIStackView.Style = [
-        passphraseToDecryptWalletField,
+        passwordToDecryptWalletField,
         revealPrivateKeyButton,
         privateKeyLabels,
         appVersionLabels,
@@ -62,7 +62,7 @@ extension SettingsView: ViewModelled {
 
     var inputFromView: ViewModel.Input {
         return ViewModel.Input(
-            passphrase: passphraseToDecryptWalletField.rx.text.orEmpty.asDriver(),
+            password: passwordToDecryptWalletField.rx.text.orEmpty.asDriver(),
             revealPrivateKeyTrigger: revealPrivateKeyButton.rx.tap.asDriver(),
             removeWalletTrigger: removeWalletButton.rx.tap.asDriver()
         )
