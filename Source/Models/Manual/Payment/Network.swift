@@ -22,19 +22,14 @@ public enum Network: UInt32, Decodable {
     case testnet = 2
 }
 
-// MARK: - Encodable
-public extension Network {
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(chainId)
-    }
-}
-
 // MARK: - Decodable
 public extension Network {
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        let chainId = try container.decode(UInt32.self)
+        let chainIdAsString = try container.decode(String.self)
+        guard let chainId = UInt32(chainIdAsString) else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unable to parse chain id string (`\(chainIdAsString)`) as integer")
+        }
         guard let network = Network(rawValue: chainId) else {
             throw DecodingError.dataCorruptedError(in: container, debugDescription: "Received new chain id: \(chainId), you need to add this to the enum `Network`")
         }

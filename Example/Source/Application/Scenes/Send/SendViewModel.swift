@@ -87,11 +87,13 @@ extension SendViewModel: ViewModelType {
             return Payment(to: to, amount: amount, gasPrice: price, nonce: nonce)
         }
 
+        let network = service.getNetworkFromAPI().map { $0.network }
+
         let receipt: Driver<TransactionReceipt> = input.sendTrigger
-            .withLatestFrom(Driver.combineLatest(payment.filterNil(), wallet, input.passphrase) { (payment: $0, keystore: $1.keystore, encyptedBy: $2) })
+            .withLatestFrom(Driver.combineLatest(payment.filterNil(), wallet, input.passphrase, network.asDriverOnErrorReturnEmpty()) { (payment: $0, keystore: $1.keystore, encyptedBy: $2, network: $3) })
             .flatMapLatest {
                 print("Trying to pay: \($0.payment)")
-                return self.service.sendTransaction(for: $0.payment, keystore: $0.keystore, passphrase: $0.encyptedBy, network: .testnet)
+                return self.service.sendTransaction(for: $0.payment, keystore: $0.keystore, passphrase: $0.encyptedBy, network: $0.network)
                     .do(onNext: {
                         print("Sent tx id: \($0.transactionIdentifier)")
                     }, onError: {

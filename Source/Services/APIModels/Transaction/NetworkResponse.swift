@@ -19,7 +19,8 @@ import Foundation
 public struct NetworkResponse: Decodable {
     public let network: Network
 
-    public enum CodingKeys: String, CodingKey {
-        case network = "id"
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.network = try container.decode(Network.self)
     }
 }
