@@ -37,8 +37,8 @@ final class CreateNewWalletViewModel {
 extension CreateNewWalletViewModel: ViewModelType {
 
     struct Input {
-        let encryptionPassphrase: Driver<String?>
-        let confirmedEncryptionPassphrase: Driver<String?>
+        let encryptionPassword: Driver<String?>
+        let confirmedEncryptionPassword: Driver<String?>
         let createWalletTrigger: Driver<Void>
     }
 
@@ -48,21 +48,21 @@ extension CreateNewWalletViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
 
-        let validEncryptionPassphrase: Driver<String?> = Driver.combineLatest(input.encryptionPassphrase, input.confirmedEncryptionPassphrase) {
+        let validEncryptionPassword: Driver<String?> = Driver.combineLatest(input.encryptionPassword, input.confirmedEncryptionPassword) {
             guard
                 $0 == $1,
-                let newPassphrase = $0,
-                newPassphrase.count >= 3
+                let newPassword = $0,
+                newPassword.count >= 3
                 else { return nil }
-            return newPassphrase
+            return newPassword
         }
 
-        let isCreateWalletButtonEnabled = validEncryptionPassphrase.map { $0 != nil }
+        let isCreateWalletButtonEnabled = validEncryptionPassword.map { $0 != nil }
         
         
-        input.createWalletTrigger.withLatestFrom(validEncryptionPassphrase.filterNil()) { $1 } //.flatMapLatest { (passphrase: String?) -> Driver<Wallet?> in
+        input.createWalletTrigger.withLatestFrom(validEncryptionPassword.filterNil()) { $1 } //.flatMapLatest { (password: String?) -> Driver<Wallet?> in
             .flatMapLatest {
-                self.service.createNewWallet(encryptionPassphrase: $0)
+                self.service.createNewWallet(encryptionPassword: $0)
                     .asDriverOnErrorReturnEmpty()
             }
             .do(onNext: { self.navigator?.toMain(wallet: $0) })

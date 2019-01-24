@@ -34,8 +34,8 @@ extension RestoreWalletViewModel: ViewModelType {
 
     struct Input {
         let privateKey: Driver<String?>
-        let encryptionPassphrase: Driver<String?>
-        let confirmEncryptionPassphrase: Driver<String?>
+        let encryptionPassword: Driver<String?>
+        let confirmEncryptionPassword: Driver<String?>
         let restoreTrigger: Driver<Void>
     }
 
@@ -45,13 +45,13 @@ extension RestoreWalletViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
 
-        let validEncryptionPassphrase: Driver<String?> = Driver.combineLatest(input.encryptionPassphrase, input.confirmEncryptionPassphrase) {
+        let validEncryptionPassword: Driver<String?> = Driver.combineLatest(input.encryptionPassword, input.confirmEncryptionPassword) {
             guard
                 $0 == $1,
-                let newPassphrase = $0,
-                newPassphrase.count >= 3
+                let newPassword = $0,
+                newPassword.count >= 3
                 else { return nil }
-            return newPassphrase
+            return newPassword
         }
 
         let validPrivateKey: Driver<String?> = input.privateKey.map {
@@ -62,9 +62,9 @@ extension RestoreWalletViewModel: ViewModelType {
             return key
         }
 
-        let isRestoreButtonEnabled = Driver.combineLatest(validEncryptionPassphrase, validPrivateKey) { ($0, $1) }.map { $0 != nil && $1 != nil }
+        let isRestoreButtonEnabled = Driver.combineLatest(validEncryptionPassword, validPrivateKey) { ($0, $1) }.map { $0 != nil && $1 != nil }
 
-        let wallet = Driver.combineLatest(validPrivateKey.filterNil(), validEncryptionPassphrase.filterNil()) {
+        let wallet = Driver.combineLatest(validPrivateKey.filterNil(), validEncryptionPassword.filterNil()) {
             try? KeyRestoration(privateKeyHexString: $0, encryptBy: $1)
         }.filterNil()
         .flatMapLatest {

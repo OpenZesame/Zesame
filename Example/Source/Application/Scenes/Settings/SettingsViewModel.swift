@@ -36,7 +36,7 @@ final class SettingsViewModel {
 extension SettingsViewModel: ViewModelType {
 
     struct Input {
-        let passphrase: Driver<String>
+        let password: Driver<String>
         let revealPrivateKeyTrigger: Driver<Void>
         let removeWalletTrigger: Driver<Void>
     }
@@ -63,8 +63,8 @@ extension SettingsViewModel: ViewModelType {
         }()
         let appVersion = Driver<String?>.just(appVersionString).filterNil()
 
-        let privateKey = input.revealPrivateKeyTrigger.withLatestFrom(input.passphrase).withLatestFrom(wallet) { (passphrase: $0, wallet: $1) }.flatMapLatest { [unowned self] in
-            self.service.extractKeyPairFrom(wallet: $0.wallet, encryptedBy: $0.passphrase).asDriverOnErrorReturnEmpty()
+        let privateKey = input.revealPrivateKeyTrigger.withLatestFrom(input.password).withLatestFrom(wallet) { (password: $0, wallet: $1) }.flatMapLatest { [unowned self] in
+            self.service.extractKeyPairFrom(wallet: $0.wallet, encryptedBy: $0.password).asDriverOnErrorReturnEmpty()
             }.map { $0.privateKey.asHexStringLength64() }
 
         return Output(
