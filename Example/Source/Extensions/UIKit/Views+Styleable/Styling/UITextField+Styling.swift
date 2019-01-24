@@ -15,7 +15,6 @@
 //
 
 import UIKit
-import TinyConstraints
 
 extension UITextField: EmptyInitializable, Styling, StaticEmptyInitializable, ExpressibleByStringLiteral {
 

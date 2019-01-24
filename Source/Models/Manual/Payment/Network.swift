@@ -50,7 +50,21 @@ public extension Network {
 }
 
 public extension Network {
-
+    var baseURL: URL {
+        let baseUrlString: String
+        switch self {
+        case .mainnet: baseUrlString = "https://api.zilliqa.com"
+        case .testnet(let testnet):
+            switch testnet {
+            case .prod:
+                // Before mainnet launch testnet prod is "borrowing" that url.
+                return Network.mainnet.baseURL
+            case .staging: baseUrlString = "https://staging-api.aws.zilliqa.com"
+            }
+        }
+        return URL(string: baseUrlString)!
+    }
+    
     var chainId: UInt32 {
         print("⚠️ Using uncofirmed chain id. Verify that this is the correct chain id before launch.")
         return rawValue

@@ -23,6 +23,7 @@ import RxSwift
 import CryptoSwift
 
 public protocol ZilliqaService: AnyObject {
+    var network: Network { get }
     var apiClient: APIClient { get }
 
     func getNetworkFromAPI(done: @escaping Done<NetworkResponse>)
