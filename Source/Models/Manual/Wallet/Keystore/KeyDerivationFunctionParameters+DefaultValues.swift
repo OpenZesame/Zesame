@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -23,19 +23,15 @@
 //
 
 import Foundation
-import EllipticCurveKit
-import CryptoSwift
 
-public struct DerivedKey {
-    public let data: Data
-    init(data: DataConvertible) {
-        self.data = data.asData
-    }
-}
-
-extension DerivedKey: DataConvertible {}
-public extension DerivedKey {
-    var asData: Data {
-        return data
+public extension KeyDerivationFunction {
+    var defaultParameters: Parameters {
+        // Same parameters used by Zilliqa Javascript SDK: https://github.com/Zilliqa/Zilliqa-JavaScript-Library/blob/dev/packages/zilliqa-js-crypto/src/keystore.ts#L77-L82
+        let costParameter: Int
+        switch self {
+        case .scrypt: costParameter = 8192
+        case .pbkdf2: costParameter = 262144
+        }
+        return Parameters(costParameter: costParameter)
     }
 }

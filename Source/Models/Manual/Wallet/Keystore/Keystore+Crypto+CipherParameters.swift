@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -23,19 +23,17 @@
 //
 
 import Foundation
-import EllipticCurveKit
-import CryptoSwift
 
-public struct DerivedKey {
-    public let data: Data
-    init(data: DataConvertible) {
-        self.data = data.asData
+public extension Keystore.Crypto {
+    public struct CipherParameters {
+        /// "iv"
+        let initializationVectorHex: String
+        var initializationVector: Data { return Data(hex: initializationVectorHex) }
     }
 }
 
-extension DerivedKey: DataConvertible {}
-public extension DerivedKey {
-    var asData: Data {
-        return data
+extension Keystore.Crypto.CipherParameters: Codable, Equatable {
+    public enum CodingKeys: String, CodingKey {
+        case initializationVectorHex = "iv"
     }
 }
