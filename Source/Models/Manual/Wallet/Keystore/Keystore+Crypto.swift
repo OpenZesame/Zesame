@@ -28,6 +28,15 @@ import EllipticCurveKit
 
 public extension Keystore {
     public struct Crypto: Codable, Equatable {
+        public struct CipherParameters: Codable, Equatable {
+            /// "iv"
+            let initializationVectorHex: String
+            var initializationVector: Data { return Data(hex: initializationVectorHex) }
+
+            public enum CodingKeys: String, CodingKey {
+                case initializationVectorHex = "iv"
+            }
+        }
 
         /// "cipher"
         let cipherType: String

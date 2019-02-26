@@ -11,7 +11,10 @@ Pod::Spec.new do |s|
     s.source_files = 'Source/**/*.swift'
     s.social_media_url = 'https://twitter.com/alexcyon'
 
-     # ECC Methods
+    # Crypto
+    s.dependency 'CryptoSwift'
+
+    # ECC Methods
     s.dependency 'EllipticCurveKit'
 
     # JSON RPC in order to format API requests. (2018-09-28: Actually I would like to mark dependency on `ollitapa`s fork github.com/ollitapa/JSONRPCKit contains support for `Codable`)

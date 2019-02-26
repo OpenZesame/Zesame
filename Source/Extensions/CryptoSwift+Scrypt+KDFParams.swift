@@ -25,6 +25,8 @@
 import Foundation
 import CryptoSwift
 
+public typealias Scrypt = CryptoSwift.Scrypt
+
 public extension Scrypt {
 
     convenience init(kdfParams: KDFParams? = nil, password: String) {

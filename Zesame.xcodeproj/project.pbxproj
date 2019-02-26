@@ -247,8 +247,6 @@
 		48DBEA6F222466D4009B8C43 /* KeyDerivationFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA6D222466D4009B8C43 /* KeyDerivationFunction.swift */; };
 		48DBEA71222466E2009B8C43 /* KeyDerivationFunctionParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA70222466E2009B8C43 /* KeyDerivationFunctionParameters.swift */; };
 		48DBEA72222466E2009B8C43 /* KeyDerivationFunctionParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA70222466E2009B8C43 /* KeyDerivationFunctionParameters.swift */; };
-		48DBEA74222467A6009B8C43 /* Keystore+Crypto+CipherParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA73222467A6009B8C43 /* Keystore+Crypto+CipherParameters.swift */; };
-		48DBEA75222467A6009B8C43 /* Keystore+Crypto+CipherParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA73222467A6009B8C43 /* Keystore+Crypto+CipherParameters.swift */; };
 		48DBEA7722246861009B8C43 /* Encodable+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA7622246861009B8C43 /* Encodable+Dictionary.swift */; };
 		48DBEA7822246861009B8C43 /* Encodable+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA7622246861009B8C43 /* Encodable+Dictionary.swift */; };
 		48DBEA7A22247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA7922247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift */; };
@@ -467,7 +465,6 @@
 		48DBEA6A222466C4009B8C43 /* Keystore+Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keystore+Crypto.swift"; sourceTree = "<group>"; };
 		48DBEA6D222466D4009B8C43 /* KeyDerivationFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDerivationFunction.swift; sourceTree = "<group>"; };
 		48DBEA70222466E2009B8C43 /* KeyDerivationFunctionParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDerivationFunctionParameters.swift; sourceTree = "<group>"; };
-		48DBEA73222467A6009B8C43 /* Keystore+Crypto+CipherParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keystore+Crypto+CipherParameters.swift"; sourceTree = "<group>"; };
 		48DBEA7622246861009B8C43 /* Encodable+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Dictionary.swift"; sourceTree = "<group>"; };
 		48DBEA7922247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyDerivationFunctionParameters+DefaultValues.swift"; sourceTree = "<group>"; };
 		48DBEA7C22247BD8009B8C43 /* KeyDeriving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDeriving.swift; sourceTree = "<group>"; };
@@ -764,7 +761,6 @@
 			children = (
 				4877B4B221BE2EFA00A94318 /* Keystore.swift */,
 				48DBEA6A222466C4009B8C43 /* Keystore+Crypto.swift */,
-				48DBEA73222467A6009B8C43 /* Keystore+Crypto+CipherParameters.swift */,
 				48DBEA6D222466D4009B8C43 /* KeyDerivationFunction.swift */,
 				48DBEA8522247C42009B8C43 /* Keystore+KeyDeriving.swift */,
 				48DBEA7922247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift */,
@@ -1269,7 +1265,6 @@
 				4877B4EB21BE2EFA00A94318 /* Wallet.swift in Sources */,
 				48CAF98821EA521D0047E53F /* HexStringConvertible.swift in Sources */,
 				484D1AC721D6940700589E38 /* ExpressibleByAmount+Arithmetic.swift in Sources */,
-				48DBEA75222467A6009B8C43 /* Keystore+Crypto+CipherParameters.swift in Sources */,
 				48D688B621F8F3C5004DCE0F /* NetworkResponse.swift in Sources */,
 				486C2A3D21D91C6B00C0F7FA /* NoUpperbound.swift in Sources */,
 				48DBEA6F222466D4009B8C43 /* KeyDerivationFunction.swift in Sources */,
@@ -1394,7 +1389,6 @@
 				4877B4D221BE2EFA00A94318 /* Keystore.swift in Sources */,
 				48CAF98721EA521D0047E53F /* HexStringConvertible.swift in Sources */,
 				4877B4EA21BE2EFA00A94318 /* Wallet.swift in Sources */,
-				48DBEA74222467A6009B8C43 /* Keystore+Crypto+CipherParameters.swift in Sources */,
 				48D688B521F8F3C2004DCE0F /* NetworkResponse.swift in Sources */,
 				486C2A3C21D91C6B00C0F7FA /* NoUpperbound.swift in Sources */,
 				48DBEA6E222466D4009B8C43 /* KeyDerivationFunction.swift in Sources */,
