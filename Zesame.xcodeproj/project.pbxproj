@@ -249,8 +249,6 @@
 		48DBEA72222466E2009B8C43 /* KeyDerivationFunctionParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA70222466E2009B8C43 /* KeyDerivationFunctionParameters.swift */; };
 		48DBEA7722246861009B8C43 /* Encodable+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA7622246861009B8C43 /* Encodable+Dictionary.swift */; };
 		48DBEA7822246861009B8C43 /* Encodable+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA7622246861009B8C43 /* Encodable+Dictionary.swift */; };
-		48DBEA7A22247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA7922247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift */; };
-		48DBEA7B22247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA7922247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift */; };
 		48DBEA7D22247BD8009B8C43 /* KeyDeriving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA7C22247BD8009B8C43 /* KeyDeriving.swift */; };
 		48DBEA7E22247BD8009B8C43 /* KeyDeriving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA7C22247BD8009B8C43 /* KeyDeriving.swift */; };
 		48DBEA8022247BF2009B8C43 /* AnyKeyDeriving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBEA7F22247BF2009B8C43 /* AnyKeyDeriving.swift */; };
@@ -466,7 +464,6 @@
 		48DBEA6D222466D4009B8C43 /* KeyDerivationFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDerivationFunction.swift; sourceTree = "<group>"; };
 		48DBEA70222466E2009B8C43 /* KeyDerivationFunctionParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDerivationFunctionParameters.swift; sourceTree = "<group>"; };
 		48DBEA7622246861009B8C43 /* Encodable+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Dictionary.swift"; sourceTree = "<group>"; };
-		48DBEA7922247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyDerivationFunctionParameters+DefaultValues.swift"; sourceTree = "<group>"; };
 		48DBEA7C22247BD8009B8C43 /* KeyDeriving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDeriving.swift; sourceTree = "<group>"; };
 		48DBEA7F22247BF2009B8C43 /* AnyKeyDeriving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyKeyDeriving.swift; sourceTree = "<group>"; };
 		48DBEA8222247C29009B8C43 /* CryptoSwift+PBKDF2+KDFParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CryptoSwift+PBKDF2+KDFParams.swift"; sourceTree = "<group>"; };
@@ -763,7 +760,6 @@
 				48DBEA6A222466C4009B8C43 /* Keystore+Crypto.swift */,
 				48DBEA6D222466D4009B8C43 /* KeyDerivationFunction.swift */,
 				48DBEA8522247C42009B8C43 /* Keystore+KeyDeriving.swift */,
-				48DBEA7922247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift */,
 				48DBEA70222466E2009B8C43 /* KeyDerivationFunctionParameters.swift */,
 				4877B4B321BE2EFA00A94318 /* Keystore+Wallet+Import.swift */,
 				48DBEA7C22247BD8009B8C43 /* KeyDeriving.swift */,
@@ -1252,7 +1248,6 @@
 				48ED0E7020E80754005DA19C /* BigUInt+String+Init.swift in Sources */,
 				484D1AEB21D6A1E800589E38 /* ExpressibleByAmount+UnitConversion.swift in Sources */,
 				48DBEA7822246861009B8C43 /* Encodable+Dictionary.swift in Sources */,
-				48DBEA7B22247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift in Sources */,
 				4832A77421EA621F00816D9D /* Address+Equatable.swift in Sources */,
 				486C2A4021D91C7700C0F7FA /* Unbound.swift in Sources */,
 				4877B4D321BE2EFA00A94318 /* Keystore.swift in Sources */,
@@ -1376,7 +1371,6 @@
 				484D1AE021D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift in Sources */,
 				484D1AEA21D6A1E800589E38 /* ExpressibleByAmount+UnitConversion.swift in Sources */,
 				48DBEA7722246861009B8C43 /* Encodable+Dictionary.swift in Sources */,
-				48DBEA7A22247BBE009B8C43 /* KeyDerivationFunctionParameters+DefaultValues.swift in Sources */,
 				4832A77321EA621F00816D9D /* Address+Equatable.swift in Sources */,
 				483460A82145BD4A007E5D5C /* ZilliqaService.swift in Sources */,
 				486C2A3F21D91C7700C0F7FA /* Unbound.swift in Sources */,
@@ -1493,6 +1487,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Debug;
 		};

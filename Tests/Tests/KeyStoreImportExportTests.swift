@@ -56,6 +56,10 @@ extension Keystore {
     }
 
     func decryptPrivateKey(done: @escaping (PrivateKey) -> Void) {
+        decryptPrivateKey(password: password, done: done)
+    }
+
+    func decryptPrivateKey(password: String, done: @escaping (PrivateKey) -> Void) {
         decryptPrivateKeyWith(password: password) {
             switch $0 {
             case .failure(let error):
