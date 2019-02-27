@@ -27,7 +27,7 @@ import EllipticCurveKit
 import CryptoSwift
 
 public struct Keystore: Codable, Equatable {
-    public static let minumumPasswordLength = 2
+    public static let minumumPasswordLength = 8
 
     public let address: AddressChecksummed
     public let crypto: Crypto
