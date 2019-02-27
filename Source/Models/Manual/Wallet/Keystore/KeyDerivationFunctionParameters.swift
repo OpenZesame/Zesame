@@ -43,7 +43,10 @@ public extension KDF {
         /// "dklen"
         let lengthOfDerivedKey: Int
 
-        let salt: Data
+        let saltHex: String
+        var salt: Data {
+            return Data(hex: saltHex)
+        }
 
         init(
             costParameterN: Int = 8192,
@@ -58,7 +61,7 @@ public extension KDF {
             self.blockSize = blockSize
             self.parallelizationParameter = parallelizationParameter
             self.lengthOfDerivedKey = lengthOfDerivedKey
-            self.salt = salt ?? (try! securelyGenerateBytes(count: 32).asData)
+            self.saltHex = (salt ?? (try! securelyGenerateBytes(count: 32).asData)).asHex
         }
 
         public init(from decoder: Decoder) throws {
@@ -68,8 +71,7 @@ public extension KDF {
             blockSize = try container.decode(Int.self, forKey: .blockSize)
             parallelizationParameter = try container.decode(Int.self, forKey: .parallelizationParameter)
             lengthOfDerivedKey = try container.decode(Int.self, forKey: .lengthOfDerivedKey)
-            let saltHex = try container.decode(String.self, forKey: .salt)
-            self.salt = Data(hex: saltHex)
+            saltHex = try container.decode(String.self, forKey: .saltHex)
         }
     }
 }
@@ -83,6 +85,6 @@ extension KDFParams {
         case parallelizationParameter = "p"
         case lengthOfDerivedKey = "dklen"
 
-        case salt = "salt"
+        case saltHex = "salt"
     }
 }

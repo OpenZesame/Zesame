@@ -31,7 +31,7 @@ class ExportKeystoreTest: XCTestCase {
     func testWalletImport() {
 
         let service = DefaultZilliqaService(endpoint: .testnet)
-        let sempaphore = expectation(description: "importing wallet from keystore json")
+        let expectWalletImport = expectation(description: "importing wallet from keystore json")
         do {
             let keyRestoration = try KeyRestoration(keyStoreJSONString: keystoreWalletJSONString, encryptedBy: password)
             service.restoreWallet(from: keyRestoration) {
@@ -41,7 +41,7 @@ class ExportKeystoreTest: XCTestCase {
 
                 case .failure(let error): XCTFail("Failed to export, error: \(error)")
                 }
-                sempaphore.fulfill()
+                expectWalletImport.fulfill()
             }
             waitForExpectations(timeout: 3, handler: nil)
         } catch {

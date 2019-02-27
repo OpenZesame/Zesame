@@ -90,4 +90,21 @@ class ScryptTests: XCTestCase {
             }
         }
     }
+
+    func testNewWalletKeystore() {
+        let privateKey = PrivateKey.generateNew()
+        let password = "apabanan"
+
+        let expectWalletImport = expectation(description: "keystore from private key")
+        Keystore.from(privateKey: privateKey, encryptBy: password) {
+            switch $0 {
+            case .failure(let error): XCTFail("unexpected error: \(error)")
+            case .success(let keystore):
+                XCTAssertFalse(keystore.crypto.keyDerivationFunctionParameters.saltHex.isEmpty)
+                expectWalletImport.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 3, handler: nil)
+    }
 }
