@@ -41,7 +41,7 @@ private let password = "apabanan"
 
 extension Keystore {
     static func with(kdf: KDF, done: @escaping (Keystore) -> Void) {
-        Keystore.from(
+        try! Keystore.from(
             privateKey: privateKey,
             encryptBy: password,
             kdf: kdf
@@ -91,16 +91,29 @@ class ScryptTests: XCTestCase {
         }
     }
 
+    typealias JSON = [String: Any]
     func testNewWalletKeystore() {
         let privateKey = PrivateKey.generateNew()
         let password = "apabanan"
 
         let expectWalletImport = expectation(description: "keystore from private key")
-        Keystore.from(privateKey: privateKey, encryptBy: password) {
+        try! Keystore.from(privateKey: privateKey, encryptBy: password) {
             switch $0 {
             case .failure(let error): XCTFail("unexpected error: \(error)")
             case .success(let keystore):
-                XCTAssertFalse(keystore.crypto.keyDerivationFunctionParameters.saltHex.isEmpty)
+                XCTAssertEqual(keystore.crypto.keyDerivationFunctionParameters.saltHex.count, 64)
+                do {
+                    let encoder = JSONEncoder()
+                    encoder.outputFormatting = .prettyPrinted
+                    let jsonData = try encoder.encode(keystore)
+                    let json = try! JSONSerialization.jsonObject(with: jsonData, options: []) as! JSON
+                    let crypto = json["crypto"] as! JSON
+                    let kdfparams = crypto["kdfparams"] as! JSON
+                    let salt = kdfparams["salt"] as! String
+                    XCTAssertNotNil(try? HexString(salt))
+                } catch {
+                    XCTFail("failed to encode")
+                }
                 expectWalletImport.fulfill()
             }
         }
