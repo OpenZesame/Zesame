@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -23,19 +23,20 @@
 //
 
 import Foundation
-import EllipticCurveKit
 import CryptoSwift
 
-public struct DerivedKey {
-    public let data: Data
-    init(data: DataConvertible) {
-        self.data = data.asData
-    }
-}
+public typealias Scrypt = CryptoSwift.Scrypt
 
-extension DerivedKey: DataConvertible {}
-public extension DerivedKey {
-    var asData: Data {
-        return data
+public extension Scrypt {
+
+    convenience init(kdfParams: KDFParams? = nil, password: String) throws {
+        let params = kdfParams ?? KDF.defaultParameters
+        try self.init(
+            password: Array(password.data(using: .ascii)!),
+            salt: params.salt.bytes,
+            dkLen: params.lengthOfDerivedKey,
+            N: params.costParameterN,
+            r: params.blockSize,
+            p: params.parallelizationParameter)
     }
 }

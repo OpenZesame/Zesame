@@ -13,20 +13,27 @@
 //  - This notice may not be removed or altered from any source or binary distribution.
 //
 
-import Foundation
 
-public extension Array where Element == UInt8 {
-    func toBase64() -> String? {
-        return Data( self).base64EncodedString()
-    }
+@testable import CryptoSwift
+import XCTest
 
-    init(base64: String) {
-        self.init()
-
-        guard let decodedData = Data(base64Encoded: base64) else {
-            return
+class ScryptTestsPeft: XCTestCase {
+    func testScryptPerformance() {
+        let N = 16384
+        let password: Array<UInt8> = Array<UInt8>(repeating: 0, count: 32)
+        let salt: Array<UInt8> = Array<UInt8>(repeating: 0, count: 32)
+        measure {
+            _ = try! CryptoSwift.Scrypt(password: password, salt: salt, dkLen: 64, N: N, r: 8, p: 1).calculate()
         }
+    }
+    
+}
 
-        append(contentsOf: decodedData.bytes)
+extension ScryptTestsPeft {
+    static func allTests() -> [(String, (ScryptTestsPeft) -> () -> Void)] {
+        let tests = [
+            ("testScryptPerformance", testScryptPerformance),
+            ]
+        return tests
     }
 }

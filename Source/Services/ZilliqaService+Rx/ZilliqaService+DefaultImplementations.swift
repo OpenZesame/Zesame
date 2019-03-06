@@ -39,10 +39,10 @@ public extension ZilliqaService {
         }
     }
 
-    func createNewWallet(encryptionPassword: String, done: @escaping Done<Wallet>) {
+    func createNewWallet(encryptionPassword: String, kdf: KDF = .scrypt, done: @escaping Done<Wallet>) {
         background {
             let privateKey = PrivateKey.generateNew()
-            let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword)
+            let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf)
             self.restoreWallet(from: keyRestoration, done: done)
         }
     }
@@ -59,32 +59,49 @@ public extension ZilliqaService {
                             done(.failure(error))
                         }
                     case .success(_): // we dont want to use the private key that got decrypted, we only store keystore
-                        do {
-                            let address = try Address(string: keystore.address)
-                            main {
-                                done(.success(Wallet(keystore: keystore, address: address)))
-                            }
-                        } catch {
-                            main {
-                                done(.failure(.walletImport(.badAddress)))
-                            }
+                        main {
+                            let wallet = Wallet(keystore: keystore)
+                            done(.success(wallet))
                         }
-
                     }
                 }
-            case .privateKey(let privateKey, let newPassword):
-                let address = AddressNotNecessarilyChecksummed(privateKey: privateKey)
-                Keystore.from(address: address, privateKey: privateKey, encryptBy: newPassword) {
-                    guard case .success(let keystore) = $0 else { done(Result.failure($0.error!)); return }
+            case .privateKey(let privateKey, let newPassword, let kdf):
+                do {
+                    try Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf) {
+
+                        guard case .success(let keystore) = $0 else {
+                            done(.failure($0.error!))
+                            return
+                        }
+
+                        main {
+                            done(.success(Wallet(keystore: keystore)))
+                        }
+                    }
+                } catch {
                     main {
-                        done(.success(Wallet(keystore: keystore, address: address)))
+                        done(.failure(Error.walletImport(.keystoreError(error))))
                     }
                 }
             }
         }
     }
 
-    func exportKeystore(address: AddressChecksummedConvertible, privateKey: PrivateKey, encryptWalletBy password: String, done: @escaping Done<Keystore>) {
-        Keystore.from(address: address, privateKey: privateKey, encryptBy: password, done: done)
+    func exportKeystore(
+        privateKey: PrivateKey,
+        encryptWalletBy password: String,
+        kdf: KDF = .scrypt,
+        done: @escaping Done<Keystore>
+        ) {
+        do {
+            try Keystore.from(
+                privateKey: privateKey,
+                encryptBy: password,
+                kdf: kdf,
+                done: done
+            )
+        } catch {
+           done(.failure(Error.keystoreExport(error)))
+        }
     }
 }
