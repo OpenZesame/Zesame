@@ -48,7 +48,7 @@ public protocol ZilliqaServiceReactive {
 
     func getNetworkFromAPI() -> Observable<NetworkResponse>
     func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) -> Observable<Bool>
-    func createNewWallet(encryptionPassword: String) -> Observable<Wallet>
+    func createNewWallet(encryptionPassword: String, kdf: KDF) -> Observable<Wallet>
     func restoreWallet(from restoration: KeyRestoration) -> Observable<Wallet>
     func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) -> Observable<Keystore>
     func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> Observable<KeyPair>
