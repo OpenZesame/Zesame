@@ -47,9 +47,8 @@ public extension ZilliqaService {
         }
     }
 
-
     func restoreWallet(from restoration: KeyRestoration, done: @escaping Done<Wallet>) {
-        background {
+        background { [unowned self] in
             switch restoration {
             case .keystore(let keystore, let password):
                 keystore.decryptPrivateKeyWith(password: password) {
@@ -58,10 +57,17 @@ public extension ZilliqaService {
                         main {
                             done(.failure(error))
                         }
-                    case .success(_): // we dont want to use the private key that got decrypted, we only store keystore
-                        main {
-                            let wallet = Wallet(keystore: keystore)
-                            done(.success(wallet))
+                    case .success(let privateKey):
+                        // We would like the SDK to always store Keystore on same format, so disregarding if we imported a keystore having KDF `pbkdf2` or `scrypt`, the stored KDF in the users wallet
+                        // is the same, so that decrypting takes ~same time for every user.
+                        if keystore.crypto.kdf != KDF.default {
+                            let defaultKeyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: password, kdf: .default)
+                            self.restoreWallet(from: defaultKeyRestoration, done: done)
+                        } else {
+                            main {
+                                let wallet = Wallet(keystore: keystore)
+                                done(.success(wallet))
+                            }
                         }
                     }
                 }
