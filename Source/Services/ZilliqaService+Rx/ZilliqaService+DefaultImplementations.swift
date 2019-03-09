@@ -39,7 +39,7 @@ public extension ZilliqaService {
         }
     }
 
-    func createNewWallet(encryptionPassword: String, kdf: KDF = .scrypt, done: @escaping Done<Wallet>) {
+    func createNewWallet(encryptionPassword: String, kdf: KDF = .default, done: @escaping Done<Wallet>) {
         background {
             let privateKey = PrivateKey.generateNew()
             let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf)
@@ -90,7 +90,7 @@ public extension ZilliqaService {
     func exportKeystore(
         privateKey: PrivateKey,
         encryptWalletBy password: String,
-        kdf: KDF = .scrypt,
+        kdf: KDF = .default,
         done: @escaping Done<Keystore>
         ) {
         do {

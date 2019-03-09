@@ -31,6 +31,11 @@ public enum KeyDerivationFunction: String, Codable {
 }
 
 public extension KDF {
+
+    static var `default`: KDF {
+        return .scrypt
+    }
+
     static var defaultParameters: KDFParams {
         do {
             return try KDFParams()
