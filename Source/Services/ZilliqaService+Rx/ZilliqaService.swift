@@ -38,7 +38,7 @@ public protocol ZilliqaService: AnyObject {
     func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore, done: @escaping Done<Bool>)
     func createNewWallet(encryptionPassword: String, kdf: KDF, done: @escaping Done<Wallet>)
     func restoreWallet(from restoration: KeyRestoration, done: @escaping Done<Wallet>)
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String, done: @escaping Done<Keystore>)
+    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String, kdf: KDF, done: @escaping Done<Keystore>)
 
     func getBalance(for address: AddressChecksummedConvertible, done: @escaping Done<BalanceResponse>)
     func send(transaction: SignedTransaction, done: @escaping Done<TransactionResponse>)
