@@ -13,7 +13,7 @@ private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
     private let _source: Observable<E>
     private let _dispose: Cancelable
 
-    init(source: Observable<E>, disposeAction: @escaping () -> ()) {
+    init(source: Observable<E>, disposeAction: @escaping () -> Void) {
         _source = source
         _dispose = Disposables.create(with: disposeAction)
     }
@@ -38,11 +38,11 @@ public class ActivityIndicator : SharedSequenceConvertibleType {
     public typealias SharingStrategy = DriverSharingStrategy
 
     private let _lock = NSRecursiveLock()
-    private let _variable = Variable(0)
+    private let _relay = BehaviorRelay(value: 0)
     private let _loading: SharedSequence<SharingStrategy, Bool>
 
     public init() {
-        _loading = _variable.asDriver()
+        _loading = _relay.asDriver()
             .map { $0 > 0 }
             .distinctUntilChanged()
     }
@@ -58,13 +58,13 @@ public class ActivityIndicator : SharedSequenceConvertibleType {
 
     private func increment() {
         _lock.lock()
-        _variable.value = _variable.value + 1
+        _relay.accept(_relay.value + 1)
         _lock.unlock()
     }
 
     private func decrement() {
         _lock.lock()
-        _variable.value = _variable.value - 1
+        _relay.accept(_relay.value - 1)
         _lock.unlock()
     }
 
