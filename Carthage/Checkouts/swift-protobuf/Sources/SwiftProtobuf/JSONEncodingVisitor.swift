@@ -335,16 +335,8 @@ internal struct JSONEncodingVisitor: Visitor {
   /// Helper function that throws an error if the field number could not be
   /// resolved.
   private mutating func startField(for number: Int) throws {
-    let name: _NameMap.Name?
-
-    if options.preserveProtoFieldNames {
-        name = nameMap.names(for: number)?.proto
-    } else {
-        name = nameMap.names(for: number)?.json
-    }
-
-    if let nm = name {
-        encoder.startField(name: nm)
+    if let jsonName = nameMap.names(for: number)?.json {
+        encoder.startField(name: jsonName)
     } else {
         throw JSONEncodingError.missingFieldNames
     }

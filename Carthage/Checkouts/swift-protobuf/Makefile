@@ -409,10 +409,10 @@ Tests/SwiftProtobufPluginLibraryTests/DescriptorTestData.swift: build ${PROTOC_G
 	@rm -f $@
 	@echo '// See Makefile how this is generated.' >> $@
 	@echo 'import Foundation' >> $@
-	@echo 'let fileDescriptorSetBytes: [UInt8] = [' >> $@
+	@echo 'let fileDesciptorSetBytes: [UInt8] = [' >> $@
 	@xxd -i < DescriptorTestData.bin >> $@
 	@echo ']' >> $@
-	@echo 'let fileDescriptorSetData = Data(fileDescriptorSetBytes)' >> $@
+	@echo 'let fileDesciptorSetData = Data(bytes: fileDesciptorSetBytes)' >> $@
 
 #
 # Collect a list of words that appear in the SwiftProtobuf library

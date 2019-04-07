@@ -1,4 +1,0 @@
-[submodule "Carthage/Checkouts/Result"]
-	url = https://github.com/antitypical/Result.git
-[submodule "Carthage/Checkouts/APIKit"]
-	url = https://github.com/ishkawa/APIKit.git

@@ -279,6 +279,7 @@ message GeneratedSwiftReservedEnums {
   enum isEqual { NONE_isEqual = 0; }
   enum isEqualTo { NONE_isEqualTo = 0; }
   enum isInitialized { NONE_isInitialized = 0; }
+  enum it { NONE_it = 0; }
   enum itemTagsEncodedSize { NONE_itemTagsEncodedSize = 0; }
   enum i_2166136261 { NONE_i_2166136261 = 0; }
   enum JSONDecoder { NONE_JSONDecoder = 0; }
@@ -368,6 +369,7 @@ message GeneratedSwiftReservedEnums {
   enum other { NONE_other = 0; }
   enum others { NONE_others = 0; }
   enum out { NONE_out = 0; }
+  enum output { NONE_output = 0; }
   enum p { NONE_p = 0; }
   enum packed { NONE_packed = 0; }
   enum PackedEnumExtensionField { NONE_PackedEnumExtensionField = 0; }
@@ -384,9 +386,7 @@ message GeneratedSwiftReservedEnums {
   enum pointer { NONE_pointer = 0; }
   enum pos { NONE_pos = 0; }
   enum prefix { NONE_prefix = 0; }
-  enum preserveProtoFieldNames { NONE_preserveProtoFieldNames = 0; }
   enum preTraverse { NONE_preTraverse = 0; }
-  enum printUnknownFields { NONE_printUnknownFields = 0; }
   enum proto2 { NONE_proto2 = 0; }
   enum proto3DefaultValue { NONE_proto3DefaultValue = 0; }
   enum ProtobufAPIVersionCheck { NONE_ProtobufAPIVersionCheck = 0; }
@@ -506,7 +506,6 @@ message GeneratedSwiftReservedEnums {
   enum textDecoder { NONE_textDecoder = 0; }
   enum TextFormatDecoder { NONE_TextFormatDecoder = 0; }
   enum TextFormatDecodingError { NONE_TextFormatDecodingError = 0; }
-  enum TextFormatEncodingOptions { NONE_TextFormatEncodingOptions = 0; }
   enum TextFormatEncodingVisitor { NONE_TextFormatEncodingVisitor = 0; }
   enum textFormatString { NONE_textFormatString = 0; }
   enum throws { NONE_throws = 0; }
@@ -546,6 +545,7 @@ message GeneratedSwiftReservedEnums {
   enum updatedOptions { NONE_updatedOptions = 0; }
   enum url { NONE_url = 0; }
   enum utf8 { NONE_utf8 = 0; }
+  enum utf8Codec { NONE_utf8Codec = 0; }
   enum utf8ToDouble { NONE_utf8ToDouble = 0; }
   enum UTF8View { NONE_UTF8View = 0; }
   enum v { NONE_v = 0; }

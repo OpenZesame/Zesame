@@ -33,8 +33,6 @@
 // - conformance tests
 //
 
-// LINT: ALLOW_GROUPS
-
 syntax = "proto2";
 
 package protobuf_test_messages.proto2;
@@ -182,9 +180,6 @@ message TestAllTypesProto2 {
   optional int32 field_name17__ = 417;
   optional int32 Field_name18__ = 418;
 
-  // Reserved for unknown fields test.
-  reserved 1000 to 9999;
-
   // message_set test case.
   message MessageSetCorrect {
     option message_set_wire_format = true;
@@ -219,15 +214,3 @@ enum ForeignEnumProto2 {
 extend TestAllTypesProto2 {
   optional int32 extension_int32 = 120;
 }
-
-message UnknownToTestAllTypes {
-  optional int32  optional_int32 = 1001;
-  optional string optional_string = 1002;
-  optional ForeignMessageProto2 nested_message = 1003;
-  optional group OptionalGroup = 1004 {
-    optional int32 a = 1;
-  }
-  optional bool optional_bool = 1006;
-  repeated int32 repeated_int32 = 1011;
-}
-

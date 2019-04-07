@@ -36,7 +36,7 @@ func readRequest() -> Data? {
     if read2 < count {
         return nil
     }
-    return Data(buff)
+    return Data(bytes: buff)
 }
 
 func writeResponse(data: Data) {
@@ -152,9 +152,7 @@ func buildResponse(serializedData: Data) -> Conformance_ConformanceResponse {
             "ConformanceRequest had a requested_output_format of JSPB WireFormat; that"
             + " isn't supposed to happen with opensource."
     case .textFormat:
-        var textFormatOptions = TextFormatEncodingOptions()
-        textFormatOptions.printUnknownFields = request.printUnknownFields
-        response.textPayload = testMessage.textFormatString(options: textFormatOptions)
+        response.textPayload = testMessage.textFormatString()
     case .unspecified:
         response.runtimeError = "Request asked for the 'unspecified' result, that isn't valid."
     case .UNRECOGNIZED(let v):
