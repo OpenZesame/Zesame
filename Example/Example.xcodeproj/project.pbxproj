@@ -41,7 +41,6 @@
 		48C469F521445417008D0DD7 /* UILabel+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C469F421445417008D0DD7 /* UILabel+Styling.swift */; };
 		48C89FBD2142BCF70063B0FA /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FB92142BCF70063B0FA /* RxCocoa.framework */; };
 		48C89FBE2142BCF70063B0FA /* TinyConstraints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBA2142BCF70063B0FA /* TinyConstraints.framework */; };
-		48C89FBF2142BCF70063B0FA /* ViewComposer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBB2142BCF70063B0FA /* ViewComposer.framework */; };
 		48C89FC02142BCF70063B0FA /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48C89FBC2142BCF70063B0FA /* RxSwift.framework */; };
 		48C89FCB21432E220063B0FA /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCA21432E220063B0FA /* ViewModelType.swift */; };
 		48C89FCD21432E2E0063B0FA /* ChooseWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C89FCC21432E2E0063B0FA /* ChooseWalletViewModel.swift */; };
@@ -71,6 +70,7 @@
 		48C8A0132143CF6C0063B0FA /* RestoreWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C8A0122143CF6C0063B0FA /* RestoreWallet.swift */; };
 		48CAF98221EA4CA50047E53F /* UITextView+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF98121EA4CA50047E53F /* UITextView+Styling.swift */; };
 		48D0E6D9215B5DCF00D5D670 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D0E6D8215B5DCF00D5D670 /* HistoryView.swift */; };
+		E6258BDB225A3CEC00147470 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6258BDA225A3CEC00147470 /* Alamofire.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,6 +198,7 @@
 		48D0E6D8215B5DCF00D5D670 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		48F03F9C2142686900A13E5E /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = ../Carthage/Build/iOS/SipHash.framework; sourceTree = "<group>"; };
 		48F03F9D2142686A00A13E5E /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = ../Carthage/Build/iOS/BigInt.framework; sourceTree = "<group>"; };
+		E6258BDA225A3CEC00147470 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,7 +209,7 @@
 				48BD4ADA215EA792005F1B18 /* Zesame.framework in Frameworks */,
 				48C89FBD2142BCF70063B0FA /* RxCocoa.framework in Frameworks */,
 				48C89FBE2142BCF70063B0FA /* TinyConstraints.framework in Frameworks */,
-				48C89FBF2142BCF70063B0FA /* ViewComposer.framework in Frameworks */,
+				E6258BDB225A3CEC00147470 /* Alamofire.framework in Frameworks */,
 				488A6580215593200091FD03 /* FormValidatorSwift.framework in Frameworks */,
 				48C89FC02142BCF70063B0FA /* RxSwift.framework in Frameworks */,
 			);
@@ -270,6 +271,7 @@
 		484B06AA20BA107A00C4E50A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E6258BDA225A3CEC00147470 /* Alamofire.framework */,
 				4877B4F521BE83F100A94318 /* SwiftProtobuf.framework */,
 				488A657C215593200091FD03 /* FormValidatorSwift.framework */,
 				48C8A0172143D33E0063B0FA /* CryptoSwift.framework */,
@@ -568,8 +570,8 @@
 		484B062E20BA0C2D00C4E50A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 0940;
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Open Zesame";
 				TargetAttributes = {
 					484B063520BA0C2D00C4E50A = {
@@ -659,16 +661,13 @@
 				"$(SRCROOT)/Carthage/Build/iOS/TinyConstraints.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/RxCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ViewComposer.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/EllipticCurveKit.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/BigInt.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/SipHash.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/CryptoSwift.framework",
-				"$(SRCROOT)/../Carthage/Build/iOS/APIKit.framework",
-				"$(SRCROOT)/../Carthage/Build/iOS/JSONRPCKit.framework",
-				"$(SRCROOT)/../Carthage/Build/iOS/Result.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FormValidatorSwift.framework",
 				"$(SRCROOT)/../Carthage/Build/iOS/SwiftProtobuf.framework",
+				"$(SRCROOT)/../Carthage/Build/iOS/Alamofire.framework",
 			);
 			name = Carthage;
 			outputFileListPaths = (

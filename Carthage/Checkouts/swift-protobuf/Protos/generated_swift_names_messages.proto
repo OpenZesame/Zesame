@@ -54,7 +54,6 @@ message GeneratedSwiftReservedMessages {
   message capitalizeNext { int32 capitalizeNext = 1; }
   message cardinality { int32 cardinality = 1; }
   message Character { int32 Character = 1; }
-  message characters { int32 characters = 1; }
   message chars { int32 chars = 1; }
   message class { int32 class = 1; }
   message clearExtensionValue { int32 clearExtensionValue = 1; }
@@ -172,7 +171,6 @@ message GeneratedSwiftReservedMessages {
   message extendedGraphemeClusterLiteral { int32 extendedGraphemeClusterLiteral = 1; }
   message ExtendedGraphemeClusterLiteralType { int32 ExtendedGraphemeClusterLiteralType = 1; }
   message ExtensibleMessage { int32 ExtensibleMessage = 1; }
-  message extension { int32 extension = 1; }
   message ExtensionField { int32 ExtensionField = 1; }
   message extensionFieldNumber { int32 extensionFieldNumber = 1; }
   message ExtensionFieldValueSet { int32 ExtensionFieldValueSet = 1; }

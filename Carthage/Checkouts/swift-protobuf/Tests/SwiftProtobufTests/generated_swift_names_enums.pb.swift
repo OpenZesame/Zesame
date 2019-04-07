@@ -1280,31 +1280,6 @@ struct ProtobufUnittestGenerated_GeneratedSwiftReservedEnums {
 
   }
 
-  enum characters: SwiftProtobuf.Enum {
-    typealias RawValue = Int
-    case noneCharacters // = 0
-    case UNRECOGNIZED(Int)
-
-    init() {
-      self = .noneCharacters
-    }
-
-    init?(rawValue: Int) {
-      switch rawValue {
-      case 0: self = .noneCharacters
-      default: self = .UNRECOGNIZED(rawValue)
-      }
-    }
-
-    var rawValue: Int {
-      switch self {
-      case .noneCharacters: return 0
-      case .UNRECOGNIZED(let i): return i
-      }
-    }
-
-  }
-
   enum chars: SwiftProtobuf.Enum {
     typealias RawValue = Int
     case noneChars // = 0
@@ -4224,31 +4199,6 @@ struct ProtobufUnittestGenerated_GeneratedSwiftReservedEnums {
     var rawValue: Int {
       switch self {
       case .noneExtensibleMessage: return 0
-      case .UNRECOGNIZED(let i): return i
-      }
-    }
-
-  }
-
-  enum extensionEnum: SwiftProtobuf.Enum {
-    typealias RawValue = Int
-    case noneExtension // = 0
-    case UNRECOGNIZED(Int)
-
-    init() {
-      self = .noneExtension
-    }
-
-    init?(rawValue: Int) {
-      switch rawValue {
-      case 0: self = .noneExtension
-      default: self = .UNRECOGNIZED(rawValue)
-      }
-    }
-
-    var rawValue: Int {
-      switch self {
-      case .noneExtension: return 0
       case .UNRECOGNIZED(let i): return i
       }
     }
@@ -15860,13 +15810,6 @@ extension ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.Character: CaseI
   ]
 }
 
-extension ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.characters: CaseIterable {
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static var allCases: [ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.characters] = [
-    .noneCharacters,
-  ]
-}
-
 extension ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.chars: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.chars] = [
@@ -16683,13 +16626,6 @@ extension ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.ExtensibleMessag
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.ExtensibleMessage] = [
     .noneExtensibleMessage,
-  ]
-}
-
-extension ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.extensionEnum: CaseIterable {
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static var allCases: [ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.extensionEnum] = [
-    .noneExtension,
   ]
 }
 
@@ -20168,12 +20104,6 @@ extension ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.Character: Swift
   ]
 }
 
-extension ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.characters: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "NONE_characters"),
-  ]
-}
-
 extension ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.chars: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "NONE_chars"),
@@ -20873,12 +20803,6 @@ extension ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.ExtendedGrapheme
 extension ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.ExtensibleMessage: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "NONE_ExtensibleMessage"),
-  ]
-}
-
-extension ProtobufUnittestGenerated_GeneratedSwiftReservedEnums.extensionEnum: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "NONE_extension"),
   ]
 }
 
