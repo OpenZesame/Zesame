@@ -1106,8 +1106,8 @@
 		48F70A0C20B72DCF0027B72D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 0930;
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Open Zesame";
 				TargetAttributes = {
 					48ED060420B8618F00C639E5 = {
@@ -1115,15 +1115,15 @@
 					};
 					48ED060C20B8618F00C639E5 = {
 						CreatedOnToolsVersion = 9.4;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 					48F70A1420B72DD00027B72D = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1020;
 					};
 					48F70A1D20B72DD00027B72D = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};

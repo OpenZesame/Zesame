@@ -60,8 +60,6 @@ public extension RPCRequest {
         try container.encode(rpcMethod, forKey: .rpcMethod)
         if let encodeValue = _encodeValue {
             try encodeValue(&container)
-        } else {
-            print("Do we to do something here")
         }
         try container.encode(version, forKey: .version)
         
@@ -85,12 +83,11 @@ public extension RPCRequest {
         urlRequest.httpMethod = Alamofire.HTTPMethod.post.rawValue
         
         // Common Headers
-        urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         do {
             let jsonData = try JSONEncoder().encode(self)
             urlRequest.httpBody = jsonData
-            print("🚁 " + String(data: jsonData, encoding: .utf8)!)
         } catch {
             throw AFError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))
         }

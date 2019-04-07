@@ -24,13 +24,16 @@
 
 import Foundation
 
-public typealias TransactionId = String
+/// JSONRPC method according to [Zilliqa API docs][1]
+///
+/// [1]: https://apidocs.zilliqa.com/#introduction
 public enum RPCMethod {
     case getBalance(AddressChecksummedConvertible)
     case createTransaction(SignedTransaction)
     case getTransaction(TransactionId)
     case getNetworkId
 }
+
 public extension RPCMethod {
     
     typealias EncodeValue<K: CodingKey> = (inout KeyedEncodingContainer<K>) throws -> Void
@@ -45,27 +48,22 @@ public extension RPCMethod {
     }
     
     func encodeValue<K>(key: K) -> EncodeValue<K>? where K: CodingKey {
-        func encodeV<V>(_ value: V) -> EncodeValue<K> where V: Encodable {
+        
+        func innerEncode<V>(_ value: V) -> EncodeValue<K> where V: Encodable {
             return { keyedEncodingContainer in
                 // DO OBSERVE THE ARRAY! `[]`. We MUST put the encodable in an array, since that is how RPC
                 // works. Otherwise we will get `INVALID_JSON_REQUEST`
                 try keyedEncodingContainer.encode([value], forKey: key)
             }
         }
+        
         switch self {
-        case .getBalance(let address): return encodeV(address.checksummedAddress)
-        case .createTransaction(let signedTransaction): return encodeV(signedTransaction)
-        case .getTransaction(let txId): return encodeV(txId)
+        case .getBalance(let address): return innerEncode(address.checksummedAddress)
+        case .createTransaction(let signedTransaction): return innerEncode(signedTransaction)
+        case .getTransaction(let txId): return innerEncode(txId)
         case .getNetworkId: return nil
         }
     }
 }
 
-enum HTTPHeaderField: String {
-    case contentType = "Content-Type"
-}
-
-enum ContentType: String {
-    case json = "application/json"
-}
-
+public typealias TransactionId = String
