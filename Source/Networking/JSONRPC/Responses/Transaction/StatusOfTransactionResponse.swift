@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -23,19 +23,12 @@
 //
 
 import Foundation
-import JSONRPCKit
-import APIKit
-import Result
 
-typealias APIKitHandler<R> = (Result<R, APIKit.SessionTaskError>) -> Void
-public typealias Done<R> = (Result<R, Zesame.Error>) -> Void
-
-func mapHandler<R>(_ handler: @escaping Done<R>) -> APIKitHandler<R> {
-    return { (result: Result<R, APIKit.SessionTaskError>) -> Void in
-        switch result {
-        case .failure(let apiKitError):
-            handler(.failure(.api(Error.API(from: apiKitError))))
-        case .success(let model): handler(.success(model))
-        }
+public struct StatusOfTransactionResponse: Decodable {
+    public struct Receipt {
+        public let totalGasCost: ZilAmount
+        public let isSent: Bool
     }
+    
+    public let receipt: Receipt
 }

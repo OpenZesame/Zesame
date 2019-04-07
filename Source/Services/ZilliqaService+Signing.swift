@@ -23,14 +23,15 @@
 //
 
 import EllipticCurveKit
-import Result
 
 public extension ZilliqaService {
 
     func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network, done: @escaping Done<TransactionResponse>) {
-        keystore.toKeypair(encryptedBy: password) {
-            guard case .success(let keyPair) = $0 else { done(Result.failure($0.error!)); return }
-            self.sendTransaction(for: payment, signWith: keyPair, network: network, done: done)
+        keystore.toKeypair(encryptedBy: password) { result in
+            switch result {
+            case .failure(let error): done(Result.failure(error))
+            case .success(let keyPair): self.sendTransaction(for: payment, signWith: keyPair, network: network, done: done)
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -23,23 +23,20 @@
 //
 
 import Foundation
-import JSONRPCKit
 
-public struct TransactionRequest: JSONRPCKit.Request {
-    public typealias Response = TransactionResponse
-
-    public let transaction: SignedTransaction
-    public init(transaction: SignedTransaction) {
-        self.transaction = transaction
+// The receipt for a transaction that the network has reached consensus for.
+public struct TransactionReceipt {
+    public let transactionId: String
+    public let totalGasCost: ZilAmount
+    public init(id: String, totalGasCost: ZilAmount) {
+        self.transactionId = id
+        self.totalGasCost = totalGasCost
     }
 }
 
-public extension TransactionRequest {
-    var method: String {
-        return "CreateTransaction"
-    }
-
-    var parameters: Encodable? {
-        return [transaction]
+public extension TransactionReceipt {
+    init?(for id: String, pollResponse: StatusOfTransactionResponse) {
+        guard pollResponse.receipt.isSent else { return nil }
+        self.init(id: id, totalGasCost: pollResponse.receipt.totalGasCost)
     }
 }

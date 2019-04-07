@@ -44,11 +44,11 @@ public extension Polling {
         )
     }
     
-    public enum Backoff {
+    enum Backoff {
         case linearIncrement(of: Delay)
     }
     
-    public enum Delay: Int {
+    enum Delay: Int {
         case oneSecond = 1
         case twoSeconds = 2
         case threeSeconds = 3
@@ -58,7 +58,7 @@ public extension Polling {
         case twentySeconds = 20
     }
     
-    public enum Count: Int {
+    enum Count: Int {
         case once = 1
         case twice = 2
         case threeTimes = 3

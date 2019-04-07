@@ -22,9 +22,8 @@
 // SOFTWARE.
 //
 
-import JSONRPCKit
-import APIKit
+public typealias Done<R> = (Swift.Result<R, Zesame.Error>) -> Void
 
 public protocol APIClient {
-    func send<Request>(request: Request, done: @escaping Done<Request.Response>) where Request: JSONRPCKit.Request
+    func send<ResultFromResponse>(method: RPCMethod, done: @escaping Done<ResultFromResponse>) where ResultFromResponse: Decodable
 }

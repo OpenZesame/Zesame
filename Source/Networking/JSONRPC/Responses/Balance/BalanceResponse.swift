@@ -28,6 +28,16 @@ import Foundation
 public struct BalanceResponse: Codable {
     public let balance: ZilAmount
     public let nonce: Nonce
+    
+    public enum CodingKeys: CodingKey {
+        case nonce, balance
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.balance = try container.decode(ZilAmount.self, forKey: .balance)
+        self.nonce = try container.decode(Nonce.self, forKey: .nonce)
+    }
 }
 
 extension Nonce: Codable {

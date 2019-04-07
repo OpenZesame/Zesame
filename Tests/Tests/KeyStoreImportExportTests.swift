@@ -25,7 +25,7 @@
 import XCTest
 @testable import Zesame
 import CryptoSwift
-import Result
+
 import EllipticCurveKit
 
 extension EllipticCurveKit.PrivateKey: Equatable where Curve == Secp256k1 {

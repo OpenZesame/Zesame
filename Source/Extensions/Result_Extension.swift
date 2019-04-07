@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -23,18 +23,18 @@
 //
 
 import Foundation
-import JSONRPCKit
 
-public struct GetNetworkRequest: JSONRPCKit.Request {
-    public typealias Response = NetworkResponse
-}
-
-public extension GetNetworkRequest {
-    var method: String {
-        return "GetNetworkId"
+extension Result {
+    var error: Failure? {
+        switch self {
+        case .failure(let error): return error
+        case .success: return nil
+        }
     }
-
-    var parameters: Encodable? {
-        return [""]
+    var value: Success? {
+        switch self {
+        case .failure: return nil
+        case .success(let success): return success
+        }
     }
 }

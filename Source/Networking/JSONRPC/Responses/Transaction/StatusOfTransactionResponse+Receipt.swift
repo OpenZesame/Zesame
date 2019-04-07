@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -23,65 +23,19 @@
 //
 
 import Foundation
-import JSONRPCKit
-
-// The receipt for a transaction that the network has reached consensus for.
-public struct TransactionReceipt {
-    public let transactionId: String
-    public let totalGasCost: ZilAmount
-    public init(id: String, totalGasCost: ZilAmount) {
-        self.transactionId = id
-        self.totalGasCost = totalGasCost
-    }
-}
-
-public extension TransactionReceipt {
-    init?(for id: String, pollResponse: StatusOfTransactionResponse) {
-        guard pollResponse.receipt.isSent else { return nil }
-        self.init(id: id, totalGasCost: pollResponse.receipt.totalGasCost)
-    }
-}
-
-public struct StatusOfTransactionResponse: Decodable {
-    public struct Receipt {
-        public let totalGasCost: ZilAmount
-        public let isSent: Bool
-    }
-
-    public let receipt: Receipt
-}
 
 extension StatusOfTransactionResponse.Receipt: Decodable {}
 public extension StatusOfTransactionResponse.Receipt {
-
+    
     enum CodingKeys: String, CodingKey {
         case totalGasCost = "cumulative_gas"
         case isSent = "success"
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let costAsString = try container.decode(String.self, forKey: .totalGasCost)
         self.totalGasCost = try ZilAmount(zil: costAsString)
         self.isSent = try container.decode(Bool.self, forKey: .isSent)
-    }
-}
-
-public struct StatusOfTransactionRequest: JSONRPCKit.Request {
-    public typealias Response = StatusOfTransactionResponse
-
-    public let transactionId: String
-    public init(transactionId: String) {
-        self.transactionId = transactionId
-    }
-}
-
-public extension StatusOfTransactionRequest {
-    var method: String {
-        return "GetTransaction"
-    }
-
-    var parameters: Encodable? {
-        return [transactionId]
     }
 }

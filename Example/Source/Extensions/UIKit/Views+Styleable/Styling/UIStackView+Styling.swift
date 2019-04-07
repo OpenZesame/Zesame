@@ -66,7 +66,7 @@ extension UIStackView: Styling, StaticEmptyInitializable {
         }
 
         public static var `default`: Style {
-            return Style()
+            return Style([])
         }
 
         public func merged(other: Style, mode: MergeMode) -> Style {

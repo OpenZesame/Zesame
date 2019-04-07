@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -23,31 +23,24 @@
 //
 
 import Foundation
-import BigInt
 
-extension String {
-    func splittingIntoSubStringsOfLength(_ length: Int) -> [String] {
-        guard count % length == 0 else { fatalError("bad length") }
-        var startIndex = self.startIndex
-        var results = [Substring]()
-
-        while startIndex < self.endIndex {
-            let endIndex = self.index(startIndex, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
-            results.append(self[startIndex..<endIndex])
-            startIndex = endIndex
-        }
-
-        return results.map { String($0) }
-    }
+public enum RPCResponse<ResultFromResponse>: Decodable where ResultFromResponse: Decodable {
+    case rpcSuccess(ResultFromResponse)
+    case rpcError(Swift.Error)
 }
 
-// MARK: - From String
-public extension BigUInt {
-    init?(string: String) {
-        if string.starts(with: "0x") {
-            self.init(String(string.dropFirst(2)), radix: 16)
-        } else {
-            self.init(string, radix: 10)
+// MARK: - Decodable
+public extension RPCResponse {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        do {
+            self = .rpcSuccess(try container.decode(RPCResponseSuccess<ResultFromResponse>.self).result)
+        } catch {
+            do {
+                self = .rpcError(try container.decode(RPCError.self) as Swift.Error)
+            } catch let decodeAsErrorMetaError {
+                self = .rpcError(decodeAsErrorMetaError)
+            }
         }
     }
 }

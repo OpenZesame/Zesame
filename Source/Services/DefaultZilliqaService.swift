@@ -24,8 +24,7 @@
 
 import Foundation
 import RxSwift
-import JSONRPCKit
-import APIKit
+
 import EllipticCurveKit
 
 public final class DefaultZilliqaService: ZilliqaService, ReactiveCompatible {
@@ -46,14 +45,14 @@ public extension DefaultZilliqaService {
 public extension DefaultZilliqaService {
 
     func getNetworkFromAPI(done: @escaping Done<NetworkResponse>) {
-        return apiClient.send(request: GetNetworkRequest(), done: done)
+        return apiClient.send(method: .getNetworkId, done: done)
     }
 
     func getBalance(for address: AddressChecksummedConvertible, done: @escaping Done<BalanceResponse>) -> Void {
-        return apiClient.send(request: BalanceRequest(address: address), done: done)
+        return apiClient.send(method: .getBalance(address), done: done)
     }
 
     func send(transaction: SignedTransaction, done: @escaping Done<TransactionResponse>) {
-        return apiClient.send(request: TransactionRequest(transaction: transaction), done: done)
+        return apiClient.send(method: .createTransaction(transaction), done: done)
     }
 }

@@ -70,7 +70,7 @@ extension CreateNewWalletViewModel: ViewModelType {
         
         input.createWalletTrigger.withLatestFrom(validEncryptionPassword.filterNil()) { $1 } //.flatMapLatest { (password: String?) -> Driver<Wallet?> in
             .flatMapLatest {
-                self.service.createNewWallet(encryptionPassword: $0)
+                self.service.createNewWallet(encryptionPassword: $0, kdf: .scrypt)
                     .asDriverOnErrorReturnEmpty()
             }
             .do(onNext: { self.navigator?.toMain(wallet: $0) })

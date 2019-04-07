@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -23,23 +23,16 @@
 //
 
 import Foundation
-import JSONRPCKit
 
-public struct BalanceRequest: JSONRPCKit.Request {
-    public typealias Response = BalanceResponse
-
-    public let address: AddressChecksummed
-    public init(address: AddressChecksummedConvertible) {
-        self.address = address.checksummedAddress
+public final class RequestIdGenerator {
+    public static let shared = RequestIdGenerator()
+    private var id: Int = 0
+    private init() {}
+    private func nextId() -> String {
+        defer { id += 1 }
+        return id.description
     }
-}
-
-public extension BalanceRequest {
-    var method: String {
-        return "GetBalance"
-    }
-
-    var parameters: Encodable? {
-        return [address.checksummedAddress]
+    public static func nextId() -> String {
+        return shared.nextId()
     }
 }

@@ -54,6 +54,6 @@ public extension ZilliqaService {
 // MARK: - Private
 private extension ZilliqaService {
     func getStatusOfTransaction(id: String, done: @escaping Done<StatusOfTransactionResponse>) {
-        return apiClient.send(request: StatusOfTransactionRequest(transactionId: id), done: done)
+        return apiClient.send(method: .getTransaction(id), done: done)
     }
 }
