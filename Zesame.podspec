@@ -12,15 +12,15 @@ Pod::Spec.new do |s|
     s.social_media_url = 'https://twitter.com/alexcyon'
 
     # Crypto
-    s.dependency 'CryptoSwift'
+    s.dependency 'CryptoSwift', '~> 1.0.0'
 
     # ECC Methods
-    s.dependency 'EllipticCurveKit'
+    s.dependency 'EllipticCurveKit', '~> 1.0.0'
 
     # Used by this SDK making APIs reactive
     s.dependency 'RxSwift'
 
     s.dependency 'SwiftProtobuf'
 
-    s.dependency 'Alamofire'
+    s.dependency 'Alamofire', '~> 5.0.0-beta.3'
 end

@@ -42,12 +42,12 @@ public extension DefaultAPIClient {
 
 // MARK: - RequestInterceptor (RequestAdapter)
 public extension DefaultAPIClient {
-    func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Alamofire.Result<URLRequest>) -> Void) {
+    func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Alamofire.AFResult<URLRequest>) -> Void) {
         var urlRequest = urlRequest
         if urlRequest.url?.absoluteString.isEmpty == true || urlRequest.url?.absoluteString == "/" {
             urlRequest.url = baseURL
         }
-        completion(Alamofire.Result.success(urlRequest))
+        completion(Alamofire.AFResult.success(urlRequest))
     }
 }
 
