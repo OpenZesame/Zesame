@@ -40,7 +40,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let data = Data("data".utf8)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -53,7 +53,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let serializer = DataResponseSerializer()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -72,7 +72,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let serializer = DataResponseSerializer()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: nil, error: error) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: nil, error: error) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -92,7 +92,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 200)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure, "result is failure should be true")
@@ -106,13 +106,52 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         }
     }
 
-    func testThatDataResponseSerializerSucceedsWhenDataIsNilWithEmptyResponseStatusCode() {
+    func testThatDataResponseSerializerSucceedsWhenDataIsNilWithGETRequestAnd204ResponseStatusCode() {
         // Given
         let serializer = DataResponseSerializer()
+        let request = URLRequest.make(method: .get)
         let response = HTTPURLResponse(statusCode: 204)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
+
+        // Then
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertNotNil(result.value)
+        XCTAssertNil(result.error)
+
+        if let data = result.value {
+            XCTAssertEqual(data.count, 0)
+        }
+    }
+
+    func testThatDataResponseSerializerSucceedsWhenDataIsNilWithGETRequestAnd205ResponseStatusCode() {
+        // Given
+        let serializer = DataResponseSerializer()
+        let request = URLRequest.make(method: .get)
+        let response = HTTPURLResponse(statusCode: 205)
+
+        // When
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
+
+        // Then
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertNotNil(result.value)
+        XCTAssertNil(result.error)
+
+        if let data = result.value {
+            XCTAssertEqual(data.count, 0)
+        }
+    }
+
+    func testThatDataResponseSerializerSucceedsWhenDataIsNilWithHEADRequestAnd200ResponseStatusCode() {
+        // Given
+        let serializer = DataResponseSerializer()
+        let request = URLRequest.make(method: .head)
+        let response = HTTPURLResponse(statusCode: 200)
+
+        // When
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -131,7 +170,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let serializer = DataResponseSerializer()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -150,7 +189,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let serializer = StringResponseSerializer()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: Data(), error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: Data(), error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -169,7 +208,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let data = Data("data".utf8)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -182,7 +221,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let data = Data("data".utf8)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -196,7 +235,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 200, headers: ["Content-Type": "image/jpeg; charset=utf-8"])
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: data, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: response, data: data, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -210,7 +249,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let data = "random data".data(using: .utf32)!
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -232,7 +271,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 200, headers: ["Content-Type": "image/jpeg; charset=utf-8"])
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: data, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: response, data: data, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -252,7 +291,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let serializer = StringResponseSerializer()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: nil, error: error) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: nil, error: error) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -272,7 +311,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 200)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -286,13 +325,52 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         }
     }
 
-    func testThatStringResponseSerializerSucceedsWhenDataIsNilWithEmptyResponseStatusCode() {
+    func testThatStringResponseSerializerSucceedsWhenDataIsNilWithGETRequestAnd204ResponseStatusCode() {
         // Given
         let serializer = StringResponseSerializer()
+        let request = URLRequest.make(method: .get)
+        let response = HTTPURLResponse(statusCode: 204)
+
+        // When
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
+
+        // Then
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertNotNil(result.value)
+        XCTAssertNil(result.error)
+
+        if let string = result.value {
+            XCTAssertEqual(string, "")
+        }
+    }
+
+    func testThatStringResponseSerializerSucceedsWhenDataIsNilWithGETRequestAnd205ResponseStatusCode() {
+        // Given
+        let serializer = StringResponseSerializer()
+        let request = URLRequest.make(method: .get)
         let response = HTTPURLResponse(statusCode: 205)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
+
+        // Then
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertNotNil(result.value)
+        XCTAssertNil(result.error)
+
+        if let string = result.value {
+            XCTAssertEqual(string, "")
+        }
+    }
+
+    func testThatStringResponseSerializerSucceedsWhenDataIsNilWithHEADRequestAnd200ResponseStatusCode() {
+        // Given
+        let serializer = StringResponseSerializer()
+        let request = URLRequest.make(method: .head)
+        let response = HTTPURLResponse(statusCode: 200)
+
+        // When
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -311,7 +389,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let serializer = JSONResponseSerializer()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -330,7 +408,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let serializer = JSONResponseSerializer()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: Data(), error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: Data(), error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -350,7 +428,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let data = Data("{\"json\": true}".utf8)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -364,7 +442,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let data = Data("definitely not valid json".utf8)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -384,7 +462,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let serializer = JSONResponseSerializer()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: nil, error: error) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: nil, error: error) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -404,7 +482,7 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 200)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -418,13 +496,56 @@ final class DataResponseSerializationTestCase: BaseTestCase {
         }
     }
 
-    func testThatJSONResponseSerializerSucceedsWhenDataIsNilWithEmptyResponseStatusCode() {
+    func testThatJSONResponseSerializerSucceedsWhenDataIsNilWithGETRequestAnd204ResponseStatusCode() {
         // Given
         let serializer = JSONResponseSerializer()
+        let request = URLRequest.make(method: .get)
         let response = HTTPURLResponse(statusCode: 204)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
+
+        // Then
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertNotNil(result.value)
+        XCTAssertNil(result.error)
+
+        if let json = result.value as? NSNull {
+            XCTAssertEqual(json, NSNull())
+        } else {
+            XCTFail("json should not be nil")
+        }
+    }
+
+    func testThatJSONResponseSerializerSucceedsWhenDataIsNilWithGETRequestAnd205ResponseStatusCode() {
+        // Given
+        let serializer = JSONResponseSerializer()
+        let request = URLRequest.make(method: .get)
+        let response = HTTPURLResponse(statusCode: 205)
+
+        // When
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
+
+        // Then
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertNotNil(result.value)
+        XCTAssertNil(result.error)
+
+        if let json = result.value as? NSNull {
+            XCTAssertEqual(json, NSNull())
+        } else {
+            XCTFail("json should not be nil")
+        }
+    }
+
+    func testThatJSONResponseSerializerSucceedsWhenDataIsNilWithHEADRequestAnd200ResponseStatusCode() {
+        // Given
+        let serializer = JSONResponseSerializer()
+        let request = URLRequest.make(method: .head)
+        let response = HTTPURLResponse(statusCode: 200)
+
+        // When
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -464,7 +585,7 @@ final class DecodableResponseSerializerTests: BaseTestCase {
         let serializer = DecodableResponseSerializer<DecodableValue>()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -483,7 +604,7 @@ final class DecodableResponseSerializerTests: BaseTestCase {
         let serializer = DecodableResponseSerializer<DecodableValue>()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: Data(), error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: Data(), error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -503,7 +624,7 @@ final class DecodableResponseSerializerTests: BaseTestCase {
         let serializer = DecodableResponseSerializer<DecodableValue>()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -518,7 +639,7 @@ final class DecodableResponseSerializerTests: BaseTestCase {
         let data = Data("definitely not valid".utf8)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: data, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -531,7 +652,7 @@ final class DecodableResponseSerializerTests: BaseTestCase {
         let serializer = DecodableResponseSerializer<DecodableValue>()
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: nil, data: nil, error: error) }
+        let result = AFResult { try serializer.serialize(request: nil, response: nil, data: nil, error: error) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -551,7 +672,7 @@ final class DecodableResponseSerializerTests: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 200)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -571,7 +692,7 @@ final class DecodableResponseSerializerTests: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 204)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -585,7 +706,52 @@ final class DecodableResponseSerializerTests: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 204)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+
+        // Then
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertNotNil(result.value)
+        XCTAssertNil(result.error)
+    }
+
+    func testThatDecodableResponseSerializerSucceedsWhenDataIsNilWithGETRequestAnd204ResponseStatusCode() {
+        // Given
+        let serializer = DecodableResponseSerializer<Empty>()
+        let request = URLRequest.make(method: .get)
+        let response = HTTPURLResponse(statusCode: 204)
+
+        // When
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
+
+        // Then
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertNotNil(result.value)
+        XCTAssertNil(result.error)
+    }
+
+    func testThatDecodableResponseSerializerSucceedsWhenDataIsNilWithGETRequestAnd205ResponseStatusCode() {
+        // Given
+        let serializer = DecodableResponseSerializer<Empty>()
+        let request = URLRequest.make(method: .get)
+        let response = HTTPURLResponse(statusCode: 205)
+
+        // When
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
+
+        // Then
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertNotNil(result.value)
+        XCTAssertNil(result.error)
+    }
+
+    func testThatDecodableResponseSerializerSucceedsWhenDataIsNilWithHEADRequestAnd200ResponseStatusCode() {
+        // Given
+        let serializer = DecodableResponseSerializer<Empty>()
+        let request = URLRequest.make(method: .head)
+        let response = HTTPURLResponse(statusCode: 200)
+
+        // When
+        let result = AFResult { try serializer.serialize(request: request, response: response, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -599,7 +765,7 @@ final class DecodableResponseSerializerTests: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 204)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -613,7 +779,7 @@ final class DecodableResponseSerializerTests: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 204)
 
         // When
-        let result = Result { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
+        let result = AFResult { try serializer.serialize(request: nil, response: response, data: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -640,10 +806,6 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
     private var jsonValidDataFileURL: URL { return url(forResource: "valid_data", withExtension: "json") }
     private var jsonInvalidDataFileURL: URL { return url(forResource: "invalid_data", withExtension: "json") }
 
-    private var plistEmptyDataFileURL: URL { return url(forResource: "empty", withExtension: "data") }
-    private var plistValidDataFileURL: URL { return url(forResource: "valid", withExtension: "data") }
-    private var plistInvalidDataFileURL: URL { return url(forResource: "invalid", withExtension: "data") }
-
     private var stringEmptyDataFileURL: URL { return url(forResource: "empty_string", withExtension: "txt") }
     private var stringUTF8DataFileURL: URL { return url(forResource: "utf8_string", withExtension: "txt") }
     private var stringUTF32DataFileURL: URL { return url(forResource: "utf32_string", withExtension: "txt") }
@@ -657,7 +819,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = DataResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: jsonValidDataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: jsonValidDataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -670,7 +832,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = DataResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: jsonEmptyDataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: jsonEmptyDataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -689,7 +851,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = DataResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -708,7 +870,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = DataResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: invalidFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: invalidFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -727,7 +889,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = DataResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: error) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: error) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -747,7 +909,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 200)
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: response, fileURL: nil, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: response, fileURL: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -767,7 +929,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 205)
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: response, fileURL: jsonEmptyDataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: response, fileURL: jsonEmptyDataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -788,7 +950,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = StringResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -808,7 +970,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = StringResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: invalidFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: invalidFileURL, error: nil) }
 
         // Then
         XCTAssertEqual(result.isSuccess, false)
@@ -827,7 +989,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = StringResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: stringEmptyDataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: stringEmptyDataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -846,7 +1008,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = StringResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: stringUTF8DataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: stringUTF8DataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -859,7 +1021,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = StringResponseSerializer(encoding: .utf8)
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: stringUTF8DataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: stringUTF8DataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -873,7 +1035,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 200, headers: ["Content-Type": "image/jpeg; charset=utf-8"])
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: response, fileURL: stringUTF8DataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: response, fileURL: stringUTF8DataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -886,7 +1048,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = StringResponseSerializer(encoding: .utf8)
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: stringUTF32DataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: stringUTF32DataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -907,7 +1069,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 200, headers: ["Content-Type": "image/jpeg; charset=utf-8"])
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: response, fileURL: stringUTF32DataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: response, fileURL: stringUTF32DataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -927,7 +1089,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = StringResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: error) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: error) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -947,7 +1109,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 200)
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: response, fileURL: nil, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: response, fileURL: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -967,7 +1129,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 204)
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: response, fileURL: stringEmptyDataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: response, fileURL: stringEmptyDataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -986,7 +1148,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = JSONResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -1005,7 +1167,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = JSONResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: invalidFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: invalidFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -1024,7 +1186,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = JSONResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: jsonEmptyDataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: jsonEmptyDataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -1043,7 +1205,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = JSONResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: jsonValidDataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: jsonValidDataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
@@ -1056,7 +1218,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = JSONResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: jsonInvalidDataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: jsonInvalidDataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -1076,7 +1238,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let serializer = JSONResponseSerializer()
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: error) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: nil, fileURL: nil, error: error) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -1096,7 +1258,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 200)
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: response, fileURL: nil, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: response, fileURL: nil, error: nil) }
 
         // Then
         XCTAssertTrue(result.isFailure)
@@ -1116,7 +1278,7 @@ final class DownloadResponseSerializationTestCase: BaseTestCase {
         let response = HTTPURLResponse(statusCode: 205)
 
         // When
-        let result = Result { try serializer.serializeDownload(request: nil, response: response, fileURL: jsonEmptyDataFileURL, error: nil) }
+        let result = AFResult { try serializer.serializeDownload(request: nil, response: response, fileURL: jsonEmptyDataFileURL, error: nil) }
 
         // Then
         XCTAssertTrue(result.isSuccess)
