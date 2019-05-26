@@ -30,3 +30,38 @@ public enum Address: AddressChecksummedConvertible {
     case notNecessarilyChecksummed(AddressNotNecessarilyChecksummed)
 
 }
+
+public extension Address {
+    
+    init(string: String) throws {
+        
+        do {
+            let bech32 = try Bech32Address(bech32String: string)
+            
+            func inner(bech32Address: Bech32Address) throws -> Address {
+                
+                let expecetedLength = Style.bech32.expectedLength
+                guard let relevantInfoPart = bech32Address.dataPart.excludingChecksum else {
+                    throw Error.bech32DataEmpty
+                }
+                
+                let length = relevantInfoPart.asString.count
+                guard length == expecetedLength else {
+                    throw Error.incorrectLength(expectedLength: expecetedLength, forStyle: Style.bech32, butGot: length)
+                }
+                let addressAsData = try Bech32.convertbits(data: relevantInfoPart.data.bytes, fromBits: 5, toBits: 8, pad: false)
+                let hexString = try HexString(addressAsData.toHexString())
+                let ethStyleNotNecessarilyChecksummed = try AddressNotNecessarilyChecksummed(hexString: hexString)
+                return Address.checksummed(ethStyleNotNecessarilyChecksummed.checksummedAddress)
+            }
+            self = try inner(bech32Address: bech32)
+        } catch {
+            let hexString = try HexString(string)
+            self = .checksummed(try AddressChecksummed(hexString: hexString))
+        }
+        
+        
+    }
+    
+}
+

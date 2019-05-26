@@ -29,53 +29,22 @@ import Foundation
 /// Bech32 checksum implementation
 public enum Bech32 {}
 
-public struct DataAndString {
-    public let asData: Data
-    public let asString: String
-}
-
-public extension Bech32 {
-    struct Decoded {
-        
-        public struct DataPart {
-            public let excludingChecksum: DataAndString?
-            public let checksum: DataAndString
-            public var includingChecksum: DataAndString {
-                guard let excludingChecksum = excludingChecksum else {
-                    return checksum
-                }
-                return DataAndString(
-                    asData: excludingChecksum.asData + checksum.asData,
-                    asString: excludingChecksum.asString + checksum.asString
-                )
-            }
-        }
-        
-        public let humanReadablePrefix: String
-        public let dataPart: DataPart
-        
-    }
-}
 
 public extension Bech32 {
     
-    static func validate(_ string: String) throws {
-        _  = try decode(string)
-    }
-    
-    /// Encode Bech32 string
-    static func encode(_ humanReadablePart: String, values: Data) -> String {
-        let checksum = createChecksum(humanReadablePart: humanReadablePart, values: values)
-        var combined = values
-        combined.append(checksum)
-
-        return [
-            humanReadablePart,
-            checksumMarker,
-            dataToString(data: combined)
-        ].joined()
-        
-    }
+//    /// Encode Bech32 string
+//    static func encode(_ humanReadablePart: String, values: Data) -> String {
+//        let checksum = createChecksum(humanReadablePart: humanReadablePart, values: values)
+//        var combined = values
+//        combined.append(checksum)
+//
+//        return [
+//            humanReadablePart,
+//            checksumMarker,
+//            dataToString(data: combined)
+//            ].joined()
+//
+//    }
     
     static func dataToString(data: Data) -> String {
         var ret = "".data(using: .utf8)!
@@ -84,9 +53,9 @@ public extension Bech32 {
         }
         return String(data: ret, encoding: .utf8) ?? ""
     }
-    
-    /// Decode Bech32 string
-    static func decode(_ str: String) throws -> Decoded {
+        
+    /// Decodes a string string into a `Bech32Address`
+    static func decode(_ str: String) throws -> Bech32Address {
         guard let strBytes = str.data(using: .utf8) else {
             throw DecodingError.nonUTF8String
         }
@@ -132,43 +101,80 @@ public extension Bech32 {
             }
             values[i] = UInt8(decInt)
         }
-        let humanReadablePart = String(str[..<pos]).lowercased()
-        guard verifyChecksum(humanReadablePart: humanReadablePart, checksum: values) else {
+        let humanReadablePrefix = String(str[..<pos]).lowercased()
+        guard verifyChecksum(humanReadablePart: humanReadablePrefix, checksum: values) else {
             throw DecodingError.checksumMismatch
         }
         
-        let humanReadablePrefix = humanReadablePart
         let checksumLength = 6
         let humanReadableRelevantData = values.prefix(upTo: values.count - checksumLength)
-        let humanReadableRelevantString = dataToString(data: humanReadableRelevantData)
         let checksumData = values.suffix(checksumLength)
-        let checksumString = dataToString(data: checksumData)
         
-        let excludingChecksumDataAndString: DataAndString? = {
-            guard !humanReadableRelevantString.isEmpty else {
-                return nil
-            }
-            return DataAndString(asData: humanReadableRelevantData, asString: humanReadableRelevantString)
-        }()
-        
-        let dataPart = Decoded.DataPart(
-            excludingChecksum: excludingChecksumDataAndString,
-            checksum: DataAndString(asData: checksumData, asString: checksumString)
+        let dataPart = Bech32Address.DataPart(
+            dataExcludingChecksum: humanReadableRelevantData,
+            checksum: checksumData
         )
         
-        return Decoded(
-            humanReadablePrefix: humanReadablePrefix,
-            dataPart: dataPart
-        )
+        return Bech32Address(prefix: humanReadablePrefix, dataPart: dataPart)
     }
+    
+    /// Create checksum
+    static func createChecksum(humanReadablePart: String, values: Data) -> Data {
+        var enc = expandHumanReadablePart(humanReadablePart)
+        enc.append(values)
+        enc.append(Data(repeating: 0x00, count: 6))
+        let mod: UInt32 = polymod(enc) ^ 1
+        var ret: Data = Data(repeating: 0x00, count: 6)
+        for i in 0..<6 {
+            ret[i] = UInt8((mod >> (5 * (5 - i))) & 31)
+        }
+        return ret
+    }
+    
+    static func convertbits(data: [UInt8], fromBits: Int, toBits: Int, pad: Bool) throws -> [UInt8] {
+        var acc = Int()
+        var bits = UInt8()
+        let maxv = (1 << toBits) - 1
+        
+        let converted: [[Int]] = try data.map { value in
+            if (value < 0 || (UInt8(Int(value) >> fromBits)) != 0) {
+//                throw DecodeBech32Error.invalidCharacter(stringConvert(bytes: [value]))
+                throw Bech32.DecodingError.invalidCharacter
+            }
+            
+            acc = (acc << fromBits) | Int(value)
+            bits += UInt8(fromBits)
+            
+            var values = [Int]()
+            
+            while bits >= UInt8(toBits) {
+                bits -= UInt8(toBits)
+                values += [(acc >> Int(bits)) & maxv]
+            }
+            
+            return values
+        }
+        
+        let padding = pad && bits > UInt8() ? [acc << (toBits - Int(bits)) & maxv] : []
+        
+        if !pad && (bits >= UInt8(fromBits) || acc << (toBits - Int(bits)) & maxv > Int()) {
+            throw Bech32.DecodingError.invalidCase
+        }
+        
+        return ((converted.flatMap { $0 }) + padding).map { UInt8($0) }
+    }
+}
+
+public extension Bech32 {
+    /// Bech32 checksum delimiter
+    static let checksumMarker: String = "1"
+    
 }
 
 private extension Bech32 {
     static let generator: [UInt32] = [0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3]
     
-    /// Bech32 checksum delimiter
-    static let checksumMarker: String = "1"
-    
+  
     /// Bech32 character set for encoding
     static let charsetForEncoding: Data = "qpzry9x8gf2tvdw0s3jn54khce6mua7l".data(using: .utf8)!
     
@@ -217,19 +223,6 @@ private extension Bech32 {
         var data = expandHumanReadablePart(humanReadablePart)
         data.append(checksum)
         return polymod(data) == 1
-    }
-    
-    /// Create checksum
-    static func createChecksum(humanReadablePart: String, values: Data) -> Data {
-        var enc = expandHumanReadablePart(humanReadablePart)
-        enc.append(values)
-        enc.append(Data(repeating: 0x00, count: 6))
-        let mod: UInt32 = polymod(enc) ^ 1
-        var ret: Data = Data(repeating: 0x00, count: 6)
-        for i in 0..<6 {
-            ret[i] = UInt8((mod >> (5 * (5 - i))) & 31)
-        }
-        return ret
     }
 }
 

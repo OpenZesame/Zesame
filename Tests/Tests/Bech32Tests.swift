@@ -30,12 +30,16 @@ class Bech32Tests: XCTestCase {
     func test3Vectors() {
         func doTest(_ vector: ZilliqaVector) {
             do {
-                let bech32Address = [vector.prefix, "1", vector.address, vector.checksum].joined()
-              
-                let decoded = try Bech32.decode(bech32Address)
+                let expectedFullAddress = [vector.prefix, "1", vector.address, vector.checksum].joined()
+//
+//                let decoded = try Bech32.decode(bech32Address)
+//
+//               print("\nVector: '\(bech32Address)' =>\nPrefix: '\(decoded.humanReadablePrefix)',\nPayload: '\(decoded.dataPart.excludingChecksum?.asString)',\nChecksum: '\(decoded.dataPart.checksum.asString)'\n")
+                let bech32Address = try Bech32Address(bech32String: expectedFullAddress)
                 
-               print("\nVector: '\(bech32Address)' =>\nPrefix: '\(decoded.humanReadablePrefix)',\nPayload: '\(decoded.dataPart.excludingChecksum?.asString)',\nChecksum: '\(decoded.dataPart.checksum.asString)'\n")
-                
+                XCTAssertEqual(bech32Address.humanReadablePrefix, vector.prefix)
+                XCTAssertEqual(bech32Address.dataPart.checksum.asString, vector.checksum)
+                XCTAssertEqual(bech32Address.asString(), expectedFullAddress)
             } catch {
                 XCTFail("Error: \(error)")
             }

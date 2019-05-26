@@ -26,12 +26,20 @@ import Foundation
 
 // MARK: - Validation
 public extension Address {
-
-    static let lengthOfValidAddresses: Int = 40
+    enum Style {
+        case bech32, ethereum
+        
+        var expectedLength: Int {
+            switch self {
+            case .bech32: return 32 // excluding prefix, delimiter and checksum
+            case .ethereum: return 40
+            }
+        }
+    }
 
     enum Error: Swift.Error {
-        case tooLong
-        case tooShort
+        case incorrectLength(expectedLength: Int, forStyle: Style, butGot: Int)
+        case bech32DataEmpty
         case notHexadecimal
         case notChecksummed
     }

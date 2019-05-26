@@ -27,11 +27,10 @@ import Foundation
 public extension AddressNotNecessarilyChecksummed {
     static func validate(hexString: HexStringConvertible) throws {
         let length = hexString.length
-        if length < Address.lengthOfValidAddresses {
-            throw Address.Error.tooShort
-        }
-        if length > Address.lengthOfValidAddresses {
-            throw Address.Error.tooLong
+        let expected = Address.Style.ethereum.expectedLength
+        
+        if length != expected {
+            throw Address.Error.incorrectLength(expectedLength: expected, forStyle: Address.Style.ethereum, butGot: length)
         }
         // is valid
     }

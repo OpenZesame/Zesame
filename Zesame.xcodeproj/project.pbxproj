@@ -271,6 +271,8 @@
 		E6FF7E40229A9CD200BC22EA /* Bech32.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E3E229A9CD200BC22EA /* Bech32.swift */; };
 		E6FF7E42229A9DE000BC22EA /* Bech32Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */; };
 		E6FF7E43229A9DE000BC22EA /* Bech32Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */; };
+		E6FF7E45229AA01A00BC22EA /* Bech32Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E44229AA01A00BC22EA /* Bech32Address.swift */; };
+		E6FF7E46229AA01A00BC22EA /* Bech32Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E44229AA01A00BC22EA /* Bech32Address.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -486,6 +488,7 @@
 		E6258BF2225A4ED500147470 /* Result_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result_Extension.swift; sourceTree = "<group>"; };
 		E6FF7E3E229A9CD200BC22EA /* Bech32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32.swift; sourceTree = "<group>"; };
 		E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32Tests.swift; sourceTree = "<group>"; };
+		E6FF7E44229AA01A00BC22EA /* Bech32Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32Address.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1016,6 +1019,7 @@
 			isa = PBXGroup;
 			children = (
 				E6FF7E3E229A9CD200BC22EA /* Bech32.swift */,
+				E6FF7E44229AA01A00BC22EA /* Bech32Address.swift */,
 			);
 			path = Bech32;
 			sourceTree = "<group>";
@@ -1250,6 +1254,7 @@
 				483F0F942147085500E6EE08 /* BalanceResponse.swift in Sources */,
 				483F0F8C214704D700E6EE08 /* Error.swift in Sources */,
 				E6258BC52257DFAA00147470 /* TransactionReceipt.swift in Sources */,
+				E6FF7E46229AA01A00BC22EA /* Bech32Address.swift in Sources */,
 				48CAF9A721EA56E30047E53F /* Address+Validation+Error.swift in Sources */,
 				E6258BCB2257DFD400147470 /* StatusOfTransactionResponse.swift in Sources */,
 				4877B4E721BE2EFA00A94318 /* Wallet+Decrypt.swift in Sources */,
@@ -1379,6 +1384,7 @@
 				4877B4D421BE2EFA00A94318 /* Keystore+Wallet+Import.swift in Sources */,
 				483F0F932147085500E6EE08 /* BalanceResponse.swift in Sources */,
 				E6258BC42257DFAA00147470 /* TransactionReceipt.swift in Sources */,
+				E6FF7E45229AA01A00BC22EA /* Bech32Address.swift in Sources */,
 				E6258BCA2257DFD400147470 /* StatusOfTransactionResponse.swift in Sources */,
 				48CAF9A621EA56E30047E53F /* Address+Validation+Error.swift in Sources */,
 				48A6400A218645F300B08C67 /* TransactionResponse.swift in Sources */,

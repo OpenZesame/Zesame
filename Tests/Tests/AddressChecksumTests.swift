@@ -88,7 +88,7 @@ extension String: HexStringConvertible {
 }
 
 
-let vectors: [Vector] = [
+private let vectors: [Vector] = [
     (
         notChecksummed: "4BAF5FADA8E5DB92C3D3242618C5B47133AE003C",
         zilliqaChecksummed: "0x4BAF5faDA8e5Db92C3d3242618c5B47133AE003C",
