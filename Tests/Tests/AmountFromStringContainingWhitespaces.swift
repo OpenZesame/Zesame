@@ -31,11 +31,11 @@ class AmountFromStringContainingWhitespaces: XCTestCase {
 
 
     func testZilStringContainingWhitespaces() {
-        XCTAssertEqual(try Zil("1 234 567").qa, 1_234_567_000_000_000_000)
+        XCTAssertEqual(Zil("1 234 567").qa, 1_234_567_000_000_000_000)
     }
 
     func testZilAmountContainingWhitespaces() {
-        XCTAssertEqual(try ZilAmount("1 234 567").qa, 1_234_567_000_000_000_000)
+        XCTAssertEqual(ZilAmount("1 234 567").qa, 1_234_567_000_000_000_000)
     }
 
     func testGasPriceContainingWhitespaces() {
