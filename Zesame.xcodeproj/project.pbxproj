@@ -267,6 +267,10 @@
 		E6258BF1225A4A9A00147470 /* RPCError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6258BEF225A4A9A00147470 /* RPCError.swift */; };
 		E6258BF3225A4ED500147470 /* Result_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6258BF2225A4ED500147470 /* Result_Extension.swift */; };
 		E6258BF4225A4ED500147470 /* Result_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6258BF2225A4ED500147470 /* Result_Extension.swift */; };
+		E6FF7E3F229A9CD200BC22EA /* Bech32.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E3E229A9CD200BC22EA /* Bech32.swift */; };
+		E6FF7E40229A9CD200BC22EA /* Bech32.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E3E229A9CD200BC22EA /* Bech32.swift */; };
+		E6FF7E42229A9DE000BC22EA /* Bech32Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */; };
+		E6FF7E43229A9DE000BC22EA /* Bech32Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -480,6 +484,8 @@
 		E6258BEC225A463600147470 /* RPCResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCResponse.swift; sourceTree = "<group>"; };
 		E6258BEF225A4A9A00147470 /* RPCError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCError.swift; sourceTree = "<group>"; };
 		E6258BF2225A4ED500147470 /* Result_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result_Extension.swift; sourceTree = "<group>"; };
+		E6FF7E3E229A9CD200BC22EA /* Bech32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32.swift; sourceTree = "<group>"; };
+		E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32Tests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -534,6 +540,7 @@
 		4805A7EE21EA10E9008D6778 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				E6FF7E3D229A9CBF00BC22EA /* Bech32 */,
 				48CAF99B21EA56370047E53F /* AddressChecksummedConvertible */,
 				48CAF99A21EA56240047E53F /* Address */,
 				48CAF99921EA561B0047E53F /* HexString */,
@@ -934,6 +941,7 @@
 				48DBEA672222E2EF009B8C43 /* KeyStoreImportExportTests.swift */,
 				481169A421677CC300341F81 /* AddressChecksumTests.swift */,
 				48CAF9B121EA57BC0047E53F /* AddressValidationTests.swift */,
+				E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */,
 				48D0880B21C5244000A88859 /* UnitConversionTests.swift */,
 				483C9CB021DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift */,
 				483C9C9E21D93C1E0059B0AF /* BalanceResponseJSONTests.swift */,
@@ -1002,6 +1010,14 @@
 				48D4114D2147204500E2F207 /* Transaction */,
 			);
 			path = Responses;
+			sourceTree = "<group>";
+		};
+		E6FF7E3D229A9CBF00BC22EA /* Bech32 */ = {
+			isa = PBXGroup;
+			children = (
+				E6FF7E3E229A9CD200BC22EA /* Bech32.swift */,
+			);
+			path = Bech32;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1240,6 +1256,7 @@
 				48A6400B218645F300B08C67 /* TransactionResponse.swift in Sources */,
 				4877B4E921BE2EFA00A94318 /* Wallet+CustomStringConvertible.swift in Sources */,
 				4877B4CD21BE2EFA00A94318 /* SignedTransaction.swift in Sources */,
+				E6FF7E40229A9CD200BC22EA /* Bech32.swift in Sources */,
 				4877B4D121BE2EFA00A94318 /* KeyPair.swift in Sources */,
 				48DBEA8722247C42009B8C43 /* Keystore+KeyDeriving.swift in Sources */,
 				484D1ACE21D69E1300589E38 /* AmountError.swift in Sources */,
@@ -1302,6 +1319,7 @@
 				483C9CA021D93C1E0059B0AF /* BalanceResponseJSONTests.swift in Sources */,
 				48CAF9B321EA57BC0047E53F /* AddressValidationTests.swift in Sources */,
 				483C9CB221DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift in Sources */,
+				E6FF7E43229A9DE000BC22EA /* Bech32Tests.swift in Sources */,
 				488A658F2157BC5F0091FD03 /* ExportKeystoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1367,6 +1385,7 @@
 				4877B4E621BE2EFA00A94318 /* Wallet+Decrypt.swift in Sources */,
 				483F0F8B214704D700E6EE08 /* Error.swift in Sources */,
 				484D1ACA21D69DE500589E38 /* Unit.swift in Sources */,
+				E6FF7E3F229A9CD200BC22EA /* Bech32.swift in Sources */,
 				48DBEA8622247C42009B8C43 /* Keystore+KeyDeriving.swift in Sources */,
 				4877B4E821BE2EFA00A94318 /* Wallet+CustomStringConvertible.swift in Sources */,
 				4877B4CC21BE2EFA00A94318 /* SignedTransaction.swift in Sources */,
@@ -1429,6 +1448,7 @@
 				483C9C9F21D93C1E0059B0AF /* BalanceResponseJSONTests.swift in Sources */,
 				48CAF9B221EA57BC0047E53F /* AddressValidationTests.swift in Sources */,
 				483C9CB121DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift in Sources */,
+				E6FF7E42229A9DE000BC22EA /* Bech32Tests.swift in Sources */,
 				488A658E2157BC5F0091FD03 /* ExportKeystoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
