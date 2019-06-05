@@ -267,6 +267,8 @@
 		E6258BF1225A4A9A00147470 /* RPCError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6258BEF225A4A9A00147470 /* RPCError.swift */; };
 		E6258BF3225A4ED500147470 /* Result_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6258BF2225A4ED500147470 /* Result_Extension.swift */; };
 		E6258BF4225A4ED500147470 /* Result_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6258BF2225A4ED500147470 /* Result_Extension.swift */; };
+		E69E753922A83FB300AC631B /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E753822A83FB300AC631B /* TestHelpers.swift */; };
+		E69E753A22A83FB300AC631B /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E753822A83FB300AC631B /* TestHelpers.swift */; };
 		E6FF7E3F229A9CD200BC22EA /* Bech32.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E3E229A9CD200BC22EA /* Bech32.swift */; };
 		E6FF7E40229A9CD200BC22EA /* Bech32.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E3E229A9CD200BC22EA /* Bech32.swift */; };
 		E6FF7E42229A9DE000BC22EA /* Bech32Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */; };
@@ -486,6 +488,7 @@
 		E6258BEC225A463600147470 /* RPCResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCResponse.swift; sourceTree = "<group>"; };
 		E6258BEF225A4A9A00147470 /* RPCError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCError.swift; sourceTree = "<group>"; };
 		E6258BF2225A4ED500147470 /* Result_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result_Extension.swift; sourceTree = "<group>"; };
+		E69E753822A83FB300AC631B /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		E6FF7E3E229A9CD200BC22EA /* Bech32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32.swift; sourceTree = "<group>"; };
 		E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32Tests.swift; sourceTree = "<group>"; };
 		E6FF7E44229AA01A00BC22EA /* Bech32Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32Address.swift; sourceTree = "<group>"; };
@@ -959,6 +962,7 @@
 			isa = PBXGroup;
 			children = (
 				4847EE0A21613972002FF978 /* ZesameTests-Info.plist */,
+				E69E753822A83FB300AC631B /* TestHelpers.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -1322,6 +1326,7 @@
 				485AA28E21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift in Sources */,
 				481169A621677CC300341F81 /* AddressChecksumTests.swift in Sources */,
 				483C9CA021D93C1E0059B0AF /* BalanceResponseJSONTests.swift in Sources */,
+				E69E753A22A83FB300AC631B /* TestHelpers.swift in Sources */,
 				48CAF9B321EA57BC0047E53F /* AddressValidationTests.swift in Sources */,
 				483C9CB221DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift in Sources */,
 				E6FF7E43229A9DE000BC22EA /* Bech32Tests.swift in Sources */,
@@ -1452,6 +1457,7 @@
 				485AA28D21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift in Sources */,
 				481169A521677CC300341F81 /* AddressChecksumTests.swift in Sources */,
 				483C9C9F21D93C1E0059B0AF /* BalanceResponseJSONTests.swift in Sources */,
+				E69E753922A83FB300AC631B /* TestHelpers.swift in Sources */,
 				48CAF9B221EA57BC0047E53F /* AddressValidationTests.swift in Sources */,
 				483C9CB121DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift in Sources */,
 				E6FF7E42229A9DE000BC22EA /* Bech32Tests.swift in Sources */,

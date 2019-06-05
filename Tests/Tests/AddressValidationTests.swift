@@ -33,32 +33,59 @@ private let privateKeyString = "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61
 final class AddressValidationTests: XCTestCase {
 
     func testChecksummedAddress() {
+        XCTAssertTrue(try Address(string: "zil1uvys5ycfm7kyqdfdq00vdnxeetfp8emtsptv94").isChecksummed)
+        XCTAssertTrue(try Address(string: "ZIL1UVYS5YCFM7KYQDFDQ00VDNXEETFP8EMTSPTV94").isChecksummed)
         XCTAssertTrue(try Address(string: "F510333720c5Dd3c3C08bC8e085e8c981ce74691").isChecksummed)
+        XCTAssertTrue(try Address(string: "0xF510333720c5Dd3c3C08bC8e085e8c981ce74691").isChecksummed)
+        XCTAssertThrowsSpecificError(
+            try Address(string: "f510333720c5Dd3c3C08bC8e085e8c981ce74691"),
+            Address.Error.notChecksummed
+        )
+        XCTAssertThrowsSpecificError(
+            try Address(string: "0xf510333720c5Dd3c3C08bC8e085e8c981ce74691"),
+            Address.Error.notChecksummed
+        )
     }
+    
+    func testMixedCaseBech32LowercaseLastChar_v_() {
+        XCTAssertThrowsSpecificError(
+            try Address(string: "ZIL1UVYS5YCFM7KYQDFDQ00VDNXEETFP8EMTSPTv94"),
+            Address.Error.invalidBech32Address(bechError: Bech32.DecodingError.invalidCase),
+            "lower case last chars `v`, uppercase rest"
+        )
+    }
+    
+    func testMixedCaseBech32LowercasePrefix() {
+        XCTAssertThrowsSpecificError(
+            try Address(string: "zil1UVYS5YCFM7KYQDFDQ00VDNXEETFP8EMTSPTV94"),
+            Address.Error.invalidBech32Address(bechError: Bech32.DecodingError.invalidCase),
+            "lower case prefix, uppercase rest"
+        )
 
-    func testNotchecksummedAddress() {
+    }
+    
+    func testSame() {
         do {
-            // changed leading uppercase "F" to lowercase
-            let address = try Address(string: "f510333720c5Dd3c3C08bC8e085e8c981ce74691")
-            XCTAssertFalse(address.isChecksummed)
-            XCTAssertTrue(AddressChecksummed.isChecksummed(hexString: address.checksummedAddress) )
-            XCTAssertEqual(Address.checksummed(address.checksummedAddress), try Address(string: "F510333720c5Dd3c3C08bC8e085e8c981ce74691"))
+            try XCTAssertAllEqual([
+                "zil1uvys5ycfm7kyqdfdq00vdnxeetfp8emtsptv94",
+                "0xe3090a1309DfAC40352d03dEc6cCD9cAd213e76B",
+                "e3090a1309DfAC40352d03dEc6cCD9cAd213e76B"
+                ].map { try Address(string: $0).asString })
         } catch {
-            return XCTFail("Test should not throw")
+            XCTFail("Unexpected error: \(error)")
         }
     }
-
-//    func testAddressEquatable() {
-//        let lhs: Address = "F510333720c5Dd3c3C08bC8e085e8c981ce74691"
-//        let rhs: Address = "f510333720c5Dd3c3C08bC8e085e8c981ce74691"
-//        XCTAssertNotEqual(lhs, rhs)
-//    }
 
     func testThatAddressFromPrivateKeyIsChecksummed() {
         let privateKey = PrivateKey(hex: privateKeyString)!
         let address = Address(privateKey: privateKey)
         XCTAssertTrue(address.isChecksummed)
         XCTAssertEqual(address, "74c544a11795905C2c9808F9e78d8156159d32e4")
+        
+        XCTAssertEqual(
+            try Address(string: "zil1wnz5fgghjkg9ctycpru70rvp2c2e6vhyc96rwg").asString,
+            try Address(string: "74c544a11795905C2c9808F9e78d8156159d32e4").asString
+        )
     }
     
     func testBech32ToEthStyle() {

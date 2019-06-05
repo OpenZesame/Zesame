@@ -26,7 +26,7 @@ import Foundation
 
 // MARK: - Validation
 public extension Address {
-    enum Style {
+    enum Style: Equatable {
         case bech32, ethereum
         
         var expectedLength: Int {
@@ -37,10 +37,11 @@ public extension Address {
         }
     }
 
-    enum Error: Swift.Error {
+    enum Error: Swift.Error, Equatable {
         case incorrectLength(expectedLength: Int, forStyle: Style, butGot: Int)
         case bech32DataEmpty
         case notHexadecimal
+        case invalidBech32Address(bechError: Bech32.DecodingError)
         case notChecksummed
     }
 }

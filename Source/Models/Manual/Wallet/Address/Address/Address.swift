@@ -55,12 +55,17 @@ public extension Address {
                 return Address.checksummed(ethStyleNotNecessarilyChecksummed.checksummedAddress)
             }
             self = try inner(bech32Address: bech32)
-        } catch {
-            let hexString = try HexString(string)
+        } catch let bech32Error as Bech32.DecodingError {
+            let hexString: HexString
+            do {
+                hexString = try HexString(string)
+            } catch {
+                throw Address.Error.invalidBech32Address(bechError: bech32Error)
+            }
             self = .checksummed(try AddressChecksummed(hexString: hexString))
+        } catch {
+            fatalError("Incorrect implementation, expected error of type Bech32.DecodingError, but got: \(error) of type: \(type(of: error))")
         }
-        
-        
     }
     
 }
