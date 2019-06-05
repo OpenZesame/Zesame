@@ -65,12 +65,20 @@ func XCTAssertThrowsSpecificErrorType<E>(
 }
 
 func XCTAssertAllEqual<Item>(_ items: Item...) where Item: Equatable {
+    XCTAssertAllEqual(items: items)
+}
+
+func XCTAssertAllEqual<Item>(items: [Item]) where Item: Equatable {
     forAll(items) {
         XCTAssertEqual($0, $1)
     }
 }
 
 func XCTAssertAllInequal<Item>(_ items: Item...) where Item: Equatable {
+    XCTAssertAllInequal(items: items)
+}
+
+func XCTAssertAllInequal<Item>(items: [Item]) where Item: Equatable {
     forAll(items) {
         XCTAssertNotEqual($0, $1)
     }

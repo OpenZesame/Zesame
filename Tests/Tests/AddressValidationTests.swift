@@ -66,11 +66,16 @@ final class AddressValidationTests: XCTestCase {
     
     func testSame() {
         do {
-            try XCTAssertAllEqual([
-                "zil1uvys5ycfm7kyqdfdq00vdnxeetfp8emtsptv94",
-                "0xe3090a1309DfAC40352d03dEc6cCD9cAd213e76B",
-                "e3090a1309DfAC40352d03dEc6cCD9cAd213e76B"
-                ].map { try Address(string: $0).asString })
+            try XCTAssertAllEqual(items:
+                [
+                    [
+                        "zil1uvys5ycfm7kyqdfdq00vdnxeetfp8emtsptv94",
+                        "0xe3090a1309DfAC40352d03dEc6cCD9cAd213e76B",
+                        "e3090a1309DfAC40352d03dEc6cCD9cAd213e76B"
+                    ].map { try Address(string: $0).asString },
+                    ["e3090a1309DfAC40352d03dEc6cCD9cAd213e76B"]
+                ].flatMap { $0 }
+            )
         } catch {
             XCTFail("Unexpected error: \(error)")
         }
@@ -86,6 +91,7 @@ final class AddressValidationTests: XCTestCase {
             try Address(string: "zil1wnz5fgghjkg9ctycpru70rvp2c2e6vhyc96rwg").asString,
             try Address(string: "74c544a11795905C2c9808F9e78d8156159d32e4").asString
         )
+        
     }
     
     func testBech32ToEthStyle() {
