@@ -94,12 +94,43 @@ final class AddressValidationTests: XCTestCase {
         
     }
     
+    func testFromLegacyToBech32Address() {
+        do {
+            let bech32 = try Bech32Address(ethStyleAddress: "74c544a11795905C2c9808F9e78d8156159d32e4", network: .mainnet)
+            
+            XCTAssertEqual(
+                bech32.asString(),
+                "zil1wnz5fgghjkg9ctycpru70rvp2c2e6vhyc96rwg"
+            )
+            
+            XCTAssertEqual(
+                bech32.checksummedAddress.asString,
+                "74c544a11795905C2c9808F9e78d8156159d32e4"
+            )
+            
+        } catch {
+            XCTFail("unexpected error: \(error)")
+        }
+    }
+    
+    func testBech32FromDataTooShortData() {
+        XCTAssertThrowsSpecificError(
+            try Bech32Address(network: .mainnet, unchecksummedData: Data(repeating: 0x1, count: 19)),
+            Bech32Address.Error.incorrectDataLength(expectedByteCountOf: 20, butGot: 19),
+            "Should be 20 bytes"
+        )
+        
+    }
+    
     func testBech32ToEthStyle() {
         func doTest(_ vector: AddressTuple) {
             do {
                 let addressBech32 = try Address(string: vector.bech32)
                 let sameEthStyle = try Address(string: vector.ethStyle)
                 XCTAssertEqual(addressBech32, sameEthStyle)
+                let bech32Add = try Bech32Address(bech32String: vector.bech32)
+                XCTAssertEqual(bech32Add.asString(), vector.bech32)
+                XCTAssertEqual(bech32Add.checksummedAddress.asString, vector.ethStyle)
             } catch {
                 XCTFail("Unexpected error: \(error)")
             }
