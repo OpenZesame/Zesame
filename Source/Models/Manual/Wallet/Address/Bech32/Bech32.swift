@@ -32,20 +32,6 @@ public enum Bech32 {}
 
 public extension Bech32 {
     
-//    /// Encode Bech32 string
-//    static func encode(_ humanReadablePart: String, values: Data) -> String {
-//        let checksum = createChecksum(humanReadablePart: humanReadablePart, values: values)
-//        var combined = values
-//        combined.append(checksum)
-//
-//        return [
-//            humanReadablePart,
-//            checksumMarker,
-//            dataToString(data: combined)
-//            ].joined()
-//
-//    }
-    
     static func dataToString(data: Data) -> String {
         var ret = "".data(using: .utf8)!
         for i in data {
@@ -138,7 +124,6 @@ public extension Bech32 {
         
         let converted: [[Int]] = try data.map { value in
             if (value < 0 || (UInt8(Int(value) >> fromBits)) != 0) {
-//                throw DecodeBech32Error.invalidCharacter(stringConvert(bytes: [value]))
                 throw Bech32.DecodingError.invalidCharacter
             }
             
@@ -167,16 +152,16 @@ public extension Bech32 {
 
 public extension Bech32 {
     /// Bech32 checksum delimiter
-    static let checksumMarker: String = "1"
-    
+    static let checksumMarker = "1"
+    static let alphabetString = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
 }
 
 private extension Bech32 {
     static let generator: [UInt32] = [0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3]
     
-  
     /// Bech32 character set for encoding
-    static let charsetForEncoding: Data = "qpzry9x8gf2tvdw0s3jn54khce6mua7l".data(using: .utf8)!
+   
+    static let charsetForEncoding: Data = alphabetString.data(using: .utf8)!
     
     /// Bech32 character set for decoding
     static let charsetForDecoding: [Int8] = [
