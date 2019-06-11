@@ -24,7 +24,7 @@
 
 import Foundation
 
-public extension AddressNotNecessarilyChecksummed {
+internal extension AddressNotNecessarilyChecksummed {
     static func validate(hexString: HexStringConvertible) throws {
         let length = hexString.length
         let expected = Address.Style.ethereum.expectedLength

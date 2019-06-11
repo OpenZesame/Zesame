@@ -48,7 +48,7 @@ public extension DefaultZilliqaService {
         return apiClient.send(method: .getNetworkId, done: done)
     }
 
-    func getBalance(for address: AddressChecksummedConvertible, done: @escaping Done<BalanceResponse>) -> Void {
+    func getBalance(for address: Address, done: @escaping Done<BalanceResponse>) -> Void {
         return apiClient.send(method: .getBalance(address), done: done)
     }
 

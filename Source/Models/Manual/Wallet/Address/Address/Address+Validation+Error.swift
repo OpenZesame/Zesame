@@ -45,14 +45,3 @@ public extension Address {
         case notChecksummed
     }
 }
-
-// MARK: - Convenience getters
-public extension Address {
-    var isChecksummed: Bool {
-        switch self {
-        case .checksummed: return true
-        case .notNecessarilyChecksummed(let maybeChecksummed):
-            return AddressChecksummed.isChecksummed(hexString: maybeChecksummed)
-        }
-    }
-}

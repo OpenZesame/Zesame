@@ -25,7 +25,7 @@
 import Foundation
 
 extension AddressNotNecessarilyChecksummed: CustomStringConvertible {}
-public extension AddressNotNecessarilyChecksummed {
+internal extension AddressNotNecessarilyChecksummed {
     var description: String {
         return hexString.description
     }

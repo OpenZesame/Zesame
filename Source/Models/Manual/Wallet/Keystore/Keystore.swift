@@ -44,8 +44,9 @@ public extension Keystore {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let addressHex = try container.decode(HexString.self, forKey: .address)
-        address = try AddressNotNecessarilyChecksummed(hexString: addressHex).checksummedAddress
+        let addressString = try container.decode(String.self, forKey: .address)
+        let address = try Address(string: addressString)
+        self.address = try address.toChecksummedLegacyAddress()
         crypto = try container.decode(Crypto.self, forKey: .crypto)
         id = try container.decode(String.self, forKey: .id)
         version = try container.decode(Int.self, forKey: .version)
@@ -54,8 +55,8 @@ public extension Keystore {
 
 // MARK: Initialization
 public extension Keystore {
-    init(address: AddressChecksummedConvertible, crypto: Crypto, id: String? = nil, version: Int = 3) {
-        self.address = address.checksummedAddress
+    init(address: AddressChecksummed, crypto: Crypto, id: String? = nil, version: Int = 3) {
+        self.address = address
         self.crypto = crypto
         self.id = id ?? UUID().uuidString
         self.version = version

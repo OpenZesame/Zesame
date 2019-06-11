@@ -73,6 +73,13 @@ public extension HexString {
     }
 }
 
+extension HexString: DataConvertible {}
+public extension HexString {
+    var asData: Data {
+        return Data(hex: self.value)
+    }
+}
+
 extension HexString: Codable {
 
     public init(from decoder: Decoder) throws {

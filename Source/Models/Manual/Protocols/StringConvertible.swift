@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -24,7 +24,18 @@
 
 import Foundation
 
-// MARK: - HexStringConvertible
-public extension AddressChecksummedConvertible {
-    var hexString: HexString { return checksummedAddress.checksummed }
+public protocol StringConvertible: CustomStringConvertible {
+    var asString: String { get }
+}
+
+public extension StringConvertible {
+    var description: String {
+        return asString
+    }
+}
+
+public extension Equatable where Self: StringConvertible {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.asString == rhs.asString
+    }
 }

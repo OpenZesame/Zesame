@@ -25,7 +25,12 @@
 import Foundation
 
 /// A minimum container of a valid Bech32 address containing the prefix, delimiter, data (relevant information) and checksum
-public struct Bech32Address: Equatable, CustomStringConvertible, ExpressibleByStringLiteral, AddressChecksummedConvertible {
+public struct Bech32Address:
+    AddressChecksummedConvertible,
+    StringConvertible,
+    Equatable,
+    ExpressibleByStringLiteral
+{
     
     public let humanReadablePrefix: String
     public let dataPart: DataPart
@@ -40,18 +45,33 @@ public struct Bech32Address: Equatable, CustomStringConvertible, ExpressibleBySt
     }
 }
 
-// MARK: - CustomStringConvertible
-public extension Bech32Address {
-    var description: String {
-        return self.asString()
-    }
-}
-
 public extension Bech32Address {
     enum Error: Swift.Error, Equatable {
         case incorrectDataLength(expectedByteCountOf: Int, butGot: Int)
     }
 }
+
+public extension Bech32Address {
+    
+    func toChecksummedLegacyAddress() throws -> AddressChecksummed {
+        guard let relevantInfoPart = dataPart.excludingChecksum else {
+            throw Address.Error.bech32DataEmpty
+        }
+        
+        let expecetedLength = Address.Style.bech32.expectedLength
+        let length = relevantInfoPart.asString.count
+        guard length == expecetedLength else {
+            throw Address.Error.incorrectLength(expectedLength: expecetedLength, forStyle: Address.Style.bech32, butGot: length)
+        }
+        
+        let addressAsData = try Bech32.convertbits(data: relevantInfoPart.data.bytes, fromBits: 5, toBits: 8, pad: false)
+        let hexString = try HexString(addressAsData.toHexString())
+        let ethStyleNotNecessarilyChecksummed = try AddressNotNecessarilyChecksummed(hexString: hexString)
+        return try ethStyleNotNecessarilyChecksummed.toChecksummedLegacyAddress()
+    }
+}
+
+
 
 public extension Bech32Address {
     init(prefix: String, unchecksummedData: Data) throws {
@@ -77,13 +97,11 @@ public extension Bech32Address {
         try self.init(prefix: network.bech32Prefix, unchecksummedData: unchecksummedData)
     }
 
-    init(ethStyleAddress address: AddressChecksummedConvertible, network: Network = .mainnet) throws {
-        let addressAsHexString = address.checksummedAddress.asString
-        let unchecksummedData = Data(hex: addressAsHexString)
+    init(ethStyleAddress address: AddressChecksummed, network: Network = .mainnet) throws {
 
         try self.init(
             network: network,
-            unchecksummedData: unchecksummedData
+            unchecksummedData: address.asData
         )
     }
     
@@ -160,8 +178,9 @@ public extension Bech32Address.DataPart.Bech32Data {
     }
 }
 
+// MARK: - StringConvertible
 public extension Bech32Address {
-    func asString() -> String {
+    var asString: String {
         return [
             humanReadablePrefix,
             Bech32.checksumMarker,
@@ -196,26 +215,5 @@ extension Network {
 public extension Network {
     enum Bech32Error: Swift.Error {
         case unrecognizedBech32Prefix(String)
-    }
-}
-
-public extension Bech32Address {
-    init(hexString: HexStringConvertible) throws {
-        fatalError("should not be used")
-    }
-    
-    var checksummedAddress: AddressChecksummed {
-        guard let exclChecks = dataPart.excludingChecksum else {
-            fatalError("should have data part excl checksum")
-        }
-        
-        do {
-            let addressData = try Bech32.convertbits(data: exclChecks.data.bytes, fromBits: 5, toBits: 8, pad: false)
-            
-            let hexString = try HexString(addressData.asData.asHex)
-            return hexString.checksummed
-        } catch {
-            fatalError("Incorrect implementation, should be able to create Legacy address from Bech32Address, unexpected error: \(error)")
-        }
     }
 }

@@ -24,26 +24,22 @@
 
 import Foundation
 
-public struct AddressNotNecessarilyChecksummed: AddressChecksummedConvertible {
+internal struct AddressNotNecessarilyChecksummed: AddressChecksummedConvertible {
 
-    public let hexString: HexString
+    internal let hexString: HexString
 
     // AddressChecksummedConvertible init
-    public init(hexString: HexStringConvertible) throws {
+    internal init(hexString: HexStringConvertible) throws {
         try AddressNotNecessarilyChecksummed.validate(hexString: hexString)
         self.hexString = hexString.hexString
     }
 }
 
 // MARK: - AddressChecksummedConvertible
-public extension AddressNotNecessarilyChecksummed {
-    var checksummedAddress: AddressChecksummed {
+internal extension AddressNotNecessarilyChecksummed {
+    func toChecksummedLegacyAddress() throws -> AddressChecksummed {
         let checksummedHexString = AddressChecksummed.checksummedHexstringFrom(hexString: hexString)
-        do {
-            return try AddressChecksummed(hexString: checksummedHexString)
-        } catch {
-            fatalError("Should be able to checksum address, unexpected error: \(error)")
-        }
+        return try AddressChecksummed(hexString: checksummedHexString)
     }
 }
 
