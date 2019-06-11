@@ -35,7 +35,7 @@ class Bech32Tests: XCTestCase {
                 
                 XCTAssertEqual(bech32Address.humanReadablePrefix, vector.prefix)
                 XCTAssertEqual(bech32Address.dataPart.checksum.asString, vector.checksum)
-                XCTAssertEqual(bech32Address.asString(), expectedFullAddress)
+                XCTAssertEqual(bech32Address.asString, expectedFullAddress)
             } catch {
                 XCTFail("Error: \(error)")
             }

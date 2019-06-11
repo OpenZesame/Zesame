@@ -31,7 +31,7 @@ public enum Address:
     ExpressibleByStringLiteral
 {
 
-    case legacy(AddressChecksummed)
+    case legacy(LegacyAddress)
     case bech32(Bech32Address)
 
 }
@@ -49,7 +49,7 @@ public extension Address {
             } catch {
                 throw Address.Error.invalidBech32Address(bechError: bech32Error)
             }
-            self = .legacy(try AddressChecksummed(hexString: hexString))
+            self = .legacy(try LegacyAddress(hexString: hexString))
         } catch {
             fatalError("Incorrect implementation, expected error of type Bech32.DecodingError, but got: \(error) of type: \(type(of: error))")
         }
@@ -58,7 +58,7 @@ public extension Address {
 
 // MARK: - AddressChecksummedConvertible
 public extension Address {
-    func toChecksummedLegacyAddress() throws -> AddressChecksummed {
+    func toChecksummedLegacyAddress() throws -> LegacyAddress {
         switch self {
         case .bech32(let bech32): return try bech32.toChecksummedLegacyAddress()
         case .legacy(let legacy): return try legacy.toChecksummedLegacyAddress()
@@ -72,6 +72,16 @@ public extension Address {
         switch self {
         case .bech32(let bech32): return bech32.asString
         case .legacy(let legacy): return legacy.asString
+        }
+    }
+}
+
+public extension Address {
+    static func == (lhs: Address, rhs: Address) -> Bool {
+        do {
+            return try lhs.toChecksummedLegacyAddress() == rhs.toChecksummedLegacyAddress()
+        } catch {
+            return false
         }
     }
 }

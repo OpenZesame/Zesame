@@ -53,7 +53,7 @@ public extension Bech32Address {
 
 public extension Bech32Address {
     
-    func toChecksummedLegacyAddress() throws -> AddressChecksummed {
+    func toChecksummedLegacyAddress() throws -> LegacyAddress {
         guard let relevantInfoPart = dataPart.excludingChecksum else {
             throw Address.Error.bech32DataEmpty
         }
@@ -66,7 +66,7 @@ public extension Bech32Address {
         
         let addressAsData = try Bech32.convertbits(data: relevantInfoPart.data.bytes, fromBits: 5, toBits: 8, pad: false)
         let hexString = try HexString(addressAsData.toHexString())
-        let ethStyleNotNecessarilyChecksummed = try AddressNotNecessarilyChecksummed(hexString: hexString)
+        let ethStyleNotNecessarilyChecksummed = try LegacyAddress(unvalidatedHex: hexString)
         return try ethStyleNotNecessarilyChecksummed.toChecksummedLegacyAddress()
     }
 }
@@ -97,7 +97,7 @@ public extension Bech32Address {
         try self.init(prefix: network.bech32Prefix, unchecksummedData: unchecksummedData)
     }
 
-    init(ethStyleAddress address: AddressChecksummed, network: Network = .mainnet) throws {
+    init(ethStyleAddress address: LegacyAddress, network: Network = .mainnet) throws {
 
         try self.init(
             network: network,
@@ -106,7 +106,7 @@ public extension Bech32Address {
     }
     
     init(ethStyleAddress address: String, network: Network = .mainnet) throws {
-        let checksummedAddress = try AddressChecksummed(string: address)
+        let checksummedAddress = try LegacyAddress(string: address)
         try self.init(ethStyleAddress: checksummedAddress, network: network)
     }
     

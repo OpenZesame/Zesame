@@ -31,18 +31,27 @@ import XCTest
 private let privateKeyString = "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638"
 
 final class AddressValidationTests: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
+        continueAfterFailure = false
+    }
 
     func testChecksummedAddress() {
-        XCTAssertTrue(try Address(string: "zil1uvys5ycfm7kyqdfdq00vdnxeetfp8emtsptv94").isChecksummed)
-        XCTAssertTrue(try Address(string: "ZIL1UVYS5YCFM7KYQDFDQ00VDNXEETFP8EMTSPTV94").isChecksummed)
-        XCTAssertTrue(try Address(string: "F510333720c5Dd3c3C08bC8e085e8c981ce74691").isChecksummed)
-        XCTAssertTrue(try Address(string: "0xF510333720c5Dd3c3C08bC8e085e8c981ce74691").isChecksummed)
+        
+        XCTAssertAllEqual(
+            try Address(string: "zil1uvys5ycfm7kyqdfdq00vdnxeetfp8emtsptv94"),
+            try Address(string: "ZIL1UVYS5YCFM7KYQDFDQ00VDNXEETFP8EMTSPTV94"),
+            try Address(string: "e3090a1309DfAC40352d03dEc6cCD9cAd213e76B"),
+            try Address(string: "0xe3090a1309DfAC40352d03dEc6cCD9cAd213e76B")
+        )
+        
         XCTAssertThrowsSpecificError(
-            try Address(string: "f510333720c5Dd3c3C08bC8e085e8c981ce74691"),
+            try Address(string: "E3090a1309DfAC40352d03dEc6cCD9cAd213e76B"),
             Address.Error.notChecksummed
         )
         XCTAssertThrowsSpecificError(
-            try Address(string: "0xf510333720c5Dd3c3C08bC8e085e8c981ce74691"),
+            try Address(string: "0xE3090a1309DfAC40352d03dEc6cCD9cAd213e76B"),
             Address.Error.notChecksummed
         )
     }
@@ -72,7 +81,7 @@ final class AddressValidationTests: XCTestCase {
                         "zil1uvys5ycfm7kyqdfdq00vdnxeetfp8emtsptv94",
                         "0xe3090a1309DfAC40352d03dEc6cCD9cAd213e76B",
                         "e3090a1309DfAC40352d03dEc6cCD9cAd213e76B"
-                    ].map { try Address(string: $0).asString },
+                    ].map { try Address(string: $0).toChecksummedLegacyAddress().asString },
                     ["e3090a1309DfAC40352d03dEc6cCD9cAd213e76B"]
                 ].flatMap { $0 }
             )
@@ -83,13 +92,12 @@ final class AddressValidationTests: XCTestCase {
 
     func testThatAddressFromPrivateKeyIsChecksummed() {
         let privateKey = PrivateKey(hex: privateKeyString)!
-        let address = Address(privateKey: privateKey)
-        XCTAssertTrue(address.isChecksummed)
-        XCTAssertEqual(address, "74c544a11795905C2c9808F9e78d8156159d32e4")
+        let address = LegacyAddress(privateKey: privateKey)
+        XCTAssertEqual(address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
         
         XCTAssertEqual(
-            try Address(string: "zil1wnz5fgghjkg9ctycpru70rvp2c2e6vhyc96rwg").asString,
-            try Address(string: "74c544a11795905C2c9808F9e78d8156159d32e4").asString
+            try Address(string: "zil1wnz5fgghjkg9ctycpru70rvp2c2e6vhyc96rwg"),
+            try Address(string: "74c544a11795905C2c9808F9e78d8156159d32e4")
         )
         
     }
@@ -99,12 +107,12 @@ final class AddressValidationTests: XCTestCase {
             let bech32 = try Bech32Address(ethStyleAddress: "74c544a11795905C2c9808F9e78d8156159d32e4", network: .mainnet)
             
             XCTAssertEqual(
-                bech32.asString(),
+                bech32.asString,
                 "zil1wnz5fgghjkg9ctycpru70rvp2c2e6vhyc96rwg"
             )
             
             XCTAssertEqual(
-                bech32.checksummedAddress.asString,
+                try bech32.toChecksummedLegacyAddress().asString,
                 "74c544a11795905C2c9808F9e78d8156159d32e4"
             )
             
@@ -129,8 +137,8 @@ final class AddressValidationTests: XCTestCase {
                 let sameEthStyle = try Address(string: vector.ethStyle)
                 XCTAssertEqual(addressBech32, sameEthStyle)
                 let bech32Add = try Bech32Address(bech32String: vector.bech32)
-                XCTAssertEqual(bech32Add.asString(), vector.bech32)
-                XCTAssertEqual(bech32Add.checksummedAddress.asString, vector.ethStyle)
+                XCTAssertEqual(bech32Add.asString, vector.bech32)
+                XCTAssertEqual(try bech32Add.toChecksummedLegacyAddress().asString, vector.ethStyle)
             } catch {
                 XCTFail("Unexpected error: \(error)")
             }

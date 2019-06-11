@@ -64,6 +64,42 @@ func XCTAssertThrowsSpecificErrorType<E>(
     }
 }
 
+func XCTAssertAllEqual<Item>(
+    _ item1: @autoclosure () throws -> Item,
+    _ item2: @autoclosure () throws -> Item,
+    _ item3: @autoclosure () throws -> Item
+)
+    where Item: Equatable
+{
+    do {
+        let i1 = try item1()
+        let i2 = try item2()
+        let i3 = try item3()
+        XCTAssertAllEqual(items: [i1, i2, i3])
+    } catch {
+        XCTFail("Unexpected error thrown: \(error)")
+    }
+}
+
+func XCTAssertAllEqual<Item>(
+    _ item1: @autoclosure () throws -> Item,
+    _ item2: @autoclosure () throws -> Item,
+    _ item3: @autoclosure () throws -> Item,
+    _ item4: @autoclosure () throws -> Item
+    )
+    where Item: Equatable
+{
+    do {
+        let i1 = try item1()
+        let i2 = try item2()
+        let i3 = try item3()
+        let i4 = try item4()
+        XCTAssertAllEqual(items: [i1, i2, i3, i4])
+    } catch {
+        XCTFail("Unexpected error thrown: \(error)")
+    }
+}
+
 func XCTAssertAllEqual<Item>(_ items: Item...) where Item: Equatable {
     XCTAssertAllEqual(items: items)
 }

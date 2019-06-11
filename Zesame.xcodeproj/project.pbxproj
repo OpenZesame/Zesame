@@ -7,14 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4805A7F521EA10E9008D6778 /* AddressNotNecessarilyChecksummed+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F021EA10E9008D6778 /* AddressNotNecessarilyChecksummed+CustomStringConvertible.swift */; };
-		4805A7F621EA10E9008D6778 /* AddressNotNecessarilyChecksummed+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F021EA10E9008D6778 /* AddressNotNecessarilyChecksummed+CustomStringConvertible.swift */; };
-		4805A7F721EA10E9008D6778 /* AddressChecksummed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F121EA10E9008D6778 /* AddressChecksummed.swift */; };
-		4805A7F821EA10E9008D6778 /* AddressChecksummed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F121EA10E9008D6778 /* AddressChecksummed.swift */; };
 		4805A7FB21EA10E9008D6778 /* HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F321EA10E9008D6778 /* HexString.swift */; };
 		4805A7FC21EA10E9008D6778 /* HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F321EA10E9008D6778 /* HexString.swift */; };
-		4805A7FD21EA10E9008D6778 /* AddressChecksummed+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F421EA10E9008D6778 /* AddressChecksummed+Codable.swift */; };
-		4805A7FE21EA10E9008D6778 /* AddressChecksummed+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F421EA10E9008D6778 /* AddressChecksummed+Codable.swift */; };
+		4805A7FD21EA10E9008D6778 /* LegacyAddress+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F421EA10E9008D6778 /* LegacyAddress+Codable.swift */; };
+		4805A7FE21EA10E9008D6778 /* LegacyAddress+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4805A7F421EA10E9008D6778 /* LegacyAddress+Codable.swift */; };
 		481169A521677CC300341F81 /* AddressChecksumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481169A421677CC300341F81 /* AddressChecksumTests.swift */; };
 		481169A621677CC300341F81 /* AddressChecksumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481169A421677CC300341F81 /* AddressChecksumTests.swift */; };
 		48196F262157C574009C40BB /* ZilliqaService+DefaultImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48196F252157C574009C40BB /* ZilliqaService+DefaultImplementations.swift */; };
@@ -184,12 +180,8 @@
 		48CAF98B21EA52420047E53F /* AddressChecksummedConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF98921EA52420047E53F /* AddressChecksummedConvertible.swift */; };
 		48CAF98D21EA52640047E53F /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF98C21EA52640047E53F /* Address.swift */; };
 		48CAF98E21EA52640047E53F /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF98C21EA52640047E53F /* Address.swift */; };
-		48CAF99121EA52970047E53F /* AddressNotNecessarilyChecksummed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF99021EA52970047E53F /* AddressNotNecessarilyChecksummed.swift */; };
-		48CAF99221EA52970047E53F /* AddressNotNecessarilyChecksummed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF99021EA52970047E53F /* AddressNotNecessarilyChecksummed.swift */; };
-		48CAF99421EA53BE0047E53F /* AddressChecksummed+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF99321EA53BE0047E53F /* AddressChecksummed+Validation.swift */; };
-		48CAF99521EA53BE0047E53F /* AddressChecksummed+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF99321EA53BE0047E53F /* AddressChecksummed+Validation.swift */; };
-		48CAF99721EA558B0047E53F /* AddressNotNecessarilyChecksummed+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF99621EA558B0047E53F /* AddressNotNecessarilyChecksummed+Validation.swift */; };
-		48CAF99821EA558B0047E53F /* AddressNotNecessarilyChecksummed+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF99621EA558B0047E53F /* AddressNotNecessarilyChecksummed+Validation.swift */; };
+		48CAF99421EA53BE0047E53F /* LegacyAddress+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF99321EA53BE0047E53F /* LegacyAddress+Validation.swift */; };
+		48CAF99521EA53BE0047E53F /* LegacyAddress+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF99321EA53BE0047E53F /* LegacyAddress+Validation.swift */; };
 		48CAF9A021EA568E0047E53F /* HexString+HexStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF99F21EA568E0047E53F /* HexString+HexStringConvertible.swift */; };
 		48CAF9A121EA568E0047E53F /* HexString+HexStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF99F21EA568E0047E53F /* HexString+HexStringConvertible.swift */; };
 		48CAF9A321EA56AA0047E53F /* HexStringConvertible+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CAF9A221EA56AA0047E53F /* HexStringConvertible+Validation.swift */; };
@@ -257,6 +249,8 @@
 		E6258BF4225A4ED500147470 /* Result_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6258BF2225A4ED500147470 /* Result_Extension.swift */; };
 		E65C149E22B01E76006FA121 /* StringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65C149D22B01E76006FA121 /* StringConvertible.swift */; };
 		E65C149F22B01E76006FA121 /* StringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65C149D22B01E76006FA121 /* StringConvertible.swift */; };
+		E65C14A122B02390006FA121 /* LegacyAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65C14A022B02390006FA121 /* LegacyAddress.swift */; };
+		E65C14A222B02390006FA121 /* LegacyAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65C14A022B02390006FA121 /* LegacyAddress.swift */; };
 		E69E753922A83FB300AC631B /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E753822A83FB300AC631B /* TestHelpers.swift */; };
 		E69E753A22A83FB300AC631B /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E753822A83FB300AC631B /* TestHelpers.swift */; };
 		E6FF7E3F229A9CD200BC22EA /* Bech32.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E3E229A9CD200BC22EA /* Bech32.swift */; };
@@ -323,10 +317,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4805A7F021EA10E9008D6778 /* AddressNotNecessarilyChecksummed+CustomStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AddressNotNecessarilyChecksummed+CustomStringConvertible.swift"; sourceTree = "<group>"; };
-		4805A7F121EA10E9008D6778 /* AddressChecksummed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressChecksummed.swift; sourceTree = "<group>"; };
 		4805A7F321EA10E9008D6778 /* HexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexString.swift; sourceTree = "<group>"; };
-		4805A7F421EA10E9008D6778 /* AddressChecksummed+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AddressChecksummed+Codable.swift"; sourceTree = "<group>"; };
+		4805A7F421EA10E9008D6778 /* LegacyAddress+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LegacyAddress+Codable.swift"; sourceTree = "<group>"; };
 		481169A421677CC300341F81 /* AddressChecksumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressChecksumTests.swift; sourceTree = "<group>"; };
 		48196F252157C574009C40BB /* ZilliqaService+DefaultImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZilliqaService+DefaultImplementations.swift"; sourceTree = "<group>"; };
 		4819BD8F21C0DBD900443F2A /* ZilliqaService+PollTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZilliqaService+PollTransaction.swift"; sourceTree = "<group>"; };
@@ -431,9 +423,7 @@
 		48CAF98621EA521D0047E53F /* HexStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexStringConvertible.swift; sourceTree = "<group>"; };
 		48CAF98921EA52420047E53F /* AddressChecksummedConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressChecksummedConvertible.swift; sourceTree = "<group>"; };
 		48CAF98C21EA52640047E53F /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
-		48CAF99021EA52970047E53F /* AddressNotNecessarilyChecksummed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressNotNecessarilyChecksummed.swift; sourceTree = "<group>"; };
-		48CAF99321EA53BE0047E53F /* AddressChecksummed+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddressChecksummed+Validation.swift"; sourceTree = "<group>"; };
-		48CAF99621EA558B0047E53F /* AddressNotNecessarilyChecksummed+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddressNotNecessarilyChecksummed+Validation.swift"; sourceTree = "<group>"; };
+		48CAF99321EA53BE0047E53F /* LegacyAddress+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LegacyAddress+Validation.swift"; sourceTree = "<group>"; };
 		48CAF99F21EA568E0047E53F /* HexString+HexStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HexString+HexStringConvertible.swift"; sourceTree = "<group>"; };
 		48CAF9A221EA56AA0047E53F /* HexStringConvertible+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HexStringConvertible+Validation.swift"; sourceTree = "<group>"; };
 		48CAF9A521EA56E30047E53F /* Address+Validation+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Address+Validation+Error.swift"; sourceTree = "<group>"; };
@@ -473,6 +463,7 @@
 		E6258BEF225A4A9A00147470 /* RPCError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCError.swift; sourceTree = "<group>"; };
 		E6258BF2225A4ED500147470 /* Result_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result_Extension.swift; sourceTree = "<group>"; };
 		E65C149D22B01E76006FA121 /* StringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConvertible.swift; sourceTree = "<group>"; };
+		E65C14A022B02390006FA121 /* LegacyAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyAddress.swift; sourceTree = "<group>"; };
 		E69E753822A83FB300AC631B /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		E6FF7E3E229A9CD200BC22EA /* Bech32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32.swift; sourceTree = "<group>"; };
 		E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32Tests.swift; sourceTree = "<group>"; };
@@ -535,20 +526,9 @@
 				48CAF99B21EA56370047E53F /* AddressChecksummedConvertible */,
 				48CAF99A21EA56240047E53F /* Address */,
 				48CAF99921EA561B0047E53F /* HexString */,
-				48CAF98F21EA52840047E53F /* AddressChecksummed */,
-				4805A7EF21EA10E9008D6778 /* AddressNotNecessarilyChecksummed */,
+				48CAF98F21EA52840047E53F /* LegacyAddress */,
 			);
 			path = Address;
-			sourceTree = "<group>";
-		};
-		4805A7EF21EA10E9008D6778 /* AddressNotNecessarilyChecksummed */ = {
-			isa = PBXGroup;
-			children = (
-				4805A7F021EA10E9008D6778 /* AddressNotNecessarilyChecksummed+CustomStringConvertible.swift */,
-				48CAF99021EA52970047E53F /* AddressNotNecessarilyChecksummed.swift */,
-				48CAF99621EA558B0047E53F /* AddressNotNecessarilyChecksummed+Validation.swift */,
-			);
-			path = AddressNotNecessarilyChecksummed;
 			sourceTree = "<group>";
 		};
 		48196F212157C471009C40BB /* Cryptography */ = {
@@ -799,14 +779,14 @@
 			path = APIClient;
 			sourceTree = "<group>";
 		};
-		48CAF98F21EA52840047E53F /* AddressChecksummed */ = {
+		48CAF98F21EA52840047E53F /* LegacyAddress */ = {
 			isa = PBXGroup;
 			children = (
-				4805A7F121EA10E9008D6778 /* AddressChecksummed.swift */,
-				48CAF99321EA53BE0047E53F /* AddressChecksummed+Validation.swift */,
-				4805A7F421EA10E9008D6778 /* AddressChecksummed+Codable.swift */,
+				E65C14A022B02390006FA121 /* LegacyAddress.swift */,
+				48CAF99321EA53BE0047E53F /* LegacyAddress+Validation.swift */,
+				4805A7F421EA10E9008D6778 /* LegacyAddress+Codable.swift */,
 			);
-			path = AddressChecksummed;
+			path = LegacyAddress;
 			sourceTree = "<group>";
 		};
 		48CAF99921EA561B0047E53F /* HexString */ = {
@@ -1218,7 +1198,6 @@
 				48DBEA8122247BF2009B8C43 /* AnyKeyDeriving.swift in Sources */,
 				4877B4C921BE2EFA00A94318 /* Transaction.swift in Sources */,
 				484D1AE221D69F9800589E38 /* ExpressibleByAmount+Codable.swift in Sources */,
-				48CAF99221EA52970047E53F /* AddressNotNecessarilyChecksummed.swift in Sources */,
 				484D1AE821D6A1B800589E38 /* ExpressibleByAmount+CustomDebugStringConvertible.swift in Sources */,
 				E6258BE2225A44E900147470 /* RPCRequest.swift in Sources */,
 				488A658C2157A1670091FD03 /* DispatchQueue+Sugar.swift in Sources */,
@@ -1231,7 +1210,7 @@
 				48DBEA8422247C29009B8C43 /* CryptoSwift+PBKDF2+KDFParams.swift in Sources */,
 				48CAF98B21EA52420047E53F /* AddressChecksummedConvertible.swift in Sources */,
 				4877B4D921BE2EFA00A94318 /* Nonce.swift in Sources */,
-				48CAF99521EA53BE0047E53F /* AddressChecksummed+Validation.swift in Sources */,
+				48CAF99521EA53BE0047E53F /* LegacyAddress+Validation.swift in Sources */,
 				48A96C1221D51FF9003F733E /* GasLimit.swift in Sources */,
 				4819BDBA21C3EFF100443F2A /* GasPrice.swift in Sources */,
 				486C2A3121D91C2000C0F7FA /* Lowerbound.swift in Sources */,
@@ -1261,14 +1240,12 @@
 				486C2A4321D91C8300C0F7FA /* AdjustableUpperbound.swift in Sources */,
 				E6258BE5225A453C00147470 /* RPCResponseSuccess.swift in Sources */,
 				4847EE0D2161419A002FF978 /* DerivedKey.swift in Sources */,
-				4805A7F821EA10E9008D6778 /* AddressChecksummed.swift in Sources */,
 				483460A92145BD4C007E5D5C /* ZilliqaService.swift in Sources */,
+				E65C14A222B02390006FA121 /* LegacyAddress.swift in Sources */,
 				E6258BEB225A456500147470 /* RPCRequestIdGenerator.swift in Sources */,
-				48CAF99821EA558B0047E53F /* AddressNotNecessarilyChecksummed+Validation.swift in Sources */,
 				484D1AD521D69E4600589E38 /* Li.swift in Sources */,
-				4805A7FE21EA10E9008D6778 /* AddressChecksummed+Codable.swift in Sources */,
+				4805A7FE21EA10E9008D6778 /* LegacyAddress+Codable.swift in Sources */,
 				48CAF9A121EA568E0047E53F /* HexString+HexStringConvertible.swift in Sources */,
-				4805A7F621EA10E9008D6778 /* AddressNotNecessarilyChecksummed+CustomStringConvertible.swift in Sources */,
 				48ED0E7020E80754005DA19C /* BigUInt+String+Init.swift in Sources */,
 				484D1AEB21D6A1E800589E38 /* ExpressibleByAmount+UnitConversion.swift in Sources */,
 				48DBEA7822246861009B8C43 /* Encodable+Dictionary.swift in Sources */,
@@ -1344,7 +1321,6 @@
 				484E09ED215440B1003D928E /* APIClient.swift in Sources */,
 				4877B4C821BE2EFA00A94318 /* Transaction.swift in Sources */,
 				484D1AD721D69E7000589E38 /* Qa.swift in Sources */,
-				48CAF99121EA52970047E53F /* AddressNotNecessarilyChecksummed.swift in Sources */,
 				484D1AD121D69E3600589E38 /* Zil.swift in Sources */,
 				E6258BE1225A44E900147470 /* RPCRequest.swift in Sources */,
 				484D1AE721D6A1B800589E38 /* ExpressibleByAmount+CustomDebugStringConvertible.swift in Sources */,
@@ -1357,7 +1333,7 @@
 				484E09EA21543F3B003D928E /* MessageFromUnsignedTransaction.swift in Sources */,
 				48CAF98A21EA52420047E53F /* AddressChecksummedConvertible.swift in Sources */,
 				484D1AD421D69E4600589E38 /* Li.swift in Sources */,
-				48CAF99421EA53BE0047E53F /* AddressChecksummed+Validation.swift in Sources */,
+				48CAF99421EA53BE0047E53F /* LegacyAddress+Validation.swift in Sources */,
 				4877B4D821BE2EFA00A94318 /* Nonce.swift in Sources */,
 				48A96C0C21D4EEF5003F733E /* ExpressibleByAmount+Codable.swift in Sources */,
 				4819BDB921C3EFEF00443F2A /* GasPrice.swift in Sources */,
@@ -1387,14 +1363,12 @@
 				4819BDBC21C3F03900443F2A /* ExpressibleByAmount.swift in Sources */,
 				E6258BE4225A453C00147470 /* RPCResponseSuccess.swift in Sources */,
 				486C2A4221D91C8300C0F7FA /* AdjustableUpperbound.swift in Sources */,
-				4805A7F721EA10E9008D6778 /* AddressChecksummed.swift in Sources */,
-				48CAF99721EA558B0047E53F /* AddressNotNecessarilyChecksummed+Validation.swift in Sources */,
 				E6258BEA225A456500147470 /* RPCRequestIdGenerator.swift in Sources */,
+				E65C14A122B02390006FA121 /* LegacyAddress.swift in Sources */,
 				484E09F021544134003D928E /* DefaultAPIClient.swift in Sources */,
-				4805A7FD21EA10E9008D6778 /* AddressChecksummed+Codable.swift in Sources */,
+				4805A7FD21EA10E9008D6778 /* LegacyAddress+Codable.swift in Sources */,
 				4847EE0C21614196002FF978 /* DerivedKey.swift in Sources */,
 				48CAF9A021EA568E0047E53F /* HexString+HexStringConvertible.swift in Sources */,
-				4805A7F521EA10E9008D6778 /* AddressNotNecessarilyChecksummed+CustomStringConvertible.swift in Sources */,
 				484D1AE021D69ECA00589E38 /* ExpressibleByAmount+Comparable.swift in Sources */,
 				484D1AEA21D6A1E800589E38 /* ExpressibleByAmount+UnitConversion.swift in Sources */,
 				48DBEA7722246861009B8C43 /* Encodable+Dictionary.swift in Sources */,

@@ -29,7 +29,7 @@ import CryptoSwift
 public struct Keystore: Codable, Equatable {
     public static let minumumPasswordLength = 8
 
-    public let address: AddressChecksummed
+    public let address: LegacyAddress
     public let crypto: Crypto
     public let id: String
     public let version: Int
@@ -44,9 +44,13 @@ public extension Keystore {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let addressString = try container.decode(String.self, forKey: .address)
-        let address = try Address(string: addressString)
-        self.address = try address.toChecksummedLegacyAddress()
+        
+        func decodeAddress() throws -> LegacyAddress {
+            let addressHex = try container.decode(HexString.self, forKey: .address)
+            return try LegacyAddress(unvalidatedHex: addressHex)
+        }
+        
+        address = try decodeAddress()
         crypto = try container.decode(Crypto.self, forKey: .crypto)
         id = try container.decode(String.self, forKey: .id)
         version = try container.decode(Int.self, forKey: .version)
@@ -55,7 +59,7 @@ public extension Keystore {
 
 // MARK: Initialization
 public extension Keystore {
-    init(address: AddressChecksummed, crypto: Crypto, id: String? = nil, version: Int = 3) {
+    init(address: LegacyAddress, crypto: Crypto, id: String? = nil, version: Int = 3) {
         self.address = address
         self.crypto = crypto
         self.id = id ?? UUID().uuidString
@@ -75,7 +79,7 @@ public extension Keystore {
             parameters: parameters
         )
 
-        let address = AddressChecksummed(privateKey: privateKey)
+        let address = LegacyAddress(privateKey: privateKey)
 
         self.init(address: address, crypto: crypto)
     }
