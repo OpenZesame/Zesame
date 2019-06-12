@@ -25,14 +25,14 @@
 import Foundation
 
 public struct Payment {
-    public let recipient: Address
+    public let recipient: LegacyAddress
     public let amount: ZilAmount
     public let gasLimit: GasLimit
     public let gasPrice: GasPrice
     public let nonce: Nonce
 
     public init(
-        to recipient: Address,
+        to recipient: LegacyAddress,
         amount: ZilAmount,
         gasLimit: GasLimit = .defaultGasLimit,
         gasPrice: GasPrice,

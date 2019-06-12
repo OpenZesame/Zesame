@@ -25,10 +25,14 @@
 import UIKit
 import Zesame
 
+enum Constants {
+    static let network: Network = .testnet
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder {
     var window: UIWindow?
-    fileprivate let zilliqaService = DefaultZilliqaService(endpoint: .testnet)
+    fileprivate let zilliqaService = DefaultZilliqaService(network: Constants.network)
     private lazy var appCoordinator: AppCoordinator = {
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window

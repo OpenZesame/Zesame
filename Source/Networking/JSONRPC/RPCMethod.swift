@@ -28,7 +28,7 @@ import Foundation
 ///
 /// [1]: https://apidocs.zilliqa.com/#introduction
 public enum RPCMethod {
-    case getBalance(Address)
+    case getBalance(LegacyAddress)
     case createTransaction(SignedTransaction)
     case getTransaction(TransactionId)
     case getNetworkId
@@ -49,17 +49,16 @@ public extension RPCMethod {
     
     func encodeValue<K>(key: K) -> EncodeValue<K>? where K: CodingKey {
         
-        func innerEncode<V>(_ getValue: @escaping @autoclosure () throws -> V) -> EncodeValue<K> where V: Encodable {
+        func innerEncode<V>(_ value: V) -> EncodeValue<K> where V: Encodable {
             return { keyedEncodingContainer in
-                let valueToEncode = try getValue()
                 // DO OBSERVE THE ARRAY! `[]`. We MUST put the encodable in an array, since that is how RPC
                 // works. Otherwise we will get `INVALID_JSON_REQUEST`
-                try keyedEncodingContainer.encode([valueToEncode], forKey: key)
+                try keyedEncodingContainer.encode([value], forKey: key)
             }
         }
         
         switch self {
-        case .getBalance(let address): return innerEncode(try address.toChecksummedLegacyAddress())
+        case .getBalance(let address): return innerEncode(address)
         case .createTransaction(let signedTransaction): return innerEncode(signedTransaction)
         case .getTransaction(let txId): return innerEncode(txId)
         case .getNetworkId: return nil
