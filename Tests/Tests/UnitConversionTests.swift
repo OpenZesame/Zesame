@@ -177,7 +177,8 @@ class UnitConversionTests: XCTestCase {
     func testTooSmallGasPrice() {
         var didThrowError = false
         do {
-            let _ = try GasPrice(999_000_000)
+            let notALiteral = 999_000_000
+            let _ = try GasPrice(notALiteral)
         } catch let error as AmountError<GasPrice>  {
             didThrowError = true
             switch error {

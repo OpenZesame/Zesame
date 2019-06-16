@@ -51,11 +51,11 @@ final class WalletView: UIStackView, StackViewStyling {
 extension WalletView {
 
     func populate(with wallet: Wallet) {
-        setAddress(wallet.address)
+        setAddress(wallet.address.asString)
     }
 
-    func setAddress(_ address: AddressChecksummedConvertible) {
-        setAddress(address.checksummedAddress.checksummed.value)
+    func setAddress(_ address: Address) {
+        setAddress(address.asString)
     }
 
     func setAddress(_ address: String) {

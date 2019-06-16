@@ -39,7 +39,7 @@ class TransactionSigningTests: XCTestCase {
 
         let unsignedTx = Transaction(
             payment: Payment(
-                to: try! Address(string: "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039"),
+                to: try! LegacyAddress(string: "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039"),
                 amount: 15,
                 gasLimit: 1,
                 gasPrice: GasPrice.min,

@@ -64,8 +64,7 @@ extension Keystore {
             switch $0 {
             case .failure(let error):
                 XCTFail("unexpected error: \(error)")
-            case .success(let decryptedPrivateKeyHex):
-                let decryptedPrivateKey = PrivateKey(hex: decryptedPrivateKeyHex)!
+            case .success(let decryptedPrivateKey):
                 done(decryptedPrivateKey)
             }
         }
@@ -97,7 +96,7 @@ class ScryptTests: XCTestCase {
         let password = "apabanan"
 
         let expectWalletImport = expectation(description: "keystore from private key")
-        try! Keystore.from(privateKey: privateKey, encryptBy: password) {
+        try! Keystore.from(privateKey: privateKey, encryptBy: password, kdf: .scrypt) {
             switch $0 {
             case .failure(let error): XCTFail("unexpected error: \(error)")
             case .success(let keystore):

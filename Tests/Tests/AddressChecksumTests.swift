@@ -33,7 +33,7 @@ final class AddressChecksumTests: XCTestCase {
     }
 
     func testEmptyStringFails() {
-        XCTAssertNil(try? Address(hexString: ""))
+        XCTAssertNil(try? Address(string: ""))
     }
 
     func test10Vectors() {
@@ -43,9 +43,9 @@ final class AddressChecksumTests: XCTestCase {
     }
 
     func testSomeAddresses() {
-        XCTAssertTrue(AddressChecksummed.isChecksummed(hexString: "F510333720c5Dd3c3C08bC8e085e8c981ce74691"))
-        XCTAssertTrue(AddressChecksummed.isChecksummed(hexString: "74c544a11795905C2c9808F9e78d8156159d32e4"))
-        XCTAssertTrue(AddressChecksummed.isChecksummed(hexString: "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039"))
+        XCTAssertTrue(LegacyAddress.isChecksummed(hexString: "F510333720c5Dd3c3C08bC8e085e8c981ce74691"))
+        XCTAssertTrue(LegacyAddress.isChecksummed(hexString: "74c544a11795905C2c9808F9e78d8156159d32e4"))
+        XCTAssertTrue(LegacyAddress.isChecksummed(hexString: "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039"))
     }
 }
 
@@ -53,7 +53,7 @@ extension AddressChecksumTests {
     private func performTestChecksum(vector: Vector) {
 
         func isValid(_ hexString: HexStringConvertible) -> Bool {
-            return AddressChecksummed.isChecksummed(hexString: hexString)
+            return LegacyAddress.isChecksummed(hexString: hexString)
         }
 
         XCTAssertFalse(isValid(vector.ethereumChecksummed))
@@ -61,7 +61,7 @@ extension AddressChecksumTests {
         XCTAssertTrue(isValid(vector.zilliqaChecksummed))
         XCTAssertTrue(isValid(vector.zilliqaChecksummedWithoutLeading0x))
 
-        XCTAssertTrue(AddressChecksummed.checksummedHexstringFrom(hexString: vector.notChecksummed) == vector.zilliqaChecksummedWithoutLeading0x)
+        XCTAssertTrue(LegacyAddress.checksummedHexstringFrom(hexString: vector.notChecksummed) == vector.zilliqaChecksummedWithoutLeading0x)
     }
 }
 
@@ -88,7 +88,7 @@ extension String: HexStringConvertible {
 }
 
 
-let vectors: [Vector] = [
+private let vectors: [Vector] = [
     (
         notChecksummed: "4BAF5FADA8E5DB92C3D3242618C5B47133AE003C",
         zilliqaChecksummed: "0x4BAF5faDA8e5Db92C3d3242618c5B47133AE003C",

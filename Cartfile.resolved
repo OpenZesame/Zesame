@@ -1,6 +1,6 @@
 github "Alamofire/Alamofire" "5.0.0-beta.4"
 github "ReactiveX/RxSwift" "4.5.0"
 github "Sajjon/EllipticCurveKit" "1.0.0"
-github "apple/swift-protobuf" "3dd275f36c2089aca0446d75c55b7c325fb36cf2"
-github "attaswift/BigInt" "108801d539eb014469c758bc0d7f734690791fb4"
+github "apple/swift-protobuf" "1.5.0"
+github "attaswift/BigInt" "a8f710e724b71ed9453e03bfa7e771c83a029360"
 github "krzyzanowskim/CryptoSwift" "1.0.0"

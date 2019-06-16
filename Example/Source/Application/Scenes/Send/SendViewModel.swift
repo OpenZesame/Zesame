@@ -89,7 +89,7 @@ extension SendViewModel: ViewModelType {
         let gasPrice = input.gasPrice.map { try? GasPrice(li: $0) }
 
         let payment: Driver<Payment?> = Driver.combineLatest(recipient, amount, gasPrice, balanceAndNonce) {
-            guard let to = $0, let amount = $1, let price = $2, case let nonce = $3.nonce else {
+            guard let to = try? $0?.toChecksummedLegacyAddress(), let amount = $1, let price = $2, case let nonce = $3.nonce else {
                 return nil
             }
             return Payment(to: to, amount: amount, gasPrice: price, nonce: nonce)
@@ -111,11 +111,13 @@ extension SendViewModel: ViewModelType {
                         self.service.hasNetworkReachedConsensusYetForTransactionWith(id: $0.transactionIdentifier)
                     } .asDriverOnErrorReturnEmpty()
         }
+        
+        let address: Driver<Bech32Address> = wallet.asObservable().map { try Bech32Address(ethStyleAddress: $0.address, network: Constants.network) }.asDriverOnErrorReturnEmpty()
 
         return Output(
             isFetchingBalance: activityIndicator.asDriver(),
             isSendButtonEnabled: payment.map { $0 != nil },
-            address: wallet.map { $0.address.asString },
+            address: address.map { $0.asString },
             nonce: balanceAndNonce.map { "\($0.nonce.nonce)" },
             balance: balanceAndNonce.map { "\($0.balance.zilString)" },
             receipt: receipt.map { "Tx fee: \($0.totalGasCost) zil, for tx: \($0.transactionId)" }

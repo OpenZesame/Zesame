@@ -13,14 +13,15 @@ Pod::Spec.new do |s|
 
     # ECC Methods
     s.dependency 'EllipticCurveKit', '~> 1.0.0'
+    s.dependency 'BigInt', '~> 4.0.0'
 
     # Hashing functions
     s.dependency 'CryptoSwift', '~> 1.0.0'
 
     # Used by this SDK making APIs reactive
-    s.dependency 'RxSwift'
+    s.dependency 'RxSwift', '~> 4.5.0'
 
-    s.dependency 'SwiftProtobuf'
+    s.dependency 'SwiftProtobuf', '~> 1.5.0'
 
-    s.dependency 'Alamofire', '~> 5.0.0-beta.3'
+    s.dependency 'Alamofire', '~> 5.0.0-beta.4'
 end
