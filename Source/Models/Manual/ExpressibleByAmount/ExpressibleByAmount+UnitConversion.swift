@@ -44,11 +44,7 @@ internal extension Double {
 }
 
 internal extension ExpressibleByAmount {
-    func decimalValue(in targetUnit: Unit, rounding: FloatingPointRoundingRule = .toNearestOrAwayFromZero) -> Double? {
-        guard targetUnit.exponent >= self.unit.exponent else {
-            return nil
-        }
-
+    func decimalValue(in targetUnit: Unit, rounding: FloatingPointRoundingRule? = .toNearestOrAwayFromZero) -> Double? {
         guard qa <= BigInt(Double.greatestFiniteMagnitude) else {
             return nil
         }
@@ -65,9 +61,9 @@ internal extension ExpressibleByAmount {
         var decimalValueInTargetUnit = qaFittingInDouble / powerFactor
 
         // Only round when for UnitX -> UnitX decimal value representation, i.e. ZilAmount(0.51) expressed in Zil rounds to 1.0
-        let shouldPerformRounding = targetUnit.exponent == self.unit.exponent
+        let tryToPerformRounding = targetUnit.exponent == self.unit.exponent
 
-        if shouldPerformRounding {
+        if tryToPerformRounding, let rounding = rounding {
             decimalValueInTargetUnit.round(rounding)
         }
 

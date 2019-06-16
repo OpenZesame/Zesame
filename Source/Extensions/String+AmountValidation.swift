@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -23,25 +23,3 @@
 //
 
 import Foundation
-
-public protocol Unbound: NoLowerbound & NoUpperbound {
-    associatedtype Magnitude: Comparable & Numeric
-
-    // "Designated" init, check bounds
-    init(qa: Magnitude)
-
-    /// Most important "convenience" init
-    init(_ value: Magnitude)
-
-    /// Various convenience inits
-    init(_ doubleValue: Double)
-    init(_ intValue: Int)
-    init(_ stringValue: String) throws
-    init<E>(_ other: E) where E: ExpressibleByAmount
-    init(zil: Zil)
-    init(li: Li)
-    init(qa: Qa)
-    init(zil: String) throws
-    init(li: String) throws
-    init(qa: String) throws
-}

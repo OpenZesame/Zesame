@@ -174,6 +174,280 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         )
     }
     
+    func testThatZilAsZilStringCanContainDecimals() {
+        XCTAssertEqual(
+            try Zil(zil: "0.1").asString(in: .zil, roundingIfNeeded: nil),
+            "0.1"
+        )
+        
+        XCTAssertEqual(try Zil(zil: "0.0000000123").asQa, Qa(12300))
+    }
+    
+    func testZilWithManyDecimalsToLiString() {
+        XCTAssertEqual(
+            try Zil(zil: "0.0000000123").asString(in: .li, roundingIfNeeded: nil),
+            "0.0123"
+        )
+    }
+    
+    func testSmall() {
+        XCTAssertEqual(try Qa(li: "0.000015").asString(in: .qa, roundingIfNeeded: nil), "15")
+    }
+    
+    func testStringDecimalPlaces() {
+        XCTAssertEqual("1".decimalPlaces, 0)
+        XCTAssertEqual("1337".decimalPlaces, 0)
+        XCTAssertEqual("0".decimalPlaces, 0)
+        XCTAssertEqual("0.1".decimalPlaces, 1)
+        XCTAssertEqual("0.01".decimalPlaces, 2)
+    }
+    
+    func testTooSmallQaFromLi() {
+        XCTAssertThrowsSpecificError(
+            try Qa(li: "0.0000001"),
+            AmountError<Li>.tooManyDecimalPlaces
+        )
+        
+        XCTAssertEqual(
+         try Qa(li: "0.000001"),
+            Qa(1)
+        )
+    }
+    
+    func testTooSmallQaFromQaString() {
+        XCTAssertThrowsSpecificError(
+            try Qa(qa: "0.1"),
+            AmountError<Qa>.tooManyDecimalPlaces
+        )
+    }
+    
+    func testThatAmountContainingMoreThanOneDecimalSeparatorThrowsErrorDot() {
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1..2"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ".."),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1...2"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "..."),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ".1.2"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1.2.3"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ".1.2."),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ".000."),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ".000.0"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "0.000."),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "0.000.0"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+    }
+    
+    func testStringDoesNotContainMoreThanOneSeparator() {
+        XCTAssertFalse(
+            "1.,2".doesNotContainMoreThanOneDecimalSeparator
+        )
+    }
+    
+    func testStringContainsOnlyZerosFalse() {
+        XCTAssertFalse("1".containsOnlyZeros)
+        XCTAssertFalse("2".containsOnlyZeros)
+        XCTAssertFalse("a".containsOnlyZeros)
+        
+        XCTAssertFalse("01".containsOnlyZeros)
+        XCTAssertFalse("10".containsOnlyZeros)
+        XCTAssertFalse("0.0".containsOnlyZeros)
+    }
+    
+    func testStringContainsOnlyZerosTrue() {
+        XCTAssertTrue("0".containsOnlyZeros)
+        XCTAssertTrue("00".containsOnlyZeros)
+        XCTAssertTrue("000".containsOnlyZeros)
+    }
+    
+    func testStringIsRationalNumberDot() {
+        XCTAssertTrue("00000".isRationalNumber)
+        XCTAssertTrue("1".isRationalNumber)
+        XCTAssertTrue("2".isRationalNumber)
+        XCTAssertTrue("0000.000".isRationalNumber)
+        XCTAssertTrue("1.0".isRationalNumber)
+        XCTAssertTrue("1.00".isRationalNumber)
+        XCTAssertTrue("2.000".isRationalNumber)
+        XCTAssertTrue("10.0".isRationalNumber)
+        XCTAssertTrue("10.00".isRationalNumber)
+        XCTAssertTrue("123.000".isRationalNumber)
+
+        XCTAssertFalse("1.01".isRationalNumber)
+        XCTAssertFalse("1,,0".isRationalNumber)
+        XCTAssertFalse("1..0".isRationalNumber)
+        XCTAssertFalse("1,,01".isRationalNumber)
+        XCTAssertFalse("1..01".isRationalNumber)
+        XCTAssertFalse("1.000001".isRationalNumber)
+    }
+    
+    func testStringIsRationalNumberComma() {
+        XCTAssertTrue("0000,000".isRationalNumber)
+        XCTAssertTrue("1,0".isRationalNumber)
+        XCTAssertTrue("1,00".isRationalNumber)
+        XCTAssertTrue("2,000".isRationalNumber)
+        XCTAssertTrue("10,0".isRationalNumber)
+        XCTAssertTrue("10,00".isRationalNumber)
+        XCTAssertTrue("123,000".isRationalNumber)
+    }
+    
+    func testThatAmountContainingMoreThanOneDecimalSeparatorThrowsErrorMixed() {
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1.,2"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ".,"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1.,.2"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ".,."),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ".1,2"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1,2.3"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ",1.2."),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ",000."),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ",000.0"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "0.000,"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "0,000.0"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+    }
+    
+    func testThatAmountContainingMoreThanOneDecimalSeparatorThrowsErrorComma() {
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1,,2"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ",,"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1,,,2"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ",,,"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ",1,2"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1,2,3"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ",1,2,"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ",000,"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ",000,0"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "0,000,"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "0,000,0"),
+            AmountError<Zil>.moreThanOneDecimalSeparator
+        )
+    }
+    
+    func testQaToZil() {
+        XCTAssertEqual(
+            try Qa(qa: "1000000000").asZil,
+            try Zil(zil: "0.001")
+        )
+    }
+    
     func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorZilAmount0() {
         XCTAssertThrowsSpecificError(
             try Zil(zil: "0."),

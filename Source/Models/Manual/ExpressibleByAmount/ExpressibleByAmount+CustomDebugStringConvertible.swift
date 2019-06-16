@@ -46,7 +46,7 @@ extension Double {
 
 public extension ExpressibleByAmount {
     var debugDescription: String {
-        return "\(qa) qa (\(zilString) Zils)"
+        return "\(qa) qa (\(asString(in: .zil, roundingIfNeeded: nil)) Zils)"
     }
 
     var zilString: String {
@@ -61,12 +61,12 @@ public extension ExpressibleByAmount {
         return qa.asDecimalString()
     }
 
-    func asString(`in` targetUnit: Unit, roundingIfNeeded: FloatingPointRoundingRule = .toNearestOrAwayFromZero) -> String {
+    func asString(`in` targetUnit: Unit, roundingIfNeeded: FloatingPointRoundingRule? = .toNearestOrAwayFromZero) -> String {
         // handle trivial edge case
         if qa == 0 {
             return "0"
         }
-
+        
         if let qaAsDecimal = decimalValue(in: targetUnit, rounding: roundingIfNeeded) {
             return qaAsDecimal.asStringWithoutTrailingZeros
         } else {

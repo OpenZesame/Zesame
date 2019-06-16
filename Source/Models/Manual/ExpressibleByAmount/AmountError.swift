@@ -29,4 +29,6 @@ public enum AmountError<E: ExpressibleByAmount>: Swift.Error, Equatable {
     case tooLarge(max: E)
     case nonNumericString
     case endsWithDecimalSeparator
+    case moreThanOneDecimalSeparator
+    case tooManyDecimalPlaces
 }
