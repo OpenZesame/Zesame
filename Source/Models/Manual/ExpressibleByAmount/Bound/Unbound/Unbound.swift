@@ -57,6 +57,24 @@ public extension ExpressibleByAmount where Self: Unbound {
     }
 }
 
+internal extension ExpressibleByAmount {
+    static func trimmingAndFixingDecimalSeparator(in untrimmed: String) throws -> String {
+        let whiteSpacesRemoved = untrimmed.replacingOccurrences(of: " ", with: "")
+        
+        func replacingIncorrectDecimalSeparatorIfNeeded(_ string: String) -> String {
+            return string.replacingOccurrences(of: ".", with: Locale.decimalSeparatorForSure).replacingOccurrences(of: ",", with: Locale.decimalSeparatorForSure)
+        }
+        
+        let incorrectDecimalSeparatorReplacedIfNeeded = replacingIncorrectDecimalSeparatorIfNeeded(whiteSpacesRemoved)
+        
+        if incorrectDecimalSeparatorReplacedIfNeeded.hasSuffix(Locale.decimalSeparatorForSure) {
+            throw AmountError<Self>.endsWithDecimalSeparator
+        }
+        
+        return incorrectDecimalSeparatorReplacedIfNeeded
+    }
+}
+
 public extension ExpressibleByAmount where Self: Unbound {
 
     init(_ doubleValue: Double) {
@@ -68,10 +86,11 @@ public extension ExpressibleByAmount where Self: Unbound {
     }
 
     init(_ untrimmed: String) throws {
-        let whiteSpacesRemoved = untrimmed.replacingOccurrences(of: " ", with: "")
-        if let mag = Magnitude(decimalString: whiteSpacesRemoved) {
+        let incorrectDecimalSeparatorReplacedIfNeeded = try Self.trimmingAndFixingDecimalSeparator(in: untrimmed)
+        
+        if let mag = Magnitude(decimalString: incorrectDecimalSeparatorReplacedIfNeeded) {
             self = Self.init(mag)
-        } else if let double = Double(whiteSpacesRemoved) {
+        } else if let double = Double(incorrectDecimalSeparatorReplacedIfNeeded) {
             self.init(double)
         } else {
             throw AmountError<Self>.nonNumericString
@@ -132,6 +151,18 @@ public extension ExpressibleByAmount where Self: Unbound {
             try self = Self(string)
         } catch {
             fatalError("The `String` value (`\(string)`) passed was invalid, error: \(error)")
+        }
+    }
+}
+
+public extension Locale {
+    static var decimalSeparatorForSure: String {
+        let currentLocal = current
+        if let decimalSeparator = currentLocal.decimalSeparator {
+            return decimalSeparator
+        } else {
+            let nsLocale = NSLocale(localeIdentifier: currentLocal.identifier)
+            return nsLocale.decimalSeparator
         }
     }
 }

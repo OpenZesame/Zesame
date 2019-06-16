@@ -24,8 +24,9 @@
 
 import Foundation
 
-public enum AmountError<E: ExpressibleByAmount>: Swift.Error {
+public enum AmountError<E: ExpressibleByAmount>: Swift.Error, Equatable {
     case tooSmall(min: E)
     case tooLarge(max: E)
     case nonNumericString
+    case endsWithDecimalSeparator
 }

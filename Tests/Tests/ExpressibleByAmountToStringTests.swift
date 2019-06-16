@@ -133,6 +133,138 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         XCTAssertEqual(Qa(10000005000000).asString(in: .li), "10000005")
         XCTAssertEqual(Qa(17000000000000).asString(in: .zil), "17")
     }
+    
+    func testDecimalStringZilAmount() {
+        XCTAssertEqual(try Zil(zil: "0.01").asString(in: .li), "10000")
+        XCTAssertEqual(try Zil(zil: "0,01").asString(in: .li), "10000")
+        XCTAssertEqual(try ZilAmount(zil: "0.01").asString(in: .li), "10000")
+        XCTAssertEqual(try ZilAmount(zil: "0,01").asString(in: .li), "10000")
+    }
+    
+    func testThatStringOnlyContainingDecimalSeparatorThrowsError() {
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "."),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: ","),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+    }
+    
+    func testCommaAndDotAsDecimalSeparatorEquals() {
+        XCTAssertEqual(
+            try Zil(zil: "0.1"),
+            try Zil(zil: "0,1")
+        )
+    }
+    
+    func testThatStringStartingWithDecimalSeparatorDefaultsToZero() {
+        
+        
+        XCTAssertEqual(
+            try Zil(zil: ".1"),
+            try Zil(zil: "0.1")
+        )
+        
+        XCTAssertEqual(
+            try Zil(zil: ",1"),
+            try Zil(zil: "0,1")
+        )
+    }
+    
+    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorZilAmount0() {
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "0."),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "0,"),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try ZilAmount(zil: "0."),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try ZilAmount(zil: "0,"),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+    }
+    
+    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorZilAmount1() {
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1."),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1,"),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try ZilAmount(zil: "1."),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try ZilAmount(zil: "1,"),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+    }
+    
+    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiFromZilAmount0() {
+        XCTAssertThrowsSpecificError(
+            try Li(zil: "0."),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Li(zil: "0,"),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+    }
+    
+    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiFromZilAmount1() {
+        XCTAssertThrowsSpecificError(
+            try Li(zil: "1."),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Li(zil: "1,"),
+            AmountError<Zil>.endsWithDecimalSeparator
+        )
+    }
+    
+    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiAmount0() {
+        XCTAssertThrowsSpecificError(
+            try Li(li: "0."),
+            AmountError<Li>.endsWithDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Li(li: "0,"),
+            AmountError<Li>.endsWithDecimalSeparator
+        )
+    }
+    
+    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiAmount1() {
+        XCTAssertThrowsSpecificError(
+            try Li(li: "1."),
+            AmountError<Li>.endsWithDecimalSeparator
+        )
+        
+        XCTAssertThrowsSpecificError(
+            try Li(li: "1,"),
+            AmountError<Li>.endsWithDecimalSeparator
+        )
+    }
 
     func testLiAsString() {
         XCTAssertEqual(Li(1).asString(in: .qa), "1000000")
