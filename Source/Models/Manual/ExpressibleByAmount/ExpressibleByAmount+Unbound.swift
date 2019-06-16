@@ -124,64 +124,6 @@ internal extension ExpressibleByAmount {
     }
 }
 
-
-extension String {
-    
-    var isRationalNumber: Bool {
-        guard containsDecimalSeparator else {
-            return true // integer => is rational
-        }
-        
-        let components = replacingIncorrectDecimalSeparatorIfNeeded().components(separatedBy: Locale.decimalSeparatorForSure)
-        
-        if components.count < 2 { // strange case, should have been covered by `guard containsDecimalSeparator`
-            return true // integer => is rational
-        } else if components.count > 2 { // contains double separator, not a valid number at all
-            return false
-        } else {
-            assert(components.count == 2)
-            let decimalStringPart = components.last!
-            return decimalStringPart.containsOnlyZeros
-        }
-    }
-    
-    var containsOnlyZeros: Bool {
-        return map { $0 == "0" }.reduce(true) { $0 && $1 }
-    }
-    
-    var decimalPlaces: Int {
-        guard containsDecimalSeparator else { return 0 }
-        
-        let components = replacingIncorrectDecimalSeparatorIfNeeded().components(separatedBy: Locale.decimalSeparatorForSure)
-        
-        if components.count < 2 { // strange case, should have been covered by `guard containsDecimalSeparator`
-            return 0 // integer => 0 decimal places
-        } else if components.count > 2 { // contains double separator, not a valid number at all
-            fatalError("invalid string")
-        } else {
-            assert(components.count == 2)
-            let decimalStringPart = components.last!
-            return decimalStringPart.components(separatedBy: "0").count
-        }
-    }
-    
-    var containsDecimalSeparator: Bool {
-        let incorrectDecimalSeparatorReplacedIfNeeded = replacingIncorrectDecimalSeparatorIfNeeded()
-        return incorrectDecimalSeparatorReplacedIfNeeded.contains(Locale.decimalSeparatorForSure)
-    }
-    
-    var doesNotContainMoreThanOneDecimalSeparator: Bool {
-        guard replacingIncorrectDecimalSeparatorIfNeeded().components(separatedBy: Locale.decimalSeparatorForSure).count < 3 else {
-            return false
-        }
-        return true
-    }
-    
-    func replacingIncorrectDecimalSeparatorIfNeeded() -> String {
-        return replacingOccurrences(of: ".", with: Locale.decimalSeparatorForSure).replacingOccurrences(of: ",", with: Locale.decimalSeparatorForSure)
-    }
-}
-
 // MARK: - ExpressibleByFloatLiteral
 public extension ExpressibleByAmount where Self: Unbound {
     init(floatLiteral double: Double) {

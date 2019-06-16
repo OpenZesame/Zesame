@@ -255,6 +255,8 @@
 		E6622DFE22B669480086134D /* ExpressibleByAmount+Bound.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6622DFC22B669480086134D /* ExpressibleByAmount+Bound.swift */; };
 		E6622E0022B669650086134D /* ExpressibleByAmount+Unbound.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6622DFF22B669650086134D /* ExpressibleByAmount+Unbound.swift */; };
 		E6622E0122B669650086134D /* ExpressibleByAmount+Unbound.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6622DFF22B669650086134D /* ExpressibleByAmount+Unbound.swift */; };
+		E6622E0322B677DF0086134D /* String+AmountValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6622E0222B677DF0086134D /* String+AmountValidation.swift */; };
+		E6622E0422B677DF0086134D /* String+AmountValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6622E0222B677DF0086134D /* String+AmountValidation.swift */; };
 		E69E753922A83FB300AC631B /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E753822A83FB300AC631B /* TestHelpers.swift */; };
 		E69E753A22A83FB300AC631B /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E753822A83FB300AC631B /* TestHelpers.swift */; };
 		E6FF7E3F229A9CD200BC22EA /* Bech32.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7E3E229A9CD200BC22EA /* Bech32.swift */; };
@@ -470,6 +472,7 @@
 		E65C14A022B02390006FA121 /* LegacyAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyAddress.swift; sourceTree = "<group>"; };
 		E6622DFC22B669480086134D /* ExpressibleByAmount+Bound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+Bound.swift"; sourceTree = "<group>"; };
 		E6622DFF22B669650086134D /* ExpressibleByAmount+Unbound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+Unbound.swift"; sourceTree = "<group>"; };
+		E6622E0222B677DF0086134D /* String+AmountValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AmountValidation.swift"; sourceTree = "<group>"; };
 		E69E753822A83FB300AC631B /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		E6FF7E3E229A9CD200BC22EA /* Bech32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32.swift; sourceTree = "<group>"; };
 		E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bech32Tests.swift; sourceTree = "<group>"; };
@@ -605,6 +608,7 @@
 			children = (
 				488A658A2157A1670091FD03 /* DispatchQueue+Sugar.swift */,
 				E6258BF2225A4ED500147470 /* Result_Extension.swift */,
+				E6622E0222B677DF0086134D /* String+AmountValidation.swift */,
 				48DBEA7622246861009B8C43 /* Encodable+Dictionary.swift */,
 				48DBEA8222247C29009B8C43 /* CryptoSwift+PBKDF2+KDFParams.swift */,
 				48DBEA8822247D9C009B8C43 /* CryptoSwift+Scrypt+KDFParams.swift */,
@@ -1190,6 +1194,7 @@
 				4805A7FC21EA10E9008D6778 /* HexString.swift in Sources */,
 				48CAF9A421EA56AA0047E53F /* HexStringConvertible+Validation.swift in Sources */,
 				486C2A4921D91CC500C0F7FA /* AnyUpperbound.swift in Sources */,
+				E6622E0422B677DF0086134D /* String+AmountValidation.swift in Sources */,
 				483F0F9A2147091900E6EE08 /* DefaultZilliqaService.swift in Sources */,
 				4877B4A121BE29C400A94318 /* DetectConfiguration.swift in Sources */,
 				E6622E0122B669650086134D /* ExpressibleByAmount+Unbound.swift in Sources */,
@@ -1315,6 +1320,7 @@
 				483F0F992147091900E6EE08 /* DefaultZilliqaService.swift in Sources */,
 				4805A7FB21EA10E9008D6778 /* HexString.swift in Sources */,
 				48CAF9A321EA56AA0047E53F /* HexStringConvertible+Validation.swift in Sources */,
+				E6622E0322B677DF0086134D /* String+AmountValidation.swift in Sources */,
 				486C2A4821D91CC500C0F7FA /* AnyUpperbound.swift in Sources */,
 				48196F262157C574009C40BB /* ZilliqaService+DefaultImplementations.swift in Sources */,
 				E6622E0022B669650086134D /* ExpressibleByAmount+Unbound.swift in Sources */,

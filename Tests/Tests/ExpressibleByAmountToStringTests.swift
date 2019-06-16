@@ -283,52 +283,6 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         )
     }
     
-    func testStringContainsOnlyZerosFalse() {
-        XCTAssertFalse("1".containsOnlyZeros)
-        XCTAssertFalse("2".containsOnlyZeros)
-        XCTAssertFalse("a".containsOnlyZeros)
-        
-        XCTAssertFalse("01".containsOnlyZeros)
-        XCTAssertFalse("10".containsOnlyZeros)
-        XCTAssertFalse("0.0".containsOnlyZeros)
-    }
-    
-    func testStringContainsOnlyZerosTrue() {
-        XCTAssertTrue("0".containsOnlyZeros)
-        XCTAssertTrue("00".containsOnlyZeros)
-        XCTAssertTrue("000".containsOnlyZeros)
-    }
-    
-    func testStringIsRationalNumberDot() {
-        XCTAssertTrue("00000".isRationalNumber)
-        XCTAssertTrue("1".isRationalNumber)
-        XCTAssertTrue("2".isRationalNumber)
-        XCTAssertTrue("0000.000".isRationalNumber)
-        XCTAssertTrue("1.0".isRationalNumber)
-        XCTAssertTrue("1.00".isRationalNumber)
-        XCTAssertTrue("2.000".isRationalNumber)
-        XCTAssertTrue("10.0".isRationalNumber)
-        XCTAssertTrue("10.00".isRationalNumber)
-        XCTAssertTrue("123.000".isRationalNumber)
-
-        XCTAssertFalse("1.01".isRationalNumber)
-        XCTAssertFalse("1,,0".isRationalNumber)
-        XCTAssertFalse("1..0".isRationalNumber)
-        XCTAssertFalse("1,,01".isRationalNumber)
-        XCTAssertFalse("1..01".isRationalNumber)
-        XCTAssertFalse("1.000001".isRationalNumber)
-    }
-    
-    func testStringIsRationalNumberComma() {
-        XCTAssertTrue("0000,000".isRationalNumber)
-        XCTAssertTrue("1,0".isRationalNumber)
-        XCTAssertTrue("1,00".isRationalNumber)
-        XCTAssertTrue("2,000".isRationalNumber)
-        XCTAssertTrue("10,0".isRationalNumber)
-        XCTAssertTrue("10,00".isRationalNumber)
-        XCTAssertTrue("123,000".isRationalNumber)
-    }
-    
     func testThatAmountContainingMoreThanOneDecimalSeparatorThrowsErrorMixed() {
         XCTAssertThrowsSpecificError(
             try Zil(zil: "1.,2"),
