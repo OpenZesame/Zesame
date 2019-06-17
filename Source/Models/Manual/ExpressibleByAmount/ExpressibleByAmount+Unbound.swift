@@ -25,12 +25,11 @@
 import Foundation
 
 public extension Locale {
-    static var decimalSeparatorForSure: String {
-        let currentLocal = current
-        if let decimalSeparator = currentLocal.decimalSeparator {
+    var decimalSeparatorForSure: String {
+        if let decimalSeparator = decimalSeparator {
             return decimalSeparator
         } else {
-            let nsLocale = NSLocale(localeIdentifier: currentLocal.identifier)
+            let nsLocale = NSLocale(localeIdentifier: identifier)
             return nsLocale.decimalSeparator
         }
     }
@@ -57,15 +56,28 @@ public extension ExpressibleByAmount where Self: Unbound {
         self.init(Magnitude(intValue))
     }
     
-    init(_ untrimmed: String) throws {
-        let incorrectDecimalSeparatorReplacedIfNeeded = try Self.trimmingAndFixingDecimalSeparator(in: untrimmed)
+    init(
+        trimming untrimmed: String,
+        trimmingString: (String) throws -> String = { try Self.trimmingAndFixingDecimalSeparator(in: $0) }
+    ) throws {
+        let trimmed = try trimmingString(untrimmed)
         
-        if let mag = Magnitude(decimalString: incorrectDecimalSeparatorReplacedIfNeeded) {
+        if let mag = Magnitude(decimalString: trimmed) {
             self = Self.init(mag)
-        } else if let double = Double(incorrectDecimalSeparatorReplacedIfNeeded) {
+        } else if let double = Double(trimmed) {
             self.init(double)
         } else {
             throw AmountError<Self>.nonNumericString
+        }
+    }
+    
+    init(
+        untrimmed: String,
+        decimalSeparator getDecimalSeparator: @autoclosure () -> String = { Locale.current.decimalSeparatorForSure }()
+    ) throws {
+        let decimalSeparator = getDecimalSeparator()
+        try self.init(trimming: untrimmed) {
+            try Self.trimmingAndFixingDecimalSeparator(in: $0, decimalSeparator: decimalSeparator)
         }
     }
 }
@@ -90,33 +102,38 @@ public extension ExpressibleByAmount where Self: Unbound {
 
 public extension ExpressibleByAmount where Self: Unbound {
     init(zil zilString: String) throws {
-        self.init(zil: try Zil(zilString))
+        self.init(zil: try Zil(trimming: zilString))
     }
     
     init(li liString: String) throws {
-        self.init(li: try Li(liString))
+        self.init(li: try Li(trimming: liString))
     }
     
     init(qa qaString: String) throws {
-        self.init(qa: try Qa(qaString))
+        self.init(qa: try Qa(trimming: qaString))
     }
 }
 
-internal extension ExpressibleByAmount {
-    static func trimmingAndFixingDecimalSeparator(in untrimmed: String) throws -> String {
+public extension ExpressibleByAmount {
+    static func trimmingAndFixingDecimalSeparator(
+        in untrimmed: String,
+        decimalSeparator getDecimalSeparator: @autoclosure () -> String = { Locale.current.decimalSeparatorForSure }()
+    ) throws -> String {
         let whiteSpacesRemoved = untrimmed.replacingOccurrences(of: " ", with: "")
         
-        let incorrectDecimalSeparatorReplacedIfNeeded = whiteSpacesRemoved.replacingIncorrectDecimalSeparatorIfNeeded()
+        let decimalSeparator = getDecimalSeparator()
+
+        let incorrectDecimalSeparatorReplacedIfNeeded = whiteSpacesRemoved.replacingIncorrectDecimalSeparatorIfNeeded(decimalSeparator: decimalSeparator)
         
-        guard incorrectDecimalSeparatorReplacedIfNeeded.doesNotContainMoreThanOneDecimalSeparator else {
+        guard incorrectDecimalSeparatorReplacedIfNeeded.doesNotContainMoreThanOneDecimalSeparator(decimalSeparator: decimalSeparator) else {
               throw AmountError<Self>.moreThanOneDecimalSeparator
         }
         
-        if incorrectDecimalSeparatorReplacedIfNeeded.hasSuffix(Locale.decimalSeparatorForSure) {
+        if incorrectDecimalSeparatorReplacedIfNeeded.hasSuffix(decimalSeparator) {
             throw AmountError<Self>.endsWithDecimalSeparator
         }
 
-        if incorrectDecimalSeparatorReplacedIfNeeded.decimalPlaces > (abs(Unit.qa.exponent) - abs(Self.unit.exponent)) {
+        if incorrectDecimalSeparatorReplacedIfNeeded.decimalPlaces(decimalSeparator: decimalSeparator) > (abs(Unit.qa.exponent) - abs(Self.unit.exponent)) {
             throw AmountError<Self>.tooManyDecimalPlaces
         }
         
@@ -142,7 +159,7 @@ public extension ExpressibleByAmount where Self: Unbound {
 public extension ExpressibleByAmount where Self: Unbound {
     init(stringLiteral string: String) {
         do {
-            try self = Self(string)
+            try self = Self(trimming: string)
         } catch {
             fatalError("The `String` value (`\(string)`) passed was invalid, error: \(error)")
         }

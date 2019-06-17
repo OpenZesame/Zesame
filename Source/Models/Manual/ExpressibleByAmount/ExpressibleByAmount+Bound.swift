@@ -49,15 +49,30 @@ public extension ExpressibleByAmount where Self: Bound {
         try self.init(Magnitude(intValue))
     }
     
-    init(_ untrimmed: String) throws {
-        let incorrectDecimalSeparatorReplacedIfNeeded = try Self.trimmingAndFixingDecimalSeparator(in: untrimmed)
+    init(
+        trimming untrimmed: String,
+        trimmingString: (String) throws -> String = { try Self.trimmingAndFixingDecimalSeparator(in: $0) }
+    ) throws {
         
-        if let value = Magnitude(decimalString: incorrectDecimalSeparatorReplacedIfNeeded) {
+        let trimmed = try trimmingString(untrimmed)
+        
+        if let value = Magnitude(decimalString: trimmed) {
             try self.init(try Self.validate(value: value))
-        } else if let double = Double(incorrectDecimalSeparatorReplacedIfNeeded) {
+        } else if let double = Double(trimmed) {
             try self.init(double)
         } else {
             throw AmountError<Self>.nonNumericString
+        }
+    }
+    
+    init(
+        untrimmed: String,
+        decimalSeparator getDecimalSeparator: @autoclosure () -> String = { Locale.current.decimalSeparatorForSure }()
+    ) throws {
+        
+        let decimalSeparator = getDecimalSeparator()
+        try self.init(trimming: untrimmed) {
+            try Self.trimmingAndFixingDecimalSeparator(in: $0, decimalSeparator: decimalSeparator)
         }
     }
 }
@@ -82,15 +97,15 @@ public extension ExpressibleByAmount where Self: Bound {
 
 public extension ExpressibleByAmount where Self: Bound {
     init(zil zilString: String) throws {
-        try self.init(zil: try Zil(zilString))
+        try self.init(zil: try Zil(trimming: zilString))
     }
     
     init(li liString: String) throws {
-        try self.init(li: try Li(liString))
+        try self.init(li: try Li(trimming: liString))
     }
     
     init(qa qaString: String) throws {
-        try self.init(qa: try Qa(qaString))
+        try self.init(qa: try Qa(trimming: qaString))
     }
 }
 
@@ -120,7 +135,7 @@ public extension ExpressibleByAmount where Self: Bound {
 public extension ExpressibleByAmount where Self: Bound {
     init(stringLiteral string: String) {
         do {
-            try self = Self(string)
+            try self = Self(trimming: string)
         } catch {
             fatalError("The `String` value (`\(string)`) passed was invalid, error: \(error)")
         }

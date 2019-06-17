@@ -194,13 +194,7 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         XCTAssertEqual(try Qa(li: "0.000015").asString(in: .qa, roundingIfNeeded: nil), "15")
     }
     
-    func testStringDecimalPlaces() {
-        XCTAssertEqual("1".decimalPlaces, 0)
-        XCTAssertEqual("1337".decimalPlaces, 0)
-        XCTAssertEqual("0".decimalPlaces, 0)
-        XCTAssertEqual("0.1".decimalPlaces, 1)
-        XCTAssertEqual("0.01".decimalPlaces, 2)
-    }
+ 
     
     func testTooSmallQaFromLi() {
         XCTAssertThrowsSpecificError(
@@ -277,12 +271,48 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         )
     }
     
-    func testStringDoesNotContainMoreThanOneSeparator() {
-        XCTAssertFalse(
-            "1.,2".doesNotContainMoreThanOneDecimalSeparator
+    func testUntrimmedStringsNoTrimmingSpaces() {
+        XCTAssertNoThrow(try Zil(trimming: "1 0"))
+        
+        XCTAssertThrowsSpecificError(
+            try Zil(trimming: "1 0") { $0 /* no trimming at all */ },
+            AmountError<Zil>.nonNumericString
         )
     }
     
+    func testUntrimmedStringsNoTrimmingCommaSeparator() {
+        guard Locale.current.decimalSeparatorForSure == "." || Locale.current.decimalSeparatorForSure == "," else {
+            return
+        }
+        
+        let wrongSeparator = Locale.current.decimalSeparatorForSure == "." ? "," : "."
+        
+        XCTAssertNotEqual(Locale.current.decimalSeparatorForSure, wrongSeparator)
+
+        let amountStringWithWrongSeparator = "1\(wrongSeparator)0"
+
+        XCTAssertNoThrow(try Zil(trimming: amountStringWithWrongSeparator))
+
+        XCTAssertThrowsSpecificError(
+            try Zil(trimming: amountStringWithWrongSeparator) { $0 /* no trimming at all */ },
+            AmountError<Zil>.nonNumericString
+        )
+        
+        XCTAssertThrowsSpecificError(
+            // Forcing wrong decimalSeparator => cannot create Decimal number since it will continue
+            // to contain an incorrect char, the `wrongSeparator`
+            try Zil(untrimmed: amountStringWithWrongSeparator, decimalSeparator: wrongSeparator),
+            AmountError<Zil>.nonNumericString
+        )
+        
+        XCTAssertNoThrow(
+            // This is in fact the default behaviour, trimming the string using the decimalSeparator
+            // of the current `Locale`, which will result in an accuratly trimmed string
+            // from which we will be able to create a decimal number.
+            try Zil(untrimmed: amountStringWithWrongSeparator, decimalSeparator: Locale.current.decimalSeparatorForSure)
+        )
+    }
+        
     func testThatAmountContainingMoreThanOneDecimalSeparatorThrowsErrorMixed() {
         XCTAssertThrowsSpecificError(
             try Zil(zil: "1.,2"),

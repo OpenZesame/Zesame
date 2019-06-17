@@ -36,7 +36,9 @@ public protocol Unbound: NoLowerbound & NoUpperbound {
     /// Various convenience inits
     init(_ doubleValue: Double)
     init(_ intValue: Int)
-    init(_ stringValue: String) throws
+    
+    init(trimming: String, trimmingString: (String) throws -> String) throws
+    
     init<E>(_ other: E) where E: ExpressibleByAmount
     init(zil: Zil)
     init(li: Li)

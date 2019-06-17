@@ -1,4 +1,4 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
@@ -23,34 +23,23 @@
 //
 
 import Foundation
+import XCTest
+import BigInt
+@testable import Zesame
 
-public protocol Bound {
-    associatedtype Magnitude: Comparable & Numeric
-
-    // "Designated" init, check bounds
-    init(qa: Magnitude) throws
-
-    /// Most important "convenience" init
-    init(_ value: Magnitude) throws
-
-    /// Various convenience inits
-    init(_ doubleValue: Double) throws
-    init(_ intValue: Int) throws
+class StringCommaSeparatorFunctionsTests: XCTestCase {
     
-    init(trimming: String, trimmingString: (String) throws -> String) throws
+    func testStringDecimalPlaces() {
+        XCTAssertEqual("1".decimalPlaces(), 0)
+        XCTAssertEqual("1337".decimalPlaces(), 0)
+        XCTAssertEqual("0".decimalPlaces(), 0)
+        XCTAssertEqual("0.1".decimalPlaces(), 1)
+        XCTAssertEqual("0.01".decimalPlaces(), 2)
+    }
     
-    init<E>(_ other: E) throws where E: ExpressibleByAmount
-    init(zil: Zil) throws
-    init(li: Li) throws
-    init(qa: Qa) throws
-    init(zil: String) throws
-    init(li: String) throws
-    init(qa: String) throws
-}
-
-public extension Bound where Self: AdjustableLowerbound, Self: AdjustableUpperbound {
-    static func restoreDefaultBounds() {
-        restoreDefaultMin()
-        restoreDefaultMax()
+    func testStringContainMoreThanOneSeparator() {
+        XCTAssertFalse(
+            "1.,2".doesNotContainMoreThanOneDecimalSeparator()
+        )
     }
 }

@@ -26,10 +26,15 @@ import Foundation
 
 extension String {
     
-    var decimalPlaces: Int {
-        guard containsDecimalSeparator else { return 0 }
+    func decimalPlaces(
+        decimalSeparator getDecimalSeparator: @autoclosure () -> String = { Locale.current.decimalSeparatorForSure }()
+    ) -> Int {
         
-        let components = replacingIncorrectDecimalSeparatorIfNeeded().components(separatedBy: Locale.decimalSeparatorForSure)
+        let decimalSeparator = getDecimalSeparator()
+        
+        guard containsDecimalSeparator(decimalSeparator: decimalSeparator) else { return 0 }
+        
+        let components = replacingIncorrectDecimalSeparatorIfNeeded(decimalSeparator: decimalSeparator).components(separatedBy: decimalSeparator)
         
         if components.count < 2 { // strange case, should have been covered by `guard containsDecimalSeparator`
             return 0 // integer => 0 decimal places
@@ -42,21 +47,42 @@ extension String {
         }
     }
     
-    var doesNotContainMoreThanOneDecimalSeparator: Bool {
-        guard replacingIncorrectDecimalSeparatorIfNeeded().components(separatedBy: Locale.decimalSeparatorForSure).count < 3 else {
+    func doesNotContainMoreThanOneDecimalSeparator(
+        decimalSeparator getDecimalSeparator: @autoclosure () -> String = { Locale.current.decimalSeparatorForSure }()
+    ) -> Bool {
+        
+         let decimalSeparator = getDecimalSeparator()
+        
+        guard replacingIncorrectDecimalSeparatorIfNeeded(decimalSeparator: decimalSeparator).components(separatedBy: decimalSeparator).count < 3 else {
             return false
         }
         return true
     }
     
-    func replacingIncorrectDecimalSeparatorIfNeeded() -> String {
-        return replacingOccurrences(of: ".", with: Locale.decimalSeparatorForSure).replacingOccurrences(of: ",", with: Locale.decimalSeparatorForSure)
+    func replacingIncorrectDecimalSeparatorIfNeeded(
+        decimalSeparator getDecimalSeparator: @autoclosure () -> String = { Locale.current.decimalSeparatorForSure }()
+    ) -> String {
+        
+        let decimalSeparator = getDecimalSeparator()
+        
+        return self
+            .replacingOccurrences(of: ".", with: decimalSeparator)
+            .replacingOccurrences(of: ",", with: decimalSeparator)
     }
 }
 
+
+
 private extension String {
-    var containsDecimalSeparator: Bool {
-        let incorrectDecimalSeparatorReplacedIfNeeded = replacingIncorrectDecimalSeparatorIfNeeded()
-        return incorrectDecimalSeparatorReplacedIfNeeded.contains(Locale.decimalSeparatorForSure)
+    
+    func containsDecimalSeparator(
+        decimalSeparator getDecimalSeparator: @autoclosure () -> String = { Locale.current.decimalSeparatorForSure }()
+        ) -> Bool {
+        
+        let decimalSeparator = getDecimalSeparator()
+        
+        let incorrectDecimalSeparatorReplacedIfNeeded = replacingIncorrectDecimalSeparatorIfNeeded(decimalSeparator: decimalSeparator)
+        
+        return incorrectDecimalSeparatorReplacedIfNeeded.contains(decimalSeparator)
     }
 }

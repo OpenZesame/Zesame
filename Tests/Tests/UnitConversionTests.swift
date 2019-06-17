@@ -195,7 +195,7 @@ class UnitConversionTests: XCTestCase {
     func testBoundString() {
         let qaString = "18446744073637511711"
         XCTAssertEqual(
-            try ZilAmount(zil: Zil(qa: try Qa(qaString))),
+            try ZilAmount(zil: Zil(qa: try Qa(trimming: qaString))),
             try ZilAmount(zil: try Zil(qa: qaString))
         )
         XCTAssertEqual(

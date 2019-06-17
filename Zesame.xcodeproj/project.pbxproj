@@ -247,6 +247,8 @@
 		E6258BF1225A4A9A00147470 /* RPCError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6258BEF225A4A9A00147470 /* RPCError.swift */; };
 		E6258BF3225A4ED500147470 /* Result_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6258BF2225A4ED500147470 /* Result_Extension.swift */; };
 		E6258BF4225A4ED500147470 /* Result_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6258BF2225A4ED500147470 /* Result_Extension.swift */; };
+		E637565122B7FB6600C4F9A2 /* StringCommaSeparatorFunctionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637565022B7FB6600C4F9A2 /* StringCommaSeparatorFunctionsTests.swift */; };
+		E637565222B7FB6600C4F9A2 /* StringCommaSeparatorFunctionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637565022B7FB6600C4F9A2 /* StringCommaSeparatorFunctionsTests.swift */; };
 		E65C149E22B01E76006FA121 /* StringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65C149D22B01E76006FA121 /* StringConvertible.swift */; };
 		E65C149F22B01E76006FA121 /* StringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65C149D22B01E76006FA121 /* StringConvertible.swift */; };
 		E65C14A122B02390006FA121 /* LegacyAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65C14A022B02390006FA121 /* LegacyAddress.swift */; };
@@ -468,6 +470,7 @@
 		E6258BEC225A463600147470 /* RPCResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCResponse.swift; sourceTree = "<group>"; };
 		E6258BEF225A4A9A00147470 /* RPCError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCError.swift; sourceTree = "<group>"; };
 		E6258BF2225A4ED500147470 /* Result_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result_Extension.swift; sourceTree = "<group>"; };
+		E637565022B7FB6600C4F9A2 /* StringCommaSeparatorFunctionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringCommaSeparatorFunctionsTests.swift; sourceTree = "<group>"; };
 		E65C149D22B01E76006FA121 /* StringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConvertible.swift; sourceTree = "<group>"; };
 		E65C14A022B02390006FA121 /* LegacyAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyAddress.swift; sourceTree = "<group>"; };
 		E6622DFC22B669480086134D /* ExpressibleByAmount+Bound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAmount+Bound.swift"; sourceTree = "<group>"; };
@@ -922,6 +925,7 @@
 				E6FF7E41229A9DE000BC22EA /* Bech32Tests.swift */,
 				48D0880B21C5244000A88859 /* UnitConversionTests.swift */,
 				483C9CB021DBBD6F0059B0AF /* ExpressibleByAmountToStringTests.swift */,
+				E637565022B7FB6600C4F9A2 /* StringCommaSeparatorFunctionsTests.swift */,
 				483C9C9E21D93C1E0059B0AF /* BalanceResponseJSONTests.swift */,
 				48D0880E21C677C000A88859 /* TransactionCostTests.swift */,
 				486C2A2221D8C57900C0F7FA /* GasPriceTests.swift */,
@@ -1297,6 +1301,7 @@
 				486C2A2421D8C57900C0F7FA /* GasPriceTests.swift in Sources */,
 				48D0881221C6780400A88859 /* TransactionCostTests.swift in Sources */,
 				48DBEA692222E2EF009B8C43 /* KeyStoreImportExportTests.swift in Sources */,
+				E637565222B7FB6600C4F9A2 /* StringCommaSeparatorFunctionsTests.swift in Sources */,
 				48D0880D21C5244000A88859 /* UnitConversionTests.swift in Sources */,
 				485AA28E21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift in Sources */,
 				481169A621677CC300341F81 /* AddressChecksumTests.swift in Sources */,
@@ -1423,6 +1428,7 @@
 				486C2A2321D8C57900C0F7FA /* GasPriceTests.swift in Sources */,
 				48D0881121C6780300A88859 /* TransactionCostTests.swift in Sources */,
 				48DBEA682222E2EF009B8C43 /* KeyStoreImportExportTests.swift in Sources */,
+				E637565122B7FB6600C4F9A2 /* StringCommaSeparatorFunctionsTests.swift in Sources */,
 				48D0880C21C5244000A88859 /* UnitConversionTests.swift in Sources */,
 				485AA28D21DD277800E700C5 /* AmountFromStringContainingWhitespaces.swift in Sources */,
 				481169A521677CC300341F81 /* AddressChecksumTests.swift in Sources */,
