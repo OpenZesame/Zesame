@@ -36,16 +36,6 @@ public protocol Bound {
     /// Various convenience inits
     init(_ doubleValue: Double) throws
     init(_ intValue: Int) throws
-    
-    init(trimming: String, trimmingString: (String) throws -> String) throws
-    
-    init<E>(_ other: E) throws where E: ExpressibleByAmount
-    init(zil: Zil) throws
-    init(li: Li) throws
-    init(qa: Qa) throws
-    init(zil: String) throws
-    init(li: String) throws
-    init(qa: String) throws
 }
 
 public extension Bound where Self: AdjustableLowerbound, Self: AdjustableUpperbound {
