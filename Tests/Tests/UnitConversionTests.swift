@@ -27,6 +27,8 @@ import XCTest
 
 @testable import Zesame
 
+private let decSep = Locale.current.decimalSeparatorForSure
+
 class UnitConversionTests: XCTestCase {
 
     func testZilToLi() {
@@ -253,9 +255,9 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testLiStringInits() {
-        XCTAssertEqual(try Li(zil: "0.01"), 10000)
-        XCTAssertLessThan(try Li(zil: "0.01"), 100000)
-        XCTAssertGreaterThan(try Li(zil: "0.11"), 100000)
+        XCTAssertEqual(try Li(zil: "0\(decSep)01"), 10000)
+        XCTAssertLessThan(try Li(zil: "0\(decSep)01"), 100000)
+        XCTAssertGreaterThan(try Li(zil: "0\(decSep)11"), 100000)
 
         XCTAssertEqual(try Li(li: "5"), 5)
         XCTAssertLessThan(try Li(li: "5"), 6)
@@ -269,7 +271,7 @@ class UnitConversionTests: XCTestCase {
     func testQaStringInits() {
         XCTAssertEqual(try Qa(zil: "1"), 1_000_000_000_000)
         XCTAssertLessThan(try Qa(zil: "1"), 1_000_000_000_001)
-        XCTAssertGreaterThan(try Qa.init(zil: "1.000000000001"), 1_000_000_000_000)
+        XCTAssertGreaterThan(try Qa.init(zil: "1\(decSep)000000000001"), 1_000_000_000_000)
 
         XCTAssertEqual(try Qa(li: "1"), 1_000_000)
         XCTAssertLessThan(try Qa(li: "1"), 1_000_001)

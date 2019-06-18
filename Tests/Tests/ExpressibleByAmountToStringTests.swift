@@ -135,292 +135,152 @@ class ExpressibleByAmountToStringTests: XCTestCase {
     }
     
     func testDecimalStringZilAmount() {
-        XCTAssertEqual(try Zil(zil: "0.01").asString(in: .li), "10000")
-        XCTAssertEqual(try Zil(zil: "0,01").asString(in: .li), "10000")
-        XCTAssertEqual(try ZilAmount(zil: "0.01").asString(in: .li), "10000")
+        XCTAssertEqual(try Zil(zil: "0\(decSep)01").asString(in: .li), "10000")
         XCTAssertEqual(try ZilAmount(zil: "0,01").asString(in: .li), "10000")
     }
     
     func testThatStringOnlyContainingDecimalSeparatorThrowsError() {
         XCTAssertThrowsSpecificError(
-            try Zil(zil: "."),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ","),
+            try Zil(zil: "\(Locale.current.decimalSeparatorForSure)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
     }
     
     func testCommaAndDotAsDecimalSeparatorEquals() {
         XCTAssertEqual(
-            try Zil(zil: "0.1"),
+            try Zil(zil: "0\(decSep)1"),
             try Zil(zil: "0,1")
         )
     }
     
     func testThatStringStartingWithDecimalSeparatorDefaultsToZero() {
-        
-        
         XCTAssertEqual(
-            try Zil(zil: ".1"),
-            try Zil(zil: "0.1")
-        )
-        
-        XCTAssertEqual(
-            try Zil(zil: ",1"),
-            try Zil(zil: "0,1")
+            try Zil(zil: "\(decSep)1"),
+            try Zil(zil: "0\(decSep)1")
         )
     }
     
     func testThatZilAsZilStringCanContainDecimals() {
         XCTAssertEqual(
-            try Zil(zil: "0.1").asString(in: .zil, roundingIfNeeded: nil),
+            try Zil(zil: "0\(decSep)1").asString(in: .zil, roundingIfNeeded: nil),
             "0.1"
         )
         
-        XCTAssertEqual(try Zil(zil: "0.0000000123").asQa, Qa(12300))
+        XCTAssertEqual(try Zil(zil: "0\(decSep)0000000123").asQa, Qa(12300))
     }
     
     func testZilWithManyDecimalsToLiString() {
         XCTAssertEqual(
-            try Zil(zil: "0.0000000123").asString(in: .li, roundingIfNeeded: nil),
+            try Zil(zil: "0\(decSep)0000000123").asString(in: .li, roundingIfNeeded: nil),
             "0.0123"
         )
     }
     
     func testSmall() {
-        XCTAssertEqual(try Qa(li: "0.000015").asString(in: .qa, roundingIfNeeded: nil), "15")
+        XCTAssertEqual(try Qa(li: "0\(decSep)000015").asString(in: .qa, roundingIfNeeded: nil), "15")
     }
     
  
     
     func testTooSmallQaFromLi() {
         XCTAssertThrowsSpecificError(
-            try Qa(li: "0.0000001"),
+            try Qa(li: "0\(Locale.current.decimalSeparatorForSure)0000001"),
             AmountError<Li>.tooManyDecimalPlaces
         )
-        
+    }
+    
+    func testTooSmallQaFromLiWrongSeparator() {
+        let wrongSeparator = Locale.current.decimalSeparatorForSure == "." ? "," : "."
+        let decimalStringWithWrongSep = "0\(wrongSeparator)0000001"
+        XCTAssertThrowsSpecificError(
+            try Qa(qa: decimalStringWithWrongSep),
+            AmountError<Qa>.containsNonDecimalStringCharacter(disallowedCharacter: wrongSeparator)
+        )
+    }
+    
+    func testSmallQaFromLiString() {
         XCTAssertEqual(
-         try Qa(li: "0.000001"),
+            try Qa(li: "0\(decSep)000001"),
             Qa(1)
         )
     }
     
     func testTooSmallQaFromQaString() {
         XCTAssertThrowsSpecificError(
-            try Qa(qa: "0.1"),
+            try Qa(qa: "0\(decSep)1"),
             AmountError<Qa>.tooManyDecimalPlaces
-        )
-    }
-    
-    func testThatAmountContainingMoreThanOneDecimalSeparatorThrowsErrorDot() {
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1..2"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ".."),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1...2"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "..."),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ".1.2"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1.2.3"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ".1.2."),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ".000."),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ".000.0"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "0.000."),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "0.000.0"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
         )
     }
     
     func testUntrimmedStringsNoTrimmingSpaces() {
         XCTAssertNoThrow(try Zil(trimming: "1 0"))
+    }
+    
+    func testThatAmountContainingOneGoodDecSepAndOneBadDoesNotThrowMoreThanOneSepErrorButRatherDisallowedCharsWarning() {
+        let badSep = Locale.current.decimalSeparatorForSure == "." ? "," : "."
         
         XCTAssertThrowsSpecificError(
-            try Zil(trimming: "1 0") { $0 /* no trimming at all */ },
-            AmountError<Zil>.nonNumericString
+            try Zil(zil: "1\(badSep)\(decSep)2"),
+            AmountError<Zil>.containsNonDecimalStringCharacter(disallowedCharacter: badSep)
+        )
+        XCTAssertThrowsSpecificError(
+            try Zil(zil: "1\(decSep)\(badSep)2"),
+            AmountError<Zil>.containsNonDecimalStringCharacter(disallowedCharacter: badSep)
         )
     }
     
-    func testUntrimmedStringsNoTrimmingCommaSeparator() {
-        guard Locale.current.decimalSeparatorForSure == "." || Locale.current.decimalSeparatorForSure == "," else {
-            return
-        }
-        
-        let wrongSeparator = Locale.current.decimalSeparatorForSure == "." ? "," : "."
-        
-        XCTAssertNotEqual(Locale.current.decimalSeparatorForSure, wrongSeparator)
-
-        let amountStringWithWrongSeparator = "1\(wrongSeparator)0"
-
-        XCTAssertNoThrow(try Zil(trimming: amountStringWithWrongSeparator))
-
+    func testThatAmountContainingMoreThanOneDecimalSeparatorThrowsError() {
         XCTAssertThrowsSpecificError(
-            try Zil(trimming: amountStringWithWrongSeparator) { $0 /* no trimming at all */ },
-            AmountError<Zil>.nonNumericString
-        )
-        
-        XCTAssertThrowsSpecificError(
-            // Forcing wrong decimalSeparator => cannot create Decimal number since it will continue
-            // to contain an incorrect char, the `wrongSeparator`
-            try Zil(untrimmed: amountStringWithWrongSeparator, decimalSeparator: wrongSeparator),
-            AmountError<Zil>.nonNumericString
-        )
-        
-        XCTAssertNoThrow(
-            // This is in fact the default behaviour, trimming the string using the decimalSeparator
-            // of the current `Locale`, which will result in an accuratly trimmed string
-            // from which we will be able to create a decimal number.
-            try Zil(untrimmed: amountStringWithWrongSeparator, decimalSeparator: Locale.current.decimalSeparatorForSure)
-        )
-    }
-        
-    func testThatAmountContainingMoreThanOneDecimalSeparatorThrowsErrorMixed() {
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1.,2"),
+            try Zil(zil: "1\(decSep)\(decSep)2"),
             AmountError<Zil>.moreThanOneDecimalSeparator
         )
         XCTAssertThrowsSpecificError(
-            try Zil(zil: ".,"),
+            try Zil(zil: "\(decSep)\(decSep)"),
             AmountError<Zil>.moreThanOneDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try Zil(zil: "1.,.2"),
+            try Zil(zil: "1\(decSep)\(decSep)\(decSep)2"),
             AmountError<Zil>.moreThanOneDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try Zil(zil: ".,."),
+            try Zil(zil: "\(decSep)\(decSep)\(decSep)"),
             AmountError<Zil>.moreThanOneDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try Zil(zil: ".1,2"),
+            try Zil(zil: "\(decSep)1\(decSep)2"),
             AmountError<Zil>.moreThanOneDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try Zil(zil: "1,2.3"),
+            try Zil(zil: "1\(decSep)2\(decSep)3"),
             AmountError<Zil>.moreThanOneDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try Zil(zil: ",1.2."),
+            try Zil(zil: "\(decSep)1\(decSep)2\(decSep)"),
             AmountError<Zil>.moreThanOneDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try Zil(zil: ",000."),
+            try Zil(zil: "\(decSep)000\(decSep)"),
             AmountError<Zil>.moreThanOneDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try Zil(zil: ",000.0"),
+            try Zil(zil: "\(decSep)000\(decSep)0"),
             AmountError<Zil>.moreThanOneDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try Zil(zil: "0.000,"),
+            try Zil(zil: "0\(decSep)000\(decSep)"),
             AmountError<Zil>.moreThanOneDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try Zil(zil: "0,000.0"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-    }
-    
-    func testThatAmountContainingMoreThanOneDecimalSeparatorThrowsErrorComma() {
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1,,2"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ",,"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1,,,2"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ",,,"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ",1,2"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1,2,3"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ",1,2,"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ",000,"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: ",000,0"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "0,000,"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "0,000,0"),
+            try Zil(zil: "0\(decSep)000\(decSep)0"),
             AmountError<Zil>.moreThanOneDecimalSeparator
         )
     }
@@ -428,98 +288,58 @@ class ExpressibleByAmountToStringTests: XCTestCase {
     func testQaToZil() {
         XCTAssertEqual(
             try Qa(qa: "1000000000").asZil,
-            try Zil(zil: "0.001")
+            try Zil(zil: "0\(decSep)001")
         )
     }
     
     func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorZilAmount0() {
         XCTAssertThrowsSpecificError(
-            try Zil(zil: "0."),
+            try Zil(zil: "0\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try Zil(zil: "0,"),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try ZilAmount(zil: "0."),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try ZilAmount(zil: "0,"),
+            try ZilAmount(zil: "0\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
     }
     
     func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorZilAmount1() {
         XCTAssertThrowsSpecificError(
-            try Zil(zil: "1."),
+            try Zil(zil: "1\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try Zil(zil: "1,"),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try ZilAmount(zil: "1."),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try ZilAmount(zil: "1,"),
+            try ZilAmount(zil: "1\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
     }
     
     func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiFromZilAmount0() {
         XCTAssertThrowsSpecificError(
-            try Li(zil: "0."),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Li(zil: "0,"),
+            try Li(zil: "0\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
     }
     
     func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiFromZilAmount1() {
         XCTAssertThrowsSpecificError(
-            try Li(zil: "1."),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Li(zil: "1,"),
+            try Li(zil: "1\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
     }
     
     func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiAmount0() {
         XCTAssertThrowsSpecificError(
-            try Li(li: "0."),
-            AmountError<Li>.endsWithDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Li(li: "0,"),
+            try Li(li: "0\(decSep)"),
             AmountError<Li>.endsWithDecimalSeparator
         )
     }
     
     func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiAmount1() {
         XCTAssertThrowsSpecificError(
-            try Li(li: "1."),
-            AmountError<Li>.endsWithDecimalSeparator
-        )
-        
-        XCTAssertThrowsSpecificError(
-            try Li(li: "1,"),
+            try Li(li: "1\(decSep)"),
             AmountError<Li>.endsWithDecimalSeparator
         )
     }
@@ -630,3 +450,5 @@ class ExpressibleByAmountToStringTests: XCTestCase {
     }
 
 }
+
+private let decSep = Locale.current.decimalSeparatorForSure

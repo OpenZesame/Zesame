@@ -50,11 +50,10 @@ public extension ExpressibleByAmount where Self: Bound {
     }
     
     init(
-        trimming untrimmed: String,
-        trimmingString: (String) throws -> String = { try Self.trimmingAndFixingDecimalSeparator(in: $0) }
+        trimming untrimmed: String
     ) throws {
         
-        let trimmed = try trimmingString(untrimmed)
+        let trimmed = try Self.trimmingAndFixingDecimalSeparator(in: untrimmed)
         
         if let value = Magnitude(decimalString: trimmed) {
             try self.init(try Self.validate(value: value))
@@ -62,17 +61,6 @@ public extension ExpressibleByAmount where Self: Bound {
             try self.init(double)
         } else {
             throw AmountError<Self>.nonNumericString
-        }
-    }
-    
-    init(
-        untrimmed: String,
-        decimalSeparator getDecimalSeparator: @autoclosure () -> String = { Locale.current.decimalSeparatorForSure }()
-    ) throws {
-        
-        let decimalSeparator = getDecimalSeparator()
-        try self.init(trimming: untrimmed) {
-            try Self.trimmingAndFixingDecimalSeparator(in: $0, decimalSeparator: decimalSeparator)
         }
     }
 }

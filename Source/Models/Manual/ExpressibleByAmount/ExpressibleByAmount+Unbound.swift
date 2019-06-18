@@ -57,10 +57,9 @@ public extension ExpressibleByAmount where Self: Unbound {
     }
     
     init(
-        trimming untrimmed: String,
-        trimmingString: (String) throws -> String = { try Self.trimmingAndFixingDecimalSeparator(in: $0) }
+        trimming untrimmed: String
     ) throws {
-        let trimmed = try trimmingString(untrimmed)
+        let trimmed = try Self.trimmingAndFixingDecimalSeparator(in: untrimmed)
         
         if let mag = Magnitude(decimalString: trimmed) {
             self = Self.init(mag)
@@ -70,16 +69,7 @@ public extension ExpressibleByAmount where Self: Unbound {
             throw AmountError<Self>.nonNumericString
         }
     }
-    
-    init(
-        untrimmed: String,
-        decimalSeparator getDecimalSeparator: @autoclosure () -> String = { Locale.current.decimalSeparatorForSure }()
-    ) throws {
-        let decimalSeparator = getDecimalSeparator()
-        try self.init(trimming: untrimmed) {
-            try Self.trimmingAndFixingDecimalSeparator(in: $0, decimalSeparator: decimalSeparator)
-        }
-    }
+
 }
 
 public extension ExpressibleByAmount where Self: Unbound {
@@ -116,29 +106,45 @@ public extension ExpressibleByAmount where Self: Unbound {
 
 public extension ExpressibleByAmount {
     static func trimmingAndFixingDecimalSeparator(
-        in untrimmed: String,
-        decimalSeparator getDecimalSeparator: @autoclosure () -> String = { Locale.current.decimalSeparatorForSure }()
+        in untrimmed: String
     ) throws -> String {
         
         let whiteSpacesRemoved = untrimmed.replacingOccurrences(of: " ", with: "")
         
-        let decimalSeparator = getDecimalSeparator()
-
-        let incorrectDecimalSeparatorReplacedIfNeeded = whiteSpacesRemoved.replacingIncorrectDecimalSeparatorIfNeeded(decimalSeparator: decimalSeparator)
+        let decimalSeparator = Locale.current.decimalSeparatorForSure
+        let characterSetDecimalsIncludingDecimalSeparator = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: decimalSeparator))
         
-        guard incorrectDecimalSeparatorReplacedIfNeeded.doesNotContainMoreThanOneDecimalSeparator(decimalSeparator: decimalSeparator) else {
-              throw AmountError<Self>.moreThanOneDecimalSeparator
+        guard CharacterSet(charactersIn: whiteSpacesRemoved).isSubset(of: characterSetDecimalsIncludingDecimalSeparator) else {
+            for char in whiteSpacesRemoved.charactersAsStrings() {
+                if CharacterSet(charactersIn: char).isDisjoint(with: characterSetDecimalsIncludingDecimalSeparator) {
+                    throw AmountError<Self>.containsNonDecimalStringCharacter(disallowedCharacter: char)
+                }
+            }
+            fatalError("should have throwed error above")
+        }
+
+        guard whiteSpacesRemoved.doesNotContainMoreThanOneDecimalSeparator() else {
+            throw AmountError<Self>.moreThanOneDecimalSeparator
         }
         
-        if incorrectDecimalSeparatorReplacedIfNeeded.hasSuffix(decimalSeparator) {
+        if whiteSpacesRemoved.hasSuffix(decimalSeparator) {
             throw AmountError<Self>.endsWithDecimalSeparator
         }
 
-        if incorrectDecimalSeparatorReplacedIfNeeded.decimalPlaces(decimalSeparator: decimalSeparator) > (abs(Unit.qa.exponent) - abs(Self.unit.exponent)) {
+        if whiteSpacesRemoved.countDecimalPlaces() > (abs(Unit.qa.exponent) - abs(Self.unit.exponent)) {
             throw AmountError<Self>.tooManyDecimalPlaces
         }
 
-        return incorrectDecimalSeparatorReplacedIfNeeded
+        return whiteSpacesRemoved
+    }
+}
+
+public extension String {
+    
+    func charactersAsStrings() -> [String] {
+        return map {
+            String($0)
+        }
     }
 }
 

@@ -59,8 +59,7 @@ where Magnitude == BigInt {
     static func validate(value: Magnitude) throws -> Magnitude
     
     // Convenience initializers
-    init(trimming: String, trimmingString: (String) throws -> String) throws
-    init(untrimmed: String, decimalSeparator: @autoclosure () -> String) throws
+    init(trimming: String) throws
     init<E>(_ other: E) throws where E: ExpressibleByAmount
     init(zil: Zil) throws
     init(li: Li) throws
