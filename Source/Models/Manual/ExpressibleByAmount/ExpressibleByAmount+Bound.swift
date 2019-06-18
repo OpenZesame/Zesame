@@ -58,7 +58,7 @@ public extension ExpressibleByAmount where Self: Bound {
         
         if let value = Magnitude(decimalString: trimmed) {
             try self.init(try Self.validate(value: value))
-        } else if let double = Double(trimmed) {
+        } else if let double = Double.fromString(trimmed) {
             try self.init(double)
         } else {
             throw AmountError<Self>.nonNumericString
@@ -73,6 +73,32 @@ public extension ExpressibleByAmount where Self: Bound {
         let decimalSeparator = getDecimalSeparator()
         try self.init(trimming: untrimmed) {
             try Self.trimmingAndFixingDecimalSeparator(in: $0, decimalSeparator: decimalSeparator)
+        }
+    }
+}
+
+public extension Double {
+    static func fromString(_ string: String) -> Double? {
+        func doubleFromAnyLocaleOfTheAvailableLocales(numberString: String) -> Double? {
+            
+            func doubleFromStringUsingLocale(_ locale: Locale) -> Double? {
+                let formatter = NumberFormatter()
+                formatter.locale = locale
+                return formatter.number(from: numberString)?.doubleValue
+            }
+            
+            for localeIdentifier in Locale.availableIdentifiers {
+                let locale = Locale(identifier: localeIdentifier)
+                if let double = doubleFromStringUsingLocale(locale) {
+                    return double
+                }
+            }
+            return nil
+        }
+        if let doubleWithoutFormatter = Double(string) {
+            return doubleWithoutFormatter
+        } else {
+            return doubleFromAnyLocaleOfTheAvailableLocales(numberString: string)
         }
     }
 }

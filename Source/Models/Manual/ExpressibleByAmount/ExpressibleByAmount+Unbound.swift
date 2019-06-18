@@ -64,7 +64,7 @@ public extension ExpressibleByAmount where Self: Unbound {
         
         if let mag = Magnitude(decimalString: trimmed) {
             self = Self.init(mag)
-        } else if let double = Double(trimmed) {
+        } else if let double = Double.fromString(trimmed) {
             self.init(double)
         } else {
             throw AmountError<Self>.nonNumericString
@@ -119,6 +119,7 @@ public extension ExpressibleByAmount {
         in untrimmed: String,
         decimalSeparator getDecimalSeparator: @autoclosure () -> String = { Locale.current.decimalSeparatorForSure }()
     ) throws -> String {
+        
         let whiteSpacesRemoved = untrimmed.replacingOccurrences(of: " ", with: "")
         
         let decimalSeparator = getDecimalSeparator()
@@ -136,7 +137,7 @@ public extension ExpressibleByAmount {
         if incorrectDecimalSeparatorReplacedIfNeeded.decimalPlaces(decimalSeparator: decimalSeparator) > (abs(Unit.qa.exponent) - abs(Self.unit.exponent)) {
             throw AmountError<Self>.tooManyDecimalPlaces
         }
-        
+
         return incorrectDecimalSeparatorReplacedIfNeeded
     }
 }

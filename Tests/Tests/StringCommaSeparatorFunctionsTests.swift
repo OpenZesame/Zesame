@@ -29,6 +29,11 @@ import BigInt
 
 class StringCommaSeparatorFunctionsTests: XCTestCase {
     
+    override func setUp() {
+        super.setUp()
+        continueAfterFailure = false
+    }
+    
     func testStringDecimalPlaces() {
         XCTAssertEqual("1".decimalPlaces(), 0)
         XCTAssertEqual("1337".decimalPlaces(), 0)
@@ -41,5 +46,22 @@ class StringCommaSeparatorFunctionsTests: XCTestCase {
         XCTAssertFalse(
             "1.,2".doesNotContainMoreThanOneDecimalSeparator()
         )
+    }
+    
+    func testFoo() {
+        func doTest(untrimmed: String) {
+            XCTAssertNotNil(Double.fromString(untrimmed))
+            XCTAssertNoThrow(
+                try ZilAmount(untrimmed: untrimmed, decimalSeparator: Locale.current.decimalSeparatorForSure)
+            )
+            XCTAssertNoThrow(
+                try ZilAmount(untrimmed: untrimmed)
+            )
+            XCTAssertNoThrow(
+                try ZilAmount(trimming: untrimmed)
+            )
+        }
+        doTest(untrimmed: "1,2")
+        doTest(untrimmed: "1.2")
     }
 }
