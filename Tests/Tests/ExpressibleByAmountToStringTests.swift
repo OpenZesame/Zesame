@@ -44,13 +44,16 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         }
     }
 
+    func testRounding() {
+        XCTAssertEqual(ZilAmount(0.1449).asString(in: .zil, roundingIfNeeded: .down, roundingNumberOfDigits: 3), "0.144")
+        XCTAssertEqual(ZilAmount(0.1449).asString(in: .zil, roundingIfNeeded: .up, roundingNumberOfDigits: 3), "0.145")
+    }
+
     func testSmallZilAmountAsZilString() {
-        XCTAssertEqual(ZilAmount(0.1).asString(in: .zil), "0")
-        XCTAssertEqual(ZilAmount(0.1).asString(in: .zil, roundingIfNeeded: .down), "0")
-        XCTAssertEqual(ZilAmount(0.1).asString(in: .zil, roundingIfNeeded: .up), "1")
-        XCTAssertEqual(ZilAmount(0.49).asString(in: .zil), "0")
-        XCTAssertEqual(ZilAmount(0.5).asString(in: .zil), "1")
-        XCTAssertEqual(ZilAmount(0.51).asString(in: .zil), "1")
+        XCTAssertEqual(ZilAmount(0.1).asString(in: .zil), "0\(decSep)1")
+        XCTAssertEqual(ZilAmount(0.49).asString(in: .zil), "0\(decSep)49")
+        XCTAssertEqual(ZilAmount(0.5).asString(in: .zil), "0\(decSep)5")
+        XCTAssertEqual(ZilAmount(0.51).asString(in: .zil), "0\(decSep)51")
         XCTAssertEqual(ZilAmount(0).asString(in: .zil), "0")
         XCTAssertEqual(ZilAmount(1).asString(in: .zil), "1")
         XCTAssertEqual(ZilAmount(9).asString(in: .zil), "9")
@@ -58,11 +61,13 @@ class ExpressibleByAmountToStringTests: XCTestCase {
 
 
     func testSmallLiAsLiString() {
-        XCTAssertEqual(Li(0.1).asString(in: .li), "0")
+        XCTAssertEqual(Li(0.1).asString(in: .li), "0\(decSep)1")
         XCTAssertEqual(Li(0.1).asString(in: .zil), "0.0000001")
-        XCTAssertEqual(Li(0.49).asString(in: .li), "0")
-        XCTAssertEqual(Li(0.5).asString(in: .li), "1")
-        XCTAssertEqual(Li(0.51).asString(in: .li), "1")
+        
+        XCTAssertEqual(Li(0.49).asString(in: .li), "0\(decSep)49")
+        XCTAssertEqual(Li(0.5).asString(in: .li), "0\(decSep)5")
+        XCTAssertEqual(Li(0.51).asString(in: .li), "0\(decSep)51")
+        
         XCTAssertEqual(Li(0.51).asString(in: .zil), "0.00000051")
         XCTAssertEqual(Li(0).asString(in: .li), "0")
         XCTAssertEqual(Li(1).asString(in: .li), "1")
@@ -76,10 +81,13 @@ class ExpressibleByAmountToStringTests: XCTestCase {
     func test10LiInQaAsString() {
         XCTAssertEqual(Qa(10000000).asString(in: .li), "10")
     }
+    
+    func testQaToLiManyDecimals() {
+        XCTAssertEqual(Qa(1).asString(in: .li), "0.000001")
+    }
 
     func testQaAsString() {
         XCTAssertEqual(Qa(1).asString(in: .qa), "1")
-        XCTAssertEqual(Qa(1).asString(in: .li), "0.000001")
         XCTAssertEqual(Qa(1).asString(in: .zil), "0.000000000001")
 
         XCTAssertEqual(Qa(10).asString(in: .qa), "10")
@@ -134,22 +142,19 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         XCTAssertEqual(Qa(17000000000000).asString(in: .zil), "17")
     }
     
+    func testThatFormattingUsesCorrectSeparator() {
+        let amountString = "0\(decSep)01"
+        XCTAssertEqual(try Zil(zil: amountString).asString(in: .zil), amountString)
+    }
+    
     func testDecimalStringZilAmount() {
         XCTAssertEqual(try Zil(zil: "0\(decSep)01").asString(in: .li), "10000")
-        XCTAssertEqual(try ZilAmount(zil: "0,01").asString(in: .li), "10000")
     }
     
     func testThatStringOnlyContainingDecimalSeparatorThrowsError() {
         XCTAssertThrowsSpecificError(
             try Zil(zil: "\(Locale.current.decimalSeparatorForSure)"),
             AmountError<Zil>.endsWithDecimalSeparator
-        )
-    }
-    
-    func testCommaAndDotAsDecimalSeparatorEquals() {
-        XCTAssertEqual(
-            try Zil(zil: "0\(decSep)1"),
-            try Zil(zil: "0,1")
         )
     }
     
@@ -446,6 +451,9 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         // bigger than total supply
         XCTAssertEqual(Zil(39000000009).asString(in: .qa), "39000000009000000000000")
         XCTAssertEqual(Zil(39000000004).asString(in: .li), "39000000004000000")
+    }
+    
+    func testBiggerThanTotalSupplyManyDigits() {
         XCTAssertEqual(Zil(39085000499).asString(in: .zil), "39085000499")
     }
 

@@ -64,16 +64,15 @@ extension String {
     }
 }
 
-public extension Double {
-    func asStringUsingLocalizedDecimalSeparator(maxFractionDigits: Int = 2) -> String? {
-        let formatter = NumberFormatter()
-        formatter.decimalSeparator = Locale.current.decimalSeparatorForSure
-        formatter.maximumFractionDigits = maxFractionDigits
-        formatter.minimumIntegerDigits = 1
-        let nsNumber = NSDecimalNumber(value: self)
-        return formatter.string(from: nsNumber)
-    }
+func asStringUsingLocalizedDecimalSeparator(nsDecimalNumber: NSDecimalNumber, maxFractionDigits: Int) -> String? {
+    let formatter = NumberFormatter()
+    formatter.decimalSeparator = Locale.current.decimalSeparatorForSure
+    formatter.maximumFractionDigits = maxFractionDigits
+    formatter.minimumIntegerDigits = 1
+    let formattedString = formatter.string(from: nsDecimalNumber)
+    return formattedString
 }
+
 
 private extension String {
     

@@ -73,7 +73,8 @@ private let decSep = Locale.current.decimalSeparatorForSure
 
 private extension Double {
     func asString(maxFractionDigits: Int = 2) -> String {
-        guard let string = asStringUsingLocalizedDecimalSeparator(maxFractionDigits: maxFractionDigits) else {
+        let nsDecimalNumber = NSDecimalNumber(floatLiteral: self)
+        guard let string = asStringUsingLocalizedDecimalSeparator(nsDecimalNumber: nsDecimalNumber, maxFractionDigits: maxFractionDigits) else {
             fatalError("should be able to format string from double")
         }
         return string
