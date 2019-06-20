@@ -221,6 +221,20 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         XCTAssertNoThrow(try Zil(trimming: "1 0"))
     }
     
+    func testZilAmountFromDecimalStringWithLeadingZeroNoThrow() {
+        XCTAssertNoThrow(try Zil(trimming: "1\(decSep)01"))
+    }
+    
+    func testZilAmountFromDecimalStringWithLeadingZeroToString() {
+        let zilString = "1\(decSep)01"
+        XCTAssertEqual(try Zil(trimming: zilString).asString(in: .zil), zilString)
+    }
+    
+    func testNotRemovingTrailingZero() {
+        let zilString = "1\(decSep)0"
+        XCTAssertEqual(try Zil(trimming: zilString).asString(in: .zil, minFractionDigits: 1), zilString)
+    }
+    
     func testThatAmountContainingOneGoodDecSepAndOneBadDoesNotThrowMoreThanOneSepErrorButRatherDisallowedCharsWarning() {
         let badSep = Locale.current.decimalSeparatorForSure == "." ? "," : "."
         
