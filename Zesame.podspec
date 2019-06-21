@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = 'Zesame'
-    s.version      = '1.0.0'
+    s.version      = '1.0.1'
     s.swift_version = '5.0'
     s.ios.deployment_target = "11.3"
     s.license      = { :type => 'MIT', :file => 'LICENSE' }
