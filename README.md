@@ -104,4 +104,4 @@ This SDK and the foundation EllipticCurveKit its built upon has been developed b
 
 # License
 
-**Zhip** is released under the [MIT License](LICENSE).
+**Zesame** is released under the [MIT License](LICENSE).
