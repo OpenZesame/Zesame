@@ -1,4 +1,0 @@
-#include "../../Configurations/Carthage.xcconfig"
-INFOPLIST_FILE = Source/SupportingFiles/Zesame-Info.plist
-PRODUCT_BUNDLE_IDENTIFIER = org.openzesame.Zesame
-PRODUCT_NAME = Zesame
