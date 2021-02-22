@@ -42,12 +42,12 @@ public extension DefaultAPIClient {
 
 // MARK: - RequestInterceptor (RequestAdapter)
 public extension DefaultAPIClient {
-    func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Alamofire.AFResult<URLRequest>) -> Void) {
+    func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         var urlRequest = urlRequest
         if urlRequest.url?.absoluteString.isEmpty == true || urlRequest.url?.absoluteString == "/" {
             urlRequest.url = baseURL
         }
-        completion(Alamofire.AFResult.success(urlRequest))
+        completion(.success(urlRequest))
     }
 }
 
@@ -72,7 +72,7 @@ public extension DefaultAPIClient {
                 done(.success(resultFromResponse))
                 }
             case .failure(let error):
-                print("⚠️ Failure from Zilliqa API: underlying error: \((error.underlyingError)), errorDescription: \(error.errorDescription)")
+                print("⚠️ Failure from Zilliqa API: underlying error: \(String(describing: (error.underlyingError))), errorDescription: \(String(describing: error.errorDescription))")
                 done(.failure(.api(.request(error))))
             }
         }
