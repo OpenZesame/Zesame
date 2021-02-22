@@ -112,6 +112,18 @@ class UnitConversionTests: XCTestCase {
             XCTAssertTrue(error is AmountError<ZilAmount>)
         }
     }
+    
+    func testMinGasPriceConversion() {
+        XCTAssertEqual(
+            try! Zil(zil: "0\(decSep)1"),
+            Zil(qa: 100_000_000_000)
+        )
+        
+        XCTAssertEqual(
+            try! Zil(zil: "0\(decSep)1"),
+            Zil(li: 100_000)
+        )
+    }
 
     func testZilAmountLiteral() {
         let amount: ZilAmount = 15
@@ -119,7 +131,8 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testGasPriceMinimum() {
-        XCTAssertEqual(GasPrice.min.asLi, 1000)
+        XCTAssertEqual(GasPrice.min.asLi, 100_000)
+        XCTAssertEqual(GasPrice.min.zilString, "0\(decSep)1")
     }
 
     func testZilAmountAndZil() {
@@ -253,6 +266,7 @@ class UnitConversionTests: XCTestCase {
         XCTAssertEqual(try Zil(qa: "1000000000"), 0.001)
         XCTAssertLessThan(try Zil(qa: "1000000000"), 0.0011)
         XCTAssertGreaterThan(try Zil(qa: "2000000000"), 0.0019)
+        
     }
 
     func testLiStringInits() {

@@ -71,7 +71,9 @@ public extension DefaultAPIClient {
                 case .rpcSuccess(let resultFromResponse):
                 done(.success(resultFromResponse))
                 }
-            case .failure(let error): done(.failure(.api(.request(error))))
+            case .failure(let error):
+                print("⚠️ Failure from Zilliqa API: underlying error: \((error.underlyingError)), errorDescription: \(error.errorDescription)")
+                done(.failure(.api(.request(error))))
             }
         }
     }

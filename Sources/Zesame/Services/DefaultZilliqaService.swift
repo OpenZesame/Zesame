@@ -56,6 +56,22 @@ public extension DefaultZilliqaService {
     func getBalance(for address: LegacyAddress, done: @escaping Done<BalanceResponse>) -> Void {
         return apiClient.send(method: .getBalance(address), done: done)
     }
+    
+    func getMinimumGasPrice(
+        alsoUpdateLocallyCachedMinimum: Bool = true,
+        done: @escaping Done<MinimumGasPriceResponse>
+    ) -> Void {
+        return apiClient.send(method: .getMinimumGasPrice) { (result: Result<MinimumGasPriceResponse, Zesame.Error>) in
+            if case .success(let newMinimumPrice) = result {
+                if alsoUpdateLocallyCachedMinimum {
+                    print("🔮 updating minimum gas price, to new value received from Zilliqa API, before update was: \(GasPrice.min)")
+                    GasPrice.minInQa = newMinimumPrice.amount.qa
+                    print("🔮 updated minimum gas price, to new value received from Zilliqa API, after update: \(GasPrice.min)")
+                }
+            }
+            done(result)
+        }
+    }
 
     func send(transaction: SignedTransaction, done: @escaping Done<TransactionResponse>) {
         return apiClient.send(method: .createTransaction(transaction), done: done)

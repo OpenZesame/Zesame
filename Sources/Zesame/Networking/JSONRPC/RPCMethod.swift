@@ -32,6 +32,7 @@ public enum RPCMethod {
     case createTransaction(SignedTransaction)
     case getTransaction(TransactionId)
     case getNetworkId
+    case getMinimumGasPrice
 }
 
 public extension RPCMethod {
@@ -44,6 +45,7 @@ public extension RPCMethod {
         case .createTransaction: return "CreateTransaction"
         case .getTransaction: return "GetTransaction"
         case .getNetworkId: return "GetNetworkId"
+        case .getMinimumGasPrice: return "GetMinimumGasPrice"
         }
     }
     
@@ -62,6 +64,7 @@ public extension RPCMethod {
         case .createTransaction(let signedTransaction): return innerEncode(signedTransaction)
         case .getTransaction(let txId): return innerEncode(txId)
         case .getNetworkId: return nil
+        case .getMinimumGasPrice: return nil
         }
     }
 }

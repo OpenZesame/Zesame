@@ -31,8 +31,13 @@ public struct GasPrice: ExpressibleByAmount, AdjustableUpperbound, AdjustableLow
 
     public let qa: Magnitude
 
-    /// By default GasPrice has a lowerobund of 1000 Li, i.e 1 000 000 000 Qa, this can be changed.
-    public static let minInQaDefault: Magnitude = 1_000_000_000
+    /// By default we set gasPrice of 0.1 Zil (= 100_000 Li = 100_000_000_000 Qa), preparing for
+    /// ZIP-18 https://github.com/jsarcher/ZIP/blob/master/zips/zip-18.md
+    ///
+    /// But you SHOULD call `ZilliqaService.getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: true)`
+    /// which will update this.
+    ///
+    public static let minInQaDefault: Magnitude = 100_000_000_000
     public static var minInQa = minInQaDefault {
         willSet {
             guard newValue <= maxInQa else {
@@ -41,8 +46,8 @@ public struct GasPrice: ExpressibleByAmount, AdjustableUpperbound, AdjustableLow
         }
     }
 
-    /// By default GasPrice has an upperbound of 10 Zil, this can be changed.
-    public static let maxInQaDefault: Magnitude = 10_000_000_000_000
+    /// By default GasPrice has an upperbound of 100 Zil, this can be changed.
+    public static let maxInQaDefault: Magnitude = 100_000_000_000_000
     public static var maxInQa = maxInQaDefault {
         willSet {
             guard newValue >= minInQa else {
