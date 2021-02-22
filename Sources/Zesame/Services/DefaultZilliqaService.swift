@@ -64,9 +64,7 @@ public extension DefaultZilliqaService {
         return apiClient.send(method: .getMinimumGasPrice) { (result: Result<MinimumGasPriceResponse, Zesame.Error>) in
             if case .success(let newMinimumPrice) = result {
                 if alsoUpdateLocallyCachedMinimum {
-                    print("🔮 updating minimum gas price, to new value received from Zilliqa API, before update was: \(GasPrice.min)")
                     GasPrice.minInQa = newMinimumPrice.amount.qa
-                    print("🔮 updated minimum gas price, to new value received from Zilliqa API, after update: \(GasPrice.min)")
                 }
             }
             done(result)

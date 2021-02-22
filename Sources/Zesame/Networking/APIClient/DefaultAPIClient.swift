@@ -25,12 +25,16 @@
 import Foundation
 import Alamofire
 
-public final class DefaultAPIClient: APIClient, RequestInterceptor {
+public final class DefaultAPIClient: APIClient {
     
-    public let baseURL: URL
+
+    private let session: Alamofire.Session
+    private unowned let interceptor: SimpleRequestAdapter
     
     public init(baseURL: URL) {
-        self.baseURL = baseURL
+        let interceptor = SimpleRequestAdapter(baseURL: baseURL)
+        self.session = Alamofire.Session(interceptor: interceptor)
+        self.interceptor = interceptor
     }
 }
 
@@ -40,14 +44,40 @@ public extension DefaultAPIClient {
     }
 }
 
-// MARK: - RequestInterceptor (RequestAdapter)
 public extension DefaultAPIClient {
-    func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        var urlRequest = urlRequest
-        if urlRequest.url?.absoluteString.isEmpty == true || urlRequest.url?.absoluteString == "/" {
-            urlRequest.url = baseURL
+    var baseURL: URL { interceptor.baseURL }
+}
+
+// MARK: - RequestInterceptor (RequestAdapter)
+private extension DefaultAPIClient {
+    
+    final class SimpleRequestAdapter: RequestInterceptor {
+        fileprivate let baseURL: URL
+        init(baseURL: URL) {
+            self.baseURL = baseURL
         }
-        completion(.success(urlRequest))
+        
+        func adapt(
+            _ urlRequest: URLRequest,
+            for session: Alamofire.Session,
+            completion: @escaping (Result<URLRequest, Swift.Error>) -> Void
+        ) {
+            var urlRequest = urlRequest
+            if urlRequest.url?.absoluteString.isEmpty == true || urlRequest.url?.absoluteString == "/" {
+                urlRequest.url = baseURL
+            }
+            completion(.success(urlRequest))
+        }
+        
+        func retry(
+            _ request: Alamofire.Request,
+            for session: Alamofire.Session,
+            dueTo error: Swift.Error,
+            completion: @escaping (Alamofire.RetryResult) -> Void
+        ) {
+            completion(.doNotRetry)
+        }
+        
     }
 }
 
@@ -58,9 +88,10 @@ public extension DefaultAPIClient {
         method: RPCMethod, 
         done: @escaping Done<ResultFromResponse>
     ) where ResultFromResponse: Decodable {
+        
         let rpcRequest = RPCRequest(method: method)
-        Alamofire.Session.default
-            .request(rpcRequest, interceptor: self)
+
+        session.request(rpcRequest)
             .validate()
             .responseDecodable { (response: DataResponse<RPCResponse<ResultFromResponse>, AFError>) in
             switch response.result {
@@ -69,10 +100,9 @@ public extension DefaultAPIClient {
                 case .rpcError(let rpcErrorOrDecodeToRPCErrorMetaError):
                     done(.failure(.api(.request(rpcErrorOrDecodeToRPCErrorMetaError))))
                 case .rpcSuccess(let resultFromResponse):
-                done(.success(resultFromResponse))
+                    done(.success(resultFromResponse))
                 }
             case .failure(let error):
-                print("⚠️ Failure from Zilliqa API: underlying error: \(String(describing: (error.underlyingError))), errorDescription: \(String(describing: error.errorDescription))")
                 done(.failure(.api(.request(error))))
             }
         }

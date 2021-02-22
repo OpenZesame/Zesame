@@ -11,8 +11,8 @@ public struct MinimumGasPriceResponse: Decodable {
     public let amount: ZilAmount
     
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let qaString = try container.decode(String.self, forKey: .amount)
+        let container = try decoder.singleValueContainer()
+        let qaString = try container.decode(String.self)
         self.amount = try ZilAmount(qa: qaString)
     }
     
