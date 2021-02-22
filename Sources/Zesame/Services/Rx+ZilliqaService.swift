@@ -39,6 +39,12 @@ public extension Reactive where Base: ZilliqaService {
     }
 
 
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool = true) -> Observable<MinimumGasPriceResponse> {
+        return callBase {
+            $0.getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: alsoUpdateLocallyCachedMinimum, done: $1)
+        }
+    }
+    
     func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> Observable<TransactionReceipt> {
         return callBase {
             $0.hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: polling, done: $1)

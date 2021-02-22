@@ -39,6 +39,6 @@ class AmountFromStringContainingWhitespaces: XCTestCase {
     }
 
     func testGasPriceContainingWhitespaces() {
-        XCTAssertEqual(try GasPrice(li: "1 567").qa, 1_567_000_000)
+        XCTAssertEqual(try GasPrice(li: "13 456 789").qa, 13_456_789_000_000)
     }
 }

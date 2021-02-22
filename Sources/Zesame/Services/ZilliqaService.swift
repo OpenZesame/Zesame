@@ -32,6 +32,7 @@ public protocol ZilliqaService: AnyObject {
     var apiClient: APIClient { get }
 
     func getNetworkFromAPI(done: @escaping Done<NetworkResponse>)
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool, done: @escaping Done<MinimumGasPriceResponse>)
 
     func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore, done: @escaping Done<Bool>)
     func createNewWallet(encryptionPassword: String, kdf: KDF, done: @escaping Done<Wallet>)
@@ -45,6 +46,7 @@ public protocol ZilliqaService: AnyObject {
 public protocol ZilliqaServiceReactive {
 
     func getNetworkFromAPI() -> Observable<NetworkResponse>
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) -> Observable<MinimumGasPriceResponse>
     func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) -> Observable<Bool>
     func createNewWallet(encryptionPassword: String, kdf: KDF) -> Observable<Wallet>
     func restoreWallet(from restoration: KeyRestoration) -> Observable<Wallet>

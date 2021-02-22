@@ -43,23 +43,23 @@ class GasPriceTests: XCTestCase {
         restoreBounds()
     }
 
-    func testMaxGasPriceIs10Zil() {
-        XCTAssertEqual(GasPrice.max.qa, Zil(10).qa)
-        XCTAssertEqual(GasPrice.max.asZil, 10)
-        XCTAssertEqual(GasPrice.max.qa, 10_000_000_000_000)
+    func testMaxGasPriceIs100Zil() {
+        XCTAssertEqual(GasPrice.max.qa, Zil(100).qa)
+        XCTAssertEqual(GasPrice.max.asZil, 100)
+        XCTAssertEqual(GasPrice.max.qa, 100_000_000_000_000)
     }
 
-    func testMinGasPriceIs1000Li() {
-        XCTAssertEqual(GasPrice.min.qa, Li(1000).qa)
-        XCTAssertEqual(GasPrice.min.liString, "1000")
-        XCTAssertEqual(GasPrice.min.asLi, 1000)
-        XCTAssertEqual(GasPrice.min.qa, 1_000_000_000)
+    func testMinGasPriceIs100_000Li() {
+        XCTAssertEqual(GasPrice.min.qa, Li(100_000).qa)
+        XCTAssertEqual(GasPrice.min.liString, "100000")
+        XCTAssertEqual(GasPrice.min.asLi, 100_000)
+        XCTAssertEqual(GasPrice.min.qa, 100_000_000_000)
     }
 
     func testMaxGasPrice() {
         do {
-            let tenZil = try GasPrice(zil: 10)
-            XCTAssertEqual(tenZil.asLi, 10_000_000)
+            let tenZil = try GasPrice(zil: 100)
+            XCTAssertEqual(tenZil.asLi, 100_000_000)
         } catch {
             return XCTFail()
         }
@@ -68,7 +68,7 @@ class GasPriceTests: XCTestCase {
     func testExceedingMaxGasPriceThrowsError() {
         var didThrowError = false
         do {
-             let _ = try GasPrice.init(zil: 11)
+             let _ = try GasPrice.init(zil: 101)
         } catch let error as AmountError<GasPrice>  {
             didThrowError = true
             switch error {
@@ -82,19 +82,19 @@ class GasPriceTests: XCTestCase {
         XCTAssertTrue(didThrowError)
     }
 
-    func testDefaultMaxMagnitudeIs10Zil() {
+    func testDefaultMaxMagnitudeIs100Zil() {
         XCTAssertEqual(GasPrice.maxInQaDefault, GasPrice.maxInQa)
-        XCTAssertEqual(GasPrice.max.zilString, "10")
+        XCTAssertEqual(GasPrice.max.zilString, "100")
     }
 
     func testDecreasingMaxPrice() {
         let newMaxInQa: GasPrice.Magnitude = (GasPrice.min.asLi + 1.li).qa
         GasPrice.maxInQa = newMaxInQa
-        XCTAssertEqual(GasPrice.maxInQa, 1_001_000_000)
+        XCTAssertEqual(GasPrice.maxInQa, 100_001_000_000)
 
         var didThrowError = false
         do {
-            let _ = try GasPrice(li: 1002)
+            let _ = try GasPrice(li: 100_000_002)
         } catch let error as AmountError<GasPrice>  {
             didThrowError = true
             switch error {
@@ -139,7 +139,7 @@ class GasPriceTests: XCTestCase {
     func testIncreasedMaxGasPrice() {
         var didThrowError = false
         do {
-            let _ = try GasPrice(zil: 11)
+            let _ = try GasPrice(zil: 101)
         } catch let error as AmountError<GasPrice>  {
             didThrowError = true
             switch error {
