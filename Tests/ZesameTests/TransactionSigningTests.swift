@@ -39,10 +39,9 @@ class TransactionSigningTests: XCTestCase {
         let publicKey = PublicKey(privateKey: privateKey)
 
         let unsignedTx = Transaction(
-            payment: Payment(
+            payment: Payment.withMinimumGasLimit(
                 to: try! LegacyAddress(string: "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039"),
                 amount: 15,
-                gasLimit: 1,
                 gasPrice: GasPrice.min,
                 nonce: Nonce(3)
             ),
@@ -73,10 +72,10 @@ private let expectedTransactionJSONString = """
   "pubKey" : "034AE47910D58B9BDE819C3CFFA8DE4441955508DB00AA2540DB8E6BF6E99ABC1B",
   "data" : null,
   "code" : null,
-  "signature" : "1727048B9F200D07E6E2D8EFF6BA3E54BF491589CCB55D872E242505B72E6CA74E022AC954DF21420AF8737C89A7E9048B75B531F6865B78B1E2A864169ED64D",
-  "gasLimit" : "1",
+  "signature" : "379AA79C8A38A51B3D20232F89D8CF06B7CB2C52D5B42F96280BCD5EE3B1E848E9778C3E0AFE7164F3A913B6E31B88AC226D3816638B03D9718BBDC6F21909DD",
+  "gasLimit" : "50",
   "version" : 65537,
-  "gasPrice" : "1000000000",
+  "gasPrice" : "100000000000",
   "nonce" : 4
 }
 """
