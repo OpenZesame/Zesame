@@ -26,7 +26,9 @@ import Foundation
 
 public typealias GasLimit = Int
 public extension GasLimit {
-    static var defaultGasLimit: GasLimit {
-        return 1
+    static var defaultGasLimit: Self = Self.minimum
+    
+    static var minimum: Self {
+        return 50
     }
 }

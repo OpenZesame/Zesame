@@ -37,16 +37,34 @@ public struct Payment {
         gasLimit: GasLimit = .defaultGasLimit,
         gasPrice: GasPrice,
         nonce: Nonce = 0
-        ) {
+    ) throws {
+        guard gasLimit >= GasLimit.minimum else { throw Error.gasLimitTooLow(got: gasLimit, butMinIs: GasLimit.minimum) }
         self.recipient = recipient
         self.amount = amount
         self.gasLimit = gasLimit
         self.gasPrice = gasPrice
         self.nonce = nonce.increasedByOne()
     }
+    
+    enum Error: Swift.Error {
+        case gasLimitTooLow(got: GasLimit, butMinIs: GasLimit)
+    }
+    
 }
 
 public extension Payment {
+    
+    
+    static func withMinimumGasLimit(
+        to recipient: LegacyAddress,
+        amount: ZilAmount,
+        gasPrice: GasPrice,
+        nonce: Nonce = 0
+    ) -> Self {
+        try! .init(to: recipient, amount: amount, gasLimit: GasLimit.minimum, gasPrice: gasPrice, nonce: nonce)
+    }
+    
+    
     static func estimatedTotalTransactionFee(gasPrice: GasPrice, gasLimit: GasLimit = .defaultGasLimit) throws -> Qa {
         return Qa(qa: Qa.Magnitude(gasLimit) * gasPrice.qa)
     }
