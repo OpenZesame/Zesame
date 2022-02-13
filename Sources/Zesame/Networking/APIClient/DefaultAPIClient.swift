@@ -54,7 +54,7 @@ public extension DefaultAPIClient {
     func send<T: Decodable>(method: RPCMethod) async throws -> T {
         
         let rpcRequest = RPCRequest(method: method)
-        let urlRequest = try rpcRequest.asURLRequest()
+        let urlRequest = try rpcRequest.asURLRequest(baseURL: baseURL)
         do {
             let (jsondata, response) = try await session.data(for: urlRequest)
             if let httpURLResponse = response as? HTTPURLResponse {

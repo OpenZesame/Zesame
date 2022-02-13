@@ -69,15 +69,17 @@ public extension RPCRequest {
     
     
     
-    func asURLRequest() throws -> URLRequest {
+    func asURLRequest(baseURL: URL) throws -> URLRequest {
         
         var components = URLComponents()
         components.path = "/"
         
-        guard let url = components.url else {
-            preconditionFailure("Failed to construct URL")
+        guard let relativeURL = components.url else {
+            preconditionFailure("Failed to construct relative URL")
         }
         
+        let url = baseURL.appendingPathComponent(relativeURL.path)
+        print("🛰 making network request to URL: `\(url.absoluteString)`")
         var urlRequest = URLRequest(url: url)
         
         // HTTP Method
