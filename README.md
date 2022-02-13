@@ -57,15 +57,7 @@ Zesame is dependent on the Elliptic Curve Cryptography of [EllipticCurveKit]((ht
 
 # API
 ## Closure or Rx
-This SDK contains two implementations for each method, one that uses [Closures](https://docs.swift.org/swift-book/LanguageGuide/Closures.html)(a.k.a. "Callbacks") and one implementation using [RxSwift Observables](https://github.com/ReactiveX/RxSwift).
-
-### Rx
-```swift
-DefaultZilliqaService.shared.rx.getBalance(for: address).subscribe(
-    onNext: { print("Balance: \($0.balance)") },
-    onError: { print("Failed to get balance, error: \($0)") }
-).disposed(by: bag)
-```
+This SDK contains two implementations for each method, one that uses [Closures](https://docs.swift.org/swift-book/LanguageGuide/Closures.html)(a.k.a. "Callbacks") and one implementation using [Combine AnyPublishers](https://developer.apple.com/documentation/combine/publisher).
 
 ### Closure
 ```swift
@@ -77,16 +69,30 @@ DefaultZilliqaService.shared.getBalance(for: address) {
 }
 ```
 
+### Combine
+```swift
+let cancellable = DefaultZilliqaService.shared.combine.getBalance(for: address).sink(
+    receiveCompletion: { completion in
+        switch completion {
+            case .failure(let error): print("Failed to get balance, error: \($0)")
+            case .finished: print("Finished getting balance")
+        }
+    },
+    receiveValue: { print("Balance: \($0.balance)") },
+)
+```
+
 ## Functions
 Have a look at [ZilliqaService.swift](https://github.com/OpenZesame/Zesame/blob/main/Sources/Zesame/Services/ZilliqaService.swift) for an overview of the functions, here is a snapshot of the current functions of the reactive API (each function having a closure counterpart):
+
 ```swift
 public protocol ZilliqaServiceReactive {
-    func createNewWallet() -> Observable<Wallet>
-    func exportKeystore(from wallet: Wallet, encryptWalletBy passphrase: String) -> Observable<Keystore>
-    func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String) -> Observable<Wallet>
+    func createNewWallet() -> AnyPublisher<Wallet, Error>
+    func exportKeystore(from wallet: Wallet, encryptWalletBy passphrase: String) -> AnyPublisher<Keystore, Error>
+    func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String) -> AnyPublisher<Wallet, Error>
 
-    func getBalance(for address: Address) -> Observable<BalanceResponse>
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier>
+    func getBalance(for address: Address) -> AnyPublisher<BalanceResponse, Error>
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> AnyPublisher<TransactionIdentifier, Error>
 }
 ```
 

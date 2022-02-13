@@ -23,88 +23,89 @@
 //
 
 import Foundation
-
-import RxSwift
-
-
+import Combine
 import EllipticCurveKit
 
-extension Reactive: ZilliqaServiceReactive where Base: ZilliqaService {}
-public extension Reactive where Base: ZilliqaService {
+public final class ZilliqaServiceCombine: ZilliqaServiceReactive {
+    internal unowned let base: ZilliqaService
+    internal init(base: ZilliqaService) {
+        self.base = base
+    }
+}
 
-    func getNetworkFromAPI() -> Observable<NetworkResponse> {
+public extension ZilliqaServiceCombine {
+
+    func getNetworkFromAPI() -> AnyPublisher<NetworkResponse, Error> {
         return callBase {
             $0.getNetworkFromAPI(done: $1)
         }
     }
 
 
-    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool = true) -> Observable<MinimumGasPriceResponse> {
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool = true) -> AnyPublisher<MinimumGasPriceResponse, Error> {
         return callBase {
             $0.getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: alsoUpdateLocallyCachedMinimum, done: $1)
         }
     }
     
-    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> Observable<TransactionReceipt> {
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> AnyPublisher<TransactionReceipt, Error> {
         return callBase {
             $0.hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: polling, done: $1)
         }
     }
 
-    func verifyThat(encryptionPassword: String, canDecryptKeystore keystore: Keystore) -> Observable<Bool> {
+    func verifyThat(encryptionPassword: String, canDecryptKeystore keystore: Keystore) -> AnyPublisher<Bool, Error> {
         return callBase {
             $0.verifyThat(encryptionPassword: encryptionPassword, canDecryptKeystore: keystore, done: $1)
         }
     }
 
-    func createNewWallet(encryptionPassword: String, kdf: KDF = .default) -> Observable<Wallet> {
+    func createNewWallet(encryptionPassword: String, kdf: KDF = .default) -> AnyPublisher<Wallet, Error> {
         return callBase {
             $0.createNewWallet(encryptionPassword: encryptionPassword, kdf: kdf, done: $1)
         }
     }
 
-    func restoreWallet(from restoration: KeyRestoration) -> Observable<Wallet>{
+    func restoreWallet(from restoration: KeyRestoration) -> AnyPublisher<Wallet, Error> {
         return callBase {
             $0.restoreWallet(from: restoration, done: $1)
         }
     }
 
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) -> Observable<Keystore> {
+    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) -> AnyPublisher<Keystore, Error> {
         return callBase {
             $0.exportKeystore(privateKey: privateKey, encryptWalletBy: password, done: $1)
         }
     }
 
-    func getBalance(for address: LegacyAddress) -> Observable<BalanceResponse> {
+    func getBalance(for address: LegacyAddress) -> AnyPublisher<BalanceResponse, Error> {
         return callBase {
             $0.getBalance(for: address, done: $1)
         }
     }
 
-    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) -> Observable<TransactionResponse> {
+    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) -> AnyPublisher<TransactionResponse, Error> {
         return callBase {
             $0.sendTransaction(for: payment, keystore: keystore, password: password, network: network, done: $1)
         }
     }
 
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> Observable<TransactionResponse> {
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> AnyPublisher<TransactionResponse, Error> {
         return callBase {
             $0.sendTransaction(for: payment, signWith: keyPair, network: network, done: $1)
         }
     }
 
-    func callBase<R>(call: @escaping (Base, @escaping Done<R>) -> Void) -> Observable<R> {
-        return Single.create { [weak base] single in
-            guard let strongBase = base else { return Disposables.create {} }
-            call(strongBase, {
-                switch $0 {
-                case .failure(let error):
-                    single(.failure(error))
-                case .success(let result):
-                    single(.success(result))
-                }
+    func callBase<R>(call: @escaping (ZilliqaService, @escaping Done<R>) -> Void) -> AnyPublisher<R, Error> {
+        Future<R, Error> { [weak base] promise in
+            guard let strongBase = base else {
+                fatalError("base is uninitialized, cannot proceed.")
+            }
+            call(strongBase, { result in
+                promise(result)
             })
-            return Disposables.create {}
-        }.asObservable()
+        }
+        .eraseToAnyPublisher()
+        
     }
 }

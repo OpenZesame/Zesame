@@ -25,7 +25,7 @@
 import Foundation
 import EllipticCurveKit
 
-import RxSwift
+import Combine
 
 public protocol ZilliqaService: AnyObject {
     var apiClient: APIClient { get }
@@ -44,50 +44,39 @@ public protocol ZilliqaService: AnyObject {
 
 public protocol ZilliqaServiceReactive {
 
-    func getNetworkFromAPI() -> Observable<NetworkResponse>
-    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) -> Observable<MinimumGasPriceResponse>
-    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) -> Observable<Bool>
-    func createNewWallet(encryptionPassword: String, kdf: KDF) -> Observable<Wallet>
-    func restoreWallet(from restoration: KeyRestoration) -> Observable<Wallet>
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) -> Observable<Keystore>
-    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> Observable<KeyPair>
+    func getNetworkFromAPI() -> AnyPublisher<NetworkResponse, Error>
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) -> AnyPublisher<MinimumGasPriceResponse, Error>
+    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) -> AnyPublisher<Bool, Error>
+    func createNewWallet(encryptionPassword: String, kdf: KDF) -> AnyPublisher<Wallet, Error>
+    func restoreWallet(from restoration: KeyRestoration) -> AnyPublisher<Wallet, Error>
+    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) -> AnyPublisher<Keystore, Error>
+    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> AnyPublisher<KeyPair, Error>
 
-    func getBalance(for address: LegacyAddress) -> Observable<BalanceResponse>
-    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) -> Observable<TransactionResponse>
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> Observable<TransactionResponse>
+    func getBalance(for address: LegacyAddress) -> AnyPublisher<BalanceResponse, Error>
+    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) -> AnyPublisher<TransactionResponse, Error>
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> AnyPublisher<TransactionResponse, Error>
 
-    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> Observable<TransactionReceipt>
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> AnyPublisher<TransactionReceipt, Error>
 }
 
 public extension ZilliqaServiceReactive {
 
-    func extractKeyPairFrom(wallet: Wallet, encryptedBy password: String) -> Observable<KeyPair> {
-        return extractKeyPairFrom(keystore: wallet.keystore, encryptedBy: password)
+    func extractKeyPairFrom(wallet: Wallet, encryptedBy password: String) -> AnyPublisher<KeyPair, Error> {
+        extractKeyPairFrom(keystore: wallet.keystore, encryptedBy: password)
     }
 
-    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> Observable<KeyPair> {
-        return Observable.create { observer in
+    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> AnyPublisher<KeyPair, Error> {
+        Future<KeyPair, Error> { promise in
             background {
-                keystore.toKeypair(encryptedBy: password) {
-                    switch $0 {
-                    case .success(let keyPair):
-                        main {
-                            observer.onNext(keyPair)
-                            observer.onCompleted()
-                        }
-                    case .failure(let error):
-                        main {
-                            observer.onError(error)
-                        }
-                    }
+                keystore.toKeypair(encryptedBy: password) { keyPairResult in
+                    promise(keyPairResult)
                 }
             }
-            return Disposables.create()
-        }
+        }.eraseToAnyPublisher()
     }
 
-    func hasNetworkReachedConsensusYetForTransactionWith(id: String) -> Observable<TransactionReceipt> {
-        return hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: .twentyTimesLinearBackoff)
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String) -> AnyPublisher<TransactionReceipt, Error> {
+        hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: .twentyTimesLinearBackoff)
     }
 
 }

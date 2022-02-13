@@ -23,16 +23,17 @@
 //
 
 import Foundation
-import RxSwift
 
 import EllipticCurveKit
 
-public final class DefaultZilliqaService: ZilliqaService, ReactiveCompatible {
+public final class DefaultZilliqaService: ZilliqaService {
 
     public let apiClient: APIClient
+    public var combine: ZilliqaServiceCombine!
 
     public init(apiClient: APIClient) {
         self.apiClient = apiClient
+        self.combine = .init(base: self)
     }
 }
 

@@ -26,7 +26,6 @@ import Foundation
 import Alamofire
 
 public enum Error: Swift.Error {
-
     case api(API)
     case keystorePasswordTooShort(provided: Int, minimum: Int)
     case walletImport(WalletImport)
