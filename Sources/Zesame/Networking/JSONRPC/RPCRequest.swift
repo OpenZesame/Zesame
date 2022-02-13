@@ -23,9 +23,8 @@
 //
 
 import Foundation
-import Alamofire
 
-public struct RPCRequest: Encodable, URLRequestConvertible {
+public struct RPCRequest: Encodable {
     public let rpcMethod: String
     private let _encodeValue: RPCMethod.EncodeValue<CodingKeys>?
     public let requestId: String
@@ -66,8 +65,10 @@ public extension RPCRequest {
     }
 }
 
-// MARK: - URLRequestConvertible
 public extension RPCRequest {
+    
+    
+    
     func asURLRequest() throws -> URLRequest {
         
         var components = URLComponents()
@@ -80,17 +81,13 @@ public extension RPCRequest {
         var urlRequest = URLRequest(url: url)
         
         // HTTP Method
-        urlRequest.httpMethod = Alamofire.HTTPMethod.post.rawValue
+        urlRequest.httpMethod = "POST"
         
         // Common Headers
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        do {
-            let jsonData = try JSONEncoder().encode(self)
-            urlRequest.httpBody = jsonData
-        } catch {
-            throw AFError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))
-        }
+        let jsonData = try JSONEncoder().encode(self)
+        urlRequest.httpBody = jsonData
         
         return urlRequest
     }

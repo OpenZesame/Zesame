@@ -31,31 +31,26 @@ public extension Keystore {
         privateKey: PrivateKey,
         encryptBy password: String,
         kdf: KDF,
-        kdfParams: KDFParams? = nil,
-        done: @escaping Done<Keystore>
-    ) throws {
+        kdfParams: KDFParams? = nil
+    ) async throws -> Keystore {
 
         guard password.count >= Keystore.minumumPasswordLength else {
-            let error = Error.keystorePasswordTooShort(
+            throw Error.keystorePasswordTooShort(
                 provided: password.count,
                 minimum: Keystore.minumumPasswordLength
             )
-            done(.failure(error))
-            return
         }
 
         let kdfParams = kdfParams ?? KDF.defaultParameters
 
-        try AnyKeyDeriving(kdf: kdf, kdfParams: kdfParams).deriveKey(password: password) { derivedKey in
-
-            let keyStore = try Keystore(
-                from: derivedKey,
-                privateKey: privateKey,
-                kdf: kdf,
-                parameters: kdfParams
-            )
-
-            done(Result.success(keyStore))
-        }
+        let derivedKey = try await AnyKeyDeriving(kdf: kdf, kdfParams: kdfParams).deriveKey(password: password)
+        
+        return try Keystore(
+            from: derivedKey,
+            privateKey: privateKey,
+            kdf: kdf,
+            parameters: kdfParams
+        )
+        
     }
 }

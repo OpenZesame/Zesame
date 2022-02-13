@@ -33,91 +33,69 @@ var isRunningTests: Bool {
 
 public extension ZilliqaService {
 
-    func verifyThat(encryptionPassword: String, canDecryptKeystore keystore: Keystore, done: @escaping Done<Bool>) {
-        background {
-            keystore.decryptPrivateKeyWith(password: encryptionPassword) { result in
-                main {
-                    done(.success(result.value != nil))
-                }
-            }
+    func verifyThat(
+        encryptionPassword: String,
+        canDecryptKeystore keystore: Keystore
+    ) async throws -> Bool {
+        do {
+           _ = try await keystore.decryptPrivateKeyWith(password: encryptionPassword)
+            return true
+        } catch {
+            return false
         }
     }
 
-    func createNewWallet(encryptionPassword: String, kdf: KDF = .default, done: @escaping Done<Wallet>) {
-        background {
-            let privateKey = PrivateKey.generateNew()
-            let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf)
-            self.restoreWallet(from: keyRestoration, done: done)
-        }
+    func createNewWallet(
+        encryptionPassword: String,
+        kdf: KDF = .default
+    ) async throws -> Wallet {
+        let privateKey = PrivateKey.generateNew()
+        let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf)
+        return try await restoreWallet(from: keyRestoration)
     }
 
-    func restoreWallet(from restoration: KeyRestoration, done: @escaping Done<Wallet>) {
-        background { [unowned self] in
-            switch restoration {
-            case .keystore(let keystore, let password):
-                keystore.decryptPrivateKeyWith(password: password) {
-                    switch $0 {
-                    case .failure(let error):
-                        main {
-                            done(.failure(error))
-                        }
-                    case .success(let privateKey):
-                        // We would like the SDK to always store Keystore on same format, so disregarding if we imported a keystore having KDF `pbkdf2` or `scrypt`, the stored KDF in the users wallet
-                        // is the same, so that decrypting takes ~same time for every user.
-                        if keystore.crypto.kdf == KDF.default || isRunningTests {
-                            main {
-                                let wallet = Wallet(keystore: keystore)
-                                done(.success(wallet))
-                            }
-                        } else {
-                            let defaultKeyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: password, kdf: .default)
-                            self.restoreWallet(from: defaultKeyRestoration, done: done)
-                        }
-                    }
-                }
-            case .privateKey(let privateKey, let newPassword, let kdf):
-                do {
-                    try Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf) {
-
-                        guard case .success(let keystore) = $0 else {
-                            done(.failure($0.error!))
-                            return
-                        }
-
-                        main {
-                            done(.success(Wallet(keystore: keystore)))
-                        }
-                    }
-                } catch {
-                    main {
-                        done(.failure(Error.walletImport(.keystoreError(error))))
-                    }
-                }
+    func restoreWallet(from restoration: KeyRestoration) async throws -> Wallet {
+        switch restoration {
+        case .keystore(let keystore, let password):
+            let privateKey = try await keystore.decryptPrivateKeyWith(password: password)
+            
+            // We would like the SDK to always store Keystore on same format, so disregarding if we imported a keystore having KDF `pbkdf2` or `scrypt`, the stored KDF in the users wallet
+            // is the same, so that decrypting takes ~same time for every user.
+            if keystore.crypto.kdf == KDF.default || isRunningTests {
+                return Wallet(keystore: keystore)
+            } else {
+                let defaultKeyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: password, kdf: .default)
+                return try await restoreWallet(from: defaultKeyRestoration)
+            }
+            
+        case .privateKey(let privateKey, let newPassword, let kdf):
+            do {
+                let keystore = try await Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf)
+                
+                return Wallet(keystore: keystore)
+            } catch {
+                throw Error.walletImport(.keystoreError(error))
             }
         }
+    }
+    
+    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) async throws -> Keystore {
+        try await exportKeystore(privateKey: privateKey, encryptWalletBy: password)
     }
 
     func exportKeystore(
         privateKey: PrivateKey,
         encryptWalletBy password: String,
-        kdf: KDF = .default,
-        done: @escaping Done<Keystore>
-        ) {
-        background {
-            do {
-                try Keystore.from(
-                    privateKey: privateKey,
-                    encryptBy: password,
-                    kdf: kdf) { newKeystoreResult in
-                        main {
-                            done(newKeystoreResult)
-                        }
-                }
-            } catch {
-                main {
-                    done(.failure(Error.keystoreExport(error)))
-                }
-            }
+        kdf: KDF = .default
+    ) async throws -> Keystore {
+        do {
+            return try await Keystore.from(
+                privateKey: privateKey,
+                encryptBy: password,
+                kdf: kdf
+            )
+        } catch {
+            throw Error.keystoreExport(error)
         }
         
     }

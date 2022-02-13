@@ -29,54 +29,35 @@ import Combine
 
 public protocol ZilliqaService: AnyObject {
     var apiClient: APIClient { get }
+    
+    func getNetworkFromAPI() async throws -> NetworkResponse
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) async throws -> MinimumGasPriceResponse
+    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) async throws -> Bool
+    func createNewWallet(encryptionPassword: String, kdf: KDF) async throws -> Wallet
+    func restoreWallet(from restoration: KeyRestoration) async throws -> Wallet
+    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) async throws -> Keystore
+    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) async throws -> KeyPair
 
-    func getNetworkFromAPI(done: @escaping Done<NetworkResponse>)
-    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool, done: @escaping Done<MinimumGasPriceResponse>)
+    func send(transaction: SignedTransaction) async throws -> TransactionResponse
+    func getBalance(for address: LegacyAddress) async throws -> BalanceResponse
+    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) async throws -> TransactionResponse
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) async throws -> TransactionResponse
 
-    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore, done: @escaping Done<Bool>)
-    func createNewWallet(encryptionPassword: String, kdf: KDF, done: @escaping Done<Wallet>)
-    func restoreWallet(from restoration: KeyRestoration, done: @escaping Done<Wallet>)
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String, kdf: KDF, done: @escaping Done<Keystore>)
-
-    func getBalance(for address: LegacyAddress, done: @escaping Done<BalanceResponse>)
-    func send(transaction: SignedTransaction, done: @escaping Done<TransactionResponse>)
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) async throws -> TransactionReceipt
 }
 
-public protocol ZilliqaServiceReactive {
+public extension ZilliqaService {
 
-    func getNetworkFromAPI() -> AnyPublisher<NetworkResponse, Error>
-    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) -> AnyPublisher<MinimumGasPriceResponse, Error>
-    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) -> AnyPublisher<Bool, Error>
-    func createNewWallet(encryptionPassword: String, kdf: KDF) -> AnyPublisher<Wallet, Error>
-    func restoreWallet(from restoration: KeyRestoration) -> AnyPublisher<Wallet, Error>
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) -> AnyPublisher<Keystore, Error>
-    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> AnyPublisher<KeyPair, Error>
-
-    func getBalance(for address: LegacyAddress) -> AnyPublisher<BalanceResponse, Error>
-    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) -> AnyPublisher<TransactionResponse, Error>
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> AnyPublisher<TransactionResponse, Error>
-
-    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> AnyPublisher<TransactionReceipt, Error>
-}
-
-public extension ZilliqaServiceReactive {
-
-    func extractKeyPairFrom(wallet: Wallet, encryptedBy password: String) -> AnyPublisher<KeyPair, Error> {
-        extractKeyPairFrom(keystore: wallet.keystore, encryptedBy: password)
+    func extractKeyPairFrom(wallet: Wallet, encryptedBy password: String) async throws -> KeyPair {
+        try await extractKeyPairFrom(keystore: wallet.keystore, encryptedBy: password)
     }
 
-    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> AnyPublisher<KeyPair, Error> {
-        Future<KeyPair, Error> { promise in
-            background {
-                keystore.toKeypair(encryptedBy: password) { keyPairResult in
-                    promise(keyPairResult)
-                }
-            }
-        }.eraseToAnyPublisher()
+    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) async throws -> KeyPair {
+        try await keystore.toKeypair(encryptedBy: password)
     }
 
-    func hasNetworkReachedConsensusYetForTransactionWith(id: String) -> AnyPublisher<TransactionReceipt, Error> {
-        hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: .twentyTimesLinearBackoff)
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String) async throws -> TransactionReceipt {
+        try await hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: .twentyTimesLinearBackoff)
     }
 
 }

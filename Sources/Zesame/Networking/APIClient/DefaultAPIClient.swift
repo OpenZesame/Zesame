@@ -27,14 +27,12 @@ import Alamofire
 
 public final class DefaultAPIClient: APIClient {
     
-
-    private let session: Alamofire.Session
-    private unowned let interceptor: SimpleRequestAdapter
-    
+    private let session: URLSession
+    private let baseURL: URL
+    private let jsonDecoder = JSONDecoder()
     public init(baseURL: URL) {
-        let interceptor = SimpleRequestAdapter(baseURL: baseURL)
-        self.session = Alamofire.Session(interceptor: interceptor)
-        self.interceptor = interceptor
+        self.session = URLSession(configuration: .default)
+        self.baseURL = baseURL
     }
 }
 
@@ -44,67 +42,31 @@ public extension DefaultAPIClient {
     }
 }
 
-public extension DefaultAPIClient {
-    var baseURL: URL { interceptor.baseURL }
-}
 
-// MARK: - RequestInterceptor (RequestAdapter)
-private extension DefaultAPIClient {
-    
-    final class SimpleRequestAdapter: RequestInterceptor {
-        fileprivate let baseURL: URL
-        init(baseURL: URL) {
-            self.baseURL = baseURL
-        }
-        
-        func adapt(
-            _ urlRequest: URLRequest,
-            for session: Alamofire.Session,
-            completion: @escaping (Result<URLRequest, Swift.Error>) -> Void
-        ) {
-            var urlRequest = urlRequest
-            if urlRequest.url?.absoluteString.isEmpty == true || urlRequest.url?.absoluteString == "/" {
-                urlRequest.url = baseURL
-            }
-            completion(.success(urlRequest))
-        }
-        
-        func retry(
-            _ request: Alamofire.Request,
-            for session: Alamofire.Session,
-            dueTo error: Swift.Error,
-            completion: @escaping (Alamofire.RetryResult) -> Void
-        ) {
-            completion(.doNotRetry)
-        }
-        
-    }
-}
 
 // MARK: - APIClient
 public extension DefaultAPIClient {
     
-    func send<ResultFromResponse>(
-        method: RPCMethod, 
-        done: @escaping Done<ResultFromResponse>
-    ) where ResultFromResponse: Decodable {
+    enum HTTPError: Swift.Error {
+        case badStatusCode(expected: Int, butGot: Int)
+    }
+    
+    func send<T: Decodable>(method: RPCMethod) async throws -> T {
         
         let rpcRequest = RPCRequest(method: method)
-
-        session.request(rpcRequest)
-            .validate()
-            .responseDecodable { (response: DataResponse<RPCResponse<ResultFromResponse>, AFError>) in
-            switch response.result {
-            case .success(let successOrRPCError):
-                switch successOrRPCError {
-                case .rpcError(let rpcErrorOrDecodeToRPCErrorMetaError):
-                    done(.failure(.api(.request(rpcErrorOrDecodeToRPCErrorMetaError))))
-                case .rpcSuccess(let resultFromResponse):
-                    done(.success(resultFromResponse))
+        let urlRequest = try rpcRequest.asURLRequest()
+        do {
+            let (jsondata, response) = try await session.data(for: urlRequest)
+            if let httpURLResponse = response as? HTTPURLResponse {
+                let ok = 200
+                if httpURLResponse.statusCode != ok {
+                    let error = HTTPError.badStatusCode(expected: ok, butGot: httpURLResponse.statusCode)
+                    throw Error.api(.request(error))
                 }
-            case .failure(let error):
-                done(.failure(.api(.request(error))))
             }
+            return try jsonDecoder.decode(T.self, from: jsondata)
+        } catch {
+            throw Error.api(.request(error))
         }
     }
 }

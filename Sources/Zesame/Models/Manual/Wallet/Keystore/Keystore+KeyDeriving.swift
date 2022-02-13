@@ -25,9 +25,10 @@
 import Foundation
 
 extension Keystore: KeyDeriving {
-    public func deriveKey(password: String, done: @escaping (DerivedKey) throws -> Void) throws {
-        let kdf = self.crypto.kdf
-        let kdfParams = self.crypto.keyDerivationFunctionParameters
-        try AnyKeyDeriving(kdf: kdf, kdfParams: kdfParams).deriveKey(password: password, done: done)
+    public func deriveKey(password: String) async throws -> DerivedKey {
+        try await AnyKeyDeriving(
+            kdf: crypto.kdf,
+            kdfParams: crypto.keyDerivationFunctionParameters
+        ).deriveKey(password: password)
     }
 }

@@ -28,39 +28,25 @@ import XCTest
 
 class ExportKeystoreTest: XCTestCase {
 
-    func testWalletImport() {
-
+    func testWalletImport() async throws {
+        
         let service = DefaultZilliqaService(endpoint: .testnet)
-        let expectWalletImport = expectation(description: "importing wallet from keystore json")
-        do {
-            let keyRestoration = try KeyRestoration(keyStoreJSONString: keystoreWalletJSONString, encryptedBy: password)
-            service.restoreWallet(from: keyRestoration) {
-                switch $0 {
-                case .success(let importedWallet):
-                    XCTAssertEqual(importedWallet.keystore.address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
-
-                case .failure(let error): XCTFail("Failed to export, error: \(error)")
-                }
-                expectWalletImport.fulfill()
-            }
-            waitForExpectations(timeout: 3, handler: nil)
-        } catch {
-            XCTFail("Unexpected error: \(error)")
-        }
+        let keyRestoration = try KeyRestoration(keyStoreJSONString: keystoreWalletJSONString, encryptedBy: password)
+        let importedWallet = try await service.restoreWallet(from: keyRestoration)
+        
+        XCTAssertEqual(importedWallet.keystore.address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
     }
-
-    func testKeystoreDecoding() {
-        do {
-            let json = keystoreWalletJSONString.data(using: .utf8)!
-            let keystore = try JSONDecoder().decode(Keystore.self, from: json)
-            XCTAssertEqual(keystore.address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
-
-            keystore.decryptPrivateKey(password: password) {
-                XCTAssertEqual($0.asHex(), expectedPrivateKey.uppercased())
-            }
-        } catch {
-            XCTFail("Unexpected error: \(error)")
+    
+    func testKeystoreDecoding() async throws {
+        let json = keystoreWalletJSONString.data(using: .utf8)!
+        let keystore = try JSONDecoder().decode(Keystore.self, from: json)
+        XCTAssertEqual(keystore.address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
+        
+        guard let privateKey = await keystore.decryptPrivateKey(password: password) else {
+            XCTFail("Expected to be able to decrypt keystore.")
+            return
         }
+        XCTAssertEqual(privateKey.asHex(), expectedPrivateKey.uppercased())
     }
 }
 

@@ -51,85 +51,63 @@ public extension KDFParams {
 extension Keystore {
     static func with(
         kdf: KDF,
-        kdfParams: KDFParams = .quickTestParameters,
-        done: @escaping (Keystore) -> Void) {
-        try! Keystore.from(
+        kdfParams: KDFParams = .quickTestParameters
+    ) async -> Keystore {
+        try! await Keystore.from(
             privateKey: privateKey,
             encryptBy: password,
             kdf: kdf,
             kdfParams: kdfParams
-        ) {
-            switch $0 {
-            case .failure(let error):
-                XCTFail("unexpected error: \(error)")
-            case .success(let keyStore):
-                done(keyStore)
-            }
-        }
+        )
     }
 
-    func decryptPrivateKey(done: @escaping (PrivateKey) -> Void) {
-        decryptPrivateKey(password: password, done: done)
+    func decryptPrivateKey() async -> PrivateKey? {
+        await decryptPrivateKey(password: password)
     }
 
-    func decryptPrivateKey(password: String, done: @escaping (PrivateKey) -> Void) {
-        decryptPrivateKeyWith(password: password) {
-            switch $0 {
-            case .failure(let error):
-                XCTFail("unexpected error: \(error)")
-            case .success(let decryptedPrivateKey):
-                done(decryptedPrivateKey)
-            }
+    func decryptPrivateKey(password: String) async -> PrivateKey? {
+        do {
+            return try await decryptPrivateKeyWith(password: password)
+        } catch {
+            XCTFail("unexpected error: \(error)")
+            return nil
         }
+        
     }
 }
 
 
 class ScryptTests: XCTestCase {
-
-    func testScrypt() {
-        Keystore.with(kdf: .scrypt) { keystore in
-            keystore.decryptPrivateKey { decryptedPrivateKey in
-                XCTAssertEqual(decryptedPrivateKey, privateKey)
-            }
-        }
+    
+    func testScrypt() async throws {
+        let keystore =  await Keystore.with(kdf: .scrypt)
+        let decryptedPrivateKey =  await keystore.decryptPrivateKey()
+        XCTAssertEqual(decryptedPrivateKey, privateKey)
     }
-
-    func testPbkdf2() {
-        Keystore.with(kdf: .pbkdf2) { keystore in
-            keystore.decryptPrivateKey { decryptedPrivateKey in
-                XCTAssertEqual(decryptedPrivateKey, privateKey)
-            }
-        }
+    
+    func testPbkdf2() async throws {
+        let keystore = await Keystore.with(kdf: .pbkdf2)
+        let decryptedPrivateKey = await keystore.decryptPrivateKey()
+        XCTAssertEqual(decryptedPrivateKey, privateKey)
     }
-
+    
+    
     typealias JSON = [String: Any]
-    func testNewWalletKeystore() {
+    
+    func testNewWalletKeystore() async throws {
         let privateKey = PrivateKey.generateNew()
         let password = "apabanan"
-
-        let expectWalletImport = expectation(description: "keystore from private key")
-        try! Keystore.from(privateKey: privateKey, encryptBy: password, kdf: .scrypt) {
-            switch $0 {
-            case .failure(let error): XCTFail("unexpected error: \(error)")
-            case .success(let keystore):
-                XCTAssertEqual(keystore.crypto.keyDerivationFunctionParameters.saltHex.count, 64)
-                do {
-                    let encoder = JSONEncoder()
-                    encoder.outputFormatting = .prettyPrinted
-                    let jsonData = try encoder.encode(keystore)
-                    let json = try! JSONSerialization.jsonObject(with: jsonData, options: []) as! JSON
-                    let crypto = json["crypto"] as! JSON
-                    let kdfparams = crypto["kdfparams"] as! JSON
-                    let salt = kdfparams["salt"] as! String
-                    XCTAssertNotNil(try? HexString(salt))
-                } catch {
-                    XCTFail("failed to encode")
-                }
-                expectWalletImport.fulfill()
-            }
-        }
-
-        waitForExpectations(timeout: 3, handler: nil)
+        
+        let keystore = try! await Keystore.from(privateKey: privateKey, encryptBy: password, kdf: .scrypt)
+        XCTAssertEqual(keystore.crypto.keyDerivationFunctionParameters.saltHex.count, 64)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let jsonData = try encoder.encode(keystore)
+        let json = try! JSONSerialization.jsonObject(with: jsonData, options: []) as! JSON
+        let crypto = json["crypto"] as! JSON
+        let kdfparams = crypto["kdfparams"] as! JSON
+        let salt = kdfparams["salt"] as! String
+        XCTAssertNotNil(try? HexString(salt))
+        
     }
 }

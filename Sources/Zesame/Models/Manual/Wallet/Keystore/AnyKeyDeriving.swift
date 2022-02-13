@@ -32,15 +32,17 @@ public struct AnyKeyDeriving: KeyDeriving {
         self.kdfParams = kdfParams
     }
 
-    public func deriveKey(password: String, done: @escaping (DerivedKey) throws -> Void) throws {
-        let data: Data
-        switch kdf {
-        case .pbkdf2:
-            data = Data(try PBKDF2(kdfParams: kdfParams, password: password).calculate())
-        case .scrypt:
-            data = Data(try Scrypt(kdfParams: kdfParams, password: password).calculate())
-        }
-        let derivedKey = DerivedKey(data: data)
-        try done(derivedKey)
+    public func deriveKey(password: String) async throws -> DerivedKey {
+        try await Task<DerivedKey, Swift.Error>(priority: .userInitiated) {
+            let data: Data
+            switch kdf {
+            case .pbkdf2:
+                data = Data(try PBKDF2(kdfParams: kdfParams, password: password).calculate())
+            case .scrypt:
+                data = Data(try Scrypt(kdfParams: kdfParams, password: password).calculate())
+            }
+            let derivedKey = DerivedKey(data: data)
+            return derivedKey
+        }.value
     }
 }
