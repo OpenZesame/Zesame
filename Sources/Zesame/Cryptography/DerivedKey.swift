@@ -24,7 +24,6 @@
 
 import Foundation
 import EllipticCurveKit
-import CryptoSwift
 
 public struct DerivedKey {
     public let data: Data

@@ -23,9 +23,7 @@
 //
 
 import Foundation
-import CryptoSwift
-
-public typealias Scrypt = CryptoSwift.Scrypt
+@_exported import class CryptoSwift.Scrypt
 
 public extension Scrypt {
 

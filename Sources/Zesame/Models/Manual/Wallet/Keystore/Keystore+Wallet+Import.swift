@@ -23,7 +23,10 @@
 //
 
 import Foundation
-import CryptoSwift
+import class CryptoSwift.HMAC
+import class CryptoSwift.AES
+import struct CryptoSwift.CTR
+import enum CryptoSwift.Padding
 import EllipticCurveKit
 
 public extension Keystore {
@@ -91,7 +94,7 @@ private func calculateMac(
 
     return try HMAC(
         key: derivedKey.bytes,
-        variant: .sha256
+        variant: .sha2(.sha256)
     ).authenticate(
         ((derivedKey.asData.suffix(16) + encryptedPrivateKey + iv + algo) as DataConvertible).bytes
     ).asData

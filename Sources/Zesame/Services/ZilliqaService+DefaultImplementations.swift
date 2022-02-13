@@ -25,7 +25,6 @@
 import Foundation
 
 import EllipticCurveKit
-import CryptoSwift
 
 var isRunningTests: Bool {
     return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil

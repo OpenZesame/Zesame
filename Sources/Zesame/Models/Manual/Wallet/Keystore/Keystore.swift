@@ -24,7 +24,6 @@
 
 import Foundation
 import EllipticCurveKit
-import CryptoSwift
 
 public struct Keystore: Codable, Equatable {
     public static let minumumPasswordLength = 8

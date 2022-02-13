@@ -25,8 +25,6 @@
 import Foundation
 import EllipticCurveKit
 
-import CryptoSwift
-
 public extension Keystore {
 
     static func from(

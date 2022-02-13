@@ -26,7 +26,6 @@ import Foundation
 import EllipticCurveKit
 
 import RxSwift
-import CryptoSwift
 
 public protocol ZilliqaService: AnyObject {
     var apiClient: APIClient { get }
