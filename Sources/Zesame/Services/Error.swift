@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import Alamofire
 
 public enum Error: Swift.Error {
     case api(API)

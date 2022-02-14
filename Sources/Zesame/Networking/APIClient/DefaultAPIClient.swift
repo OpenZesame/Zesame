@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import Alamofire
 
 public final class DefaultAPIClient: APIClient {
     
