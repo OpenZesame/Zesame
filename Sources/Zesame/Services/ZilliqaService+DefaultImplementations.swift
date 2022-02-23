@@ -47,10 +47,11 @@ public extension ZilliqaService {
 
     func createNewWallet(
         encryptionPassword: String,
-        kdf: KDF = .default
+        kdf: KDF = .default,
+        kdfParams: KDFParams? = nil
     ) async throws -> Wallet {
         let privateKey = PrivateKey.generateNew()
-        let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf)
+        let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf, kdfParams: kdfParams)
         return try await restoreWallet(from: keyRestoration)
     }
 
@@ -68,10 +69,9 @@ public extension ZilliqaService {
                 return try await restoreWallet(from: defaultKeyRestoration)
             }
             
-        case .privateKey(let privateKey, let newPassword, let kdf):
+        case .privateKey(let privateKey, let newPassword, let kdf, let kdfParams):
             do {
-                let keystore = try await Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf)
-                
+                let keystore = try await Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf, kdfParams: kdfParams)
                 return Wallet(keystore: keystore)
             } catch {
                 throw Error.walletImport(.keystoreError(error))
