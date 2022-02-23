@@ -48,14 +48,15 @@ public extension KDF {
             return Data(hex: saltHex)
         }
 
-        init(
+        public init(
             costParameterN: Int = 8192,
             costParameterC: Int = 262144,
             blockSize: Int = 8,
             parallelizationParameter: Int = 1,
             lengthOfDerivedKey: Int = 32,
             saltHex: String? = nil
-            ) throws {
+        ) throws {
+            
             self.costParameterN = costParameterN
             self.costParameterC = costParameterC
             self.blockSize = blockSize
@@ -88,7 +89,7 @@ public extension KDF {
     }
 }
 
-extension KDFParams {
+extension KDF.Parameters {
     enum CodingKeys: String, CodingKey {
         /// Should be lowercase "n", since that is what Zilliqa JS SDK uses
         case costParameterN = "n"
@@ -99,4 +100,8 @@ extension KDFParams {
 
         case saltHex = "salt"
     }
+}
+
+public extension KDF.Parameters {
+    static let `default`: Self = try! .init()
 }
