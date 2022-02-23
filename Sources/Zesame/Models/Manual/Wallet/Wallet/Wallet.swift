@@ -22,7 +22,7 @@
 // SOFTWARE.
 //
 
-public struct Wallet {
+public struct Wallet: Hashable {
     public let keystore: Keystore
     public let address: LegacyAddress
 

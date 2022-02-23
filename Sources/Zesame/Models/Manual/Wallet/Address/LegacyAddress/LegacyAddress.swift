@@ -26,7 +26,7 @@ import Foundation
 import EllipticCurveKit
 
 /// Checksummed legacy Ethereum style address, looking like this: `F510333720c5Dd3c3C08bC8e085e8c981ce74691` can also be instantiated with a prefix of `0x`, like so: `0xF510333720c5Dd3c3C08bC8e085e8c981ce74691`
-public struct LegacyAddress: AddressChecksummedConvertible, HexStringConvertible, Equatable {
+public struct LegacyAddress: AddressChecksummedConvertible, HexStringConvertible, Hashable {
 
     /// Checksummed hexstring representing the legacy Ethereum style address, e.g. `F510333720c5Dd3c3C08bC8e085e8c981ce74691`
     public let checksummed: HexString

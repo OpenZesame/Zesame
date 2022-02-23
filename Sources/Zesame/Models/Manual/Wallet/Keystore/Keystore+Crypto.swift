@@ -26,8 +26,8 @@ import Foundation
 import EllipticCurveKit
 
 public extension Keystore {
-    struct Crypto: Codable, Equatable {
-        public struct CipherParameters: Codable, Equatable {
+    struct Crypto: Codable, Hashable {
+        public struct CipherParameters: Codable, Hashable {
             /// "iv"
             let initializationVectorHex: String
             var initializationVector: Data {
@@ -92,7 +92,7 @@ public extension Keystore {
             kdf: KDF,
             kdfParams: KDFParams,
             messageAuthenticationCodeHex: String
-            ) throws {
+        ) throws {
 
             guard encryptedPrivateKeyHex.count == Crypto.expectedLengthEncryptedPrivateKeyHex else {
                 throw Error.encryptedPrivateKeyHexIncorrectLength(expectedLength: Crypto.expectedLengthEncryptedPrivateKeyHex, butGot: encryptedPrivateKeyHex.count)

@@ -28,7 +28,7 @@ import Foundation
 public struct Bech32Address:
     AddressChecksummedConvertible,
     StringConvertible,
-    Equatable,
+    Hashable,
     ExpressibleByStringLiteral
 {
     
@@ -126,7 +126,7 @@ public extension Bech32Address {
 }
 
 public extension Bech32Address {
-    struct DataPart: Equatable, CustomStringConvertible {
+    struct DataPart: Hashable, CustomStringConvertible {
     
         public let excludingChecksum: Bech32Data?
         public let checksum: Bech32Data
@@ -159,7 +159,7 @@ public extension Bech32Address.DataPart {
 }
 
 public extension Bech32Address.DataPart {
-    struct Bech32Data: Equatable, CustomStringConvertible {
+    struct Bech32Data: Hashable, CustomStringConvertible {
         public let data: Data
         
         public init(_ data: Data) {

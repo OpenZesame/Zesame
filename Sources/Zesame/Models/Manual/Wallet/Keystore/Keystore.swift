@@ -25,7 +25,7 @@
 import Foundation
 import EllipticCurveKit
 
-public struct Keystore: Codable, Equatable {
+public struct Keystore: Codable, Hashable {
     public static let minumumPasswordLength = 8
 
     public let address: LegacyAddress
