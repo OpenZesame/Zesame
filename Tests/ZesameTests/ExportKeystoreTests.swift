@@ -32,9 +32,9 @@ class ExportKeystoreTest: XCTestCase {
         
         let service = DefaultZilliqaService(endpoint: .testnet)
         let keyRestoration = try KeyRestoration(keyStoreJSONString: keystoreWalletJSONString, encryptedBy: password)
-        let importedWallet = try await service.restoreWallet(from: keyRestoration)
+        let importedKeystore = try await service.restoreKeystore(from: keyRestoration)
         
-        XCTAssertEqual(importedWallet.keystore.address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
+        XCTAssertEqual(importedKeystore.address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
     }
     
     func testKeystoreDecoding() async throws {

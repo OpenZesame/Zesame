@@ -68,9 +68,11 @@ public protocol ZilliqaService: AnyObject {
     func getNetworkFromAPI() async throws -> NetworkResponse
     func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) async throws -> MinimumGasPriceResponse
     func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) async throws -> Bool
-    func createNewWallet(encryptionPassword: String, kdf: KDF) async throws -> Wallet
-    func restoreWallet(from restoration: KeyRestoration) async throws -> Wallet
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) async throws -> Keystore
+    
+	func createNewKeystore(encryptionPassword: String, kdf: KDF, kdfParams: KDFParams?) async throws -> Keystore
+    func restoreKeystore(from restoration: KeyRestoration) async throws -> Keystore
+    
+	func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) async throws -> Keystore
     func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) async throws -> KeyPair
 
     func send(transaction: SignedTransaction) async throws -> TransactionResponse

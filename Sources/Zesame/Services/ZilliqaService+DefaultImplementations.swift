@@ -45,17 +45,17 @@ public extension ZilliqaService {
         }
     }
 
-    func createNewWallet(
+    func createNewKeystore(
         encryptionPassword: String,
         kdf: KDF = .default,
         kdfParams: KDFParams? = nil
-    ) async throws -> Wallet {
+    ) async throws -> Keystore {
         let privateKey = PrivateKey.generateNew()
         let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf, kdfParams: kdfParams)
-        return try await restoreWallet(from: keyRestoration)
+        return try await restoreKeystore(from: keyRestoration)
     }
 
-    func restoreWallet(from restoration: KeyRestoration) async throws -> Wallet {
+    func restoreKeystore(from restoration: KeyRestoration) async throws -> Keystore {
         switch restoration {
         case .keystore(let keystore, let password):
             let privateKey = try await keystore.decryptPrivateKeyWith(password: password)
@@ -63,16 +63,15 @@ public extension ZilliqaService {
             // We would like the SDK to always store Keystore on same format, so disregarding if we imported a keystore having KDF `pbkdf2` or `scrypt`, the stored KDF in the users wallet
             // is the same, so that decrypting takes ~same time for every user.
             if keystore.crypto.kdf == KDF.default || isRunningTests {
-                return Wallet(keystore: keystore)
+                return keystore
             } else {
                 let defaultKeyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: password, kdf: .default)
-                return try await restoreWallet(from: defaultKeyRestoration)
+                return try await restoreKeystore(from: defaultKeyRestoration)
             }
             
         case .privateKey(let privateKey, let newPassword, let kdf, let kdfParams):
             do {
-                let keystore = try await Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf, kdfParams: kdfParams)
-                return Wallet(keystore: keystore)
+                return try await Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf, kdfParams: kdfParams)
             } catch {
                 throw Error.walletImport(.keystoreError(error))
             }
