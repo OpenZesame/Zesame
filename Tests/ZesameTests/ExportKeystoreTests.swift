@@ -47,6 +47,9 @@ class ExportKeystoreTest: XCTestCase {
             return
         }
         XCTAssertEqual(privateKey.asHex(), expectedPrivateKey.uppercased())
+		let zilliqaService = DefaultZilliqaService(network: .mainnet)
+		let keyPair = try await zilliqaService.extractKeyPairFrom(keystore: keystore, encryptedBy: password)
+		XCTAssertEqual(keyPair.privateKey, privateKey)
     }
 }
 

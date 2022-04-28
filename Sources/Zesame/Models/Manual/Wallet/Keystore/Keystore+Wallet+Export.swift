@@ -31,7 +31,7 @@ public extension Keystore {
         privateKey: PrivateKey,
         encryptBy password: String,
         kdf: KDF,
-        kdfParams: KDFParams? = nil
+		kdfParams: KDFParams = KDF.defaultParameters
     ) async throws -> Keystore {
 
         guard password.count >= Keystore.minumumPasswordLength else {
@@ -41,9 +41,10 @@ public extension Keystore {
             )
         }
 
-        let kdfParams = kdfParams ?? KDF.defaultParameters
-
-        let derivedKey = try await AnyKeyDeriving(kdf: kdf, kdfParams: kdfParams).deriveKey(password: password)
+        let derivedKey = try await AnyKeyDeriving(
+			kdf: kdf,
+			kdfParams: kdfParams
+		).deriveKey(password: password)
         
         return try Keystore(
             from: derivedKey,

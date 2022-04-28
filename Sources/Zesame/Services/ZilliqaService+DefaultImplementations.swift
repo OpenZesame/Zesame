@@ -71,31 +71,33 @@ public extension ZilliqaService {
             
         case .privateKey(let privateKey, let newPassword, let kdf, let kdfParams):
             do {
-                return try await Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf, kdfParams: kdfParams)
+                return try await Keystore.from(
+					privateKey: privateKey,
+					encryptBy: newPassword,
+					kdf: kdf,
+					kdfParams: kdfParams ?? KDF.defaultParameters
+				)
             } catch {
                 throw Error.walletImport(.keystoreError(error))
             }
         }
     }
     
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) async throws -> Keystore {
-        try await exportKeystore(privateKey: privateKey, encryptWalletBy: password)
-    }
-
     func exportKeystore(
-        privateKey: PrivateKey,
-        encryptWalletBy password: String,
-        kdf: KDF = .default
-    ) async throws -> Keystore {
-        do {
-            return try await Keystore.from(
-                privateKey: privateKey,
-                encryptBy: password,
-                kdf: kdf
-            )
-        } catch {
-            throw Error.keystoreExport(error)
-        }
-        
+		privateKey: PrivateKey,
+		encryptWalletBy password: String,
+		kdf: KDF = .default,
+		kdfParams: KDFParams = KDF.defaultParameters
+	) async throws -> Keystore {
+		do {
+			return try await Keystore.from(
+				privateKey: privateKey,
+				encryptBy: password,
+				kdf: kdf,
+				kdfParams: kdfParams
+			)
+		} catch {
+			throw Error.keystoreExport(error)
+		}
     }
 }

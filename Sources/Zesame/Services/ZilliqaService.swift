@@ -37,7 +37,7 @@ public protocol ZilliqaService: AnyObject {
 	func createNewKeystore(encryptionPassword: String, kdf: KDF, kdfParams: KDFParams?) async throws -> Keystore
     func restoreKeystore(from restoration: KeyRestoration) async throws -> Keystore
     
-	func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) async throws -> Keystore
+	func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String, kdf: KDF, kdfParams: KDFParams) async throws -> Keystore
     func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) async throws -> KeyPair
 
     func send(transaction: SignedTransaction) async throws -> TransactionResponse
@@ -51,7 +51,7 @@ public protocol ZilliqaService: AnyObject {
 public extension ZilliqaService {
 
     func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) async throws -> KeyPair {
-        try await extractKeyPairFrom(keystore: keystore, encryptedBy: password)
+		try await keystore.toKeypair(encryptedBy: password)
     }
 
     func hasNetworkReachedConsensusYetForTransactionWith(id: String) async throws -> TransactionReceipt {
