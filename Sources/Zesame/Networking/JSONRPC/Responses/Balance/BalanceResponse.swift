@@ -26,10 +26,10 @@ import Foundation
 
 // Encodable for test purposes, this type is never sent TO the API, only parsed FROM the API.
 public struct BalanceResponse: Codable {
-    public let balance: ZilAmount
+    public let balance: Amount
     public let nonce: Nonce
     
-    public init(balance: ZilAmount, nonce: Nonce) {
+    public init(balance: Amount, nonce: Nonce) {
         self.balance = balance
         self.nonce = nonce
     }
@@ -40,7 +40,7 @@ public struct BalanceResponse: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.balance = try container.decode(ZilAmount.self, forKey: .balance)
+        self.balance = try container.decode(Amount.self, forKey: .balance)
         self.nonce = try container.decode(Nonce.self, forKey: .nonce)
     }
 }

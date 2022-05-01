@@ -34,11 +34,11 @@ class ExpressibleByAmountToStringTests: XCTestCase {
 
     func testQa() {
         do {
-            let big = try ZilAmount(qa: "20999999999123567912432")
-            let small = try ZilAmount(qa: "510231481549")
-            let expected = try ZilAmount(qa: "20999999999633799393981")
-            let expectedPlus1 = try ZilAmount(qa: "20999999999633799393982")
-            let expectedMinus1 = try ZilAmount(qa: "20999999999633799393980")
+            let big = try Amount(qa: "20999999999123567912432")
+            let small = try Amount(qa: "510231481549")
+            let expected = try Amount(qa: "20999999999633799393981")
+            let expectedPlus1 = try Amount(qa: "20999999999633799393982")
+            let expectedMinus1 = try Amount(qa: "20999999999633799393980")
             XCTAssertEqual(try big + small, expected)
             XCTAssertLessThan(try big + small, expectedPlus1)
             XCTAssertGreaterThan(try big + small, expectedMinus1)
@@ -48,18 +48,18 @@ class ExpressibleByAmountToStringTests: XCTestCase {
     }
 
     func testRounding() {
-        XCTAssertEqual(ZilAmount(0.1449).asString(in: .zil, roundingIfNeeded: .down, roundingNumberOfDigits: 3), "0\(decSep)144")
-        XCTAssertEqual(ZilAmount(0.1449).asString(in: .zil, roundingIfNeeded: .up, roundingNumberOfDigits: 3), "0\(decSep)145")
+        XCTAssertEqual(Amount(0.1449).asString(in: .zil, roundingIfNeeded: .down, roundingNumberOfDigits: 3), "0\(decSep)144")
+        XCTAssertEqual(Amount(0.1449).asString(in: .zil, roundingIfNeeded: .up, roundingNumberOfDigits: 3), "0\(decSep)145")
     }
 
-    func testSmallZilAmountAsZilString() {
-        XCTAssertEqual(ZilAmount(0.1).asString(in: .zil), "0\(decSep)1")
-        XCTAssertEqual(ZilAmount(0.49).asString(in: .zil), "0\(decSep)49")
-        XCTAssertEqual(ZilAmount(0.5).asString(in: .zil), "0\(decSep)5")
-        XCTAssertEqual(ZilAmount(0.51).asString(in: .zil), "0\(decSep)51")
-        XCTAssertEqual(ZilAmount(0).asString(in: .zil), "0")
-        XCTAssertEqual(ZilAmount(1).asString(in: .zil), "1")
-        XCTAssertEqual(ZilAmount(9).asString(in: .zil), "9")
+    func testSmallAmountAsZilString() {
+        XCTAssertEqual(Amount(0.1).asString(in: .zil), "0\(decSep)1")
+        XCTAssertEqual(Amount(0.49).asString(in: .zil), "0\(decSep)49")
+        XCTAssertEqual(Amount(0.5).asString(in: .zil), "0\(decSep)5")
+        XCTAssertEqual(Amount(0.51).asString(in: .zil), "0\(decSep)51")
+        XCTAssertEqual(Amount(0).asString(in: .zil), "0")
+        XCTAssertEqual(Amount(1).asString(in: .zil), "1")
+        XCTAssertEqual(Amount(9).asString(in: .zil), "9")
     }
 
     func testSmallLiAsLiString() {
@@ -76,8 +76,8 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         XCTAssertEqual(Li(9).asString(in: .li), "9")
     }
 
-    func testMazZilAmountAsZilString() {
-        XCTAssertEqual(ZilAmount(21_000_000_000).asString(in: .zil), "21000000000")
+    func testMazAmountAsZilString() {
+        XCTAssertEqual(Amount(21_000_000_000).asString(in: .zil), "21000000000")
     }
 
     func test10LiInQaAsString() {
@@ -149,7 +149,7 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         XCTAssertEqual(try Zil(zil: amountString).asString(in: .zil), amountString)
     }
     
-    func testDecimalStringZilAmount() {
+    func testDecimalStringAmount() {
         XCTAssertEqual(try Zil(zil: "0\(decSep)01").asString(in: .li), "10000")
     }
     
@@ -223,11 +223,11 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         XCTAssertNoThrow(try Zil(trimming: "1 0"))
     }
     
-    func testZilAmountFromDecimalStringWithLeadingZeroNoThrow() {
+    func testAmountFromDecimalStringWithLeadingZeroNoThrow() {
         XCTAssertNoThrow(try Zil(trimming: "1\(decSep)01"))
     }
     
-    func testZilAmountFromDecimalStringWithLeadingZeroToString() {
+    func testAmountFromDecimalStringWithLeadingZeroToString() {
         let zilString = "1\(decSep)01"
         XCTAssertEqual(try Zil(trimming: zilString).asString(in: .zil), zilString)
     }
@@ -313,38 +313,38 @@ class ExpressibleByAmountToStringTests: XCTestCase {
         )
     }
     
-    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorZilAmount0() {
+    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorAmount0() {
         XCTAssertThrowsSpecificError(
             try Zil(zil: "0\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try ZilAmount(zil: "0\(decSep)"),
+            try Amount(zil: "0\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
     }
     
-    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorZilAmount1() {
+    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorAmount1() {
         XCTAssertThrowsSpecificError(
             try Zil(zil: "1\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
         
         XCTAssertThrowsSpecificError(
-            try ZilAmount(zil: "1\(decSep)"),
+            try Amount(zil: "1\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
     }
     
-    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiFromZilAmount0() {
+    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiFromAmount0() {
         XCTAssertThrowsSpecificError(
             try Li(zil: "0\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator
         )
     }
     
-    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiFromZilAmount1() {
+    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiFromAmount1() {
         XCTAssertThrowsSpecificError(
             try Li(zil: "1\(decSep)"),
             AmountError<Zil>.endsWithDecimalSeparator

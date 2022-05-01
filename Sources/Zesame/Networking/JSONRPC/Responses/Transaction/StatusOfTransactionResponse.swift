@@ -26,7 +26,7 @@ import Foundation
 
 public struct StatusOfTransactionResponse: Decodable {
     public struct Receipt {
-        public let totalGasCost: ZilAmount
+        public let totalGasCost: Amount
         public let isSent: Bool
     }
     

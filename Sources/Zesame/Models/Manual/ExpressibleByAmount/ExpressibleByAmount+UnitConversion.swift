@@ -63,7 +63,7 @@ internal extension ExpressibleByAmount {
             decimalValueInTargetUnit = qaFittingInDecimal
         } else { fatalError("forgot case?") }
         
-        // Only round when for UnitX -> UnitX decimal value representation, i.e. ZilAmount(0.51) expressed in Zil rounds to 1.0
+        // Only round when for UnitX -> UnitX decimal value representation, i.e. Amount(0.51) expressed in Zil rounds to 1.0
         let tryToPerformRounding = targetUnit.exponent == self.unit.exponent
         
         if tryToPerformRounding, let rounding = rounding {

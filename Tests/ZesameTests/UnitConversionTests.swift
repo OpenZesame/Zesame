@@ -103,13 +103,13 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testAdditionOfUpperboundOverflow() {
-        let foo: ZilAmount = try! ZilAmount.max - 1
-        let bar: ZilAmount = 2
+        let foo: Amount = try! Amount.max - 1
+        let bar: Amount = 2
         do {
             let sum = try foo + bar
             XCTFail("Fail, should have thrown error, sum was: \(sum)")
         } catch {
-            XCTAssertTrue(error is AmountError<ZilAmount>)
+            XCTAssertTrue(error is AmountError<Amount>)
         }
     }
     
@@ -125,8 +125,8 @@ class UnitConversionTests: XCTestCase {
         )
     }
 
-    func testZilAmountLiteral() {
-        let amount: ZilAmount = 15
+    func testAmountLiteral() {
+        let amount: Amount = 15
         XCTAssertEqual(amount, 15)
     }
 
@@ -135,8 +135,8 @@ class UnitConversionTests: XCTestCase {
         XCTAssertEqual(GasPrice.min.zilString, "0\(decSep)1")
     }
 
-    func testZilAmountAndZil() {
-        let foo: ZilAmount = 123
+    func testAmountAndZil() {
+        let foo: Amount = 123
         let bar: Zil = 123
         XCTAssertTrue(foo == bar)
     }
@@ -211,15 +211,15 @@ class UnitConversionTests: XCTestCase {
     func testBoundString() {
         let qaString = "18446744073637511711"
         XCTAssertEqual(
-            try ZilAmount(zil: Zil(qa: try Qa(trimming: qaString))),
-            try ZilAmount(zil: try Zil(qa: qaString))
+            try Amount(zil: Zil(qa: try Qa(trimming: qaString))),
+            try Amount(zil: try Zil(qa: qaString))
         )
         XCTAssertEqual(
-            try ZilAmount(zil: try Zil(qa: qaString)),
-            try ZilAmount(qa: qaString)
+            try Amount(zil: try Zil(qa: qaString)),
+            try Amount(qa: qaString)
         )
         do {
-            let amount = try ZilAmount(qa: qaString)
+            let amount = try Amount(qa: qaString)
             XCTAssertEqual(amount.qaString, "18446744073637511711")
         } catch {
             XCTFail()
@@ -237,11 +237,11 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testStringZilMaxAmount() {
-        XCTAssertEqual(ZilAmount.max.zilString, "21000000000")
+        XCTAssertEqual(Amount.max.zilString, "21000000000")
     }
 
-    func testZilExceedingZilAmountMaxSinceZilIsUnbound() {
-        XCTAssertEqual(ZilAmount.max.asZil + 1, 21000000001)
+    func testZilExceedingAmountMaxSinceZilIsUnbound() {
+        XCTAssertEqual(Amount.max.asZil + 1, 21000000001)
     }
 
     func testNegativeAmountForZilSinceItIsUnbound() {

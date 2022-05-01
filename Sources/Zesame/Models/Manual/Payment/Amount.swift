@@ -24,7 +24,7 @@
 
 import Foundation
 
-public struct ZilAmount: ExpressibleByAmount, Upperbound, Lowerbound {
+public struct Amount: ExpressibleByAmount, Upperbound, Lowerbound, Hashable {
 
     public typealias Magnitude = Zil.Magnitude
 
@@ -36,6 +36,6 @@ public struct ZilAmount: ExpressibleByAmount, Upperbound, Lowerbound {
     public let qa: Magnitude
 
     public init(qa: Magnitude) throws {
-         self.qa = try ZilAmount.validate(value: qa)
+         self.qa = try Amount.validate(value: qa)
     }
 }

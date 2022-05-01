@@ -8,12 +8,12 @@
 import Foundation
 
 public struct MinimumGasPriceResponse: Decodable {
-    public let amount: ZilAmount
+    public let amount: Amount
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let qaString = try container.decode(String.self)
-        self.amount = try ZilAmount(qa: qaString)
+        self.amount = try Amount(qa: qaString)
     }
     
 }
