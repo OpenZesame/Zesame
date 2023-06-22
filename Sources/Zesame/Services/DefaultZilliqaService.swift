@@ -23,11 +23,10 @@
 //
 
 import Foundation
-import RxSwift
 
 import EllipticCurveKit
 
-public final class DefaultZilliqaService: ZilliqaService, ReactiveCompatible {
+public final class DefaultZilliqaService: ZilliqaService {
 
     public let apiClient: APIClient
 
@@ -49,29 +48,25 @@ public extension DefaultZilliqaService {
 
 public extension DefaultZilliqaService {
 
-    func getNetworkFromAPI(done: @escaping Done<NetworkResponse>) {
-        return apiClient.send(method: .getNetworkId, done: done)
+    func getNetworkFromAPI() async throws -> NetworkResponse {
+        try await apiClient.send(method: .getNetworkId)
     }
 
-    func getBalance(for address: LegacyAddress, done: @escaping Done<BalanceResponse>) -> Void {
-        return apiClient.send(method: .getBalance(address), done: done)
+    func getBalance(for address: LegacyAddress) async throws -> BalanceResponse {
+        try await apiClient.send(method: .getBalance(address))
     }
-    
+
     func getMinimumGasPrice(
-        alsoUpdateLocallyCachedMinimum: Bool = true,
-        done: @escaping Done<MinimumGasPriceResponse>
-    ) -> Void {
-        return apiClient.send(method: .getMinimumGasPrice) { (result: Result<MinimumGasPriceResponse, Zesame.Error>) in
-            if case .success(let newMinimumPrice) = result {
-                if alsoUpdateLocallyCachedMinimum {
-                    GasPrice.minInQa = newMinimumPrice.amount.qa
-                }
-            }
-            done(result)
+        alsoUpdateLocallyCachedMinimum: Bool = true
+    ) async throws -> MinimumGasPriceResponse {
+        let newMinimumPrice: MinimumGasPriceResponse = try await apiClient.send(method: .getMinimumGasPrice)
+        if alsoUpdateLocallyCachedMinimum {
+            GasPrice.minInQa = newMinimumPrice.amount.qa
         }
+        return newMinimumPrice
     }
 
-    func send(transaction: SignedTransaction, done: @escaping Done<TransactionResponse>) {
-        return apiClient.send(method: .createTransaction(transaction), done: done)
+    func send(transaction: SignedTransaction) async throws -> TransactionResponse {
+        try await apiClient.send(method: .createTransaction(transaction))
     }
 }

@@ -44,7 +44,7 @@ class BalanceResponseJSONTests: XCTestCase {
 
     func testEncoding() {
         do {
-            let model = BalanceResponse(balance: try ZilAmount(qa: "18446744073637511711"), nonce: 16)
+            let model = BalanceResponse(balance: try Amount(qa: "18446744073637511711"), nonce: 16)
             let jsonEncoder = JSONEncoder()
             jsonEncoder.outputFormatting = .prettyPrinted
             let json = try jsonEncoder.encode(model)

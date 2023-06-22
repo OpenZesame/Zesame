@@ -25,7 +25,7 @@
 import Foundation
 
 public enum KeyRestoration {
-    case privateKey(PrivateKey, encryptBy: String, kdf: KDF)
+    case privateKey(PrivateKey, encryptBy: String, kdf: KDF, kdfParams: KDFParams? = nil)
     case keystore(Keystore, password: String)
 }
 

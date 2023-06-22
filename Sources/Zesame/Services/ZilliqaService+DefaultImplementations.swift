@@ -25,7 +25,6 @@
 import Foundation
 
 import EllipticCurveKit
-import CryptoSwift
 
 var isRunningTests: Bool {
     return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
@@ -34,92 +33,71 @@ var isRunningTests: Bool {
 
 public extension ZilliqaService {
 
-    func verifyThat(encryptionPassword: String, canDecryptKeystore keystore: Keystore, done: @escaping Done<Bool>) {
-        background {
-            keystore.decryptPrivateKeyWith(password: encryptionPassword) { result in
-                main {
-                    done(.success(result.value != nil))
-                }
-            }
+    func verifyThat(
+        encryptionPassword: String,
+        canDecryptKeystore keystore: Keystore
+    ) async throws -> Bool {
+        do {
+           _ = try await keystore.decryptPrivateKeyWith(password: encryptionPassword)
+            return true
+        } catch {
+            return false
         }
     }
 
-    func createNewWallet(encryptionPassword: String, kdf: KDF = .default, done: @escaping Done<Wallet>) {
-        background {
-            let privateKey = PrivateKey.generateNew()
-            let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf)
-            self.restoreWallet(from: keyRestoration, done: done)
-        }
-    }
-
-    func restoreWallet(from restoration: KeyRestoration, done: @escaping Done<Wallet>) {
-        background { [unowned self] in
-            switch restoration {
-            case .keystore(let keystore, let password):
-                keystore.decryptPrivateKeyWith(password: password) {
-                    switch $0 {
-                    case .failure(let error):
-                        main {
-                            done(.failure(error))
-                        }
-                    case .success(let privateKey):
-                        // We would like the SDK to always store Keystore on same format, so disregarding if we imported a keystore having KDF `pbkdf2` or `scrypt`, the stored KDF in the users wallet
-                        // is the same, so that decrypting takes ~same time for every user.
-                        if keystore.crypto.kdf == KDF.default || isRunningTests {
-                            main {
-                                let wallet = Wallet(keystore: keystore)
-                                done(.success(wallet))
-                            }
-                        } else {
-                            let defaultKeyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: password, kdf: .default)
-                            self.restoreWallet(from: defaultKeyRestoration, done: done)
-                        }
-                    }
-                }
-            case .privateKey(let privateKey, let newPassword, let kdf):
-                do {
-                    try Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf) {
-
-                        guard case .success(let keystore) = $0 else {
-                            done(.failure($0.error!))
-                            return
-                        }
-
-                        main {
-                            done(.success(Wallet(keystore: keystore)))
-                        }
-                    }
-                } catch {
-                    main {
-                        done(.failure(Error.walletImport(.keystoreError(error))))
-                    }
-                }
-            }
-        }
-    }
-
-    func exportKeystore(
-        privateKey: PrivateKey,
-        encryptWalletBy password: String,
+    func createNewKeystore(
+        encryptionPassword: String,
         kdf: KDF = .default,
-        done: @escaping Done<Keystore>
-        ) {
-        background {
+        kdfParams: KDFParams? = nil
+    ) async throws -> Keystore {
+        let privateKey = PrivateKey.generateNew()
+        let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf, kdfParams: kdfParams)
+        return try await restoreKeystore(from: keyRestoration)
+    }
+
+    func restoreKeystore(from restoration: KeyRestoration) async throws -> Keystore {
+        switch restoration {
+        case .keystore(let keystore, let password):
+            let privateKey = try await keystore.decryptPrivateKeyWith(password: password)
+            
+            // We would like the SDK to always store Keystore on same format, so disregarding if we imported a keystore having KDF `pbkdf2` or `scrypt`, the stored KDF in the users wallet
+            // is the same, so that decrypting takes ~same time for every user.
+            if keystore.crypto.kdf == KDF.default || isRunningTests {
+                return keystore
+            } else {
+                let defaultKeyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: password, kdf: .default)
+                return try await restoreKeystore(from: defaultKeyRestoration)
+            }
+            
+        case .privateKey(let privateKey, let newPassword, let kdf, let kdfParams):
             do {
-                try Keystore.from(
-                    privateKey: privateKey,
-                    encryptBy: password,
-                    kdf: kdf) { newKeystoreResult in
-                        main {
-                            done(newKeystoreResult)
-                        }
-                }
+                return try await Keystore.from(
+					privateKey: privateKey,
+					encryptBy: newPassword,
+					kdf: kdf,
+					kdfParams: kdfParams ?? KDF.defaultParameters
+				)
             } catch {
-                main {
-                    done(.failure(Error.keystoreExport(error)))
-                }
+                throw Error.walletImport(.keystoreError(error))
             }
         }
-        
+    }
+    
+    func exportKeystore(
+		privateKey: PrivateKey,
+		encryptWalletBy password: String,
+		kdf: KDF = .default,
+		kdfParams: KDFParams = KDF.defaultParameters
+	) async throws -> Keystore {
+		do {
+			return try await Keystore.from(
+				privateKey: privateKey,
+				encryptBy: password,
+				kdf: kdf,
+				kdfParams: kdfParams
+			)
+		} catch {
+			throw Error.keystoreExport(error)
+		}
     }
 }

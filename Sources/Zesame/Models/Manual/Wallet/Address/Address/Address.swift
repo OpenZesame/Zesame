@@ -27,7 +27,7 @@ import Foundation
 public enum Address:
     AddressChecksummedConvertible,
     StringConvertible,
-    Equatable,
+    Hashable,
     ExpressibleByStringLiteral
 {
 

@@ -23,31 +23,26 @@
 //
 
 import Foundation
-import CryptoSwift
+import class CryptoSwift.HMAC
+import class CryptoSwift.AES
+import struct CryptoSwift.CTR
+import enum CryptoSwift.Padding
 import EllipticCurveKit
 
 public extension Keystore {
 
-    func toKeypair(encryptedBy password: String, done: @escaping Done<KeyPair>) {
-        decryptPrivateKeyWith(password: password) {
-                switch $0 {
-                case .failure(let error): done(Result.failure(error))
-                case .success(let privateKey):
-                    let keyPair = KeyPair(private: privateKey)
-                    done(.success(keyPair))
-                }
-        }
+    func toKeypair(encryptedBy password: String) async throws -> KeyPair {
+        let privateKey = try await decryptPrivateKeyWith(password: password)
+        return KeyPair(private: privateKey)
     }
 
-    func decryptPrivateKeyWith(password: String, done: @escaping Done<PrivateKey>) {
+    func decryptPrivateKeyWith(password: String) async throws -> PrivateKey {
 
         guard password.count >= Keystore.minumumPasswordLength else {
-            let error = Error.keystorePasswordTooShort(
+            throw Error.keystorePasswordTooShort(
                 provided: password.count,
                 minimum: Keystore.minumumPasswordLength
             )
-            done(.failure(error))
-            return
         }
 
         let encryptedPrivateKey = crypto.encryptedPrivateKey
@@ -55,26 +50,28 @@ public extension Keystore {
         let cipher = crypto.cipherType
         let expectedMAC = crypto.messageAuthenticationCodeHex.uppercased()
         do {
-            try deriveKey(password: password) { derivedKey in
-                let MAC = try calculateMac(derivedKey: derivedKey, encryptedPrivateKey: encryptedPrivateKey, iv: iv, cipherType: cipher).asHex.uppercased()
-
-                guard MAC == expectedMAC else {
-                    let error = Error.walletImport(.incorrectPassword)
-                    done(.failure(error))
-                    return
-                }
-
-                let aesCtr = try makeAesCtr(derivedKey: derivedKey, iv: iv)
-                let decryptedPrivateKey = try aesCtr.decrypt(Array(encryptedPrivateKey)).asHex
-                guard let privateKey = PrivateKey(hex: decryptedPrivateKey) else {
-                    let error = Error.walletImport(.badPrivateKeyHex)
-                    done(.failure(error))
-                    return
-                }
-                done(.success(privateKey))
+            
+            let derivedKey = try await deriveKey(password: password)
+            
+            let MAC = try calculateMac(
+                derivedKey: derivedKey,
+                encryptedPrivateKey: encryptedPrivateKey,
+                iv: iv,
+                cipherType: cipher
+            ).asHex.uppercased()
+            
+            guard MAC == expectedMAC else {
+                throw Error.walletImport(.incorrectPassword)
             }
+            
+            let aesCtr = try makeAesCtr(derivedKey: derivedKey, iv: iv)
+            let decryptedPrivateKey = try aesCtr.decrypt(Array(encryptedPrivateKey)).asHex
+            guard let privateKey = PrivateKey(hex: decryptedPrivateKey) else {
+                throw Error.walletImport(.badPrivateKeyHex)
+            }
+            return privateKey
         } catch {
-            done(.failure(Error.decryptPrivateKey(error)))
+            throw Error.decryptPrivateKey(error)
         }
     }
 }
@@ -91,7 +88,7 @@ private func calculateMac(
 
     return try HMAC(
         key: derivedKey.bytes,
-        variant: .sha256
+        variant: .sha2(.sha256)
     ).authenticate(
         ((derivedKey.asData.suffix(16) + encryptedPrivateKey + iv + algo) as DataConvertible).bytes
     ).asData

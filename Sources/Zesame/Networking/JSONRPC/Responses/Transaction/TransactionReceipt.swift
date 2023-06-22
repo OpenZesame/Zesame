@@ -27,8 +27,8 @@ import Foundation
 // The receipt for a transaction that the network has reached consensus for.
 public struct TransactionReceipt {
     public let transactionId: String
-    public let totalGasCost: ZilAmount
-    public init(id: String, totalGasCost: ZilAmount) {
+    public let totalGasCost: Amount
+    public init(id: String, totalGasCost: Amount) {
         self.transactionId = id
         self.totalGasCost = totalGasCost
     }

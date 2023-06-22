@@ -32,29 +32,23 @@ public extension ZilliqaService {
         for payment: Payment,
         keystore: Keystore,
         password: String,
-        network: Network,
-        done: @escaping Done<TransactionResponse>
-    ) {
-        keystore.toKeypair(encryptedBy: password) { result in
-            switch result {
-            case .failure(let error): done(Result.failure(error))
-            case .success(let keyPair): self.sendTransaction(for: payment, signWith: keyPair, network: network, done: done)
-            }
-        }
+        network: Network
+    ) async throws -> TransactionResponse {
+        let keyPair = try await keystore.toKeypair(encryptedBy: password)
+        return try await sendTransaction(for: payment, signWith: keyPair, network: network)
     }
 
     func sendTransaction(
         for payment: Payment,
         signWith keyPair: KeyPair,
-        network: Network,
-        done: @escaping Done<TransactionResponse>
-    ) {
+        network: Network
+    ) async throws -> TransactionResponse {
         let transaction = sign(
             payment: payment,
             using: keyPair,
             network: network
         )
-        send(transaction: transaction, done: done)
+        return try await send(transaction: transaction)
     }
 
     func sign(
@@ -75,7 +69,7 @@ public extension ZilliqaService {
     }
 
     func sign(message: Message, using keyPair: KeyPair) -> Signature {
-        return Signer.sign(message, using: keyPair, personalizationDRBG: drbgPers)
+        Signer.sign(message, using: keyPair, personalizationDRBG: drbgPers)
     }
 }
 

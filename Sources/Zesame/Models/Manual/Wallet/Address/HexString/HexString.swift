@@ -33,7 +33,7 @@ extension CharacterSet {
     }
 }
 
-public struct HexString {
+public struct HexString: Hashable {
 
     public let value: String
     init(_ value: String) throws {

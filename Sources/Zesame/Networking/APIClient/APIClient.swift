@@ -22,8 +22,6 @@
 // SOFTWARE.
 //
 
-public typealias Done<R> = (Swift.Result<R, Zesame.Error>) -> Void
-
 public protocol APIClient {
-    func send<ResultFromResponse>(method: RPCMethod, done: @escaping Done<ResultFromResponse>) where ResultFromResponse: Decodable
+    func send<T: Decodable>(method: RPCMethod) async throws -> T
 }

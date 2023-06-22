@@ -25,70 +25,37 @@
 import Foundation
 import EllipticCurveKit
 
-import RxSwift
-import CryptoSwift
+import Combine
 
 public protocol ZilliqaService: AnyObject {
     var apiClient: APIClient { get }
+    
+    func getNetworkFromAPI() async throws -> NetworkResponse
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) async throws -> MinimumGasPriceResponse
+    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) async throws -> Bool
+    
+	func createNewKeystore(encryptionPassword: String, kdf: KDF, kdfParams: KDFParams?) async throws -> Keystore
+    func restoreKeystore(from restoration: KeyRestoration) async throws -> Keystore
+    
+	func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String, kdf: KDF, kdfParams: KDFParams) async throws -> Keystore
+    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) async throws -> KeyPair
 
-    func getNetworkFromAPI(done: @escaping Done<NetworkResponse>)
-    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool, done: @escaping Done<MinimumGasPriceResponse>)
+    func send(transaction: SignedTransaction) async throws -> TransactionResponse
+    func getBalance(for address: LegacyAddress) async throws -> BalanceResponse
+    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) async throws -> TransactionResponse
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) async throws -> TransactionResponse
 
-    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore, done: @escaping Done<Bool>)
-    func createNewWallet(encryptionPassword: String, kdf: KDF, done: @escaping Done<Wallet>)
-    func restoreWallet(from restoration: KeyRestoration, done: @escaping Done<Wallet>)
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String, kdf: KDF, done: @escaping Done<Keystore>)
-
-    func getBalance(for address: LegacyAddress, done: @escaping Done<BalanceResponse>)
-    func send(transaction: SignedTransaction, done: @escaping Done<TransactionResponse>)
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) async throws -> TransactionReceipt
 }
 
-public protocol ZilliqaServiceReactive {
+public extension ZilliqaService {
 
-    func getNetworkFromAPI() -> Observable<NetworkResponse>
-    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) -> Observable<MinimumGasPriceResponse>
-    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) -> Observable<Bool>
-    func createNewWallet(encryptionPassword: String, kdf: KDF) -> Observable<Wallet>
-    func restoreWallet(from restoration: KeyRestoration) -> Observable<Wallet>
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) -> Observable<Keystore>
-    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> Observable<KeyPair>
-
-    func getBalance(for address: LegacyAddress) -> Observable<BalanceResponse>
-    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) -> Observable<TransactionResponse>
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> Observable<TransactionResponse>
-
-    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> Observable<TransactionReceipt>
-}
-
-public extension ZilliqaServiceReactive {
-
-    func extractKeyPairFrom(wallet: Wallet, encryptedBy password: String) -> Observable<KeyPair> {
-        return extractKeyPairFrom(keystore: wallet.keystore, encryptedBy: password)
+    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) async throws -> KeyPair {
+		try await keystore.toKeypair(encryptedBy: password)
     }
 
-    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> Observable<KeyPair> {
-        return Observable.create { observer in
-            background {
-                keystore.toKeypair(encryptedBy: password) {
-                    switch $0 {
-                    case .success(let keyPair):
-                        main {
-                            observer.onNext(keyPair)
-                            observer.onCompleted()
-                        }
-                    case .failure(let error):
-                        main {
-                            observer.onError(error)
-                        }
-                    }
-                }
-            }
-            return Disposables.create()
-        }
-    }
-
-    func hasNetworkReachedConsensusYetForTransactionWith(id: String) -> Observable<TransactionReceipt> {
-        return hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: .twentyTimesLinearBackoff)
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String) async throws -> TransactionReceipt {
+        try await hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: .twentyTimesLinearBackoff)
     }
 
 }

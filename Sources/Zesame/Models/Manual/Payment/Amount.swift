@@ -24,21 +24,18 @@
 
 import Foundation
 
-extension Wallet: Encodable {
-    public enum CodingKeys: String, CodingKey {
-        case keystore, address
-    }
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(keystore, forKey: .keystore)
-        try container.encode(address, forKey: .address)
-    }
-}
+public struct Amount: ExpressibleByAmount, Upperbound, Lowerbound, Hashable {
 
-extension Wallet: Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.keystore = try container.decode(Keystore.self, forKey: .keystore)
-        self.address = try container.decode(LegacyAddress.self, forKey: .address)
+    public typealias Magnitude = Zil.Magnitude
+
+    public static let unit: Unit = .zil
+
+    public static let minInQa: Zil.Magnitude = 0
+    public static let maxInQa: Zil.Magnitude = "21000000000000000000000"
+
+    public let qa: Magnitude
+
+    public init(qa: Magnitude) throws {
+         self.qa = try Amount.validate(value: qa)
     }
 }
