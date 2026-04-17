@@ -34,8 +34,7 @@ public final class DefaultZilliqaService: ZilliqaService, CombineCompatible {
 
 public extension DefaultZilliqaService {
     convenience init(network: Network) {
-        let apiClient = DefaultAPIClient(baseURL: network.baseURL)
-        self.init(apiClient: apiClient)
+        self.init(apiClient: DefaultAPIClient(baseURL: network.baseURL))
     }
 
     convenience init(endpoint: ZilliqaAPIEndpoint) {
@@ -44,29 +43,23 @@ public extension DefaultZilliqaService {
 }
 
 public extension DefaultZilliqaService {
-    func getNetworkFromAPI(done: @escaping Done<NetworkResponse>) {
-        apiClient.send(method: .getNetworkId, done: done)
+    func getNetworkFromAPI() async throws -> NetworkResponse {
+        try await apiClient.send(method: .getNetworkId)
     }
 
-    func getBalance(for address: LegacyAddress, done: @escaping Done<BalanceResponse>) {
-        apiClient.send(method: .getBalance(address), done: done)
+    func getBalance(for address: LegacyAddress) async throws -> BalanceResponse {
+        try await apiClient.send(method: .getBalance(address))
     }
 
-    func getMinimumGasPrice(
-        alsoUpdateLocallyCachedMinimum: Bool = true,
-        done: @escaping Done<MinimumGasPriceResponse>
-    ) {
-        apiClient.send(method: .getMinimumGasPrice) { (result: Result<MinimumGasPriceResponse, Zesame.Error>) in
-            if case let .success(newMinimumPrice) = result {
-                if alsoUpdateLocallyCachedMinimum {
-                    GasPrice.minInQa = newMinimumPrice.amount.qa
-                }
-            }
-            done(result)
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool = true) async throws -> MinimumGasPriceResponse {
+        let response: MinimumGasPriceResponse = try await apiClient.send(method: .getMinimumGasPrice)
+        if alsoUpdateLocallyCachedMinimum {
+            GasPrice.minInQa = response.amount.qa
         }
+        return response
     }
 
-    func send(transaction: SignedTransaction, done: @escaping Done<TransactionResponse>) {
-        apiClient.send(method: .createTransaction(transaction), done: done)
+    func send(transaction: SignedTransaction) async throws -> TransactionResponse {
+        try await apiClient.send(method: .createTransaction(transaction))
     }
 }

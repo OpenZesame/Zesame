@@ -48,46 +48,46 @@ extension CombineWrapper: ZilliqaServiceReactive where Base: ZilliqaService {}
 
 public extension CombineWrapper where Base: ZilliqaService {
     func getNetworkFromAPI() -> AnyPublisher<NetworkResponse, Zesame.Error> {
-        callBase { $0.getNetworkFromAPI(done: $1) }
+        callAsync { try await $0.getNetworkFromAPI() }
     }
 
     func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool = true)
         -> AnyPublisher<MinimumGasPriceResponse, Zesame.Error>
     {
-        callBase { $0.getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: alsoUpdateLocallyCachedMinimum, done: $1) }
+        callAsync { try await $0.getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: alsoUpdateLocallyCachedMinimum) }
     }
 
     func hasNetworkReachedConsensusYetForTransactionWith(
         id: String,
         polling: Polling
     ) -> AnyPublisher<TransactionReceipt, Zesame.Error> {
-        callBase { $0.hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: polling, done: $1) }
+        callAsync { try await $0.hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: polling) }
     }
 
     func verifyThat(
         encryptionPassword: String,
         canDecryptKeystore keystore: Keystore
     ) -> AnyPublisher<Bool, Zesame.Error> {
-        callBase { $0.verifyThat(encryptionPassword: encryptionPassword, canDecryptKeystore: keystore, done: $1) }
+        callAsync { try await $0.verifyThat(encryptionPassword: encryptionPassword, canDecryptKeystore: keystore) }
     }
 
     func createNewWallet(encryptionPassword: String, kdf: KDF = .default) -> AnyPublisher<Wallet, Zesame.Error> {
-        callBase { $0.createNewWallet(encryptionPassword: encryptionPassword, kdf: kdf, done: $1) }
+        callAsync { try await $0.createNewWallet(encryptionPassword: encryptionPassword, kdf: kdf) }
     }
 
     func restoreWallet(from restoration: KeyRestoration) -> AnyPublisher<Wallet, Zesame.Error> {
-        callBase { $0.restoreWallet(from: restoration, done: $1) }
+        callAsync { try await $0.restoreWallet(from: restoration) }
     }
 
     func exportKeystore(
         privateKey: PrivateKey,
         encryptWalletBy password: String
     ) -> AnyPublisher<Keystore, Zesame.Error> {
-        callBase { $0.exportKeystore(privateKey: privateKey, encryptWalletBy: password, done: $1) }
+        callAsync { try await $0.exportKeystore(privateKey: privateKey, encryptWalletBy: password, kdf: .default) }
     }
 
     func getBalance(for address: LegacyAddress) -> AnyPublisher<BalanceResponse, Zesame.Error> {
-        callBase { $0.getBalance(for: address, done: $1) }
+        callAsync { try await $0.getBalance(for: address) }
     }
 
     func sendTransaction(
@@ -96,7 +96,8 @@ public extension CombineWrapper where Base: ZilliqaService {
         password: String,
         network: Network
     ) -> AnyPublisher<TransactionResponse, Zesame.Error> {
-        callBase { $0.sendTransaction(for: payment, keystore: keystore, password: password, network: network, done: $1)
+        callAsync {
+            try await $0.sendTransaction(for: payment, keystore: keystore, password: password, network: network)
         }
     }
 
@@ -105,13 +106,21 @@ public extension CombineWrapper where Base: ZilliqaService {
         signWith keyPair: KeyPair,
         network: Network
     ) -> AnyPublisher<TransactionResponse, Zesame.Error> {
-        callBase { $0.sendTransaction(for: payment, signWith: keyPair, network: network, done: $1) }
+        callAsync { try await $0.sendTransaction(for: payment, signWith: keyPair, network: network) }
     }
 
-    private func callBase<R>(call: @escaping (Base, @escaping Done<R>) -> Void) -> AnyPublisher<R, Zesame.Error> {
-        Future { [weak base] promise in
-            guard let base else { return }
-            call(base, promise)
+    private func callAsync<R>(_ asyncCall: @escaping (Base) async throws -> R) -> AnyPublisher<R, Zesame.Error> {
+        let base = base
+        return Future { promise in
+            Task {
+                do {
+                    try await promise(.success(asyncCall(base)))
+                } catch let error as Zesame.Error {
+                    promise(.failure(error))
+                } catch {
+                    promise(.failure(.api(.request(error))))
+                }
+            }
         }.eraseToAnyPublisher()
     }
 }

@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "Zesame",
-    platforms: [.macOS(.v11), .iOS(.v13)],
+    platforms: [.macOS(.v13), .iOS(.v16)],
     products: [
         .library(
             name: "Zesame",

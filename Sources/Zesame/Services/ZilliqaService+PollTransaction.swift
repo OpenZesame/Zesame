@@ -27,42 +27,21 @@ import Foundation
 public extension ZilliqaService {
     func hasNetworkReachedConsensusYetForTransactionWith(
         id: String,
-        polling: Polling,
-        done: @escaping Done<TransactionReceipt>
-    ) {
-        func poll(retriesLeft: Int, delay delayInSeconds: Int) {
-            // Stop recursion with failure when retry count reached zero
-            guard retriesLeft > 0 else {
-                return done(.failure(Error.api(.timeout)))
+        polling: Polling
+    ) async throws -> TransactionReceipt {
+        var retriesLeft = polling.count.rawValue
+        var delayInSeconds = polling.initialDelay.rawValue
+
+        while retriesLeft > 0 {
+            try await Task.sleep(for: .seconds(delayInSeconds))
+            let response: StatusOfTransactionResponse = try await apiClient.send(method: .getTransaction(id))
+            if let receipt = TransactionReceipt(for: id, pollResponse: response) {
+                return receipt
             }
-
-            let delay = DispatchTimeInterval.seconds(delayInSeconds)
-
-            background(delay: delay) { [weak self] in
-                guard let self else { return }
-                getStatusOfTransaction(id: id) {
-                    if case let .success(pollResponse) = $0, let receipt = TransactionReceipt(
-                        for: id,
-                        pollResponse: pollResponse
-                    ) {
-                        return done(.success(receipt))
-                    }
-
-                    // Recursively call self
-                    poll(retriesLeft: retriesLeft - 1, delay: polling.backoff.add(to: delayInSeconds))
-                }
-            }
+            retriesLeft -= 1
+            delayInSeconds = polling.backoff.add(to: delayInSeconds)
         }
 
-        // Initiate recursive backing off polling
-        poll(retriesLeft: polling.count.rawValue, delay: polling.initialDelay.rawValue)
-    }
-}
-
-// MARK: - Private
-
-private extension ZilliqaService {
-    func getStatusOfTransaction(id: String, done: @escaping Done<StatusOfTransactionResponse>) {
-        apiClient.send(method: .getTransaction(id), done: done)
+        throw Zesame.Error.api(.timeout)
     }
 }

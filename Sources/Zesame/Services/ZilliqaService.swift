@@ -25,24 +25,19 @@
 import Combine
 import Foundation
 
-public protocol ZilliqaService: AnyObject {
+public protocol ZilliqaService {
     var apiClient: APIClient { get }
 
-    func getNetworkFromAPI(done: @escaping Done<NetworkResponse>)
-    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool, done: @escaping Done<MinimumGasPriceResponse>)
+    func getNetworkFromAPI() async throws -> NetworkResponse
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) async throws -> MinimumGasPriceResponse
 
-    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore, done: @escaping Done<Bool>)
-    func createNewWallet(encryptionPassword: String, kdf: KDF, done: @escaping Done<Wallet>)
-    func restoreWallet(from restoration: KeyRestoration, done: @escaping Done<Wallet>)
-    func exportKeystore(
-        privateKey: PrivateKey,
-        encryptWalletBy password: String,
-        kdf: KDF,
-        done: @escaping Done<Keystore>
-    )
+    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) async throws -> Bool
+    func createNewWallet(encryptionPassword: String, kdf: KDF) async throws -> Wallet
+    func restoreWallet(from restoration: KeyRestoration) async throws -> Wallet
+    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String, kdf: KDF) async throws -> Keystore
 
-    func getBalance(for address: LegacyAddress, done: @escaping Done<BalanceResponse>)
-    func send(transaction: SignedTransaction, done: @escaping Done<TransactionResponse>)
+    func getBalance(for address: LegacyAddress) async throws -> BalanceResponse
+    func send(transaction: SignedTransaction) async throws -> TransactionResponse
 }
 
 public protocol ZilliqaServiceReactive {
@@ -72,8 +67,14 @@ public extension ZilliqaServiceReactive {
 
     func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> AnyPublisher<KeyPair, Zesame.Error> {
         Future { promise in
-            background {
-                keystore.toKeypair(encryptedBy: password) { promise($0) }
+            Task {
+                do {
+                    try promise(.success(keystore.toKeypair(encryptedBy: password)))
+                } catch let error as Zesame.Error {
+                    promise(.failure(error))
+                } catch {
+                    promise(.failure(.api(.request(error))))
+                }
             }
         }.eraseToAnyPublisher()
     }

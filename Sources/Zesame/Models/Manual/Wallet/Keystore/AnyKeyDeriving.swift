@@ -32,7 +32,7 @@ public struct AnyKeyDeriving: KeyDeriving {
         self.kdfParams = kdfParams
     }
 
-    public func deriveKey(password: String, done: @escaping (DerivedKey) throws -> Void) throws {
+    public func deriveKey(password: String) throws -> DerivedKey {
         let passwordBytes = Array(password.utf8)
         let saltBytes = Array(kdfParams.salt)
         let keyLength = kdfParams.derivedKeyLength
@@ -52,6 +52,6 @@ public struct AnyKeyDeriving: KeyDeriving {
                 .keystoreError(NSError(domain: "PBKDF2", code: Int(status), userInfo: nil))
             )
         }
-        try done(DerivedKey(data: Data(derivedKeyBytes)))
+        return DerivedKey(data: Data(derivedKeyBytes))
     }
 }

@@ -30,7 +30,7 @@ import Testing
 private let privateKeyString = "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638"
 
 @Suite struct AddressValidationTests {
-    // All four formats represent the same address
+    /// All four formats represent the same address
     @Test(arguments: [
         "zil1uvys5ycfm7kyqdfdq00vdnxeetfp8emtsptv94",
         "ZIL1UVYS5YCFM7KYQDFDQ00VDNXEETFP8EMTSPTV94",
@@ -122,12 +122,36 @@ struct AddressVector: Sendable {
 }
 
 private let addressVectors: [AddressVector] = [
-    AddressVector(ethStyle: "1d19918A737306218b5CBB3241FcdcBd998c3a72", bech32: "zil1r5verznnwvrzrz6uhveyrlxuhkvccwnju4aehf"),
-    AddressVector(ethStyle: "cC8Ee24773e1b4B28B3CC5596bb9Cfc430b48453", bech32: "zil1ej8wy3mnux6t9zeuc4vkhww0csctfpznzt4s76"),
-    AddressVector(ethStyle: "e14576944443E9aeca6f12b454941884aa122938", bech32: "zil1u9zhd9zyg056ajn0z269f9qcsj4py2fc89ru3d"),
-    AddressVector(ethStyle: "179361114cbFD53bE4D3451eDF8148CDE4cfe774", bech32: "zil1z7fkzy2vhl2nhexng50dlq2gehjvlem5w7kx8z"),
-    AddressVector(ethStyle: "5a2B667FdEB6356597681D08F6cD6636AEd94784", bech32: "zil1tg4kvl77kc6kt9mgr5y0dntxx6hdj3uy95ash8"),
-    AddressVector(ethStyle: "537342E5e0a6b402f281E2b4301b89123AE31117", bech32: "zil12de59e0q566q9u5pu26rqxufzgawxyghq0vdk9"),
-    AddressVector(ethStyle: "5e61D42a952D2dF1f4e5cbed7F7D1294e9744A52", bech32: "zil1tesag25495klra89e0kh7lgjjn5hgjjj0qmu8l"),
-    AddressVector(ethStyle: "5F5Db1C18CcDE67e513B7f7Ae820E569154976Ba", bech32: "zil1tawmrsvvehn8u5fm0aawsg89dy25ja46ndsrhq"),
+    AddressVector(
+        ethStyle: "1d19918A737306218b5CBB3241FcdcBd998c3a72",
+        bech32: "zil1r5verznnwvrzrz6uhveyrlxuhkvccwnju4aehf"
+    ),
+    AddressVector(
+        ethStyle: "cC8Ee24773e1b4B28B3CC5596bb9Cfc430b48453",
+        bech32: "zil1ej8wy3mnux6t9zeuc4vkhww0csctfpznzt4s76"
+    ),
+    AddressVector(
+        ethStyle: "e14576944443E9aeca6f12b454941884aa122938",
+        bech32: "zil1u9zhd9zyg056ajn0z269f9qcsj4py2fc89ru3d"
+    ),
+    AddressVector(
+        ethStyle: "179361114cbFD53bE4D3451eDF8148CDE4cfe774",
+        bech32: "zil1z7fkzy2vhl2nhexng50dlq2gehjvlem5w7kx8z"
+    ),
+    AddressVector(
+        ethStyle: "5a2B667FdEB6356597681D08F6cD6636AEd94784",
+        bech32: "zil1tg4kvl77kc6kt9mgr5y0dntxx6hdj3uy95ash8"
+    ),
+    AddressVector(
+        ethStyle: "537342E5e0a6b402f281E2b4301b89123AE31117",
+        bech32: "zil12de59e0q566q9u5pu26rqxufzgawxyghq0vdk9"
+    ),
+    AddressVector(
+        ethStyle: "5e61D42a952D2dF1f4e5cbed7F7D1294e9744A52",
+        bech32: "zil1tesag25495klra89e0kh7lgjjn5hgjjj0qmu8l"
+    ),
+    AddressVector(
+        ethStyle: "5F5Db1C18CcDE67e513B7f7Ae820E569154976Ba",
+        bech32: "zil1tawmrsvvehn8u5fm0aawsg89dy25ja46ndsrhq"
+    ),
 ]

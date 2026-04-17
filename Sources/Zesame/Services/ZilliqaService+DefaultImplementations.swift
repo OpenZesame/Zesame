@@ -29,97 +29,40 @@ var isRunningTests: Bool {
 }
 
 public extension ZilliqaService {
-    func verifyThat(encryptionPassword: String, canDecryptKeystore keystore: Keystore, done: @escaping Done<Bool>) {
-        background {
-            keystore.decryptPrivateKeyWith(password: encryptionPassword) { result in
-                main {
-                    done(.success(result.value != nil))
-                }
-            }
+    func verifyThat(encryptionPassword: String, canDecryptKeystore keystore: Keystore) async throws -> Bool {
+        do {
+            _ = try keystore.decryptPrivateKey(encryptedBy: encryptionPassword)
+            return true
+        } catch {
+            return false
         }
     }
 
-    func createNewWallet(encryptionPassword: String, kdf: KDF = .default, done: @escaping Done<Wallet>) {
-        background {
-            let privateKey = PrivateKey()
-            let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf)
-            self.restoreWallet(from: keyRestoration, done: done)
-        }
+    func createNewWallet(encryptionPassword: String, kdf: KDF = .default) async throws -> Wallet {
+        let privateKey = PrivateKey()
+        return try await restoreWallet(from: .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf))
     }
 
-    func restoreWallet(from restoration: KeyRestoration, done: @escaping Done<Wallet>) {
-        background { [weak self] in
-            guard let self else { return }
-            switch restoration {
-            case let .keystore(keystore, password):
-                keystore.decryptPrivateKeyWith(password: password) {
-                    switch $0 {
-                    case let .failure(error):
-                        main {
-                            done(.failure(error))
-                        }
-                    case let .success(privateKey):
-                        // We would like the SDK to always store Keystore on same format, so disregarding if we imported
-                        // a keystore having KDF `pbkdf2` or `scrypt`, the stored KDF in the users wallet
-                        // is the same, so that decrypting takes ~same time for every user.
-                        if keystore.crypto.kdf == KDF.default || isRunningTests {
-                            main {
-                                let wallet = Wallet(keystore: keystore)
-                                done(.success(wallet))
-                            }
-                        } else {
-                            let defaultKeyRestoration: KeyRestoration = .privateKey(
-                                privateKey,
-                                encryptBy: password,
-                                kdf: .default
-                            )
-                            self.restoreWallet(from: defaultKeyRestoration, done: done)
-                        }
-                    }
-                }
-            case let .privateKey(privateKey, newPassword, kdf):
-                do {
-                    try Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf) {
-                        guard case let .success(keystore) = $0 else {
-                            done(.failure($0.error!))
-                            return
-                        }
-
-                        main {
-                            done(.success(Wallet(keystore: keystore)))
-                        }
-                    }
-                } catch {
-                    main {
-                        done(.failure(Error.walletImport(.keystoreError(error))))
-                    }
-                }
+    func restoreWallet(from restoration: KeyRestoration) async throws -> Wallet {
+        switch restoration {
+        case let .keystore(keystore, password):
+            let privateKey = try keystore.decryptPrivateKey(encryptedBy: password)
+            if keystore.crypto.kdf == KDF.default || isRunningTests {
+                return Wallet(keystore: keystore)
+            } else {
+                return try await restoreWallet(from: .privateKey(privateKey, encryptBy: password, kdf: .default))
             }
+        case let .privateKey(privateKey, newPassword, kdf):
+            let keystore = try Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf)
+            return Wallet(keystore: keystore)
         }
     }
 
     func exportKeystore(
         privateKey: PrivateKey,
         encryptWalletBy password: String,
-        kdf: KDF = .default,
-        done: @escaping Done<Keystore>
-    ) {
-        background {
-            do {
-                try Keystore.from(
-                    privateKey: privateKey,
-                    encryptBy: password,
-                    kdf: kdf
-                ) { newKeystoreResult in
-                    main {
-                        done(newKeystoreResult)
-                    }
-                }
-            } catch {
-                main {
-                    done(.failure(Error.keystoreExport(error)))
-                }
-            }
-        }
+        kdf: KDF = .default
+    ) async throws -> Keystore {
+        try Keystore.from(privateKey: privateKey, encryptBy: password, kdf: kdf)
     }
 }

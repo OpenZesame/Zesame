@@ -29,22 +29,50 @@ import Testing
 @Suite struct UnitConversionTests {
     private let decSep = Locale.current.decimalSeparatorForSure
 
-    @Test func zilToLi() { #expect(Zil(1).asLi == Li(1_000_000)) }
-    @Test func zilToQa() { #expect(Zil(1).asQa == Qa(1_000_000_000_000)) }
-    @Test func liToQa() { #expect(Li(1).asQa == Qa(1_000_000)) }
-    @Test func liFromQa() { #expect(Li(qa: 1_000_000) == 1) }
+    @Test func zilToLi() {
+        #expect(Zil(1).asLi == Li(1_000_000))
+    }
+
+    @Test func zilToQa() {
+        #expect(Zil(1).asQa == Qa(1_000_000_000_000))
+    }
+
+    @Test func liToQa() {
+        #expect(Li(1).asQa == Qa(1_000_000))
+    }
+
+    @Test func liFromQa() {
+        #expect(Li(qa: 1_000_000) == 1)
+    }
 
     @Test func zilEMinus5() {
         #expect(Zil.toQa(double: 0.000001) == 1_000_000)
         #expect(Zil(0.000001).qa == 1_000_000)
     }
 
-    @Test func liToZil() { #expect(Li(1).asZil == Zil(0.000001)) }
-    @Test func zilFromLi() { #expect(Zil(li: 1_000_000) == 1) }
-    @Test func zilFromQa() { #expect(Zil(qa: 1_000_000_000) == 0.001) }
-    @Test func stringToZil() { #expect("1" == Zil(1)) }
-    @Test func stringToLi() { #expect("1" == Li(1)) }
-    @Test func stringToQa() { #expect("1" == Qa(1)) }
+    @Test func liToZil() {
+        #expect(Li(1).asZil == Zil(0.000001))
+    }
+
+    @Test func zilFromLi() {
+        #expect(Zil(li: 1_000_000) == 1)
+    }
+
+    @Test func zilFromQa() {
+        #expect(Zil(qa: 1_000_000_000) == 0.001)
+    }
+
+    @Test func stringToZil() {
+        #expect(Zil(1) == "1")
+    }
+
+    @Test func stringToLi() {
+        #expect(Li(1) == "1")
+    }
+
+    @Test func stringToQa() {
+        #expect(Qa(1) == "1")
+    }
 
     @Test func compareZilAndLi() {
         #expect(Zil(1) > Li(2))
@@ -123,14 +151,18 @@ import Testing
         #expect(Qa(123_456).zilString == "0\(decSep)000000123456")
     }
 
-    @Test func liValue() { #expect(Li(0.01).qa == 10000) }
+    @Test func liValue() {
+        #expect(Li(0.01).qa == 10000)
+    }
 
     @Test func conversionFromDecimalZilToLi() {
         #expect(Zil(0.1).qa == 100_000_000_000)
         #expect(Li(100_000).qa == 100_000_000_000)
     }
 
-    @Test func smallDecimals() { #expect(Zil(0.000000000001).qa == 1) }
+    @Test func smallDecimals() {
+        #expect(Zil(0.000000000001).qa == 1)
+    }
 
     @Test func conversionFromDecimalZilToQa() {
         #expect(Qa(Zil(0.000000000001)) == 1)
@@ -144,7 +176,9 @@ import Testing
         #expect(Zil(9.000000000001).asQa < 10_000_000_000_001)
     }
 
-    @Test func conversionFromDecimalLi() { #expect(Li(0.1).qa == 100_000) }
+    @Test func conversionFromDecimalLi() {
+        #expect(Li(0.1).qa == 100_000)
+    }
 
     @Test func tooSmallGasPrice() {
         #expect {
@@ -177,8 +211,13 @@ import Testing
         #expect(zil.qaString == "18446744073637511711")
     }
 
-    @Test func stringZilMaxAmount() { #expect(ZilAmount.max.zilString == "21000000000") }
-    @Test func zilExceedingZilAmountMaxSinceZilIsUnbound() { #expect(ZilAmount.max.asZil + 1 == 21_000_000_001) }
+    @Test func stringZilMaxAmount() {
+        #expect(ZilAmount.max.zilString == "21000000000")
+    }
+
+    @Test func zilExceedingZilAmountMaxSinceZilIsUnbound() {
+        #expect(ZilAmount.max.asZil + 1 == 21_000_000_001)
+    }
 
     @Test func negativeAmountForZilSinceItIsUnbound() {
         let two: Zil = 2

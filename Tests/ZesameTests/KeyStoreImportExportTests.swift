@@ -85,7 +85,7 @@ extension Keystore {
         let salt = try #require(kdfparams["salt"] as? String)
         #expect((try? HexString(salt)) != nil)
         let cipherparams = try #require(crypto["cipherparams"] as? JSON)
-        #expect(cipherparams["nonce"] as? String != nil)
-        #expect(cipherparams["tag"] as? String != nil)
+        #expect(cipherparams["nonce"] is String)
+        #expect(cipherparams["tag"] is String)
     }
 }

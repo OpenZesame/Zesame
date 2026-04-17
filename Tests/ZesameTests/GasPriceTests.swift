@@ -26,9 +26,12 @@ import Foundation
 import Testing
 @testable import Zesame
 
-// Serialized because tests mutate global GasPrice bounds.
+/// Serialized because tests mutate global GasPrice bounds.
 @Suite(.serialized) final class GasPriceTests {
-    init() { GasPrice.restoreDefaultBounds() }
+    init() {
+        GasPrice.restoreDefaultBounds()
+    }
+
     deinit { GasPrice.restoreDefaultBounds() }
 
     @Test func maxGasPriceIs100Zil() {

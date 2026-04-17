@@ -43,39 +43,23 @@ public extension DefaultAPIClient {
 // MARK: - APIClient
 
 public extension DefaultAPIClient {
-    func send<ResultFromResponse: Decodable>(
-        method: RPCMethod,
-        done: @escaping Done<ResultFromResponse>
-    ) {
+    func send<T: Decodable>(method: RPCMethod) async throws -> T {
         let rpcRequest = RPCRequest(method: method)
-
         do {
             var urlRequest = try rpcRequest.asURLRequest()
             urlRequest.url = baseURL
-
-            session.dataTask(with: urlRequest) { data, _, error in
-                if let error {
-                    done(.failure(.api(.request(error))))
-                    return
-                }
-                guard let data else {
-                    done(.failure(.api(.request(URLError(.badServerResponse)))))
-                    return
-                }
-                do {
-                    let rpcResponse = try JSONDecoder().decode(RPCResponse<ResultFromResponse>.self, from: data)
-                    switch rpcResponse {
-                    case let .rpcError(rpcError):
-                        done(.failure(.api(.request(rpcError))))
-                    case let .rpcSuccess(result):
-                        done(.success(result))
-                    }
-                } catch {
-                    done(.failure(.api(.request(error))))
-                }
-            }.resume()
+            let (data, _) = try await session.data(for: urlRequest)
+            let rpcResponse = try JSONDecoder().decode(RPCResponse<T>.self, from: data)
+            switch rpcResponse {
+            case let .rpcError(rpcError):
+                throw Zesame.Error.api(.request(rpcError))
+            case let .rpcSuccess(result):
+                return result
+            }
+        } catch let error as Zesame.Error {
+            throw error
         } catch {
-            done(.failure(.api(.request(error))))
+            throw Zesame.Error.api(.request(error))
         }
     }
 }

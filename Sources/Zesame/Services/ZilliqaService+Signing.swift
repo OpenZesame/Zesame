@@ -30,30 +30,18 @@ public extension ZilliqaService {
         for payment: Payment,
         keystore: Keystore,
         password: String,
-        network: Network,
-        done: @escaping Done<TransactionResponse>
-    ) {
-        keystore.toKeypair(encryptedBy: password) { result in
-            switch result {
-            case let .failure(error): done(Result.failure(error))
-            case let .success(keyPair): self.sendTransaction(
-                    for: payment,
-                    signWith: keyPair,
-                    network: network,
-                    done: done
-                )
-            }
-        }
+        network: Network
+    ) async throws -> TransactionResponse {
+        let keyPair = try keystore.toKeypair(encryptedBy: password)
+        return try await sendTransaction(for: payment, signWith: keyPair, network: network)
     }
 
     func sendTransaction(
         for payment: Payment,
         signWith keyPair: KeyPair,
-        network: Network,
-        done: @escaping Done<TransactionResponse>
-    ) {
-        let transaction = sign(payment: payment, using: keyPair, network: network)
-        send(transaction: transaction, done: done)
+        network: Network
+    ) async throws -> TransactionResponse {
+        try await send(transaction: sign(payment: payment, using: keyPair, network: network))
     }
 
     func sign(

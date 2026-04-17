@@ -26,52 +26,37 @@ import CryptoKit
 import Foundation
 
 public extension Keystore {
-    func toKeypair(encryptedBy password: String, done: @escaping Done<KeyPair>) {
-        decryptPrivateKeyWith(password: password) {
-            switch $0 {
-            case let .failure(error): done(.failure(error))
-            case let .success(privateKey):
-                done(.success(KeyPair(private: privateKey)))
-            }
-        }
+    func toKeypair(encryptedBy password: String) throws -> KeyPair {
+        try KeyPair(private: decryptPrivateKey(encryptedBy: password))
     }
 
-    func decryptPrivateKeyWith(password: String, done: @escaping Done<PrivateKey>) {
+    func decryptPrivateKey(encryptedBy password: String) throws -> PrivateKey {
         guard password.count >= Keystore.minimumPasswordLength else {
-            done(.failure(.keystorePasswordTooShort(
+            throw Zesame.Error.keystorePasswordTooShort(
                 provided: password.count,
                 minimum: Keystore.minimumPasswordLength
-            )))
-            return
+            )
         }
 
-        let encryptedPrivateKey = crypto.encryptedPrivateKey
-        let nonce = crypto.cipherParameters.nonce
-        let tag = crypto.cipherParameters.tag
+        let derivedKey = try deriveKey(password: password)
+        let symmetricKey = SymmetricKey(data: derivedKey.data)
 
         do {
-            try deriveKey(password: password) { derivedKey in
-                let symmetricKey = SymmetricKey(data: derivedKey.data)
-                do {
-                    let gcmNonce = try AES.GCM.Nonce(data: nonce)
-                    let sealedBox = try AES.GCM.SealedBox(
-                        nonce: gcmNonce,
-                        ciphertext: encryptedPrivateKey,
-                        tag: tag
-                    )
-                    let plaintext = try AES.GCM.open(sealedBox, using: symmetricKey)
-                    guard let privateKey = try? PrivateKey(rawRepresentation: plaintext) else {
-                        done(.failure(.walletImport(.badPrivateKeyHex)))
-                        return
-                    }
-                    done(.success(privateKey))
-                } catch {
-                    // AES-GCM authentication failure means wrong password
-                    done(.failure(.walletImport(.incorrectPassword)))
-                }
+            let gcmNonce = try AES.GCM.Nonce(data: crypto.cipherParameters.nonce)
+            let sealedBox = try AES.GCM.SealedBox(
+                nonce: gcmNonce,
+                ciphertext: crypto.encryptedPrivateKey,
+                tag: crypto.cipherParameters.tag
+            )
+            let plaintext = try AES.GCM.open(sealedBox, using: symmetricKey)
+            guard let privateKey = try? PrivateKey(rawRepresentation: plaintext) else {
+                throw Zesame.Error.walletImport(.badPrivateKeyHex)
             }
+            return privateKey
+        } catch let error as Zesame.Error {
+            throw error
         } catch {
-            done(.failure(.decryptPrivateKey(error)))
+            throw Zesame.Error.walletImport(.incorrectPassword)
         }
     }
 }
