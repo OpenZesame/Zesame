@@ -23,63 +23,34 @@
 //
 
 import Foundation
-import XCTest
+import Testing
 @testable import Zesame
 
-class ExportKeystoreTest: XCTestCase {
-    func testWalletImport() {
+@Suite struct ExportKeystoreTests {
+    @Test func walletImport() async throws {
         let service = DefaultZilliqaService(endpoint: .testnet)
-        let expectWalletImport = expectation(description: "importing wallet from keystore")
-        do {
-            let keyRestoration = KeyRestoration.privateKey(knownPrivateKey, encryptBy: password, kdf: .pbkdf2)
-            service.restoreWallet(from: keyRestoration) {
-                switch $0 {
-                case let .success(importedWallet):
-                    XCTAssertEqual(importedWallet.keystore.address.asString, expectedAddress)
-                    XCTAssertEqual(importedWallet.keystore.version, 4)
-                case let .failure(error): XCTFail("Failed to import wallet, error: \(error)")
-                }
-                expectWalletImport.fulfill()
-            }
-            waitForExpectations(timeout: 5, handler: nil)
-        }
+        let keyRestoration = KeyRestoration.privateKey(knownPrivateKey, encryptBy: password, kdf: .pbkdf2)
+        let importedWallet = try await service.restoreWallet(from: keyRestoration)
+        #expect(importedWallet.keystore.address.asString == expectedAddress)
+        #expect(importedWallet.keystore.version == 4)
     }
 
-    func testKeystoreEncodeDecode() throws {
-        let expectRoundtrip = expectation(description: "keystore encode/decode roundtrip")
-        try Keystore.from(
+    @Test func keystoreEncodeDecode() throws {
+        let keystore = try Keystore.from(
             privateKey: knownPrivateKey,
             encryptBy: password,
             kdf: .pbkdf2,
             kdfParams: .quickTestParameters
-        ) { result in
-            switch result {
-            case let .failure(error):
-                XCTFail("Failed to create keystore, error: \(error)")
-                expectRoundtrip.fulfill()
-            case let .success(keystore):
-                XCTAssertEqual(keystore.address.asString, expectedAddress)
-                do {
-                    let jsonData = try JSONEncoder().encode(keystore)
-                    let decoded = try JSONDecoder().decode(Keystore.self, from: jsonData)
-                    XCTAssertEqual(decoded.address.asString, expectedAddress)
-                    XCTAssertEqual(decoded.version, 4)
-                    decoded.decryptPrivateKeyWith(password: password) { decryptResult in
-                        switch decryptResult {
-                        case let .failure(error):
-                            XCTFail("Failed to decrypt, error: \(error)")
-                        case let .success(key):
-                            XCTAssertEqual(key.rawRepresentation.asHex.uppercased(), expectedPrivateKey.uppercased())
-                        }
-                        expectRoundtrip.fulfill()
-                    }
-                } catch {
-                    XCTFail("Encode/decode failed: \(error)")
-                    expectRoundtrip.fulfill()
-                }
-            }
-        }
-        waitForExpectations(timeout: 5, handler: nil)
+        )
+        #expect(keystore.address.asString == expectedAddress)
+
+        let jsonData = try JSONEncoder().encode(keystore)
+        let decoded = try JSONDecoder().decode(Keystore.self, from: jsonData)
+        #expect(decoded.address.asString == expectedAddress)
+        #expect(decoded.version == 4)
+
+        let key = try decoded.decryptPrivateKey(encryptedBy: password)
+        #expect(key.rawRepresentation.asHex.uppercased() == expectedPrivateKey.uppercased())
     }
 }
 

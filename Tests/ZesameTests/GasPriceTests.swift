@@ -23,131 +23,85 @@
 //
 
 import Foundation
-import XCTest
+import Testing
 @testable import Zesame
 
-class GasPriceTests: XCTestCase {
-    private func restoreBounds() {
-        GasPrice.restoreDefaultBounds()
-        XCTAssertEqual(GasPrice.maxInQa, GasPrice.maxInQaDefault)
-        XCTAssertEqual(GasPrice.minInQa, GasPrice.minInQaDefault)
+// Serialized because tests mutate global GasPrice bounds.
+@Suite(.serialized) final class GasPriceTests {
+    init() { GasPrice.restoreDefaultBounds() }
+    deinit { GasPrice.restoreDefaultBounds() }
+
+    @Test func maxGasPriceIs100Zil() {
+        #expect(GasPrice.max.qa == Zil(100).qa)
+        #expect(GasPrice.max.asZil == 100)
+        #expect(GasPrice.max.qa == 100_000_000_000_000)
     }
 
-    override func setUp() {
-        restoreBounds()
+    @Test func minGasPriceIs100_000Li() {
+        #expect(GasPrice.min.qa == Li(100_000).qa)
+        #expect(GasPrice.min.liString == "100000")
+        #expect(GasPrice.min.asLi == 100_000)
+        #expect(GasPrice.min.qa == 100_000_000_000)
     }
 
-    override func tearDown() {
-        restoreBounds()
+    @Test func maxGasPrice() throws {
+        let tenZil = try GasPrice(zil: 100)
+        #expect(tenZil.asLi == 100_000_000)
     }
 
-    func testMaxGasPriceIs100Zil() {
-        XCTAssertEqual(GasPrice.max.qa, Zil(100).qa)
-        XCTAssertEqual(GasPrice.max.asZil, 100)
-        XCTAssertEqual(GasPrice.max.qa, 100_000_000_000_000)
-    }
-
-    func testMinGasPriceIs100_000Li() {
-        XCTAssertEqual(GasPrice.min.qa, Li(100_000).qa)
-        XCTAssertEqual(GasPrice.min.liString, "100000")
-        XCTAssertEqual(GasPrice.min.asLi, 100_000)
-        XCTAssertEqual(GasPrice.min.qa, 100_000_000_000)
-    }
-
-    func testMaxGasPrice() {
-        do {
-            let tenZil = try GasPrice(zil: 100)
-            XCTAssertEqual(tenZil.asLi, 100_000_000)
-        } catch {
-            return XCTFail()
+    @Test func exceedingMaxGasPriceThrowsError() {
+        #expect {
+            try GasPrice(zil: 101)
+        } throws: { error in
+            guard let amountError = error as? AmountError<GasPrice>,
+                  case let .tooLarge(max) = amountError else { return false }
+            return max == GasPrice.max
         }
     }
 
-    func testExceedingMaxGasPriceThrowsError() {
-        var didThrowError = false
-        do {
-            _ = try GasPrice(zil: 101)
-        } catch let error as AmountError<GasPrice> {
-            didThrowError = true
-            switch error {
-            case let .tooLarge(max):
-                XCTAssertEqual(max, GasPrice.max)
-            default: XCTFail()
-            }
-        } catch {
-            return XCTFail()
-        }
-        XCTAssertTrue(didThrowError)
+    @Test func defaultMaxMagnitudeIs100Zil() {
+        #expect(GasPrice.maxInQaDefault == GasPrice.maxInQa)
+        #expect(GasPrice.max.zilString == "100")
     }
 
-    func testDefaultMaxMagnitudeIs100Zil() {
-        XCTAssertEqual(GasPrice.maxInQaDefault, GasPrice.maxInQa)
-        XCTAssertEqual(GasPrice.max.zilString, "100")
-    }
-
-    func testDecreasingMaxPrice() {
+    @Test func decreasingMaxPrice() throws {
         let newMaxInQa: GasPrice.Magnitude = (GasPrice.min.asLi + 1.li).qa
         GasPrice.maxInQa = newMaxInQa
-        XCTAssertEqual(GasPrice.maxInQa, 100_001_000_000)
+        #expect(GasPrice.maxInQa == 100_001_000_000)
 
-        var didThrowError = false
-        do {
-            _ = try GasPrice(li: 100_000_002)
-        } catch let error as AmountError<GasPrice> {
-            didThrowError = true
-            switch error {
-            case let .tooLarge(max):
-                XCTAssertEqual(max.qa, newMaxInQa)
-            default: XCTFail()
-            }
-        } catch {
-            return XCTFail()
+        #expect {
+            try GasPrice(li: 100_000_002)
+        } throws: { error in
+            guard let amountError = error as? AmountError<GasPrice>,
+                  case let .tooLarge(max) = amountError else { return false }
+            return max.qa == newMaxInQa
         }
-        XCTAssertTrue(didThrowError)
     }
 
-    func testIncreasingMaxGasPrice() {
-        let newMaxInqa: GasPrice.Magnitude = Zil(1337).qa
-        GasPrice.maxInQa = newMaxInqa
-        XCTAssertEqual(GasPrice.maxInQa, 1_337_000_000_000_000)
+    @Test func increasingMaxGasPrice() throws {
+        let newMaxInQa: GasPrice.Magnitude = Zil(1337).qa
+        GasPrice.maxInQa = newMaxInQa
+        #expect(GasPrice.maxInQa == 1_337_000_000_000_000)
 
-        do {
-            let tenZil = try GasPrice(zil: 1336)
-            XCTAssertEqual(tenZil.asLi, 1_336_000_000)
-        } catch {
-            return XCTFail()
-        }
+        let price = try GasPrice(zil: 1336)
+        #expect(price.asLi == 1_336_000_000)
 
-        var didThrowError = false
-        do {
-            _ = try GasPrice(zil: 1338)
-        } catch let error as AmountError<GasPrice> {
-            didThrowError = true
-            switch error {
-            case let .tooLarge(max):
-                XCTAssertEqual(max.qa, newMaxInqa)
-            default: XCTFail()
-            }
-        } catch {
-            return XCTFail()
+        #expect {
+            try GasPrice(zil: 1338)
+        } throws: { error in
+            guard let amountError = error as? AmountError<GasPrice>,
+                  case let .tooLarge(max) = amountError else { return false }
+            return max.qa == newMaxInQa
         }
-        XCTAssertTrue(didThrowError)
     }
 
-    func testIncreasedMaxGasPrice() {
-        var didThrowError = false
-        do {
-            _ = try GasPrice(zil: 101)
-        } catch let error as AmountError<GasPrice> {
-            didThrowError = true
-            switch error {
-            case let .tooLarge(max):
-                XCTAssertEqual(max, GasPrice.max)
-            default: XCTFail()
-            }
-        } catch {
-            return XCTFail()
+    @Test func increasedMaxGasPriceStillEnforcesDefault() {
+        #expect {
+            try GasPrice(zil: 101)
+        } throws: { error in
+            guard let amountError = error as? AmountError<GasPrice>,
+                  case let .tooLarge(max) = amountError else { return false }
+            return max == GasPrice.max
         }
-        XCTAssertTrue(didThrowError)
     }
 }

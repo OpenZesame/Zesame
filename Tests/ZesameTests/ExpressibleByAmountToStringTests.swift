@@ -24,454 +24,428 @@
 
 import BigInt
 import Foundation
-import XCTest
+import Testing
 @testable import Zesame
 
-class ExpressibleByAmountToStringTests: XCTestCase {
-    let decSep = Locale.current.decimalSeparatorForSure
+// MARK: - Parameterized vector types
 
-    func testQa() {
-        do {
-            let big = try ZilAmount(qa: "20999999999123567912432")
-            let small = try ZilAmount(qa: "510231481549")
-            let expected = try ZilAmount(qa: "20999999999633799393981")
-            let expectedPlus1 = try ZilAmount(qa: "20999999999633799393982")
-            let expectedMinus1 = try ZilAmount(qa: "20999999999633799393980")
-            XCTAssertEqual(try big + small, expected)
-            XCTAssertLessThan(try big + small, expectedPlus1)
-            XCTAssertGreaterThan(try big + small, expectedMinus1)
-        } catch {
-            return XCTFail()
+struct QaCase: Sendable {
+    let qa: Qa
+    let unit: Zesame.Unit
+    let expected: String
+}
+
+struct LiCase: Sendable {
+    let li: Li
+    let unit: Zesame.Unit
+    let expected: String
+}
+
+struct ZilCase: Sendable {
+    let zil: Zil
+    let unit: Zesame.Unit
+    let expected: String
+}
+
+// MARK: - Test data
+
+private extension QaCase {
+    static var all: [QaCase] {
+        let d = Locale.current.decimalSeparatorForSure
+        return [
+            QaCase(qa: Qa(1),                    unit: Zesame.Unit.qa,  expected: "1"),
+            QaCase(qa: Qa(1),                    unit: .zil, expected: "0\(d)000000000001"),
+            QaCase(qa: Qa(10),                   unit: .qa,  expected: "10"),
+            QaCase(qa: Qa(10),                   unit: .li,  expected: "0\(d)00001"),
+            QaCase(qa: Qa(100),                  unit: .qa,  expected: "100"),
+            QaCase(qa: Qa(100),                  unit: .li,  expected: "0\(d)0001"),
+            QaCase(qa: Qa(100),                  unit: .zil, expected: "0\(d)0000000001"),
+            QaCase(qa: Qa(1_000),                unit: .qa,  expected: "1000"),
+            QaCase(qa: Qa(1_000),                unit: .li,  expected: "0\(d)001"),
+            QaCase(qa: Qa(7_000),                unit: .zil, expected: "0\(d)000000007"),
+            QaCase(qa: Qa(10_005),               unit: .qa,  expected: "10005"),
+            QaCase(qa: Qa(10_000),               unit: .li,  expected: "0\(d)01"),
+            QaCase(qa: Qa(50_000),               unit: .zil, expected: "0\(d)00000005"),
+            QaCase(qa: Qa(100_008),              unit: .qa,  expected: "100008"),
+            QaCase(qa: Qa(100_000),              unit: .li,  expected: "0\(d)1"),
+            QaCase(qa: Qa(100_000),              unit: .zil, expected: "0\(d)0000001"),
+            QaCase(qa: Qa(1_000_001),            unit: .qa,  expected: "1000001"),
+            QaCase(qa: Qa(1_000_000),            unit: .li,  expected: "1"),
+            QaCase(qa: Qa(1_000_000),            unit: .zil, expected: "0\(d)000001"),
+            QaCase(qa: Qa(10_000_004),           unit: .qa,  expected: "10000004"),
+            QaCase(qa: Qa(10_000_000),           unit: .li,  expected: "10"),
+            QaCase(qa: Qa(10_000_000),           unit: .zil, expected: "0\(d)00001"),
+            QaCase(qa: Qa(100_000_003),          unit: .qa,  expected: "100000003"),
+            QaCase(qa: Qa(100_000_000),          unit: .li,  expected: "100"),
+            QaCase(qa: Qa(100_000_000),          unit: .zil, expected: "0\(d)0001"),
+            QaCase(qa: Qa(1_000_000_009),        unit: .qa,  expected: "1000000009"),
+            QaCase(qa: Qa(1_000_000_000),        unit: .li,  expected: "1000"),
+            QaCase(qa: Qa(1_000_000_000),        unit: .zil, expected: "0\(d)001"),
+            QaCase(qa: Qa(10_000_000_002),       unit: .qa,  expected: "10000000002"),
+            QaCase(qa: Qa(10_000_000_000),       unit: .li,  expected: "10000"),
+            QaCase(qa: Qa(10_000_000_000),       unit: .zil, expected: "0\(d)01"),
+            QaCase(qa: Qa(700_000_005_434),      unit: .qa,  expected: "700000005434"),
+            QaCase(qa: Qa(674_723_000_000),      unit: .li,  expected: "674723"),
+            QaCase(qa: Qa(100_000_000_000),      unit: .zil, expected: "0\(d)1"),
+            QaCase(qa: Qa(1_000_000_000_003),    unit: .qa,  expected: "1000000000003"),
+            QaCase(qa: Qa(1_000_000_000_000),    unit: .li,  expected: "1000000"),
+            QaCase(qa: Qa(1_000_000_000_000),    unit: .zil, expected: "1"),
+            QaCase(qa: Qa(10_000_000_000_007),   unit: .qa,  expected: "10000000000007"),
+            QaCase(qa: Qa(10_000_005_000_000),   unit: .li,  expected: "10000005"),
+            QaCase(qa: Qa(17_000_000_000_000),   unit: .zil, expected: "17"),
+        ]
+    }
+}
+
+private extension LiCase {
+    static var all: [LiCase] {
+        let d = Locale.current.decimalSeparatorForSure
+        return [
+            LiCase(li: Li(1),               unit: .qa,  expected: "1000000"),
+            LiCase(li: Li(1),               unit: .li,  expected: "1"),
+            LiCase(li: Li(1),               unit: .zil, expected: "0\(d)000001"),
+            LiCase(li: Li(10),              unit: .qa,  expected: "10000000"),
+            LiCase(li: Li(10),              unit: .li,  expected: "10"),
+            LiCase(li: Li(10),              unit: .zil, expected: "0\(d)00001"),
+            LiCase(li: Li(100),             unit: .qa,  expected: "100000000"),
+            LiCase(li: Li(100),             unit: .li,  expected: "100"),
+            LiCase(li: Li(100),             unit: .zil, expected: "0\(d)0001"),
+            LiCase(li: Li(1_000),           unit: .qa,  expected: "1000000000"),
+            LiCase(li: Li(1_000),           unit: .li,  expected: "1000"),
+            LiCase(li: Li(1_000),           unit: .zil, expected: "0\(d)001"),
+            LiCase(li: Li(10_000),          unit: .qa,  expected: "10000000000"),
+            LiCase(li: Li(10_000),          unit: .li,  expected: "10000"),
+            LiCase(li: Li(10_000),          unit: .zil, expected: "0\(d)01"),
+            LiCase(li: Li(100_000),         unit: .qa,  expected: "100000000000"),
+            LiCase(li: Li(100_000),         unit: .li,  expected: "100000"),
+            LiCase(li: Li(100_000),         unit: .zil, expected: "0\(d)1"),
+            LiCase(li: Li(1_000_000),       unit: .qa,  expected: "1000000000000"),
+            LiCase(li: Li(1_000_000),       unit: .li,  expected: "1000000"),
+            LiCase(li: Li(1_000_000),       unit: .zil, expected: "1"),
+            LiCase(li: Li(10_000_000),      unit: .qa,  expected: "10000000000000"),
+            LiCase(li: Li(10_000_000),      unit: .li,  expected: "10000000"),
+            LiCase(li: Li(10_000_000),      unit: .zil, expected: "10"),
+            LiCase(li: Li(100_000_000),     unit: .qa,  expected: "100000000000000"),
+            LiCase(li: Li(100_000_000),     unit: .li,  expected: "100000000"),
+            LiCase(li: Li(987_000_000),     unit: .zil, expected: "987"),
+            LiCase(li: Li(1_000_000_000),   unit: .qa,  expected: "1000000000000000"),
+            LiCase(li: Li(1_000_000_000),   unit: .li,  expected: "1000000000"),
+            LiCase(li: Li(4_321_000_000),   unit: .zil, expected: "4321"),
+            LiCase(li: Li(10_000_000_000),  unit: .qa,  expected: "10000000000000000"),
+            LiCase(li: Li(10_000_000_000),  unit: .li,  expected: "10000000000"),
+            LiCase(li: Li(10_000_000_000),  unit: .zil, expected: "10000"),
+            LiCase(li: Li(100_000_000_000), unit: .qa,  expected: "100000000000000000"),
+            LiCase(li: Li(100_000_000_000), unit: .li,  expected: "100000000000"),
+            LiCase(li: Li(106_078_000_000), unit: .zil, expected: "106078"),
+            LiCase(li: Li(1_000_000_000_000),  unit: .qa,  expected: "1000000000000000000"),
+            LiCase(li: Li(1_000_000_000_000),  unit: .li,  expected: "1000000000000"),
+            LiCase(li: Li(1_000_000_000_000),  unit: .zil, expected: "1000000"),
+            LiCase(li: Li(10_000_000_000_000), unit: .qa,  expected: "10000000000000000000"),
+            LiCase(li: Li(10_000_000_000_000), unit: .li,  expected: "10000000000000"),
+            LiCase(li: Li(10_000_000_000_000), unit: .zil, expected: "10000000"),
+        ]
+    }
+}
+
+private extension ZilCase {
+    static var all: [ZilCase] {
+        return [
+            ZilCase(zil: Zil(1),              unit: .qa,  expected: "1000000000000"),
+            ZilCase(zil: Zil(1),              unit: .li,  expected: "1000000"),
+            ZilCase(zil: Zil(1),              unit: .zil, expected: "1"),
+            ZilCase(zil: Zil(10),             unit: .qa,  expected: "10000000000000"),
+            ZilCase(zil: Zil(10),             unit: .li,  expected: "10000000"),
+            ZilCase(zil: Zil(10),             unit: .zil, expected: "10"),
+            ZilCase(zil: Zil(100),            unit: .qa,  expected: "100000000000000"),
+            ZilCase(zil: Zil(100),            unit: .li,  expected: "100000000"),
+            ZilCase(zil: Zil(100),            unit: .zil, expected: "100"),
+            ZilCase(zil: Zil(1_000),          unit: .qa,  expected: "1000000000000000"),
+            ZilCase(zil: Zil(1_000),          unit: .li,  expected: "1000000000"),
+            ZilCase(zil: Zil(1_234),          unit: .zil, expected: "1234"),
+            ZilCase(zil: Zil(10_000),         unit: .qa,  expected: "10000000000000000"),
+            ZilCase(zil: Zil(10_000),         unit: .li,  expected: "10000000000"),
+            ZilCase(zil: Zil(10_000),         unit: .zil, expected: "10000"),
+            ZilCase(zil: Zil(100_000),        unit: .qa,  expected: "100000000000000000"),
+            ZilCase(zil: Zil(100_000),        unit: .li,  expected: "100000000000"),
+            ZilCase(zil: Zil(12_345),         unit: .zil, expected: "12345"),
+            ZilCase(zil: Zil(1_000_000),      unit: .qa,  expected: "1000000000000000000"),
+            ZilCase(zil: Zil(1_000_000),      unit: .li,  expected: "1000000000000"),
+            ZilCase(zil: Zil(123_456),        unit: .zil, expected: "123456"),
+            ZilCase(zil: Zil(1_234_567),      unit: .qa,  expected: "1234567000000000000"),
+            ZilCase(zil: Zil(1_234_567),      unit: .li,  expected: "1234567000000"),
+            ZilCase(zil: Zil(1_234_567),      unit: .zil, expected: "1234567"),
+            ZilCase(zil: Zil(100_000_000),    unit: .qa,  expected: "100000000000000000000"),
+            ZilCase(zil: Zil(100_000_000),    unit: .li,  expected: "100000000000000"),
+            ZilCase(zil: Zil(987_000_000),    unit: .zil, expected: "987000000"),
+            ZilCase(zil: Zil(9_000_000_000),  unit: .qa,  expected: "9000000000000000000000"),
+            ZilCase(zil: Zil(9_000_000_000),  unit: .li,  expected: "9000000000000000"),
+            ZilCase(zil: Zil(9_085_000_000),  unit: .zil, expected: "9085000000"),
+            ZilCase(zil: Zil(39_000_000_009), unit: .qa,  expected: "39000000009000000000000"),
+            ZilCase(zil: Zil(39_000_000_004), unit: .li,  expected: "39000000004000000"),
+            ZilCase(zil: Zil(39_085_000_499), unit: .zil, expected: "39085000499"),
+        ]
+    }
+}
+
+// MARK: - Tests
+
+@Suite struct ExpressibleByAmountToStringTests {
+    @Test func qa() throws {
+        let big = try ZilAmount(qa: "20999999999123567912432")
+        let small = try ZilAmount(qa: "510231481549")
+        let expected = try ZilAmount(qa: "20999999999633799393981")
+        let expectedPlus1 = try ZilAmount(qa: "20999999999633799393982")
+        let expectedMinus1 = try ZilAmount(qa: "20999999999633799393980")
+        #expect(try big + small == expected)
+        #expect(try big + small < expectedPlus1)
+        #expect(try big + small > expectedMinus1)
+    }
+
+    @Test func rounding() {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(
+            ZilAmount(0.1449).asString(in: .zil, roundingIfNeeded: .down, roundingNumberOfDigits: 3)
+                == "0\(decSep)144"
+        )
+        #expect(
+            ZilAmount(0.1449).asString(in: .zil, roundingIfNeeded: .up, roundingNumberOfDigits: 3)
+                == "0\(decSep)145"
+        )
+    }
+
+    @Test func smallZilAmountAsZilString() {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(ZilAmount(0.1).asString(in: .zil) == "0\(decSep)1")
+        #expect(ZilAmount(0.49).asString(in: .zil) == "0\(decSep)49")
+        #expect(ZilAmount(0.5).asString(in: .zil) == "0\(decSep)5")
+        #expect(ZilAmount(0.51).asString(in: .zil) == "0\(decSep)51")
+        #expect(ZilAmount(0).asString(in: .zil) == "0")
+        #expect(ZilAmount(1).asString(in: .zil) == "1")
+        #expect(ZilAmount(9).asString(in: .zil) == "9")
+    }
+
+    @Test func smallLiAsLiString() {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(Li(0.1).asString(in: .li) == "0\(decSep)1")
+        #expect(Li(0.1).asString(in: .zil) == "0\(decSep)0000001")
+        #expect(Li(0.49).asString(in: .li) == "0\(decSep)49")
+        #expect(Li(0.5).asString(in: .li) == "0\(decSep)5")
+        #expect(Li(0.51).asString(in: .li) == "0\(decSep)51")
+        #expect(Li(0.51).asString(in: .zil) == "0\(decSep)00000051")
+        #expect(Li(0).asString(in: .li) == "0")
+        #expect(Li(1).asString(in: .li) == "1")
+        #expect(Li(9).asString(in: .li) == "9")
+    }
+
+    @Test func maxZilAmountAsZilString() {
+        #expect(ZilAmount(21_000_000_000).asString(in: .zil) == "21000000000")
+    }
+
+    @Test func tenLiInQaAsString() {
+        #expect(Qa(10_000_000).asString(in: .li) == "10")
+    }
+
+    @Test func qaToLiManyDecimals() {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(Qa(1).asString(in: .li) == "0\(decSep)000001")
+    }
+
+    @Test(arguments: QaCase.all)
+    func qaAsString(_ c: QaCase) {
+        #expect(c.qa.asString(in: c.unit) == c.expected)
+    }
+
+    @Test func thatFormattingUsesCorrectSeparator() throws {
+        let decSep = Locale.current.decimalSeparatorForSure
+        let amountString = "0\(decSep)01"
+        #expect(try Zil(zil: amountString).asString(in: .zil) == amountString)
+    }
+
+    @Test func decimalStringZilAmount() throws {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(try Zil(zil: "0\(decSep)01").asString(in: .li) == "10000")
+    }
+
+    @Test func thatStringOnlyContainingDecimalSeparatorThrowsError() {
+        #expect(throws: AmountError<Zil>.endsWithDecimalSeparator) {
+            try Zil(zil: "\(Locale.current.decimalSeparatorForSure)")
         }
     }
 
-    func testRounding() {
-        XCTAssertEqual(
-            ZilAmount(0.1449).asString(in: .zil, roundingIfNeeded: .down, roundingNumberOfDigits: 3),
-            "0\(decSep)144"
-        )
-        XCTAssertEqual(
-            ZilAmount(0.1449).asString(in: .zil, roundingIfNeeded: .up, roundingNumberOfDigits: 3),
-            "0\(decSep)145"
-        )
+    @Test func thatStringStartingWithDecimalSeparatorDefaultsToZero() throws {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(try Zil(zil: "\(decSep)1") == Zil(zil: "0\(decSep)1"))
     }
 
-    func testSmallZilAmountAsZilString() {
-        XCTAssertEqual(ZilAmount(0.1).asString(in: .zil), "0\(decSep)1")
-        XCTAssertEqual(ZilAmount(0.49).asString(in: .zil), "0\(decSep)49")
-        XCTAssertEqual(ZilAmount(0.5).asString(in: .zil), "0\(decSep)5")
-        XCTAssertEqual(ZilAmount(0.51).asString(in: .zil), "0\(decSep)51")
-        XCTAssertEqual(ZilAmount(0).asString(in: .zil), "0")
-        XCTAssertEqual(ZilAmount(1).asString(in: .zil), "1")
-        XCTAssertEqual(ZilAmount(9).asString(in: .zil), "9")
+    @Test func zilAsZilStringCanContainDecimals() throws {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(try Zil(zil: "0\(decSep)1").asString(in: .zil, roundingIfNeeded: nil) == "0\(decSep)1")
+        #expect(try Zil(zil: "0\(decSep)0000000123").asQa == Qa(12300))
     }
 
-    func testSmallLiAsLiString() {
-        XCTAssertEqual(Li(0.1).asString(in: .li), "0\(decSep)1")
-        XCTAssertEqual(Li(0.1).asString(in: .zil), "0\(decSep)0000001")
-
-        XCTAssertEqual(Li(0.49).asString(in: .li), "0\(decSep)49")
-        XCTAssertEqual(Li(0.5).asString(in: .li), "0\(decSep)5")
-        XCTAssertEqual(Li(0.51).asString(in: .li), "0\(decSep)51")
-
-        XCTAssertEqual(Li(0.51).asString(in: .zil), "0\(decSep)00000051")
-        XCTAssertEqual(Li(0).asString(in: .li), "0")
-        XCTAssertEqual(Li(1).asString(in: .li), "1")
-        XCTAssertEqual(Li(9).asString(in: .li), "9")
-    }
-
-    func testMazZilAmountAsZilString() {
-        XCTAssertEqual(ZilAmount(21_000_000_000).asString(in: .zil), "21000000000")
-    }
-
-    func test10LiInQaAsString() {
-        XCTAssertEqual(Qa(10_000_000).asString(in: .li), "10")
-    }
-
-    func testQaToLiManyDecimals() {
-        XCTAssertEqual(Qa(1).asString(in: .li), "0\(decSep)000001")
-    }
-
-    func testQaAsString() {
-        XCTAssertEqual(Qa(1).asString(in: .qa), "1")
-        XCTAssertEqual(Qa(1).asString(in: .zil), "0\(decSep)000000000001")
-
-        XCTAssertEqual(Qa(10).asString(in: .qa), "10")
-        XCTAssertEqual(Qa(10).asString(in: .li), "0\(decSep)00001")
-
-        XCTAssertEqual(Qa(100).asString(in: .qa), "100")
-        XCTAssertEqual(Qa(100).asString(in: .li), "0\(decSep)0001")
-        XCTAssertEqual(Qa(100).asString(in: .zil), "0\(decSep)0000000001")
-
-        XCTAssertEqual(Qa(1000).asString(in: .qa), "1000")
-        XCTAssertEqual(Qa(1000).asString(in: .li), "0\(decSep)001")
-        XCTAssertEqual(Qa(7000).asString(in: .zil), "0\(decSep)000000007")
-
-        XCTAssertEqual(Qa(10005).asString(in: .qa), "10005")
-        XCTAssertEqual(Qa(10000).asString(in: .li), "0\(decSep)01")
-        XCTAssertEqual(Qa(50000).asString(in: .zil), "0\(decSep)00000005")
-
-        XCTAssertEqual(Qa(100_008).asString(in: .qa), "100008")
-        XCTAssertEqual(Qa(100_000).asString(in: .li), "0\(decSep)1")
-        XCTAssertEqual(Qa(100_000).asString(in: .zil), "0\(decSep)0000001")
-
-        XCTAssertEqual(Qa(1_000_001).asString(in: .qa), "1000001")
-        XCTAssertEqual(Qa(1_000_000).asString(in: .li), "1")
-        XCTAssertEqual(Qa(1_000_000).asString(in: .zil), "0\(decSep)000001")
-
-        XCTAssertEqual(Qa(10_000_004).asString(in: .qa), "10000004")
-        XCTAssertEqual(Qa(10_000_000).asString(in: .li), "10")
-        XCTAssertEqual(Qa(10_000_000).asString(in: .zil), "0\(decSep)00001")
-
-        XCTAssertEqual(Qa(100_000_003).asString(in: .qa), "100000003")
-        XCTAssertEqual(Qa(100_000_000).asString(in: .li), "100")
-        XCTAssertEqual(Qa(100_000_000).asString(in: .zil), "0\(decSep)0001")
-
-        XCTAssertEqual(Qa(1_000_000_009).asString(in: .qa), "1000000009")
-        XCTAssertEqual(Qa(1_000_000_000).asString(in: .li), "1000")
-        XCTAssertEqual(Qa(1_000_000_000).asString(in: .zil), "0\(decSep)001")
-
-        XCTAssertEqual(Qa(10_000_000_002).asString(in: .qa), "10000000002")
-        XCTAssertEqual(Qa(10_000_000_000).asString(in: .li), "10000")
-        XCTAssertEqual(Qa(10_000_000_000).asString(in: .zil), "0\(decSep)01")
-
-        XCTAssertEqual(Qa(700_000_005_434).asString(in: .qa), "700000005434")
-        XCTAssertEqual(Qa(674_723_000_000).asString(in: .li), "674723")
-        XCTAssertEqual(Qa(100_000_000_000).asString(in: .zil), "0\(decSep)1")
-
-        XCTAssertEqual(Qa(1_000_000_000_003).asString(in: .qa), "1000000000003")
-        XCTAssertEqual(Qa(1_000_000_000_000).asString(in: .li), "1000000")
-        XCTAssertEqual(Qa(1_000_000_000_000).asString(in: .zil), "1")
-
-        XCTAssertEqual(Qa(10_000_000_000_007).asString(in: .qa), "10000000000007")
-        XCTAssertEqual(Qa(10_000_005_000_000).asString(in: .li), "10000005")
-        XCTAssertEqual(Qa(17_000_000_000_000).asString(in: .zil), "17")
-    }
-
-    func testThatFormattingUsesCorrectSeparator() {
-        let amountString = "0\(decSep)01"
-        XCTAssertEqual(try Zil(zil: amountString).asString(in: .zil), amountString)
-    }
-
-    func testDecimalStringZilAmount() {
-        XCTAssertEqual(try Zil(zil: "0\(decSep)01").asString(in: .li), "10000")
-    }
-
-    func testThatStringOnlyContainingDecimalSeparatorThrowsError() {
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "\(Locale.current.decimalSeparatorForSure)"),
-            AmountError<Zil>.endsWithDecimalSeparator
+    @Test func zilWithManyDecimalsToLiString() throws {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(
+            try Zil(zil: "0\(decSep)0000000123").asString(in: .li, roundingIfNeeded: nil)
+                == "0\(decSep)0123"
         )
     }
 
-    func testThatStringStartingWithDecimalSeparatorDefaultsToZero() {
-        XCTAssertEqual(
-            try Zil(zil: "\(decSep)1"),
-            try Zil(zil: "0\(decSep)1")
-        )
+    @Test func small() throws {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(try Qa(li: "0\(decSep)000015").asString(in: .qa, roundingIfNeeded: nil) == "15")
     }
 
-    func testThatZilAsZilStringCanContainDecimals() {
-        XCTAssertEqual(
-            try Zil(zil: "0\(decSep)1").asString(in: .zil, roundingIfNeeded: nil),
-            "0\(decSep)1"
-        )
-
-        XCTAssertEqual(try Zil(zil: "0\(decSep)0000000123").asQa, Qa(12300))
+    @Test func tooSmallQaFromLi() {
+        #expect(throws: AmountError<Li>.tooManyDecimalPlaces) {
+            try Qa(li: "0\(Locale.current.decimalSeparatorForSure)0000001")
+        }
     }
 
-    func testZilWithManyDecimalsToLiString() {
-        XCTAssertEqual(
-            try Zil(zil: "0\(decSep)0000000123").asString(in: .li, roundingIfNeeded: nil),
-            "0\(decSep)0123"
-        )
+    @Test func tooSmallQaFromLiWrongSeparator() {
+        let wrongSep = Locale.current.decimalSeparatorForSure == "." ? "," : "."
+        #expect(throws: AmountError<Qa>.containsNonDecimalStringCharacter(disallowedCharacter: wrongSep)) {
+            try Qa(qa: "0\(wrongSep)0000001")
+        }
     }
 
-    func testSmall() {
-        XCTAssertEqual(try Qa(li: "0\(decSep)000015").asString(in: .qa, roundingIfNeeded: nil), "15")
+    @Test func smallQaFromLiString() throws {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(try Qa(li: "0\(decSep)000001") == Qa(1))
     }
 
-    func testTooSmallQaFromLi() {
-        XCTAssertThrowsSpecificError(
-            try Qa(li: "0\(Locale.current.decimalSeparatorForSure)0000001"),
-            AmountError<Li>.tooManyDecimalPlaces
-        )
+    @Test func tooSmallQaFromQaString() {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(throws: AmountError<Qa>.tooManyDecimalPlaces) {
+            try Qa(qa: "0\(decSep)1")
+        }
     }
 
-    func testTooSmallQaFromLiWrongSeparator() {
-        let wrongSeparator = Locale.current.decimalSeparatorForSure == "." ? "," : "."
-        let decimalStringWithWrongSep = "0\(wrongSeparator)0000001"
-        XCTAssertThrowsSpecificError(
-            try Qa(qa: decimalStringWithWrongSep),
-            AmountError<Qa>.containsNonDecimalStringCharacter(disallowedCharacter: wrongSeparator)
-        )
+    @Test func untrimmedStringsNoTrimmingSpaces() {
+        #expect(throws: Never.self) { try Zil(trimming: "1 0") }
     }
 
-    func testSmallQaFromLiString() {
-        XCTAssertEqual(
-            try Qa(li: "0\(decSep)000001"),
-            Qa(1)
-        )
+    @Test func zilAmountFromDecimalStringWithLeadingZeroNoThrow() {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(throws: Never.self) { try Zil(trimming: "1\(decSep)01") }
     }
 
-    func testTooSmallQaFromQaString() {
-        XCTAssertThrowsSpecificError(
-            try Qa(qa: "0\(decSep)1"),
-            AmountError<Qa>.tooManyDecimalPlaces
-        )
-    }
-
-    func testUntrimmedStringsNoTrimmingSpaces() {
-        XCTAssertNoThrow(try Zil(trimming: "1 0"))
-    }
-
-    func testZilAmountFromDecimalStringWithLeadingZeroNoThrow() {
-        XCTAssertNoThrow(try Zil(trimming: "1\(decSep)01"))
-    }
-
-    func testZilAmountFromDecimalStringWithLeadingZeroToString() {
+    @Test func zilAmountFromDecimalStringWithLeadingZeroToString() throws {
+        let decSep = Locale.current.decimalSeparatorForSure
         let zilString = "1\(decSep)01"
-        XCTAssertEqual(try Zil(trimming: zilString).asString(in: .zil), zilString)
+        #expect(try Zil(trimming: zilString).asString(in: .zil) == zilString)
     }
 
-    func testNotRemovingTrailingZero() {
+    @Test func notRemovingTrailingZero() throws {
+        let decSep = Locale.current.decimalSeparatorForSure
         let zilString = "1\(decSep)0"
-        XCTAssertEqual(try Zil(trimming: zilString).asString(in: .zil, minFractionDigits: 1), zilString)
+        #expect(try Zil(trimming: zilString).asString(in: .zil, minFractionDigits: 1) == zilString)
     }
 
-    func testThatAmountContainingOneGoodDecSepAndOneBadDoesNotThrowMoreThanOneSepErrorButRatherDisallowedCharsWarning() {
-        let badSep = Locale.current.decimalSeparatorForSure == "." ? "," : "."
-
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1\(badSep)\(decSep)2"),
-            AmountError<Zil>.containsNonDecimalStringCharacter(disallowedCharacter: badSep)
-        )
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1\(decSep)\(badSep)2"),
-            AmountError<Zil>.containsNonDecimalStringCharacter(disallowedCharacter: badSep)
-        )
+    @Test func goodAndBadDecSepThrowsDisallowedCharError() {
+        let decSep = Locale.current.decimalSeparatorForSure
+        let badSep = decSep == "." ? "," : "."
+        #expect(throws: AmountError<Zil>.containsNonDecimalStringCharacter(disallowedCharacter: badSep)) {
+            try Zil(zil: "1\(badSep)\(decSep)2")
+        }
+        #expect(throws: AmountError<Zil>.containsNonDecimalStringCharacter(disallowedCharacter: badSep)) {
+            try Zil(zil: "1\(decSep)\(badSep)2")
+        }
     }
 
-    func testThatAmountContainingMoreThanOneDecimalSeparatorThrowsError() {
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1\(decSep)\(decSep)2"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "\(decSep)\(decSep)"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1\(decSep)\(decSep)\(decSep)2"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "\(decSep)\(decSep)\(decSep)"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "\(decSep)1\(decSep)2"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1\(decSep)2\(decSep)3"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "\(decSep)1\(decSep)2\(decSep)"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "\(decSep)000\(decSep)"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "\(decSep)000\(decSep)0"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "0\(decSep)000\(decSep)"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
-
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "0\(decSep)000\(decSep)0"),
-            AmountError<Zil>.moreThanOneDecimalSeparator
-        )
+    @Test(arguments: moreThanOneDecSepInputs)
+    func moreThanOneDecimalSeparatorThrowsError(_ input: String) {
+        #expect(throws: AmountError<Zil>.moreThanOneDecimalSeparator) {
+            try Zil(zil: input)
+        }
     }
 
-    func testQaToZil() {
-        XCTAssertEqual(
-            try Qa(qa: "1000000000").asZil,
-            try Zil(zil: "0\(decSep)001")
-        )
+    @Test func qaToZil() throws {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(try Qa(qa: "1000000000").asZil == Zil(zil: "0\(decSep)001"))
     }
 
-    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorZilAmount0() {
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "0\(decSep)"),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
-
-        XCTAssertThrowsSpecificError(
-            try ZilAmount(zil: "0\(decSep)"),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
+    @Test(arguments: endsWithDecSepZilInputs)
+    func decimalStringEndingWithDecimalSeparatorThrowsErrorZil(_ input: String) {
+        #expect(throws: AmountError<Zil>.endsWithDecimalSeparator) {
+            try Zil(zil: input)
+        }
     }
 
-    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorZilAmount1() {
-        XCTAssertThrowsSpecificError(
-            try Zil(zil: "1\(decSep)"),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
-
-        XCTAssertThrowsSpecificError(
-            try ZilAmount(zil: "1\(decSep)"),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
+    @Test(arguments: endsWithDecSepZilAmountInputs)
+    func decimalStringEndingWithDecimalSeparatorThrowsErrorZilAmount(_ input: String) {
+        #expect(throws: AmountError<Zil>.endsWithDecimalSeparator) {
+            try ZilAmount(zil: input)
+        }
     }
 
-    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiFromZilAmount0() {
-        XCTAssertThrowsSpecificError(
-            try Li(zil: "0\(decSep)"),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
+    @Test(arguments: endsWithDecSepLiFromZilInputs)
+    func decimalStringEndingWithDecimalSeparatorThrowsErrorLiFromZil(_ input: String) {
+        #expect(throws: AmountError<Zil>.endsWithDecimalSeparator) {
+            try Li(zil: input)
+        }
     }
 
-    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiFromZilAmount1() {
-        XCTAssertThrowsSpecificError(
-            try Li(zil: "1\(decSep)"),
-            AmountError<Zil>.endsWithDecimalSeparator
-        )
+    @Test(arguments: endsWithDecSepLiInputs)
+    func decimalStringEndingWithDecimalSeparatorThrowsErrorLi(_ input: String) {
+        #expect(throws: AmountError<Li>.endsWithDecimalSeparator) {
+            try Li(li: input)
+        }
     }
 
-    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiAmount0() {
-        XCTAssertThrowsSpecificError(
-            try Li(li: "0\(decSep)"),
-            AmountError<Li>.endsWithDecimalSeparator
-        )
+    @Test func liAsString() {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(Li(1).asString(in: .qa) == "1000000")
+        #expect(Li(1).asString(in: .li) == "1")
+        #expect(Li(1).asString(in: .zil) == "0\(decSep)000001")
     }
 
-    func testThatDecimalStringEndingWithDecimalSeparatorThrowsErrorLiAmount1() {
-        XCTAssertThrowsSpecificError(
-            try Li(li: "1\(decSep)"),
-            AmountError<Li>.endsWithDecimalSeparator
-        )
+    @Test(arguments: LiCase.all)
+    func liAsString(_ c: LiCase) {
+        #expect(c.li.asString(in: c.unit) == c.expected)
     }
 
-    func testLiAsString() {
-        XCTAssertEqual(Li(1).asString(in: .qa), "1000000")
-        XCTAssertEqual(Li(1).asString(in: .li), "1")
-        XCTAssertEqual(Li(1).asString(in: .zil), "0\(decSep)000001")
-
-        XCTAssertEqual(Li(10).asString(in: .qa), "10000000")
-        XCTAssertEqual(Li(10).asString(in: .li), "10")
-        XCTAssertEqual(Li(10).asString(in: .zil), "0\(decSep)00001")
-
-        XCTAssertEqual(Li(100).asString(in: .qa), "100000000")
-        XCTAssertEqual(Li(100).asString(in: .li), "100")
-        XCTAssertEqual(Li(100).asString(in: .zil), "0\(decSep)0001")
-
-        XCTAssertEqual(Li(1000).asString(in: .qa), "1000000000")
-        XCTAssertEqual(Li(1000).asString(in: .li), "1000")
-        XCTAssertEqual(Li(1000).asString(in: .zil), "0\(decSep)001")
-
-        XCTAssertEqual(Li(10000).asString(in: .qa), "10000000000")
-        XCTAssertEqual(Li(10000).asString(in: .li), "10000")
-        XCTAssertEqual(Li(10000).asString(in: .zil), "0\(decSep)01")
-
-        XCTAssertEqual(Li(100_000).asString(in: .qa), "100000000000")
-        XCTAssertEqual(Li(100_000).asString(in: .li), "100000")
-        XCTAssertEqual(Li(100_000).asString(in: .zil), "0\(decSep)1")
-
-        XCTAssertEqual(Li(1_000_000).asString(in: .qa), "1000000000000")
-        XCTAssertEqual(Li(1_000_000).asString(in: .li), "1000000")
-        XCTAssertEqual(Li(1_000_000).asString(in: .zil), "1")
-
-        XCTAssertEqual(Li(10_000_000).asString(in: .qa), "10000000000000")
-        XCTAssertEqual(Li(10_000_000).asString(in: .li), "10000000")
-        XCTAssertEqual(Li(10_000_000).asString(in: .zil), "10")
-
-        XCTAssertEqual(Li(100_000_000).asString(in: .qa), "100000000000000")
-        XCTAssertEqual(Li(100_000_000).asString(in: .li), "100000000")
-        XCTAssertEqual(Li(987_000_000).asString(in: .zil), "987")
-
-        XCTAssertEqual(Li(1_000_000_000).asString(in: .qa), "1000000000000000")
-        XCTAssertEqual(Li(1_000_000_000).asString(in: .li), "1000000000")
-        XCTAssertEqual(Li(4_321_000_000).asString(in: .zil), "4321")
-
-        XCTAssertEqual(Li(10_000_000_000).asString(in: .qa), "10000000000000000")
-        XCTAssertEqual(Li(10_000_000_000).asString(in: .li), "10000000000")
-        XCTAssertEqual(Li(10_000_000_000).asString(in: .zil), "10000")
-
-        XCTAssertEqual(Li(100_000_000_000).asString(in: .qa), "100000000000000000")
-        XCTAssertEqual(Li(100_000_000_000).asString(in: .li), "100000000000")
-        XCTAssertEqual(Li(106_078_000_000).asString(in: .zil), "106078")
-
-        XCTAssertEqual(Li(1_000_000_000_000).asString(in: .qa), "1000000000000000000")
-        XCTAssertEqual(Li(1_000_000_000_000).asString(in: .li), "1000000000000")
-        XCTAssertEqual(Li(1_000_000_000_000).asString(in: .zil), "1000000")
-
-        XCTAssertEqual(Li(10_000_000_000_000).asString(in: .qa), "10000000000000000000")
-        XCTAssertEqual(Li(10_000_000_000_000).asString(in: .li), "10000000000000")
-        XCTAssertEqual(Li(10_000_000_000_000).asString(in: .zil), "10000000")
+    @Test(arguments: ZilCase.all)
+    func zilAsString(_ c: ZilCase) {
+        #expect(c.zil.asString(in: c.unit) == c.expected)
     }
+}
 
-    func testZilAsString() {
-        XCTAssertEqual(Zil(1).asString(in: .qa), "1000000000000")
-        XCTAssertEqual(Zil(1).asString(in: .li), "1000000")
-        XCTAssertEqual(Zil(1).asString(in: .zil), "1")
+// MARK: - Parameterized input sets
 
-        XCTAssertEqual(Zil(10).asString(in: .qa), "10000000000000")
-        XCTAssertEqual(Zil(10).asString(in: .li), "10000000")
-        XCTAssertEqual(Zil(10).asString(in: .zil), "10")
+private var moreThanOneDecSepInputs: [String] {
+    let d = Locale.current.decimalSeparatorForSure
+    return [
+        "1\(d)\(d)2",
+        "\(d)\(d)",
+        "1\(d)\(d)\(d)2",
+        "\(d)\(d)\(d)",
+        "\(d)1\(d)2",
+        "1\(d)2\(d)3",
+        "\(d)1\(d)2\(d)",
+        "\(d)000\(d)",
+        "\(d)000\(d)0",
+        "0\(d)000\(d)",
+        "0\(d)000\(d)0",
+    ]
+}
 
-        XCTAssertEqual(Zil(100).asString(in: .qa), "100000000000000")
-        XCTAssertEqual(Zil(100).asString(in: .li), "100000000")
-        XCTAssertEqual(Zil(100).asString(in: .zil), "100")
+private var endsWithDecSepZilInputs: [String] {
+    let d = Locale.current.decimalSeparatorForSure
+    return ["0\(d)", "1\(d)"]
+}
 
-        XCTAssertEqual(Zil(1000).asString(in: .qa), "1000000000000000")
-        XCTAssertEqual(Zil(1000).asString(in: .li), "1000000000")
-        XCTAssertEqual(Zil(1234).asString(in: .zil), "1234")
+private var endsWithDecSepZilAmountInputs: [String] {
+    let d = Locale.current.decimalSeparatorForSure
+    return ["0\(d)", "1\(d)"]
+}
 
-        XCTAssertEqual(Zil(10000).asString(in: .qa), "10000000000000000")
-        XCTAssertEqual(Zil(10000).asString(in: .li), "10000000000")
-        XCTAssertEqual(Zil(10000).asString(in: .zil), "10000")
+private var endsWithDecSepLiFromZilInputs: [String] {
+    let d = Locale.current.decimalSeparatorForSure
+    return ["0\(d)", "1\(d)"]
+}
 
-        XCTAssertEqual(Zil(100_000).asString(in: .qa), "100000000000000000")
-        XCTAssertEqual(Zil(100_000).asString(in: .li), "100000000000")
-        XCTAssertEqual(Zil(12345).asString(in: .zil), "12345")
-
-        XCTAssertEqual(Zil(1_000_000).asString(in: .qa), "1000000000000000000")
-        XCTAssertEqual(Zil(1_000_000).asString(in: .li), "1000000000000")
-        XCTAssertEqual(Zil(123_456).asString(in: .zil), "123456")
-
-        XCTAssertEqual(Zil(1_234_567).asString(in: .qa), "1234567000000000000")
-        XCTAssertEqual(Zil(1_234_567).asString(in: .li), "1234567000000")
-        XCTAssertEqual(Zil(1_234_567).asString(in: .zil), "1234567")
-
-        XCTAssertEqual(Zil(100_000_000).asString(in: .qa), "100000000000000000000")
-        XCTAssertEqual(Zil(100_000_000).asString(in: .li), "100000000000000")
-        XCTAssertEqual(Zil(987_000_000).asString(in: .zil), "987000000")
-
-        XCTAssertEqual(Zil(9_000_000_000).asString(in: .qa), "9000000000000000000000")
-        XCTAssertEqual(Zil(9_000_000_000).asString(in: .li), "9000000000000000")
-        XCTAssertEqual(Zil(9_085_000_000).asString(in: .zil), "9085000000")
-
-        // bigger than total supply
-        XCTAssertEqual(Zil(39_000_000_009).asString(in: .qa), "39000000009000000000000")
-        XCTAssertEqual(Zil(39_000_000_004).asString(in: .li), "39000000004000000")
-    }
-
-    func testBiggerThanTotalSupplyManyDigits() {
-        XCTAssertEqual(Zil(39_085_000_499).asString(in: .zil), "39085000499")
-    }
+private var endsWithDecSepLiInputs: [String] {
+    let d = Locale.current.decimalSeparatorForSure
+    return ["0\(d)", "1\(d)"]
 }

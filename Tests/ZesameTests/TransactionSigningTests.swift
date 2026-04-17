@@ -23,19 +23,19 @@
 //
 
 import CryptoKit
-import XCTest
+import Foundation
+import Testing
 @testable import Zesame
 
 private let network: Network = .mainnet
 private let service = DefaultZilliqaService(endpoint: .testnet)
 
-class TransactionSigningTests: XCTestCase {
-    func testTransactionSigning() throws {
+@Suite struct TransactionSigningTests {
+    @Test func transactionSigning() throws {
         // Some uninteresting Zilliqa TESTNET private key, that might contain some worthless TEST tokens.
-        let privateKey =
-            try PrivateKey(
-                rawRepresentation: Data(hex: "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638")
-            )
+        let privateKey = try PrivateKey(
+            rawRepresentation: Data(hex: "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638")
+        )
         let publicKey = privateKey.publicKey
 
         let unsignedTx = try Transaction(
@@ -54,22 +54,18 @@ class TransactionSigningTests: XCTestCase {
         let signedTransaction = SignedTransaction(transaction: unsignedTx, signedBy: publicKey, signature: signature)
         let jsonEncoder = JSONEncoder()
         jsonEncoder.outputFormatting = .prettyPrinted
-        do {
-            let transactionJSONData = try jsonEncoder.encode(signedTransaction)
-            let json = try XCTUnwrap(try JSONSerialization.jsonObject(with: transactionJSONData) as? [String: Any])
+        let transactionJSONData = try jsonEncoder.encode(signedTransaction)
+        let json = try #require(try JSONSerialization.jsonObject(with: transactionJSONData) as? [String: Any])
 
-            XCTAssertEqual(json["pubKey"] as? String, expectedPubKey)
-            XCTAssertEqual(json["toAddr"] as? String, "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039")
-            XCTAssertEqual(json["amount"] as? String, "15000000000000")
-            XCTAssertEqual(json["gasPrice"] as? String, "100000000000")
-            XCTAssertEqual(json["gasLimit"] as? String, "50")
-            XCTAssertEqual(json["version"] as? Int, 65537)
-            XCTAssertEqual(json["nonce"] as? Int, 4)
-            let sig = json["signature"] as? String
-            XCTAssertEqual(sig?.count, 128, "BIP340 Schnorr signature should be 64 bytes (128 hex chars)")
-        } catch {
-            return XCTFail("Should not throw, unexpected error: \(error)")
-        }
+        #expect(json["pubKey"] as? String == expectedPubKey)
+        #expect(json["toAddr"] as? String == "9Ca91EB535Fb92Fda5094110FDaEB752eDb9B039")
+        #expect(json["amount"] as? String == "15000000000000")
+        #expect(json["gasPrice"] as? String == "100000000000")
+        #expect(json["gasLimit"] as? String == "50")
+        #expect(json["version"] as? Int == 65537)
+        #expect(json["nonce"] as? Int == 4)
+        let sig = json["signature"] as? String
+        #expect(sig?.count == 128, "BIP340 Schnorr signature should be 64 bytes (128 hex chars)")
     }
 }
 

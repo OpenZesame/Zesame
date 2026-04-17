@@ -22,7 +22,8 @@
 // SOFTWARE.
 //
 
-import XCTest
+import Foundation
+import Testing
 @testable import Zesame
 
 private let privateKey =
@@ -42,88 +43,49 @@ public extension KDFParams {
 }
 
 extension Keystore {
-    static func with(
-        kdfParams: KDFParams = .quickTestParameters,
-        done: @escaping (Keystore) -> Void
-    ) {
-        try! Keystore.from(
+    static func makeTest(kdfParams: KDFParams = .quickTestParameters) throws -> Keystore {
+        try Keystore.from(
             privateKey: privateKey,
             encryptBy: password,
             kdf: .pbkdf2,
             kdfParams: kdfParams
-        ) {
-            switch $0 {
-            case let .failure(error):
-                XCTFail("unexpected error: \(error)")
-            case let .success(keyStore):
-                done(keyStore)
-            }
-        }
-    }
-
-    func decryptPrivateKey(done: @escaping (PrivateKey) -> Void) {
-        decryptPrivateKey(password: password, done: done)
-    }
-
-    func decryptPrivateKey(password: String, done: @escaping (PrivateKey) -> Void) {
-        decryptPrivateKeyWith(password: password) {
-            switch $0 {
-            case let .failure(error):
-                XCTFail("unexpected error: \(error)")
-            case let .success(decryptedPrivateKey):
-                done(decryptedPrivateKey)
-            }
-        }
+        )
     }
 }
 
-class KeystoreTests: XCTestCase {
-    func testPBKDF2AES256GCM() {
-        Keystore.with { keystore in
-            keystore.decryptPrivateKey { decryptedPrivateKey in
-                XCTAssertEqual(decryptedPrivateKey, privateKey)
-            }
-        }
+@Suite struct KeystoreTests {
+    @Test func pbkdf2AES256GCM() throws {
+        let keystore = try Keystore.makeTest()
+        let decryptedPrivateKey = try keystore.decryptPrivateKey(encryptedBy: password)
+        #expect(decryptedPrivateKey == privateKey)
     }
 
-    typealias JSON = [String: Any]
-    func testNewWalletKeystore() throws {
+    @Test func newWalletKeystore() throws {
+        typealias JSON = [String: Any]
         let newPrivateKey = PrivateKey()
-        let expectWalletImport = expectation(description: "keystore from private key")
-        try Keystore.from(
+        let keystore = try Keystore.from(
             privateKey: newPrivateKey,
             encryptBy: password,
             kdf: .pbkdf2,
             kdfParams: .quickTestParameters
-        ) {
-            switch $0 {
-            case let .failure(error): XCTFail("unexpected error: \(error)")
-            case let .success(keystore):
-                XCTAssertEqual(keystore.version, 4)
-                XCTAssertEqual(keystore.crypto.keyDerivationFunctionParameters.saltHex.count, 64)
-                XCTAssertEqual(keystore.crypto.cipherParameters.nonceHex.count, 24)
-                XCTAssertEqual(keystore.crypto.cipherParameters.tagHex.count, 32)
-                do {
-                    let encoder = JSONEncoder()
-                    encoder.outputFormatting = .prettyPrinted
-                    let jsonData = try encoder.encode(keystore)
-                    let json = try! JSONSerialization.jsonObject(with: jsonData, options: []) as! JSON
-                    let crypto = json["crypto"] as! JSON
-                    XCTAssertEqual(crypto["cipher"] as? String, "aes-256-gcm")
-                    let kdfparams = crypto["kdfparams"] as! JSON
-                    XCTAssertEqual(kdfparams["prf"] as? String, "hmac-sha512")
-                    let salt = kdfparams["salt"] as! String
-                    XCTAssertNotNil(try? HexString(salt))
-                    let cipherparams = crypto["cipherparams"] as! JSON
-                    XCTAssertNotNil(cipherparams["nonce"] as? String)
-                    XCTAssertNotNil(cipherparams["tag"] as? String)
-                } catch {
-                    XCTFail("failed to encode: \(error)")
-                }
-                expectWalletImport.fulfill()
-            }
-        }
+        )
+        #expect(keystore.version == 4)
+        #expect(keystore.crypto.keyDerivationFunctionParameters.saltHex.count == 64)
+        #expect(keystore.crypto.cipherParameters.nonceHex.count == 24)
+        #expect(keystore.crypto.cipherParameters.tagHex.count == 32)
 
-        waitForExpectations(timeout: 3, handler: nil)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let jsonData = try encoder.encode(keystore)
+        let json = try #require(try JSONSerialization.jsonObject(with: jsonData, options: []) as? JSON)
+        let crypto = try #require(json["crypto"] as? JSON)
+        #expect(crypto["cipher"] as? String == "aes-256-gcm")
+        let kdfparams = try #require(crypto["kdfparams"] as? JSON)
+        #expect(kdfparams["prf"] as? String == "hmac-sha512")
+        let salt = try #require(kdfparams["salt"] as? String)
+        #expect((try? HexString(salt)) != nil)
+        let cipherparams = try #require(crypto["cipherparams"] as? JSON)
+        #expect(cipherparams["nonce"] as? String != nil)
+        #expect(cipherparams["tag"] as? String != nil)
     }
 }

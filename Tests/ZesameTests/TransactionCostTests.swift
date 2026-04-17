@@ -24,55 +24,41 @@
 
 import BigInt
 import Foundation
-import XCTest
+import Testing
 @testable import Zesame
 
-class TransactionCostTests: XCTestCase {
-    func testTotalAmount() {
+@Suite struct TransactionCostTests {
+    @Test func totalAmount() {
         let amount: ZilAmount = 21_000_000_000
-        XCTAssertEqual(amount.qa, "21000000000000000000000")
+        #expect(amount.qa == "21000000000000000000000")
     }
 
-    func testGasPrice() {
+    @Test func gasPrice() {
         let gasPrice: GasPrice = 1_100_000_000_000
-        XCTAssertEqual(gasPrice.asZil, 1.1)
+        #expect(gasPrice.asZil == 1.1)
     }
 
-    func testWorking() {
-        XCTAssertEqual(Zil(10).qa, BigInt(10_000_000_000_000))
+    @Test func working() {
+        #expect(Zil(10).qa == BigInt(10_000_000_000_000))
     }
 
-    func testExceedingTotalSupplyIntegerLiteral() {
-        var didThrowError = false
-        do {
-            _ = try Payment.estimatedTotalCostOfTransaction(amount: 20_999_999_999, gasPrice: 1_000_000_000_001)
-        } catch let error as AmountError<ZilAmount> {
-            didThrowError = true
-            switch error {
-            case let .tooLarge(max):
-                XCTAssertEqual(max, ZilAmount.max)
-            default: XCTFail()
-            }
-        } catch {
-            return XCTFail()
+    @Test func exceedingTotalSupplyIntegerLiteral() {
+        #expect {
+            try Payment.estimatedTotalCostOfTransaction(amount: 20_999_999_999, gasPrice: 1_000_000_000_001)
+        } throws: { error in
+            guard let amountError = error as? AmountError<ZilAmount>,
+                  case let .tooLarge(max) = amountError else { return false }
+            return max == ZilAmount.max
         }
-        XCTAssertTrue(didThrowError)
     }
 
-    func testExceedingTotalSupplyStringLiteral() {
-        var didThrowError = false
-        do {
-            _ = try Payment.estimatedTotalCostOfTransaction(amount: "20999999999", gasPrice: "1000000000001")
-        } catch let error as AmountError<ZilAmount> {
-            didThrowError = true
-            switch error {
-            case let .tooLarge(max):
-                XCTAssertEqual(max, ZilAmount.max)
-            default: XCTFail()
-            }
-        } catch {
-            return XCTFail()
+    @Test func exceedingTotalSupplyStringLiteral() {
+        #expect {
+            try Payment.estimatedTotalCostOfTransaction(amount: "20999999999", gasPrice: "1000000000001")
+        } throws: { error in
+            guard let amountError = error as? AmountError<ZilAmount>,
+                  case let .tooLarge(max) = amountError else { return false }
+            return max == ZilAmount.max
         }
-        XCTAssertTrue(didThrowError)
     }
 }

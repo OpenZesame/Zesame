@@ -22,81 +22,48 @@
 // SOFTWARE.
 //
 
-import XCTest
+import Testing
 @testable import Zesame
 
-class Bech32Tests: XCTestCase {
-    func test3Vectors() {
-        func doTest(_ vector: ZilliqaVector) {
-            do {
-                let expectedFullAddress = [vector.prefix, "1", vector.address, vector.checksum].joined()
-                let bech32Address = try Bech32Address(bech32String: expectedFullAddress)
-
-                XCTAssertEqual(bech32Address.humanReadablePrefix, vector.prefix)
-                XCTAssertEqual(bech32Address.dataPart.checksum.asString, vector.checksum)
-                XCTAssertEqual(bech32Address.asString, expectedFullAddress)
-            } catch {
-                XCTFail("Error: \(error)")
-            }
-        }
-        for zilliqaVector in zilliqaVectors {
-            doTest(zilliqaVector)
-        }
+@Suite struct Bech32Tests {
+    @Test(arguments: zilliqaVectors)
+    func zilliqaVector(_ vector: ZilliqaVector) throws {
+        let expectedFullAddress = [vector.prefix, "1", vector.address, vector.checksum].joined()
+        let bech32Address = try Bech32Address(bech32String: expectedFullAddress)
+        #expect(bech32Address.humanReadablePrefix == vector.prefix)
+        #expect(bech32Address.dataPart.checksum.asString == vector.checksum)
+        #expect(bech32Address.asString == expectedFullAddress)
     }
 
-    func testValidChecksums() {
-        func doTest(_ valid: String) {
-            XCTAssertNoThrow(
-                try Bech32.decode(valid),
-                "Valid checksum should not throw when decoded"
-            )
-        }
-
-        for validChecksumVector in validChecksumVectors {
-            doTest(validChecksumVector)
-        }
+    @Test(arguments: validChecksumVectors)
+    func validChecksum(_ bech32: String) throws {
+        _ = try Bech32.decode(bech32)
     }
 
-    func testInvalidChecksums() {
-        func doTest(_ invalid: InvalidChecksum) {
-            XCTAssertThrowsError(
-                try Bech32.decode(invalid.bech32),
-                "Expect Bech32.DecodingError: \(invalid.error)"
-            ) { error in
-                guard let bech32Error = error as? Bech32.DecodingError else {
-                    return XCTFail(
-                        "Wrong error type, got error: \(error), expected to be of type \(type(of: Bech32.DecodingError.self))"
-                    )
-                }
-                XCTAssertEqual(bech32Error, invalid.error)
-            }
-        }
-
-        for invalidChecksumVector in invalidChecksumVectors {
-            doTest(invalidChecksumVector)
+    @Test(arguments: invalidChecksumVectors)
+    func invalidChecksum(_ vector: InvalidChecksumVector) {
+        #expect(throws: vector.error) {
+            try Bech32.decode(vector.bech32)
         }
     }
 }
 
-private typealias ZilliqaVector = (prefix: String, address: String, checksum: String)
+struct ZilliqaVector: Sendable {
+    let prefix: String
+    let address: String
+    let checksum: String
+}
+
+struct InvalidChecksumVector: Sendable {
+    let bech32: String
+    let error: Bech32.DecodingError
+}
 
 /// https://github.com/Zilliqa/Zilliqa/wiki/Address-Standard#specification
 private let zilliqaVectors: [ZilliqaVector] = [
-    (
-        prefix: "zil",
-        address: "02n74869xnvdwq3yh8p0k9jjgtejruft",
-        checksum: "268tg8"
-    ),
-    (
-        prefix: "zil",
-        address: "48fy8yjxn6jf5w36kqc7x73qd3ufuu24",
-        checksum: "a4u8t9"
-    ),
-    (
-        prefix: "zil",
-        address: "fdv7u7rll9epgcqv9xxh9lhwq427nsql",
-        checksum: "58qcs9"
-    ),
+    ZilliqaVector(prefix: "zil", address: "02n74869xnvdwq3yh8p0k9jjgtejruft", checksum: "268tg8"),
+    ZilliqaVector(prefix: "zil", address: "48fy8yjxn6jf5w36kqc7x73qd3ufuu24", checksum: "a4u8t9"),
+    ZilliqaVector(prefix: "zil", address: "fdv7u7rll9epgcqv9xxh9lhwq427nsql", checksum: "58qcs9"),
 ]
 
 private let validChecksumVectors: [String] = [
@@ -108,20 +75,18 @@ private let validChecksumVectors: [String] = [
     "?1ezyfcl",
 ]
 
-private let invalidChecksumVectors: [InvalidChecksum] = [
-    (" 1nwldj5", Bech32.DecodingError.nonPrintableCharacter),
-    ("\u{7f}1axkwrx", Bech32.DecodingError.nonPrintableCharacter),
-    (
-        "an84characterslonghumanreadablepartthatcontainsthenumber1andtheexcludedcharactersbio1569pvx",
-        Bech32.DecodingError.stringLengthExceeded
+private let invalidChecksumVectors: [InvalidChecksumVector] = [
+    InvalidChecksumVector(bech32: " 1nwldj5", error: .nonPrintableCharacter),
+    InvalidChecksumVector(bech32: "\u{7f}1axkwrx", error: .nonPrintableCharacter),
+    InvalidChecksumVector(
+        bech32: "an84characterslonghumanreadablepartthatcontainsthenumber1andtheexcludedcharactersbio1569pvx",
+        error: .stringLengthExceeded
     ),
-    ("pzry9x0s0muk", Bech32.DecodingError.noChecksumMarker),
-    ("1pzry9x0s0muk", Bech32.DecodingError.incorrectHumanReadablePartSize),
-    ("x1b4n0q5v", Bech32.DecodingError.invalidCharacter),
-    ("li1dgmt3", Bech32.DecodingError.incorrectChecksumSize),
-    ("de1lg7wt\u{ff}", Bech32.DecodingError.nonPrintableCharacter),
-    ("10a06t8", Bech32.DecodingError.incorrectHumanReadablePartSize),
-    ("1qzzfhee", Bech32.DecodingError.incorrectHumanReadablePartSize),
+    InvalidChecksumVector(bech32: "pzry9x0s0muk", error: .noChecksumMarker),
+    InvalidChecksumVector(bech32: "1pzry9x0s0muk", error: .incorrectHumanReadablePartSize),
+    InvalidChecksumVector(bech32: "x1b4n0q5v", error: .invalidCharacter),
+    InvalidChecksumVector(bech32: "li1dgmt3", error: .incorrectChecksumSize),
+    InvalidChecksumVector(bech32: "de1lg7wt\u{ff}", error: .nonPrintableCharacter),
+    InvalidChecksumVector(bech32: "10a06t8", error: .incorrectHumanReadablePartSize),
+    InvalidChecksumVector(bech32: "1qzzfhee", error: .incorrectHumanReadablePartSize),
 ]
-
-private typealias InvalidChecksum = (bech32: String, error: Bech32.DecodingError)

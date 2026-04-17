@@ -24,49 +24,37 @@
 
 import BigInt
 import Foundation
-import XCTest
+import Testing
 @testable import Zesame
 
-class StringCommaSeparatorFunctionsTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
-        continueAfterFailure = false
+@Suite struct StringCommaSeparatorFunctionsTests {
+    private let decSep = Locale.current.decimalSeparatorForSure
+
+    @Test func doubleFormattingContainsLocaleDecimalSeparator() {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect(Double(0.1).asString() == "0\(decSep)1")
     }
 
-    func testDoubleFormattingContainsLocaleDecimalSeparator() {
-        XCTAssertEqual(Double(0.1).asString(), "0\(Locale.current.decimalSeparatorForSure)1")
+    @Test func stringDecimalPlaces() {
+        #expect("1".countDecimalPlaces() == 0)
+        #expect("1337".countDecimalPlaces() == 0)
+        #expect("0".countDecimalPlaces() == 0)
+        #expect(Double(0.01).asString(maxFractionDigits: 2).countDecimalPlaces() == 2)
+        #expect(Double(0.01).asString(maxFractionDigits: 9).countDecimalPlaces() == 2)
+        #expect(Double(0.001).asString(maxFractionDigits: 9).countDecimalPlaces() == 3)
+        #expect(Double(0.0001).asString(maxFractionDigits: 9).countDecimalPlaces() == 4)
     }
 
-    func testStringDecimalPlaces() {
-        XCTAssertEqual("1".countDecimalPlaces(), 0)
-        XCTAssertEqual("1337".countDecimalPlaces(), 0)
-        XCTAssertEqual("0".countDecimalPlaces(), 0)
-        XCTAssertEqual(Double(0.01).asString(maxFractionDigits: 2).countDecimalPlaces(), 2)
-        XCTAssertEqual(Double(0.01).asString(maxFractionDigits: 9).countDecimalPlaces(), 2)
-        XCTAssertEqual(Double(0.001).asString(maxFractionDigits: 9).countDecimalPlaces(), 3)
-        XCTAssertEqual(Double(0.0001).asString(maxFractionDigits: 9).countDecimalPlaces(), 4)
+    @Test func stringContainMoreThanOneSeparator() {
+        let decSep = Locale.current.decimalSeparatorForSure
+        #expect("1\(decSep)2".doesNotContainMoreThanOneDecimalSeparator())
+        #expect(!"1\(decSep)\(decSep)2".doesNotContainMoreThanOneDecimalSeparator())
     }
 
-    func testStringContainMoreThanOneSeparator() {
-        XCTAssertTrue(
-            "1\(decSep)2".doesNotContainMoreThanOneDecimalSeparator()
-        )
-        XCTAssertFalse(
-            "1\(decSep)\(decSep)2".doesNotContainMoreThanOneDecimalSeparator()
-        )
-    }
-
-    func testStringCharsAsStrings() {
-        func doTest(string: String, expected: [String], function: (String) -> () -> [String]) {
-            XCTAssertEqual(
-                function(string)(), expected
-            )
-        }
-        doTest(string: "ABC", expected: ["A", "B", "C"], function: String.charactersAsStrings)
+    @Test func stringCharsAsStrings() {
+        #expect("ABC".charactersAsStrings() == ["A", "B", "C"])
     }
 }
-
-private let decSep = Locale.current.decimalSeparatorForSure
 
 private extension Double {
     func asString(maxFractionDigits: Int = 2) -> String {

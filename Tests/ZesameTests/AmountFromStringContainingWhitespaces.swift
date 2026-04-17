@@ -23,19 +23,19 @@
 //
 
 import Foundation
-import XCTest
+import Testing
 @testable import Zesame
 
-class AmountFromStringContainingWhitespaces: XCTestCase {
-    func testZilStringContainingWhitespaces() {
-        XCTAssertEqual(Zil("1 234 567").qa, 1_234_567_000_000_000_000)
+@Suite struct AmountFromStringContainingWhitespacesTests {
+    @Test func zilStringContainingWhitespaces() {
+        #expect(Zil("1 234 567").qa == 1_234_567_000_000_000_000)
     }
 
-    func testZilAmountContainingWhitespaces() {
-        XCTAssertEqual(ZilAmount("1 234 567").qa, 1_234_567_000_000_000_000)
+    @Test func zilAmountContainingWhitespaces() {
+        #expect(ZilAmount("1 234 567").qa == 1_234_567_000_000_000_000)
     }
 
-    func testGasPriceContainingWhitespaces() {
-        XCTAssertEqual(try GasPrice(li: "13 456 789").qa, 13_456_789_000_000)
+    @Test func gasPriceContainingWhitespaces() throws {
+        #expect(try GasPrice(li: "13 456 789").qa == 13_456_789_000_000)
     }
 }

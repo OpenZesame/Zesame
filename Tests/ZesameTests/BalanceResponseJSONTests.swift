@@ -24,36 +24,26 @@
 
 import BigInt
 import Foundation
-import XCTest
+import Testing
 @testable import Zesame
 
-class BalanceResponseJSONTests: XCTestCase {
-    func testDecoding() throws {
-        do {
-            let response = try JSONDecoder().decode(
-                BalanceResponse.self,
-                from: XCTUnwrap(validJSON.data(using: .utf8))
-            )
-            XCTAssertEqual(response.nonce, 16)
-            XCTAssertEqual(response.balance.qaString, "18446744073637511711")
-            XCTAssertNotEqual(response.balance.qaString, "18446744073637511712")
-            XCTAssertNotEqual(response.balance.qaString, "18446744073637511710")
-        } catch {
-            XCTFail("JSONDecoding should not fail, got error: \(error)")
-        }
+@Suite struct BalanceResponseJSONTests {
+    @Test func decoding() throws {
+        let data = try #require(validJSON.data(using: .utf8))
+        let response = try JSONDecoder().decode(BalanceResponse.self, from: data)
+        #expect(response.nonce == 16)
+        #expect(response.balance.qaString == "18446744073637511711")
+        #expect(response.balance.qaString != "18446744073637511712")
+        #expect(response.balance.qaString != "18446744073637511710")
     }
 
-    func testEncoding() throws {
-        do {
-            let model = try BalanceResponse(balance: ZilAmount(qa: "18446744073637511711"), nonce: 16)
-            let jsonEncoder = JSONEncoder()
-            jsonEncoder.outputFormatting = .prettyPrinted
-            let json = try jsonEncoder.encode(model)
-            let jsonString = try XCTUnwrap(String(data: json, encoding: .utf8))
-            XCTAssertEqual(jsonString, jsonString)
-        } catch {
-            XCTFail("JSONEncoding should not fail, got error: \(error)")
-        }
+    @Test func encoding() throws {
+        let model = try BalanceResponse(balance: ZilAmount(qa: "18446744073637511711"), nonce: 16)
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.outputFormatting = .prettyPrinted
+        let json = try jsonEncoder.encode(model)
+        let jsonString = try #require(String(data: json, encoding: .utf8))
+        #expect(!jsonString.isEmpty)
     }
 }
 
