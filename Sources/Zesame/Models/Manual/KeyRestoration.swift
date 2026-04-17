@@ -31,7 +31,10 @@ public enum KeyRestoration {
 
 public extension KeyRestoration {
     init(privateKeyHexString: String, encryptBy newPassword: String, kdf: KDF = .default) throws {
-        guard let privateKey = try? PrivateKey(rawRepresentation: Data(hex: privateKeyHexString)) else {
+        guard
+            let privateKeyData = Data(validatingHex: privateKeyHexString),
+            let privateKey = try? PrivateKey(rawRepresentation: privateKeyData)
+        else {
             throw Error.walletImport(.badPrivateKeyHex)
         }
         self = .privateKey(privateKey, encryptBy: newPassword, kdf: kdf)

@@ -67,14 +67,12 @@ public extension ZilliqaServiceReactive {
 
     func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> AnyPublisher<KeyPair, Zesame.Error> {
         Future { promise in
-            Task {
-                do {
-                    try promise(.success(keystore.toKeypair(encryptedBy: password)))
-                } catch let error as Zesame.Error {
-                    promise(.failure(error))
-                } catch {
-                    promise(.failure(.api(.request(error))))
-                }
+            do {
+                try promise(.success(keystore.toKeypair(encryptedBy: password)))
+            } catch let error as Zesame.Error {
+                promise(.failure(error))
+            } catch {
+                promise(.failure(.api(.request(error))))
             }
         }.eraseToAnyPublisher()
     }

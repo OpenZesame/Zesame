@@ -43,12 +43,29 @@ public extension DefaultAPIClient {
 // MARK: - APIClient
 
 public extension DefaultAPIClient {
+    enum HTTPError: Swift.Error, CustomStringConvertible {
+        case unacceptableStatusCode(code: Int, body: Data)
+
+        public var description: String {
+            switch self {
+            case let .unacceptableStatusCode(code, body):
+                let bodyString = String(data: body, encoding: .utf8) ?? "<non-utf8 \(body.count) bytes>"
+                return "HTTP \(code): \(bodyString)"
+            }
+        }
+    }
+
     func send<T: Decodable>(method: RPCMethod) async throws -> T {
         let rpcRequest = RPCRequest(method: method)
         do {
             var urlRequest = try rpcRequest.asURLRequest()
             urlRequest.url = baseURL
-            let (data, _) = try await session.data(for: urlRequest)
+            let (data, response) = try await session.data(for: urlRequest)
+            if let http = response as? HTTPURLResponse, !(200 ..< 300).contains(http.statusCode) {
+                throw Zesame.Error.api(.request(
+                    HTTPError.unacceptableStatusCode(code: http.statusCode, body: data)
+                ))
+            }
             let rpcResponse = try JSONDecoder().decode(RPCResponse<T>.self, from: data)
             switch rpcResponse {
             case let .rpcError(rpcError):

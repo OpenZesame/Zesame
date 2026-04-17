@@ -26,15 +26,31 @@ import BigInt
 import Foundation
 
 public extension Data {
+    /// Initialize `Data` from a hexadecimal string.
+    ///
+    /// Accepts an optional `0x` prefix. Odd-length strings are left-padded with a leading `0`
+    /// (`"f"` → `0x0f`). Traps on non-hex characters — previously malformed input was silently
+    /// truncated, which is hazardous for cryptographic material. Callers that handle untrusted
+    /// input should pre-validate via ``init(validatingHex:)``.
     init(hex: String) {
-        let s = hex.hasPrefix("0x") ? String(hex.dropFirst(2)) : hex
+        guard let data = Data(validatingHex: hex) else {
+            preconditionFailure("Invalid hex string: \(hex)")
+        }
+        self = data
+    }
+
+    init?(validatingHex hex: String) {
+        var s = hex.hasPrefix("0x") ? String(hex.dropFirst(2)) : hex
+        if !s.count.isMultiple(of: 2) {
+            s = "0" + s
+        }
         var result = Data()
+        result.reserveCapacity(s.count / 2)
         var index = s.startIndex
         while index < s.endIndex {
-            let end = s.index(index, offsetBy: 2, limitedBy: s.endIndex) ?? s.endIndex
-            if let byte = UInt8(s[index ..< end], radix: 16) {
-                result.append(byte)
-            }
+            let end = s.index(index, offsetBy: 2)
+            guard let byte = UInt8(s[index ..< end], radix: 16) else { return nil }
+            result.append(byte)
             index = end
         }
         self = result

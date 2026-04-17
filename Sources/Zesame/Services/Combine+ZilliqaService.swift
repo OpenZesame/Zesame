@@ -111,8 +111,9 @@ public extension CombineWrapper where Base: ZilliqaService {
 
     private func callAsync<R>(_ asyncCall: @escaping (Base) async throws -> R) -> AnyPublisher<R, Zesame.Error> {
         let base = base
-        return Future { promise in
-            Task {
+        let box = TaskBox()
+        return Future<R, Zesame.Error> { promise in
+            box.task = Task {
                 do {
                     let result = try await asyncCall(base)
                     promise(.success(result))
@@ -122,6 +123,12 @@ public extension CombineWrapper where Base: ZilliqaService {
                     promise(.failure(.api(.request(error))))
                 }
             }
-        }.eraseToAnyPublisher()
+        }
+        .handleEvents(receiveCancel: { box.task?.cancel() })
+        .eraseToAnyPublisher()
     }
+}
+
+final class TaskBox: @unchecked Sendable {
+    var task: Task<Void, Never>?
 }
