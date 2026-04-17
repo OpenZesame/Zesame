@@ -22,6 +22,7 @@
 // SOFTWARE.
 //
 
+import BigInt
 import Foundation
 
 public struct Amount: ExpressibleByAmount, Upperbound, Lowerbound, Hashable {

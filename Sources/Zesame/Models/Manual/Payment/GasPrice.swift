@@ -22,6 +22,7 @@
 // SOFTWARE.
 //
 
+import BigInt
 import Foundation
 
 public struct GasPrice: ExpressibleByAmount, AdjustableUpperbound, AdjustableLowerbound {

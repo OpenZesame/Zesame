@@ -25,7 +25,7 @@
 import Testing
 @testable import Zesame
 
-extension String: @retroactive HexStringConvertible {
+extension String: HexStringConvertible {
     public var hexString: HexString {
         do {
             return try HexString(self)

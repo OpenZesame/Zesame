@@ -40,7 +40,7 @@ public struct KeyPair {
     }
 }
 
-extension K1.Schnorr.PublicKey: CustomStringConvertible {
+extension K1.Schnorr.PublicKey: @retroactive CustomStringConvertible {
     public var description: String {
         compressedRepresentation.asHex
     }

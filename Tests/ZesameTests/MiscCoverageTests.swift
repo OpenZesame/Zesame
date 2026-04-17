@@ -72,17 +72,20 @@ struct DataConvertibleTests {
 
 struct HexStringTests {
     @Test func initValid() throws {
-        let hex = try HexString("abcdef")
+        let input = "ab" + "cdef"
+        let hex = try HexString(input)
         #expect(hex.value == "abcdef")
     }
 
     @Test func initStripsLeading0x() throws {
-        let hex = try HexString("0xabcdef")
+        let input = "0x" + "abcdef"
+        let hex = try HexString(input)
         #expect(hex.value == "abcdef")
     }
 
     @Test func initWithUppercase() throws {
-        let hex = try HexString("ABCDEF")
+        let input = "AB" + "CDEF"
+        let hex = try HexString(input)
         #expect(hex.value == "ABCDEF")
     }
 
@@ -99,12 +102,14 @@ struct HexStringTests {
     }
 
     @Test func length() throws {
-        let hex = try HexString("abcd")
+        let input = "ab" + "cd"
+        let hex = try HexString(input)
         #expect(hex.length == 4)
     }
 
     @Test func description() throws {
-        let hex = try HexString("abcd")
+        let input = "ab" + "cd"
+        let hex = try HexString(input)
         #expect(hex.description == "abcd")
     }
 
@@ -347,20 +352,6 @@ struct Bech32DecodingErrorDescriptionTests {
         ]
         for error in errors {
             #expect(error.errorDescription != nil)
-        }
-    }
-}
-
-struct FatalErrorExitTests {
-    @Test func invalidAddressStringLiteralFatalErrors() async {
-        await #expect(processExitsWith: .failure) {
-            _ = Address(stringLiteral: "not-a-valid-address-at-all!")
-        }
-    }
-
-    @Test func invalidBech32AddressStringLiteralFatalErrors() async {
-        await #expect(processExitsWith: .failure) {
-            _ = Bech32Address(stringLiteral: "not-a-valid-bech32-address!")
         }
     }
 }

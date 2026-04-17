@@ -424,7 +424,7 @@ struct ProtoTransactionWithReceiptTests {
         r2.cumgas = 100
         twr2.receipt = r2
 
-        var twr3 = ProtoTransactionWithReceipt()
+        let twr3 = ProtoTransactionWithReceipt()
         #expect(twr1 == twr2)
         #expect(twr1 != twr3)
     }
