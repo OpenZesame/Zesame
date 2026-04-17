@@ -53,7 +53,8 @@ public extension ZilliqaService {
     }
 
     func restoreWallet(from restoration: KeyRestoration, done: @escaping Done<Wallet>) {
-        background { [unowned self] in
+        background { [weak self] in
+            guard let self else { return }
             switch restoration {
             case .keystore(let keystore, let password):
                 keystore.decryptPrivateKeyWith(password: password) {

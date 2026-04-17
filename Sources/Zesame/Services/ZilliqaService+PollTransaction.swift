@@ -34,7 +34,8 @@ public extension ZilliqaService {
 
             let delay = DispatchTimeInterval.seconds(delayInSeconds)
 
-            background(delay: delay) { [unowned self] in
+            background(delay: delay) { [weak self] in
+                guard let self else { return }
                 self.getStatusOfTransaction(id: id) {
                     if case .success(let pollResponse) = $0, let receipt = TransactionReceipt(for: id, pollResponse: pollResponse) {
                         return done(.success(receipt))

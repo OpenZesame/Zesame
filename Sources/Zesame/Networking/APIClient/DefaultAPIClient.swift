@@ -29,7 +29,7 @@ public final class DefaultAPIClient: APIClient {
     
 
     private let session: Alamofire.Session
-    private unowned let interceptor: SimpleRequestAdapter
+    private let interceptor: SimpleRequestAdapter
     
     public init(baseURL: URL) {
         let interceptor = SimpleRequestAdapter(baseURL: baseURL)
