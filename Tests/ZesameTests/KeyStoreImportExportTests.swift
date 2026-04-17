@@ -26,12 +26,9 @@ import XCTest
 @testable import Zesame
 import CryptoSwift
 
-import EllipticCurveKit
 
 
-typealias PrivateKey = EllipticCurveKit.PrivateKey<Curve>
-
-private let privateKey = PrivateKey(hex: "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638")!
+private let privateKey = try! PrivateKey(rawRepresentation: Data(hex: "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638"))
 private let password = "apabanan"
 
 public extension KDFParams {
@@ -105,7 +102,7 @@ class ScryptTests: XCTestCase {
 
     typealias JSON = [String: Any]
     func testNewWalletKeystore() {
-        let privateKey = PrivateKey.generateNew()
+        let privateKey = PrivateKey()
         let password = "apabanan"
 
         let expectWalletImport = expectation(description: "keystore from private key")

@@ -58,7 +58,7 @@ public extension ExpressibleByAmount {
     }
 
     var qaString: String {
-        return qa.asDecimalString()
+        return String(qa)
     }
 
     func asString(`in` targetUnit: Unit, roundingIfNeeded: NSDecimalNumber.RoundingMode? = nil, roundingNumberOfDigits: Int = 2, minFractionDigits: Int? = nil) -> String {

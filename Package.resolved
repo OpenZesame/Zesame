@@ -1,5 +1,5 @@
 {
-  "originHash" : "90d72af91c7a1db2cbd0ff6b6d24d54e25e0e59c0ff312532a46bd83f63c9762",
+  "originHash" : "0647d2bbd0e7fff4e253fa01ce323391b1dfbaddeaf722d167c73d920c8d1ec9",
   "pins" : [
     {
       "identity" : "bigint",
@@ -20,12 +20,12 @@
       }
     },
     {
-      "identity" : "ellipticcurvekit",
+      "identity" : "k1",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Sajjon/EllipticCurveKit.git",
+      "location" : "https://github.com/Sajjon/K1.git",
       "state" : {
-        "revision" : "9ebdfefe73f97cd9a2b95cd94a093d4aad61d12e",
-        "version" : "1.0.2"
+        "revision" : "142c0c0194a53d249d0bfcb5d7998ea2f2403153",
+        "version" : "0.7.1"
       }
     },
     {

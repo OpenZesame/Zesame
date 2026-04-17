@@ -24,6 +24,5 @@
 
 import BigInt
 
-import EllipticCurveKit
-
-public typealias BigNumber = EllipticCurveKit.Number
+public typealias BigNumber = BigUInt
+public typealias Number = BigUInt

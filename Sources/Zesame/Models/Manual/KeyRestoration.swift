@@ -32,7 +32,7 @@ public enum KeyRestoration {
 public extension KeyRestoration {
 
     init(privateKeyHexString: String, encryptBy newPassword: String, kdf: KDF = .default) throws {
-        guard let privateKey = PrivateKey(hex: privateKeyHexString) else {
+        guard let privateKey = try? PrivateKey(rawRepresentation: Data(hex: privateKeyHexString)) else {
             throw Error.walletImport(.badPrivateKeyHex)
         }
         self = .privateKey(privateKey, encryptBy: newPassword, kdf: kdf)

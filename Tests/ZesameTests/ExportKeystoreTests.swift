@@ -56,7 +56,7 @@ class ExportKeystoreTest: XCTestCase {
             XCTAssertEqual(keystore.address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
 
             keystore.decryptPrivateKey(password: password) {
-                XCTAssertEqual($0.asHex(), expectedPrivateKey.uppercased())
+                XCTAssertEqual($0.rawRepresentation.asHex.uppercased(), expectedPrivateKey.uppercased())
             }
         } catch {
             XCTFail("Unexpected error: \(error)")

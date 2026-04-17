@@ -24,7 +24,6 @@
 
 import Foundation
 import Combine
-import EllipticCurveKit
 import CryptoSwift
 
 public protocol ZilliqaService: AnyObject {

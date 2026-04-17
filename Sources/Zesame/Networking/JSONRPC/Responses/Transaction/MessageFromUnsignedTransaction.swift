@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,14 +23,13 @@
 //
 
 import Foundation
-import EllipticCurveKit
 import CryptoKit
 
 func messageFromUnsignedTransaction<H>(
     _ tx: Transaction,
     publicKey: PublicKey,
     hasher: H
-) -> Message where H: HashFunction  {
+) -> Data where H: HashFunction {
 
     func formatCodeOrData(_ string: String) -> Data {
         return string.data(using: .utf8)!
@@ -40,7 +39,7 @@ func messageFromUnsignedTransaction<H>(
         $0.version = tx.version.value
         $0.nonce = tx.payment.nonce.nonce
         $0.toaddr = Data(hex: tx.payment.recipient.asString.lowercased())
-        $0.senderpubkey = publicKey.data.compressed.asByteArray
+        $0.senderpubkey = publicKey.compressedRepresentation.asByteArray
         $0.amount = tx.payment.amount.as16BytesLongArray
         $0.gasprice = tx.payment.gasPrice.as16BytesLongArray
         $0.gaslimit = UInt64(tx.payment.gasLimit)
@@ -52,17 +51,17 @@ func messageFromUnsignedTransaction<H>(
         }
     }
 
-    return Message(hashedData: try! protoTransaction.serializedData(), hashedBy: hasher)
+    let serialized = try! protoTransaction.serializedData()
+    var hashFunction = hasher
+    hashFunction.update(data: serialized)
+    return Data(hashFunction.finalize())
 }
 
 // MARK: - Private format helpers
 private extension BigInt {
-    /// Returns this integer as `Data` of `length`, if `length` is greater
-    /// than the number itself, we pad empty bytes.
     func asData(minByteCount: Int? = nil) -> Data {
-        var hexString = self.asHexString()
+        var hexString = String(self.magnitude, radix: 16)
         if let minByteCount = minByteCount {
-            // each byte is represented as two hexadecimal chars
             let minStringLength = 2 * minByteCount
             while hexString.count < minStringLength {
                 hexString = "0" + hexString

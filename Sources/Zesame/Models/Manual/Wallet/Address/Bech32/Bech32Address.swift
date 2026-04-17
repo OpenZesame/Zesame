@@ -64,7 +64,7 @@ public extension Bech32Address {
             throw Address.Error.incorrectLength(expectedLength: expecetedLength, forStyle: Address.Style.bech32, butGot: length)
         }
         
-        let addressAsData = try Bech32.convertbits(data: relevantInfoPart.data.bytes, fromBits: 5, toBits: 8, pad: false)
+        let addressAsData = try Bech32.convertbits(data: Array(relevantInfoPart.data), fromBits: 5, toBits: 8, pad: false)
         let hexString = try HexString(addressAsData.toHexString())
         let ethStyleNotNecessarilyChecksummed = try LegacyAddress(unvalidatedHex: hexString)
         return try ethStyleNotNecessarilyChecksummed.toChecksummedLegacyAddress()
@@ -77,11 +77,11 @@ public extension Bech32Address {
     init(prefix: String, unchecksummedData: Data) throws {
 
         let expectedByteCount = 20
-        let byteCount = unchecksummedData.bytes.count
+        let byteCount = unchecksummedData.count
         guard byteCount == expectedByteCount else {
             throw Error.incorrectDataLength(expectedByteCountOf: expectedByteCount, butGot: byteCount)
         }
-        let value = try Bech32.convertbits(data: unchecksummedData.bytes, fromBits: 8, toBits: 5, pad: false).asData
+        let value = try Bech32.convertbits(data: Array(unchecksummedData), fromBits: 8, toBits: 5, pad: false).asData
         let checksum = Bech32.createChecksum(humanReadablePart: prefix, values: value)
         
         self.init(prefix: prefix, dataPart:

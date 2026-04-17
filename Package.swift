@@ -4,14 +4,15 @@ import PackageDescription
 
 let package = Package(
     name: "Zesame",
-    platforms: [.macOS(.v10_15), .iOS(.v13)],
+    platforms: [.macOS(.v11), .iOS(.v13)],
     products: [
         .library(
             name: "Zesame",
             targets: ["Zesame"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Sajjon/EllipticCurveKit.git", .upToNextMinor(from: "1.0.2")),
+        .package(url: "https://github.com/Sajjon/K1.git", from: "0.3.7"),
+        .package(url: "https://github.com/attaswift/BigInt.git", from: "5.2.1"),
         .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.8.0")),
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.26.0"),
     ],
@@ -19,7 +20,8 @@ let package = Package(
         .target(
             name: "Zesame",
             dependencies: [
-                "EllipticCurveKit",
+                "K1",
+                "BigInt",
                 "CryptoSwift",
                 .product(name: "SwiftProtobuf", package: "swift-protobuf"),
             ],

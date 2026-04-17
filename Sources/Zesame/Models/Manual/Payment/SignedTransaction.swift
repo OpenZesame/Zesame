@@ -32,8 +32,8 @@ public struct SignedTransaction {
 
     init(transaction: Transaction, signedBy publicKey: PublicKey, signature: Signature) {
         self.transaction = transaction
-        self.publicKeyCompressed = publicKey.hex.compressed
-        self.signature = signature.asHexString()
+        self.publicKeyCompressed = publicKey.compressedRepresentation.asHex.uppercased()
+        self.signature = signature.rawRepresentation.asHex.uppercased()
     }
 }
 

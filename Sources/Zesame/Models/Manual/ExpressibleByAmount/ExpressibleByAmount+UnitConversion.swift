@@ -28,7 +28,7 @@ import BigInt
 internal extension ExpressibleByAmount {
     static func toQa(magnitude: Magnitude) -> Magnitude {
         let exponentDiff = abs(Unit.qa.exponent - Self.unit.exponent)
-        let powerFactor = BigNumber(10).power(exponentDiff)
+        let powerFactor = BigInt(10).power(exponentDiff)
         return magnitude * powerFactor
     }
 

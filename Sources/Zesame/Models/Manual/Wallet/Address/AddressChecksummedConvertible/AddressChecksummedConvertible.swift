@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import EllipticCurveKit
 
 public protocol AddressChecksummedConvertible {
     func toChecksummedLegacyAddress() throws -> LegacyAddress

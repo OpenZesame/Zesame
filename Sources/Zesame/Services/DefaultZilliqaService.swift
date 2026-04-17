@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import EllipticCurveKit
 
 public final class DefaultZilliqaService: ZilliqaService, CombineCompatible {
 

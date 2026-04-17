@@ -24,7 +24,7 @@
 
 import Foundation
 import CryptoKit
-import EllipticCurveKit
+import BigInt
 
 extension CharacterSet {
     static var hexadecimalDigits: CharacterSet {
@@ -55,7 +55,7 @@ public extension HexString {
         var hasher = SHA256()
         hasher.update(data: hexString.asData)
         let hash = hasher.finalize()
-        let numberFromHash = Number.init(data: .init(hash))
+        let numberFromHash = BigUInt(Data(hash))
 
 
         var checksummedString: String = ""
@@ -66,7 +66,7 @@ public extension HexString {
                 checksummedString += string
                 continue
             }
-            let andOperand: Number = Number(2).power(255 - 6 * i)
+            let andOperand: BigUInt = BigUInt(2).power(255 - 6 * i)
             let shouldUppercase = (numberFromHash & andOperand) >= 1
             checksummedString += shouldUppercase ? string.uppercased() : string.lowercased()
         }

@@ -24,7 +24,6 @@
 
 import Foundation
 import Combine
-import EllipticCurveKit
 
 // MARK: - CombineCompatible
 

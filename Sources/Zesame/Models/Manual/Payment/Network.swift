@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import EllipticCurveKit
 
 /// seemore: https://apidocs.zilliqa.com/#getnetworkid
 public enum Network: UInt32, Decodable {

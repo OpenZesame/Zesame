@@ -61,7 +61,7 @@ public extension ExpressibleByAmount where Self: Unbound {
     ) throws {
         let trimmed = try Self.trimmingAndFixingDecimalSeparator(in: untrimmed)
         
-        if let mag = Magnitude(decimalString: trimmed) {
+        if let mag = Magnitude(trimmed) {
             self = Self.init(mag)
         } else if let double = Double.fromString(trimmed) {
             self.init(double)

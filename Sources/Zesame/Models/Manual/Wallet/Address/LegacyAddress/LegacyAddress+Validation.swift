@@ -24,7 +24,7 @@
 
 import Foundation
 import CryptoKit
-import EllipticCurveKit
+import BigInt
 
 // MARK: - Validation
 public extension LegacyAddress {
@@ -57,7 +57,7 @@ public extension LegacyAddress {
                 checksummedString += string
                 continue
             }
-            let andOperand: Number = Number(2).power(255 - 6 * i)
+            let andOperand: BigUInt = BigUInt(2).power(255 - 6 * i)
             let shouldUppercase = (numberFromHash & andOperand) >= 1
             checksummedString += shouldUppercase ? string.uppercased() : string.lowercased()
         }

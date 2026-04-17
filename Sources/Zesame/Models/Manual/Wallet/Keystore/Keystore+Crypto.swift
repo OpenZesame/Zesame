@@ -24,7 +24,6 @@
 
 import Foundation
 import CryptoSwift
-import EllipticCurveKit
 
 public extension Keystore {
     struct Crypto: Codable, Equatable {

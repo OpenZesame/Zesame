@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import EllipticCurveKit
 import CryptoSwift
 
 public struct Keystore: Codable, Equatable {

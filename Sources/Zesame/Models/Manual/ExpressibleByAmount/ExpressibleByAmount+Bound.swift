@@ -55,7 +55,7 @@ public extension ExpressibleByAmount where Self: Bound {
         
         let trimmed = try Self.trimmingAndFixingDecimalSeparator(in: untrimmed)
         
-        if let value = Magnitude(decimalString: trimmed) {
+        if let value = Magnitude(trimmed) {
             try self.init(try Self.validate(value: value))
         } else if let double = Double.fromString(trimmed) {
             try self.init(double)

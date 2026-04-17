@@ -23,8 +23,6 @@
 //
 
 import Foundation
-
-import EllipticCurveKit
 import CryptoSwift
 
 var isRunningTests: Bool {
@@ -46,7 +44,7 @@ public extension ZilliqaService {
 
     func createNewWallet(encryptionPassword: String, kdf: KDF = .default, done: @escaping Done<Wallet>) {
         background {
-            let privateKey = PrivateKey.generateNew()
+            let privateKey = PrivateKey()
             let keyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf)
             self.restoreWallet(from: keyRestoration, done: done)
         }

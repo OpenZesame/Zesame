@@ -25,7 +25,6 @@
 import Foundation
 
 import XCTest
-import EllipticCurveKit
 @testable import Zesame
 
 // Some uninteresting Zilliqa TESTNET private key, containing worthless TEST tokens.
@@ -92,7 +91,7 @@ final class AddressValidationTests: XCTestCase {
     }
 
     func testThatAddressFromPrivateKeyIsChecksummed() {
-        let privateKey = PrivateKey(hex: privateKeyString)!
+        let privateKey = try! PrivateKey(rawRepresentation: Data(hex: privateKeyString))
         let address = LegacyAddress(privateKey: privateKey)
         XCTAssertEqual(address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
         

@@ -33,7 +33,7 @@ public extension Scrypt {
         let params = kdfParams ?? KDF.defaultParameters
         try self.init(
             password: Array(password.data(using: .ascii)!),
-            salt: params.salt.bytes,
+            salt: Array(params.salt),
             dkLen: params.lengthOfDerivedKey,
             N: params.costParameterN,
             r: params.blockSize,
