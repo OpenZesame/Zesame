@@ -36,7 +36,7 @@ extension String: @retroactive HexStringConvertible {
     }
 }
 
-@Suite struct AddressChecksumTests {
+struct AddressChecksumTests {
     @Test func emptyStringFails() {
         #expect((try? Address(string: "")) == nil)
     }
@@ -67,7 +67,7 @@ extension String: @retroactive HexStringConvertible {
     }
 }
 
-struct ChecksumVector: Sendable {
+struct ChecksumVector {
     let notChecksummed: String
     let zilliqaChecksummed: String
     let zilliqaChecksummedWithoutLeading0x: String
