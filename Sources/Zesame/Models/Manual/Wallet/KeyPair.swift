@@ -31,7 +31,9 @@ public typealias Signature = K1.Schnorr.Signature
 
 public struct KeyPair {
     public let privateKey: PrivateKey
-    public var publicKey: PublicKey { privateKey.publicKey }
+    public var publicKey: PublicKey {
+        privateKey.publicKey
+    }
 
     public init(private privateKey: PrivateKey) {
         self.privateKey = privateKey

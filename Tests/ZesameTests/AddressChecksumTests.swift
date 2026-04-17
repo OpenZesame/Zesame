@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,7 +26,6 @@ import XCTest
 @testable import Zesame
 
 final class AddressChecksumTests: XCTestCase {
-
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
@@ -37,8 +36,8 @@ final class AddressChecksumTests: XCTestCase {
     }
 
     func test10Vectors() {
-        vectors.forEach {
-            performTestChecksum(vector: $0)
+        for item in vectors {
+            performTestChecksum(vector: item)
         }
     }
 
@@ -51,9 +50,8 @@ final class AddressChecksumTests: XCTestCase {
 
 extension AddressChecksumTests {
     private func performTestChecksum(vector: Vector) {
-
         func isValid(_ hexString: HexStringConvertible) -> Bool {
-            return LegacyAddress.isChecksummed(hexString: hexString)
+            LegacyAddress.isChecksummed(hexString: hexString)
         }
 
         XCTAssertFalse(isValid(vector.ethereumChecksummed))
@@ -61,10 +59,10 @@ extension AddressChecksumTests {
         XCTAssertTrue(isValid(vector.zilliqaChecksummed))
         XCTAssertTrue(isValid(vector.zilliqaChecksummedWithoutLeading0x))
 
-        XCTAssertTrue(LegacyAddress.checksummedHexstringFrom(hexString: vector.notChecksummed) == vector.zilliqaChecksummedWithoutLeading0x)
+        XCTAssertTrue(LegacyAddress.checksummedHexstringFrom(hexString: vector.notChecksummed) == vector
+            .zilliqaChecksummedWithoutLeading0x)
     }
 }
-
 
 /// Vectors from Zilliqa JS Library
 /// https://github.com/Zilliqa/Zilliqa-JavaScript-Library/blob/9368fb34a0d443797adc1ecbcb9728db9ce75e97/packages/zilliqa-js-crypto/test/checksum.fixtures.ts
@@ -86,7 +84,6 @@ extension String: HexStringConvertible {
         }
     }
 }
-
 
 private let vectors: [Vector] = [
     (
@@ -158,6 +155,5 @@ private let vectors: [Vector] = [
         zilliqaChecksummedWithoutLeading0x: "50f92304c892D94A385cA6cE6CD6950ce9A36839",
         ethereumChecksummedWithoutLeading0x: "50f92304c892d94A385Ca6ce6cD6950ce9A36839",
         ethereumChecksummed: "0x50f92304c892d94A385Ca6ce6cD6950ce9A36839"
-    )
+    ),
 ]
-

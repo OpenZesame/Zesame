@@ -2,17 +2,17 @@
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,23 +31,22 @@ public struct RPCError: Swift.Error, Decodable {
 }
 
 public extension RPCError {
-    
     private struct InnerError: Decodable {
         public let code: RPCErrorCode
         public let message: String
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case error
         case requestId = "id"
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.requestId = try container.decode(String.self, forKey: .requestId)
+        requestId = try container.decode(String.self, forKey: .requestId)
         let innerError = try container.decode(InnerError.self, forKey: .error)
-        self.errorCode = innerError.code
-        self.errorMessage = innerError.message
+        errorCode = innerError.code
+        errorMessage = innerError.message
     }
 }
 
@@ -61,10 +60,10 @@ public extension RPCErrorCode {
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         do {
-            self = .recognizedRPCError(try container.decode(RPCErrorCodeRecognized.self))
+            self = try .recognizedRPCError(container.decode(RPCErrorCodeRecognized.self))
         } catch {
             do {
-                self = .unrecognizedError(code: try container.decode(Int.self))
+                self = try .unrecognizedError(code: container.decode(Int.self))
             } catch let decodeErrorCodeMetaError {
                 self = .failedToParseErrorCode(metaError: decodeErrorCodeMetaError)
             }

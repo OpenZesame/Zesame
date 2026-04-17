@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,7 +25,6 @@
 import Foundation
 
 public final class DefaultZilliqaService: ZilliqaService, CombineCompatible {
-
     public let apiClient: APIClient
 
     public init(apiClient: APIClient) {
@@ -38,28 +37,27 @@ public extension DefaultZilliqaService {
         let apiClient = DefaultAPIClient(baseURL: network.baseURL)
         self.init(apiClient: apiClient)
     }
-    
+
     convenience init(endpoint: ZilliqaAPIEndpoint) {
         self.init(apiClient: DefaultAPIClient(endpoint: endpoint))
     }
 }
 
 public extension DefaultZilliqaService {
-
     func getNetworkFromAPI(done: @escaping Done<NetworkResponse>) {
-        return apiClient.send(method: .getNetworkId, done: done)
+        apiClient.send(method: .getNetworkId, done: done)
     }
 
-    func getBalance(for address: LegacyAddress, done: @escaping Done<BalanceResponse>) -> Void {
-        return apiClient.send(method: .getBalance(address), done: done)
+    func getBalance(for address: LegacyAddress, done: @escaping Done<BalanceResponse>) {
+        apiClient.send(method: .getBalance(address), done: done)
     }
-    
+
     func getMinimumGasPrice(
         alsoUpdateLocallyCachedMinimum: Bool = true,
         done: @escaping Done<MinimumGasPriceResponse>
-    ) -> Void {
-        return apiClient.send(method: .getMinimumGasPrice) { (result: Result<MinimumGasPriceResponse, Zesame.Error>) in
-            if case .success(let newMinimumPrice) = result {
+    ) {
+        apiClient.send(method: .getMinimumGasPrice) { (result: Result<MinimumGasPriceResponse, Zesame.Error>) in
+            if case let .success(newMinimumPrice) = result {
                 if alsoUpdateLocallyCachedMinimum {
                     GasPrice.minInQa = newMinimumPrice.amount.qa
                 }
@@ -69,6 +67,6 @@ public extension DefaultZilliqaService {
     }
 
     func send(transaction: SignedTransaction, done: @escaping Done<TransactionResponse>) {
-        return apiClient.send(method: .createTransaction(transaction), done: done)
+        apiClient.send(method: .createTransaction(transaction), done: done)
     }
 }

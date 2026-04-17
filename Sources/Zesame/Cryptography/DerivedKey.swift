@@ -26,11 +26,10 @@ import Foundation
 
 public struct DerivedKey {
     public let data: Data
-    init(data: Data) {
-        self.data = data
-    }
 }
 
 extension DerivedKey: DataConvertible {
-    public var asData: Data { data }
+    public var asData: Data {
+        data
+    }
 }

@@ -22,17 +22,16 @@
 // SOFTWARE.
 //
 
-import Foundation
 import CryptoKit
+import Foundation
 
-func messageFromUnsignedTransaction<H>(
+func messageFromUnsignedTransaction(
     _ tx: Transaction,
     publicKey: PublicKey,
-    hasher: H
-) -> Data where H: HashFunction {
-
+    hasher: some HashFunction
+) -> Data {
     func formatCodeOrData(_ string: String) -> Data {
-        return string.data(using: .utf8)!
+        string.data(using: .utf8)!
     }
 
     let protoTransaction = ProtoTransactionCoreInfo.with {
@@ -58,10 +57,11 @@ func messageFromUnsignedTransaction<H>(
 }
 
 // MARK: - Private format helpers
+
 private extension BigInt {
     func asData(minByteCount: Int? = nil) -> Data {
-        var hexString = String(self.magnitude, radix: 16)
-        if let minByteCount = minByteCount {
+        var hexString = String(magnitude, radix: 16)
+        if let minByteCount {
             let minStringLength = 2 * minByteCount
             while hexString.count < minStringLength {
                 hexString = "0" + hexString
@@ -72,23 +72,23 @@ private extension BigInt {
 }
 
 import BigInt
-private extension ExpressibleByAmount {
 
+private extension ExpressibleByAmount {
     func asData(minByteCount: Int? = nil) -> Data {
-        return qa.asData(minByteCount: minByteCount)
+        qa.asData(minByteCount: minByteCount)
     }
 
     var asByteArray: ByteArray {
-        return asData().asByteArray
+        asData().asByteArray
     }
 
     var as16BytesLongArray: ByteArray {
-        return asData(minByteCount: 16).asByteArray
+        asData(minByteCount: 16).asByteArray
     }
 }
 
 private extension Data {
     var asByteArray: ByteArray {
-        return ByteArray.with { $0.data = self }
+        ByteArray.with { $0.data = self }
     }
 }

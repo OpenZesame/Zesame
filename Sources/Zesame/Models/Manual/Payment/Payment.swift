@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -38,23 +38,21 @@ public struct Payment {
         gasPrice: GasPrice,
         nonce: Nonce = 0
     ) throws {
-        guard gasLimit >= GasLimit.minimum else { throw Error.gasLimitTooLow(got: gasLimit, butMinIs: GasLimit.minimum) }
+        guard gasLimit >= GasLimit.minimum
+        else { throw Error.gasLimitTooLow(got: gasLimit, butMinIs: GasLimit.minimum) }
         self.recipient = recipient
         self.amount = amount
         self.gasLimit = gasLimit
         self.gasPrice = gasPrice
         self.nonce = nonce.increasedByOne()
     }
-    
+
     enum Error: Swift.Error {
         case gasLimitTooLow(got: GasLimit, butMinIs: GasLimit)
     }
-    
 }
 
 public extension Payment {
-    
-    
     static func withMinimumGasLimit(
         to recipient: LegacyAddress,
         amount: ZilAmount,
@@ -63,14 +61,16 @@ public extension Payment {
     ) -> Self {
         try! .init(to: recipient, amount: amount, gasLimit: GasLimit.minimum, gasPrice: gasPrice, nonce: nonce)
     }
-    
-    
+
     static func estimatedTotalTransactionFee(gasPrice: GasPrice, gasLimit: GasLimit = .defaultGasLimit) throws -> Qa {
-        return Qa(qa: Qa.Magnitude(gasLimit) * gasPrice.qa)
+        Qa(qa: Qa.Magnitude(gasLimit) * gasPrice.qa)
     }
 
-    static func estimatedTotalCostOfTransaction(amount: ZilAmount, gasPrice: GasPrice, gasLimit: GasLimit = .defaultGasLimit) throws -> ZilAmount {
-
+    static func estimatedTotalCostOfTransaction(
+        amount: ZilAmount,
+        gasPrice: GasPrice,
+        gasLimit: GasLimit = .defaultGasLimit
+    ) throws -> ZilAmount {
         let fee = try estimatedTotalTransactionFee(gasPrice: gasPrice, gasLimit: gasLimit)
         let amountInQa = amount.asQa
         let totalInQa: Qa = amountInQa + fee

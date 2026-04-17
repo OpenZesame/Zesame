@@ -22,8 +22,8 @@
 // SOFTWARE.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 public protocol ZilliqaService: AnyObject {
     var apiClient: APIClient { get }
@@ -34,7 +34,12 @@ public protocol ZilliqaService: AnyObject {
     func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore, done: @escaping Done<Bool>)
     func createNewWallet(encryptionPassword: String, kdf: KDF, done: @escaping Done<Wallet>)
     func restoreWallet(from restoration: KeyRestoration, done: @escaping Done<Wallet>)
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String, kdf: KDF, done: @escaping Done<Keystore>)
+    func exportKeystore(
+        privateKey: PrivateKey,
+        encryptWalletBy password: String,
+        kdf: KDF,
+        done: @escaping Done<Keystore>
+    )
 
     func getBalance(for address: LegacyAddress, done: @escaping Done<BalanceResponse>)
     func send(transaction: SignedTransaction, done: @escaping Done<TransactionResponse>)
@@ -46,20 +51,23 @@ public protocol ZilliqaServiceReactive {
     func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) -> AnyPublisher<Bool, Zesame.Error>
     func createNewWallet(encryptionPassword: String, kdf: KDF) -> AnyPublisher<Wallet, Zesame.Error>
     func restoreWallet(from restoration: KeyRestoration) -> AnyPublisher<Wallet, Zesame.Error>
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) -> AnyPublisher<Keystore, Zesame.Error>
+    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String)
+        -> AnyPublisher<Keystore, Zesame.Error>
     func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> AnyPublisher<KeyPair, Zesame.Error>
 
     func getBalance(for address: LegacyAddress) -> AnyPublisher<BalanceResponse, Zesame.Error>
-    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) -> AnyPublisher<TransactionResponse, Zesame.Error>
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> AnyPublisher<TransactionResponse, Zesame.Error>
+    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network)
+        -> AnyPublisher<TransactionResponse, Zesame.Error>
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network)
+        -> AnyPublisher<TransactionResponse, Zesame.Error>
 
-    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> AnyPublisher<TransactionReceipt, Zesame.Error>
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling)
+        -> AnyPublisher<TransactionReceipt, Zesame.Error>
 }
 
 public extension ZilliqaServiceReactive {
-
     func extractKeyPairFrom(wallet: Wallet, encryptedBy password: String) -> AnyPublisher<KeyPair, Zesame.Error> {
-        return extractKeyPairFrom(keystore: wallet.keystore, encryptedBy: password)
+        extractKeyPairFrom(keystore: wallet.keystore, encryptedBy: password)
     }
 
     func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> AnyPublisher<KeyPair, Zesame.Error> {
@@ -71,6 +79,6 @@ public extension ZilliqaServiceReactive {
     }
 
     func hasNetworkReachedConsensusYetForTransactionWith(id: String) -> AnyPublisher<TransactionReceipt, Zesame.Error> {
-        return hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: .twentyTimesLinearBackoff)
+        hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: .twentyTimesLinearBackoff)
     }
 }

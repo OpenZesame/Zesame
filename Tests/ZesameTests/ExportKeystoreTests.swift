@@ -27,7 +27,6 @@ import XCTest
 @testable import Zesame
 
 class ExportKeystoreTest: XCTestCase {
-
     func testWalletImport() {
         let service = DefaultZilliqaService(endpoint: .testnet)
         let expectWalletImport = expectation(description: "importing wallet from keystore")
@@ -35,10 +34,10 @@ class ExportKeystoreTest: XCTestCase {
             let keyRestoration = KeyRestoration.privateKey(knownPrivateKey, encryptBy: password, kdf: .pbkdf2)
             service.restoreWallet(from: keyRestoration) {
                 switch $0 {
-                case .success(let importedWallet):
+                case let .success(importedWallet):
                     XCTAssertEqual(importedWallet.keystore.address.asString, expectedAddress)
                     XCTAssertEqual(importedWallet.keystore.version, 4)
-                case .failure(let error): XCTFail("Failed to import wallet, error: \(error)")
+                case let .failure(error): XCTFail("Failed to import wallet, error: \(error)")
                 }
                 expectWalletImport.fulfill()
             }
@@ -46,19 +45,19 @@ class ExportKeystoreTest: XCTestCase {
         }
     }
 
-    func testKeystoreEncodeDecode() {
+    func testKeystoreEncodeDecode() throws {
         let expectRoundtrip = expectation(description: "keystore encode/decode roundtrip")
-        try! Keystore.from(
+        try Keystore.from(
             privateKey: knownPrivateKey,
             encryptBy: password,
             kdf: .pbkdf2,
             kdfParams: .quickTestParameters
         ) { result in
             switch result {
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("Failed to create keystore, error: \(error)")
                 expectRoundtrip.fulfill()
-            case .success(let keystore):
+            case let .success(keystore):
                 XCTAssertEqual(keystore.address.asString, expectedAddress)
                 do {
                     let jsonData = try JSONEncoder().encode(keystore)
@@ -67,9 +66,9 @@ class ExportKeystoreTest: XCTestCase {
                     XCTAssertEqual(decoded.version, 4)
                     decoded.decryptPrivateKeyWith(password: password) { decryptResult in
                         switch decryptResult {
-                        case .failure(let error):
+                        case let .failure(error):
                             XCTFail("Failed to decrypt, error: \(error)")
-                        case .success(let key):
+                        case let .success(key):
                             XCTAssertEqual(key.rawRepresentation.asHex.uppercased(), expectedPrivateKey.uppercased())
                         }
                         expectRoundtrip.fulfill()

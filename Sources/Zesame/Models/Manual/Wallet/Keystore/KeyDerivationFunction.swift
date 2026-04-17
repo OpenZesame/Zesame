@@ -35,7 +35,9 @@ public extension KDF {
         do {
             return try KDFParams()
         } catch {
-            fatalError("Incorrect implementation, should always be able to create default KDF params, unexpected error: \(error)")
+            fatalError(
+                "Incorrect implementation, should always be able to create default KDF params, unexpected error: \(error)"
+            )
         }
     }
 }

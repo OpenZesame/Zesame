@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,28 +24,25 @@
 
 import Foundation
 import XCTest
-
 @testable import Zesame
 
-
 class UnitConversionTests: XCTestCase {
-    
     private let decSep = Locale.current.decimalSeparatorForSure
 
     func testZilToLi() {
-        XCTAssertEqual(Zil(1).asLi, Li(1000000))
+        XCTAssertEqual(Zil(1).asLi, Li(1_000_000))
     }
 
     func testZilToQa() {
-        XCTAssertEqual(Zil(1).asQa, Qa(1000000000000))
+        XCTAssertEqual(Zil(1).asQa, Qa(1_000_000_000_000))
     }
 
     func testLiToQa() {
-        XCTAssertEqual(Li(1).asQa, Qa(1000000))
+        XCTAssertEqual(Li(1).asQa, Qa(1_000_000))
     }
 
     func testLiFromQa() {
-        XCTAssertEqual(Li(qa: 1000000), 1)
+        XCTAssertEqual(Li(qa: 1_000_000), 1)
     }
 
     func testZilEMinus5() {
@@ -58,11 +55,11 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testZilFromLi() {
-        XCTAssertEqual(Zil(li: 1000000), 1)
+        XCTAssertEqual(Zil(li: 1_000_000), 1)
     }
 
     func testZilFromQa() {
-        XCTAssertEqual(Zil(qa: 1000000000), 0.001)
+        XCTAssertEqual(Zil(qa: 1_000_000_000), 0.001)
     }
 
     func testStringToZil() {
@@ -76,22 +73,23 @@ class UnitConversionTests: XCTestCase {
     func testStringToQa() {
         XCTAssertEqual("1", Qa(1))
     }
+
     func testCompareZilAndLi() {
         XCTAssertTrue(Zil(1) > Li(2))
-        XCTAssertTrue(Zil(1) > Li(999999))
-        XCTAssertTrue(Zil(1) < Li(9999990))
+        XCTAssertTrue(Zil(1) > Li(999_999))
+        XCTAssertTrue(Zil(1) < Li(9_999_990))
     }
 
     func testCompareZilAndQa() {
         XCTAssertTrue(Zil(1) > Qa(2))
-        XCTAssertTrue(Zil(1) > Qa(999999999999))
-        XCTAssertTrue(Zil(1) < Qa(9999999999990))
+        XCTAssertTrue(Zil(1) > Qa(999_999_999_999))
+        XCTAssertTrue(Zil(1) < Qa(9_999_999_999_990))
     }
 
     func testCompareLiAndQa() {
         XCTAssertTrue(Li(1) > Qa(2))
-        XCTAssertTrue(Li(1) > Qa(999999))
-        XCTAssertTrue(Li(1) < Qa(9999990))
+        XCTAssertTrue(Li(1) > Qa(999_999))
+        XCTAssertTrue(Li(1) < Qa(9_999_990))
     }
 
     func testAdditionOfDifferentUnits() {
@@ -102,8 +100,8 @@ class UnitConversionTests: XCTestCase {
         XCTAssertEqual(amount.asQa, 3_100_009_000_123)
     }
 
-    func testAdditionOfUpperboundOverflow() {
-        let foo: ZilAmount = try! ZilAmount.max - 1
+    func testAdditionOfUpperboundOverflow() throws {
+        let foo: ZilAmount = try ZilAmount.max - 1
         let bar: ZilAmount = 2
         do {
             let sum = try foo + bar
@@ -112,15 +110,15 @@ class UnitConversionTests: XCTestCase {
             XCTAssertTrue(error is AmountError<ZilAmount>)
         }
     }
-    
-    func testMinGasPriceConversion() {
+
+    func testMinGasPriceConversion() throws {
         XCTAssertEqual(
-            try! Zil(zil: "0\(decSep)1"),
+            try Zil(zil: "0\(decSep)1"),
             Zil(qa: 100_000_000_000)
         )
-        
+
         XCTAssertEqual(
-            try! Zil(zil: "0\(decSep)1"),
+            try Zil(zil: "0\(decSep)1"),
             Zil(li: 100_000)
         )
     }
@@ -154,7 +152,7 @@ class UnitConversionTests: XCTestCase {
 
     func testZilStringFromQa() {
         XCTAssertEqual(Qa(1).zilString, "0\(decSep)000000000001")
-        XCTAssertEqual(Qa(123456).zilString, "0\(decSep)000000123456")
+        XCTAssertEqual(Qa(123_456).zilString, "0\(decSep)000000123456")
     }
 
     func testLiValue() {
@@ -163,7 +161,7 @@ class UnitConversionTests: XCTestCase {
 
     func testConversionFromDecimalZilToLi() {
         XCTAssertEqual(Zil(0.1).qa, 100_000_000_000)
-        XCTAssertEqual(Li(100000).qa, 100_000_000_000)
+        XCTAssertEqual(Li(100_000).qa, 100_000_000_000)
     }
 
     func testSmallDecimals() {
@@ -174,31 +172,30 @@ class UnitConversionTests: XCTestCase {
         // using init:amount
 
         XCTAssertEqual(Qa(Zil(0.000000000001)), 1)
-        XCTAssertEqual(Qa(Zil(10.000000000001)), 10000000000001)
-        XCTAssertGreaterThan(Qa(Zil(10.000000000002)), 10000000000001)
-        XCTAssertLessThan(Qa(Zil(9.000000000001)), 10000000000001)
+        XCTAssertEqual(Qa(Zil(10.000000000001)), 10_000_000_000_001)
+        XCTAssertGreaterThan(Qa(Zil(10.000000000002)), 10_000_000_000_001)
+        XCTAssertLessThan(Qa(Zil(9.000000000001)), 10_000_000_000_001)
 
         // using `asQa`
         XCTAssertEqual(Zil(0.000000000001).asQa, 1)
-        XCTAssertEqual(Zil(10.000000000001).asQa, 10000000000001)
-        XCTAssertGreaterThan(Zil(10.000000000002).asQa, 10000000000001)
-        XCTAssertLessThan(Zil(9.000000000001).asQa, 10000000000001)
+        XCTAssertEqual(Zil(10.000000000001).asQa, 10_000_000_000_001)
+        XCTAssertGreaterThan(Zil(10.000000000002).asQa, 10_000_000_000_001)
+        XCTAssertLessThan(Zil(9.000000000001).asQa, 10_000_000_000_001)
     }
 
-
     func testConversionFromDecimalLi() {
-        XCTAssertEqual(Li(0.1).qa, 100000)
+        XCTAssertEqual(Li(0.1).qa, 100_000)
     }
 
     func testTooSmallGasPrice() {
         var didThrowError = false
         do {
             let notALiteral = 999_000_000
-            let _ = try GasPrice(notALiteral)
-        } catch let error as AmountError<GasPrice>  {
+            _ = try GasPrice(notALiteral)
+        } catch let error as AmountError<GasPrice> {
             didThrowError = true
             switch error {
-            case .tooSmall(let min):
+            case let .tooSmall(min):
                 XCTAssertEqual(min, GasPrice.min)
             default: XCTFail()
             }
@@ -211,11 +208,11 @@ class UnitConversionTests: XCTestCase {
     func testBoundString() {
         let qaString = "18446744073637511711"
         XCTAssertEqual(
-            try ZilAmount(zil: Zil(qa: try Qa(trimming: qaString))),
-            try ZilAmount(zil: try Zil(qa: qaString))
+            try ZilAmount(zil: Zil(qa: Qa(trimming: qaString))),
+            try ZilAmount(zil: Zil(qa: qaString))
         )
         XCTAssertEqual(
-            try ZilAmount(zil: try Zil(qa: qaString)),
+            try ZilAmount(zil: Zil(qa: qaString)),
             try ZilAmount(qa: qaString)
         )
         do {
@@ -241,7 +238,7 @@ class UnitConversionTests: XCTestCase {
     }
 
     func testZilExceedingZilAmountMaxSinceZilIsUnbound() {
-        XCTAssertEqual(ZilAmount.max.asZil + 1, 21000000001)
+        XCTAssertEqual(ZilAmount.max.asZil + 1, 21_000_000_001)
     }
 
     func testNegativeAmountForZilSinceItIsUnbound() {
@@ -266,13 +263,12 @@ class UnitConversionTests: XCTestCase {
         XCTAssertEqual(try Zil(qa: "1000000000"), 0.001)
         XCTAssertLessThan(try Zil(qa: "1000000000"), 0.0011)
         XCTAssertGreaterThan(try Zil(qa: "2000000000"), 0.0019)
-        
     }
 
     func testLiStringInits() {
         XCTAssertEqual(try Li(zil: "0\(decSep)01"), 10000)
-        XCTAssertLessThan(try Li(zil: "0\(decSep)01"), 100000)
-        XCTAssertGreaterThan(try Li(zil: "0\(decSep)11"), 100000)
+        XCTAssertLessThan(try Li(zil: "0\(decSep)01"), 100_000)
+        XCTAssertGreaterThan(try Li(zil: "0\(decSep)11"), 100_000)
 
         XCTAssertEqual(try Li(li: "5"), 5)
         XCTAssertLessThan(try Li(li: "5"), 6)
@@ -286,7 +282,7 @@ class UnitConversionTests: XCTestCase {
     func testQaStringInits() {
         XCTAssertEqual(try Qa(zil: "1"), 1_000_000_000_000)
         XCTAssertLessThan(try Qa(zil: "1"), 1_000_000_000_001)
-        XCTAssertGreaterThan(try Qa.init(zil: "1\(decSep)000000000001"), 1_000_000_000_000)
+        XCTAssertGreaterThan(try Qa(zil: "1\(decSep)000000000001"), 1_000_000_000_000)
 
         XCTAssertEqual(try Qa(li: "1"), 1_000_000)
         XCTAssertLessThan(try Qa(li: "1"), 1_000_001)
@@ -296,6 +292,5 @@ class UnitConversionTests: XCTestCase {
         XCTAssertLessThan(try Qa(qa: "1"), 2)
         XCTAssertGreaterThan(try Qa(qa: "100"), 99)
         XCTAssertLessThan(try Qa(qa: "100"), 101)
-
     }
 }

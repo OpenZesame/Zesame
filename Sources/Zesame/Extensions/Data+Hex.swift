@@ -22,18 +22,17 @@
 // SOFTWARE.
 //
 
-import Foundation
 import BigInt
+import Foundation
 
 public extension Data {
-
     init(hex: String) {
         let s = hex.hasPrefix("0x") ? String(hex.dropFirst(2)) : hex
         var result = Data()
         var index = s.startIndex
         while index < s.endIndex {
             let end = s.index(index, offsetBy: 2, limitedBy: s.endIndex) ?? s.endIndex
-            if let byte = UInt8(s[index..<end], radix: 16) {
+            if let byte = UInt8(s[index ..< end], radix: 16) {
                 result.append(byte)
             }
             index = end
@@ -41,9 +40,15 @@ public extension Data {
         self = result
     }
 
-    static func fromHexString(_ string: String) -> Data { Data(hex: string) }
+    static func fromHexString(_ string: String) -> Data {
+        Data(hex: string)
+    }
 
-    var asHex: String { map { String(format: "%02x", $0) }.joined() }
+    var asHex: String {
+        map { String(format: "%02x", $0) }.joined()
+    }
 
-    var asNumber: BigUInt { BigUInt(self) }
+    var asNumber: BigUInt {
+        BigUInt(self)
+    }
 }

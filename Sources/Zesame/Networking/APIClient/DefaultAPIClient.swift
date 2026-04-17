@@ -25,13 +25,12 @@
 import Foundation
 
 public final class DefaultAPIClient: APIClient {
-
     private let session: URLSession
     public let baseURL: URL
 
     public init(baseURL: URL) {
         self.baseURL = baseURL
-        self.session = URLSession(configuration: .default)
+        session = URLSession(configuration: .default)
     }
 }
 
@@ -42,13 +41,12 @@ public extension DefaultAPIClient {
 }
 
 // MARK: - APIClient
-public extension DefaultAPIClient {
 
-    func send<ResultFromResponse>(
+public extension DefaultAPIClient {
+    func send<ResultFromResponse: Decodable>(
         method: RPCMethod,
         done: @escaping Done<ResultFromResponse>
-    ) where ResultFromResponse: Decodable {
-
+    ) {
         let rpcRequest = RPCRequest(method: method)
 
         do {
@@ -56,20 +54,20 @@ public extension DefaultAPIClient {
             urlRequest.url = baseURL
 
             session.dataTask(with: urlRequest) { data, _, error in
-                if let error = error {
+                if let error {
                     done(.failure(.api(.request(error))))
                     return
                 }
-                guard let data = data else {
+                guard let data else {
                     done(.failure(.api(.request(URLError(.badServerResponse)))))
                     return
                 }
                 do {
                     let rpcResponse = try JSONDecoder().decode(RPCResponse<ResultFromResponse>.self, from: data)
                     switch rpcResponse {
-                    case .rpcError(let rpcError):
+                    case let .rpcError(rpcError):
                         done(.failure(.api(.request(rpcError))))
-                    case .rpcSuccess(let result):
+                    case let .rpcSuccess(result):
                         done(.success(result))
                     }
                 } catch {

@@ -22,13 +22,13 @@
 // SOFTWARE.
 //
 
-import Foundation
 import CommonCrypto
+import Foundation
 
 public struct AnyKeyDeriving: KeyDeriving {
     private let kdfParams: KDFParams
 
-    public init(kdf: KDF = .pbkdf2, kdfParams: KDFParams) {
+    public init(kdf _: KDF = .pbkdf2, kdfParams: KDFParams) {
         self.kdfParams = kdfParams
     }
 

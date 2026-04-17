@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,12 +25,10 @@
 import Foundation
 
 var isRunningTests: Bool {
-    return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
 }
 
-
 public extension ZilliqaService {
-
     func verifyThat(encryptionPassword: String, canDecryptKeystore keystore: Keystore, done: @escaping Done<Bool>) {
         background {
             keystore.decryptPrivateKeyWith(password: encryptionPassword) { result in
@@ -53,15 +51,16 @@ public extension ZilliqaService {
         background { [weak self] in
             guard let self else { return }
             switch restoration {
-            case .keystore(let keystore, let password):
+            case let .keystore(keystore, password):
                 keystore.decryptPrivateKeyWith(password: password) {
                     switch $0 {
-                    case .failure(let error):
+                    case let .failure(error):
                         main {
                             done(.failure(error))
                         }
-                    case .success(let privateKey):
-                        // We would like the SDK to always store Keystore on same format, so disregarding if we imported a keystore having KDF `pbkdf2` or `scrypt`, the stored KDF in the users wallet
+                    case let .success(privateKey):
+                        // We would like the SDK to always store Keystore on same format, so disregarding if we imported
+                        // a keystore having KDF `pbkdf2` or `scrypt`, the stored KDF in the users wallet
                         // is the same, so that decrypting takes ~same time for every user.
                         if keystore.crypto.kdf == KDF.default || isRunningTests {
                             main {
@@ -69,16 +68,19 @@ public extension ZilliqaService {
                                 done(.success(wallet))
                             }
                         } else {
-                            let defaultKeyRestoration: KeyRestoration = .privateKey(privateKey, encryptBy: password, kdf: .default)
+                            let defaultKeyRestoration: KeyRestoration = .privateKey(
+                                privateKey,
+                                encryptBy: password,
+                                kdf: .default
+                            )
                             self.restoreWallet(from: defaultKeyRestoration, done: done)
                         }
                     }
                 }
-            case .privateKey(let privateKey, let newPassword, let kdf):
+            case let .privateKey(privateKey, newPassword, kdf):
                 do {
                     try Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf) {
-
-                        guard case .success(let keystore) = $0 else {
+                        guard case let .success(keystore) = $0 else {
                             done(.failure($0.error!))
                             return
                         }
@@ -101,16 +103,17 @@ public extension ZilliqaService {
         encryptWalletBy password: String,
         kdf: KDF = .default,
         done: @escaping Done<Keystore>
-        ) {
+    ) {
         background {
             do {
                 try Keystore.from(
                     privateKey: privateKey,
                     encryptBy: password,
-                    kdf: kdf) { newKeystoreResult in
-                        main {
-                            done(newKeystoreResult)
-                        }
+                    kdf: kdf
+                ) { newKeystoreResult in
+                    main {
+                        done(newKeystoreResult)
+                    }
                 }
             } catch {
                 main {
@@ -118,6 +121,5 @@ public extension ZilliqaService {
                 }
             }
         }
-        
     }
 }

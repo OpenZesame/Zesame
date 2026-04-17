@@ -25,52 +25,56 @@
 import Foundation
 import XCTest
 
-func XCTAssertThrowsSpecificError<ReturnValue, ExpectedError>(
-    _ codeThatThrows: @autoclosure () throws -> ReturnValue,
+func XCTAssertThrowsSpecificError<ExpectedError: Swift.Error & Equatable>(
+    _ codeThatThrows: @autoclosure () throws -> some Any,
     _ error: ExpectedError,
     _ message: String = ""
-) where ExpectedError: Swift.Error & Equatable {
-    
+) {
     XCTAssertThrowsError(try codeThatThrows(), message) { someError in
         guard let expectedErrorType = someError as? ExpectedError else {
-            XCTFail("Expected code to throw error of type: <\(ExpectedError.self)>, but got error: <\(someError)>, of type: <\(type(of: someError))>")
+            XCTFail(
+                "Expected code to throw error of type: <\(ExpectedError.self)>, but got error: <\(someError)>, of type: <\(type(of: someError))>"
+            )
             return
         }
         XCTAssertEqual(expectedErrorType, error)
     }
 }
 
-func XCTAssertThrowsSpecificError<ExpectedError>(
+func XCTAssertThrowsSpecificError<ExpectedError: Swift.Error & Equatable>(
     _ codeThatThrows: @autoclosure () throws -> Void,
     _ error: ExpectedError,
     _ message: String = ""
-) where ExpectedError: Swift.Error & Equatable {
+) {
     XCTAssertThrowsError(try codeThatThrows(), message) { someError in
         guard let expectedErrorType = someError as? ExpectedError else {
-            XCTFail("Expected code to throw error of type: <\(ExpectedError.self)>, but got error: <\(someError)>, of type: <\(type(of: someError))>")
+            XCTFail(
+                "Expected code to throw error of type: <\(ExpectedError.self)>, but got error: <\(someError)>, of type: <\(type(of: someError))>"
+            )
             return
         }
         XCTAssertEqual(expectedErrorType, error)
     }
 }
 
-func XCTAssertThrowsSpecificErrorType<E>(
+func XCTAssertThrowsSpecificErrorType<E: Swift.Error & Equatable>(
     _ codeThatThrows: @autoclosure () throws -> Void,
-    _ errorType: E.Type,
+    _: E.Type,
     _ message: String = ""
-) where E: Swift.Error & Equatable {
+) {
     XCTAssertThrowsError(try codeThatThrows(), message) { someError in
-        XCTAssertTrue(someError is E, "Expected code to throw error of type: <\(E.self)>, but got error: <\(someError)>, of type: <\(type(of: someError))>")
+        XCTAssertTrue(
+            someError is E,
+            "Expected code to throw error of type: <\(E.self)>, but got error: <\(someError)>, of type: <\(type(of: someError))>"
+        )
     }
 }
 
-func XCTAssertAllEqual<Item>(
+func XCTAssertAllEqual<Item: Equatable>(
     _ item1: @autoclosure () throws -> Item,
     _ item2: @autoclosure () throws -> Item,
     _ item3: @autoclosure () throws -> Item
-)
-where Item: Equatable
-{
+) {
     do {
         let i1 = try item1()
         let i2 = try item2()
@@ -81,14 +85,12 @@ where Item: Equatable
     }
 }
 
-func XCTAssertAllEqual<Item>(
+func XCTAssertAllEqual<Item: Equatable>(
     _ item1: @autoclosure () throws -> Item,
     _ item2: @autoclosure () throws -> Item,
     _ item3: @autoclosure () throws -> Item,
     _ item4: @autoclosure () throws -> Item
-)
-where Item: Equatable
-{
+) {
     do {
         let i1 = try item1()
         let i2 = try item2()
@@ -100,33 +102,33 @@ where Item: Equatable
     }
 }
 
-func XCTAssertAllEqual<Item>(_ items: Item...) where Item: Equatable {
+func XCTAssertAllEqual<Item: Equatable>(_ items: Item...) {
     XCTAssertAllEqual(items: items)
 }
 
-func XCTAssertAllEqual<Item>(items: [Item]) where Item: Equatable {
+func XCTAssertAllEqual(items: [some Equatable]) {
     forAll(items) {
         XCTAssertEqual($0, $1)
     }
 }
 
-func XCTAssertAllInequal<Item>(_ items: Item...) where Item: Equatable {
+func XCTAssertAllInequal<Item: Equatable>(_ items: Item...) {
     XCTAssertAllInequal(items: items)
 }
 
-func XCTAssertAllInequal<Item>(items: [Item]) where Item: Equatable {
+func XCTAssertAllInequal(items: [some Equatable]) {
     forAll(items) {
         XCTAssertNotEqual($0, $1)
     }
 }
 
-private func forAll<Item>(_ items: [Item], compareElemenets: (Item, Item) -> Void) where Item: Equatable {
+private func forAll<Item: Equatable>(_ items: [Item], compareElements: (Item, Item) -> Void) {
     var lastIndex: Array<Item>.Index?
     for index in items.indices {
         defer { lastIndex = index }
         guard let last = lastIndex else { continue }
         let fooElement: Item = items[last]
         let barElement: Item = items[index]
-        compareElemenets(fooElement, barElement)
+        compareElements(fooElement, barElement)
     }
 }

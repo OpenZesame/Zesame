@@ -22,20 +22,24 @@
 // SOFTWARE.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 // MARK: - CombineCompatible
 
 public protocol CombineCompatible: AnyObject {}
 
 public extension CombineCompatible {
-    var combine: CombineWrapper<Self> { CombineWrapper(self) }
+    var combine: CombineWrapper<Self> {
+        CombineWrapper(self)
+    }
 }
 
 public struct CombineWrapper<Base> {
     public let base: Base
-    fileprivate init(_ base: Base) { self.base = base }
+    fileprivate init(_ base: Base) {
+        self.base = base
+    }
 }
 
 // MARK: - ZilliqaServiceReactive conformance
@@ -43,20 +47,27 @@ public struct CombineWrapper<Base> {
 extension CombineWrapper: ZilliqaServiceReactive where Base: ZilliqaService {}
 
 public extension CombineWrapper where Base: ZilliqaService {
-
     func getNetworkFromAPI() -> AnyPublisher<NetworkResponse, Zesame.Error> {
         callBase { $0.getNetworkFromAPI(done: $1) }
     }
 
-    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool = true) -> AnyPublisher<MinimumGasPriceResponse, Zesame.Error> {
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool = true)
+        -> AnyPublisher<MinimumGasPriceResponse, Zesame.Error>
+    {
         callBase { $0.getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: alsoUpdateLocallyCachedMinimum, done: $1) }
     }
 
-    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> AnyPublisher<TransactionReceipt, Zesame.Error> {
+    func hasNetworkReachedConsensusYetForTransactionWith(
+        id: String,
+        polling: Polling
+    ) -> AnyPublisher<TransactionReceipt, Zesame.Error> {
         callBase { $0.hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: polling, done: $1) }
     }
 
-    func verifyThat(encryptionPassword: String, canDecryptKeystore keystore: Keystore) -> AnyPublisher<Bool, Zesame.Error> {
+    func verifyThat(
+        encryptionPassword: String,
+        canDecryptKeystore keystore: Keystore
+    ) -> AnyPublisher<Bool, Zesame.Error> {
         callBase { $0.verifyThat(encryptionPassword: encryptionPassword, canDecryptKeystore: keystore, done: $1) }
     }
 
@@ -68,7 +79,10 @@ public extension CombineWrapper where Base: ZilliqaService {
         callBase { $0.restoreWallet(from: restoration, done: $1) }
     }
 
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) -> AnyPublisher<Keystore, Zesame.Error> {
+    func exportKeystore(
+        privateKey: PrivateKey,
+        encryptWalletBy password: String
+    ) -> AnyPublisher<Keystore, Zesame.Error> {
         callBase { $0.exportKeystore(privateKey: privateKey, encryptWalletBy: password, done: $1) }
     }
 
@@ -76,11 +90,21 @@ public extension CombineWrapper where Base: ZilliqaService {
         callBase { $0.getBalance(for: address, done: $1) }
     }
 
-    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) -> AnyPublisher<TransactionResponse, Zesame.Error> {
-        callBase { $0.sendTransaction(for: payment, keystore: keystore, password: password, network: network, done: $1) }
+    func sendTransaction(
+        for payment: Payment,
+        keystore: Keystore,
+        password: String,
+        network: Network
+    ) -> AnyPublisher<TransactionResponse, Zesame.Error> {
+        callBase { $0.sendTransaction(for: payment, keystore: keystore, password: password, network: network, done: $1)
+        }
     }
 
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> AnyPublisher<TransactionResponse, Zesame.Error> {
+    func sendTransaction(
+        for payment: Payment,
+        signWith keyPair: KeyPair,
+        network: Network
+    ) -> AnyPublisher<TransactionResponse, Zesame.Error> {
         callBase { $0.sendTransaction(for: payment, signWith: keyPair, network: network, done: $1) }
     }
 

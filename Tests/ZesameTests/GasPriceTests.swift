@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,11 +24,9 @@
 
 import Foundation
 import XCTest
-
 @testable import Zesame
 
 class GasPriceTests: XCTestCase {
-
     private func restoreBounds() {
         GasPrice.restoreDefaultBounds()
         XCTAssertEqual(GasPrice.maxInQa, GasPrice.maxInQaDefault)
@@ -68,11 +66,11 @@ class GasPriceTests: XCTestCase {
     func testExceedingMaxGasPriceThrowsError() {
         var didThrowError = false
         do {
-             let _ = try GasPrice.init(zil: 101)
-        } catch let error as AmountError<GasPrice>  {
+            _ = try GasPrice(zil: 101)
+        } catch let error as AmountError<GasPrice> {
             didThrowError = true
             switch error {
-            case .tooLarge(let max):
+            case let .tooLarge(max):
                 XCTAssertEqual(max, GasPrice.max)
             default: XCTFail()
             }
@@ -94,11 +92,11 @@ class GasPriceTests: XCTestCase {
 
         var didThrowError = false
         do {
-            let _ = try GasPrice(li: 100_000_002)
-        } catch let error as AmountError<GasPrice>  {
+            _ = try GasPrice(li: 100_000_002)
+        } catch let error as AmountError<GasPrice> {
             didThrowError = true
             switch error {
-            case .tooLarge(let max):
+            case let .tooLarge(max):
                 XCTAssertEqual(max.qa, newMaxInQa)
             default: XCTFail()
             }
@@ -122,11 +120,11 @@ class GasPriceTests: XCTestCase {
 
         var didThrowError = false
         do {
-            let _ = try GasPrice(zil: 1338)
-        } catch let error as AmountError<GasPrice>  {
+            _ = try GasPrice(zil: 1338)
+        } catch let error as AmountError<GasPrice> {
             didThrowError = true
             switch error {
-            case .tooLarge(let max):
+            case let .tooLarge(max):
                 XCTAssertEqual(max.qa, newMaxInqa)
             default: XCTFail()
             }
@@ -139,11 +137,11 @@ class GasPriceTests: XCTestCase {
     func testIncreasedMaxGasPrice() {
         var didThrowError = false
         do {
-            let _ = try GasPrice(zil: 101)
-        } catch let error as AmountError<GasPrice>  {
+            _ = try GasPrice(zil: 101)
+        } catch let error as AmountError<GasPrice> {
             didThrowError = true
             switch error {
-            case .tooLarge(let max):
+            case let .tooLarge(max):
                 XCTAssertEqual(max, GasPrice.max)
             default: XCTFail()
             }

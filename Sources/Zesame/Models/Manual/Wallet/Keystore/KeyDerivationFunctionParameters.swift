@@ -40,7 +40,9 @@ public extension KDF {
         public let derivedKeyLength: Int
         public let saltHex: String
 
-        public var salt: Data { Data(hex: saltHex) }
+        public var salt: Data {
+            Data(hex: saltHex)
+        }
 
         public init(
             iterations: Int = Self.defaultIterations,

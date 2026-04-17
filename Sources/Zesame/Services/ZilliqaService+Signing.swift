@@ -22,11 +22,10 @@
 // SOFTWARE.
 //
 
-import Foundation
 import CryptoKit
+import Foundation
 
 public extension ZilliqaService {
-
     func sendTransaction(
         for payment: Payment,
         keystore: Keystore,
@@ -36,8 +35,13 @@ public extension ZilliqaService {
     ) {
         keystore.toKeypair(encryptedBy: password) { result in
             switch result {
-            case .failure(let error): done(Result.failure(error))
-            case .success(let keyPair): self.sendTransaction(for: payment, signWith: keyPair, network: network, done: done)
+            case let .failure(error): done(Result.failure(error))
+            case let .success(keyPair): self.sendTransaction(
+                    for: payment,
+                    signWith: keyPair,
+                    network: network,
+                    done: done
+                )
             }
         }
     }
@@ -57,7 +61,6 @@ public extension ZilliqaService {
         using keyPair: KeyPair,
         network: Network
     ) -> SignedTransaction {
-
         let transaction = Transaction(payment: payment, version: Version(network: network))
         let messageData = messageFromUnsignedTransaction(transaction, publicKey: keyPair.publicKey, hasher: SHA256())
         let signature = sign(message: messageData, using: keyPair)
@@ -69,6 +72,6 @@ public extension ZilliqaService {
 
     func sign(message: Data, using keyPair: KeyPair) -> Signature {
         // swiftlint:disable:next force_try
-        return try! keyPair.privateKey.signature(for: message)
+        try! keyPair.privateKey.signature(for: message)
     }
 }

@@ -29,11 +29,21 @@ public protocol DataConvertible {
 }
 
 public extension DataConvertible {
-    var bytes: [UInt8] { Array(asData) }
-    var asHex: String { asData.asHex }
+    var bytes: [UInt8] {
+        Array(asData)
+    }
+
+    var asHex: String {
+        asData.asHex
+    }
 }
 
-public extension Array where Element == UInt8 {
-    var asData: Data { Data(self) }
-    var asHex: String { map { String(format: "%02x", $0) }.joined() }
+public extension [UInt8] {
+    var asData: Data {
+        Data(self)
+    }
+
+    var asHex: String {
+        map { String(format: "%02x", $0) }.joined()
+    }
 }

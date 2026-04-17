@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,24 +24,24 @@
 
 import Foundation
 
-// Encodable for test purposes, this type is never sent TO the API, only parsed FROM the API.
+/// Encodable for test purposes, this type is never sent TO the API, only parsed FROM the API.
 public struct BalanceResponse: Codable {
     public let balance: ZilAmount
     public let nonce: Nonce
-    
+
     public init(balance: ZilAmount, nonce: Nonce) {
         self.balance = balance
         self.nonce = nonce
     }
-    
+
     public enum CodingKeys: CodingKey {
         case nonce, balance
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.balance = try container.decode(ZilAmount.self, forKey: .balance)
-        self.nonce = try container.decode(Nonce.self, forKey: .nonce)
+        balance = try container.decode(ZilAmount.self, forKey: .balance)
+        nonce = try container.decode(Nonce.self, forKey: .nonce)
     }
 }
 

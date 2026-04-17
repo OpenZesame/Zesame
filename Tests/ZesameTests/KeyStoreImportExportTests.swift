@@ -25,7 +25,8 @@
 import XCTest
 @testable import Zesame
 
-private let privateKey = try! PrivateKey(rawRepresentation: Data(hex: "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638"))
+private let privateKey =
+    try! PrivateKey(rawRepresentation: Data(hex: "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638"))
 private let password = "apabanan"
 
 public extension KDFParams {
@@ -33,7 +34,9 @@ public extension KDFParams {
         do {
             return try Self(iterations: 1)
         } catch {
-            fatalError("Incorrect implementation, should always be able to create test KDF params, unexpected error: \(error)")
+            fatalError(
+                "Incorrect implementation, should always be able to create test KDF params, unexpected error: \(error)"
+            )
         }
     }
 }
@@ -50,9 +53,9 @@ extension Keystore {
             kdfParams: kdfParams
         ) {
             switch $0 {
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("unexpected error: \(error)")
-            case .success(let keyStore):
+            case let .success(keyStore):
                 done(keyStore)
             }
         }
@@ -65,18 +68,16 @@ extension Keystore {
     func decryptPrivateKey(password: String, done: @escaping (PrivateKey) -> Void) {
         decryptPrivateKeyWith(password: password) {
             switch $0 {
-            case .failure(let error):
+            case let .failure(error):
                 XCTFail("unexpected error: \(error)")
-            case .success(let decryptedPrivateKey):
+            case let .success(decryptedPrivateKey):
                 done(decryptedPrivateKey)
             }
         }
     }
 }
 
-
 class KeystoreTests: XCTestCase {
-
     func testPBKDF2AES256GCM() {
         Keystore.with { keystore in
             keystore.decryptPrivateKey { decryptedPrivateKey in
@@ -86,13 +87,18 @@ class KeystoreTests: XCTestCase {
     }
 
     typealias JSON = [String: Any]
-    func testNewWalletKeystore() {
+    func testNewWalletKeystore() throws {
         let newPrivateKey = PrivateKey()
         let expectWalletImport = expectation(description: "keystore from private key")
-        try! Keystore.from(privateKey: newPrivateKey, encryptBy: password, kdf: .pbkdf2, kdfParams: .quickTestParameters) {
+        try Keystore.from(
+            privateKey: newPrivateKey,
+            encryptBy: password,
+            kdf: .pbkdf2,
+            kdfParams: .quickTestParameters
+        ) {
             switch $0 {
-            case .failure(let error): XCTFail("unexpected error: \(error)")
-            case .success(let keystore):
+            case let .failure(error): XCTFail("unexpected error: \(error)")
+            case let .success(keystore):
                 XCTAssertEqual(keystore.version, 4)
                 XCTAssertEqual(keystore.crypto.keyDerivationFunctionParameters.saltHex.count, 64)
                 XCTAssertEqual(keystore.crypto.cipherParameters.nonceHex.count, 24)

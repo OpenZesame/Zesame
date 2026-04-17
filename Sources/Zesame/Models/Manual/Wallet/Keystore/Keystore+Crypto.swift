@@ -26,17 +26,21 @@ import Foundation
 
 public extension Keystore {
     struct Crypto: Codable, Equatable {
-
         public struct CipherParameters: Codable, Equatable {
-            let nonceHex: String    // 12 bytes (24 hex chars) - AES-GCM nonce
-            let tagHex: String      // 16 bytes (32 hex chars) - AES-GCM authentication tag
+            let nonceHex: String // 12 bytes (24 hex chars) - AES-GCM nonce
+            let tagHex: String // 16 bytes (32 hex chars) - AES-GCM authentication tag
 
-            var nonce: Data { Data(hex: nonceHex) }
-            var tag: Data { Data(hex: tagHex) }
+            var nonce: Data {
+                Data(hex: nonceHex)
+            }
+
+            var tag: Data {
+                Data(hex: tagHex)
+            }
 
             init(nonce: Data, tag: Data) {
-                self.nonceHex = nonce.asHex
-                self.tagHex = tag.asHex
+                nonceHex = nonce.asHex
+                tagHex = tag.asHex
             }
 
             enum CodingKeys: String, CodingKey {
@@ -46,15 +50,18 @@ public extension Keystore {
         }
 
         public static let cipherDefault = "aes-256-gcm"
-        public static let expectedLengthEncryptedPrivateKeyHex = 64  // 32 bytes
-        public static let expectedLengthNonceHex = 24                // 12 bytes
-        public static let expectedLengthTagHex = 32                  // 16 bytes
-        public static let expectedLengthSaltHex = 64                 // 32 bytes
+        public static let expectedLengthEncryptedPrivateKeyHex = 64 // 32 bytes
+        public static let expectedLengthNonceHex = 24 // 12 bytes
+        public static let expectedLengthTagHex = 32 // 16 bytes
+        public static let expectedLengthSaltHex = 64 // 32 bytes
 
         let cipherType: String
         let cipherParameters: CipherParameters
         let encryptedPrivateKeyHex: String
-        var encryptedPrivateKey: Data { Data(hex: encryptedPrivateKeyHex) }
+        var encryptedPrivateKey: Data {
+            Data(hex: encryptedPrivateKeyHex)
+        }
+
         let kdf: KeyDerivationFunction
         let keyDerivationFunctionParameters: KeyDerivationFunction.Parameters
 
@@ -100,7 +107,7 @@ public extension Keystore {
             self.cipherParameters = cipherParameters
             self.encryptedPrivateKeyHex = encryptedPrivateKeyHex
             self.kdf = kdf
-            self.keyDerivationFunctionParameters = kdfParams
+            keyDerivationFunctionParameters = kdfParams
         }
 
         public init(from decoder: Decoder) throws {
@@ -121,8 +128,8 @@ public extension Keystore {
     }
 }
 
-extension Keystore.Crypto {
-    public enum CodingKeys: String, CodingKey {
+public extension Keystore.Crypto {
+    enum CodingKeys: String, CodingKey {
         case cipherType = "cipher"
         case cipherParameters = "cipherparams"
         case encryptedPrivateKeyHex = "ciphertext"

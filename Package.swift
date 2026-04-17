@@ -8,7 +8,8 @@ let package = Package(
     products: [
         .library(
             name: "Zesame",
-            targets: ["Zesame"]),
+            targets: ["Zesame"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/Sajjon/K1.git", from: "0.3.7"),

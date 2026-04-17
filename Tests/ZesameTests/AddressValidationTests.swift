@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,29 +23,26 @@
 //
 
 import Foundation
-
 import XCTest
 @testable import Zesame
 
-// Some uninteresting Zilliqa TESTNET private key, containing worthless TEST tokens.
+/// Some uninteresting Zilliqa TESTNET private key, containing worthless TEST tokens.
 private let privateKeyString = "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638"
 
 final class AddressValidationTests: XCTestCase {
-    
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
     }
 
     func testChecksummedAddress() {
-        
         XCTAssertAllEqual(
             try Address(string: "zil1uvys5ycfm7kyqdfdq00vdnxeetfp8emtsptv94"),
             try Address(string: "ZIL1UVYS5YCFM7KYQDFDQ00VDNXEETFP8EMTSPTV94"),
             try Address(string: "e3090a1309DfAC40352d03dEc6cCD9cAd213e76B"),
             try Address(string: "0xe3090a1309DfAC40352d03dEc6cCD9cAd213e76B")
         )
-        
+
         XCTAssertThrowsSpecificError(
             try Address(string: "E3090a1309DfAC40352d03dEc6cCD9cAd213e76B"),
             Address.Error.notChecksummed
@@ -55,7 +52,7 @@ final class AddressValidationTests: XCTestCase {
             Address.Error.notChecksummed
         )
     }
-    
+
     func testMixedCaseBech32LowercaseLastChar_v_() {
         XCTAssertThrowsSpecificError(
             try Address(string: "ZIL1UVYS5YCFM7KYQDFDQ00VDNXEETFP8EMTSPTv94"),
@@ -63,16 +60,15 @@ final class AddressValidationTests: XCTestCase {
             "lower case last chars `v`, uppercase rest"
         )
     }
-    
+
     func testMixedCaseBech32LowercasePrefix() {
         XCTAssertThrowsSpecificError(
             try Address(string: "zil1UVYS5YCFM7KYQDFDQ00VDNXEETFP8EMTSPTV94"),
             Address.Error.invalidBech32Address(bechError: Bech32.DecodingError.invalidCase),
             "lower case prefix, uppercase rest"
         )
-
     }
-    
+
     func testSame() {
         do {
             try XCTAssertAllEqual(items:
@@ -80,56 +76,57 @@ final class AddressValidationTests: XCTestCase {
                     [
                         "zil1uvys5ycfm7kyqdfdq00vdnxeetfp8emtsptv94",
                         "0xe3090a1309DfAC40352d03dEc6cCD9cAd213e76B",
-                        "e3090a1309DfAC40352d03dEc6cCD9cAd213e76B"
+                        "e3090a1309DfAC40352d03dEc6cCD9cAd213e76B",
                     ].map { try Address(string: $0).toChecksummedLegacyAddress().asString },
-                    ["e3090a1309DfAC40352d03dEc6cCD9cAd213e76B"]
-                ].flatMap { $0 }
+                    ["e3090a1309DfAC40352d03dEc6cCD9cAd213e76B"],
+                ].flatMap(\.self)
             )
         } catch {
             XCTFail("Unexpected error: \(error)")
         }
     }
 
-    func testThatAddressFromPrivateKeyIsChecksummed() {
-        let privateKey = try! PrivateKey(rawRepresentation: Data(hex: privateKeyString))
+    func testThatAddressFromPrivateKeyIsChecksummed() throws {
+        let privateKey = try PrivateKey(rawRepresentation: Data(hex: privateKeyString))
         let address = LegacyAddress(privateKey: privateKey)
         XCTAssertEqual(address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
-        
+
         XCTAssertEqual(
             try Address(string: "zil1wnz5fgghjkg9ctycpru70rvp2c2e6vhyc96rwg"),
             try Address(string: "74c544a11795905C2c9808F9e78d8156159d32e4")
         )
-        
     }
-    
+
     func testFromLegacyToBech32Address() {
         do {
-            let bech32 = try Bech32Address(ethStyleAddress: "74c544a11795905C2c9808F9e78d8156159d32e4", network: .mainnet)
-            
+            let bech32 = try Bech32Address(
+                ethStyleAddress: "74c544a11795905C2c9808F9e78d8156159d32e4",
+                network: .mainnet
+            )
+
             XCTAssertEqual(
                 bech32.asString,
                 "zil1wnz5fgghjkg9ctycpru70rvp2c2e6vhyc96rwg"
             )
-            
+
             XCTAssertEqual(
                 try bech32.toChecksummedLegacyAddress().asString,
                 "74c544a11795905C2c9808F9e78d8156159d32e4"
             )
-            
+
         } catch {
             XCTFail("unexpected error: \(error)")
         }
     }
-    
+
     func testBech32FromDataTooShortData() {
         XCTAssertThrowsSpecificError(
             try Bech32Address(network: .mainnet, unchecksummedData: Data(repeating: 0x1, count: 19)),
             Bech32Address.Error.incorrectDataLength(expectedByteCountOf: 20, butGot: 19),
             "Should be 20 bytes"
         )
-        
     }
-    
+
     func testBech32ToEthStyle() {
         func doTest(_ vector: AddressTuple) {
             do {
@@ -143,11 +140,10 @@ final class AddressValidationTests: XCTestCase {
                 XCTFail("Unexpected error: \(error)")
             }
         }
-        vectors.forEach {
-            doTest($0)
+        for vector in vectors {
+            doTest(vector)
         }
     }
-
 }
 
 private typealias AddressTuple = (ethStyle: String, bech32: String)
@@ -184,5 +180,5 @@ private let vectors: [AddressTuple] = [
     (
         ethStyle: "5F5Db1C18CcDE67e513B7f7Ae820E569154976Ba",
         bech32: "zil1tawmrsvvehn8u5fm0aawsg89dy25ja46ndsrhq"
-    )
+    ),
 ]

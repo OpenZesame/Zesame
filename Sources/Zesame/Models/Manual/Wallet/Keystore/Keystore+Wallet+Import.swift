@@ -22,26 +22,25 @@
 // SOFTWARE.
 //
 
-import Foundation
 import CryptoKit
+import Foundation
 
 public extension Keystore {
-
     func toKeypair(encryptedBy password: String, done: @escaping Done<KeyPair>) {
         decryptPrivateKeyWith(password: password) {
             switch $0 {
-            case .failure(let error): done(.failure(error))
-            case .success(let privateKey):
+            case let .failure(error): done(.failure(error))
+            case let .success(privateKey):
                 done(.success(KeyPair(private: privateKey)))
             }
         }
     }
 
     func decryptPrivateKeyWith(password: String, done: @escaping Done<PrivateKey>) {
-        guard password.count >= Keystore.minumumPasswordLength else {
+        guard password.count >= Keystore.minimumPasswordLength else {
             done(.failure(.keystorePasswordTooShort(
                 provided: password.count,
-                minimum: Keystore.minumumPasswordLength
+                minimum: Keystore.minimumPasswordLength
             )))
             return
         }
