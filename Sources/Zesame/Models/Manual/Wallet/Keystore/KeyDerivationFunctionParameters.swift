@@ -77,3 +77,8 @@ public extension KDF {
         }
     }
 }
+
+public extension KDF.Parameters {
+    // swiftlint:disable:next force_try
+    static let `default`: Self = try! .init()
+}

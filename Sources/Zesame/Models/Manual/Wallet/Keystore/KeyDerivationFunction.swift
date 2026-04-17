@@ -31,13 +31,5 @@ public enum KeyDerivationFunction: String, Codable, Hashable {
 }
 
 public extension KDF {
-    static var defaultParameters: KDFParams {
-        do {
-            return try KDFParams()
-        } catch {
-            fatalError(
-                "Incorrect implementation, should always be able to create default KDF params, unexpected error: \(error)"
-            )
-        }
-    }
+    static let defaultParameters: KDFParams = .default
 }
