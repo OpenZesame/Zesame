@@ -48,8 +48,8 @@ struct TransactionSigningTests {
             version: Version(network: network)
         )
 
-        let message = messageFromUnsignedTransaction(unsignedTx, publicKey: publicKey, hasher: SHA256())
-        let signature = service.sign(message: message, using: KeyPair(private: privateKey))
+        let message = try messageFromUnsignedTransaction(unsignedTx, publicKey: publicKey, hasher: SHA256())
+        let signature = try service.sign(message: message, using: KeyPair(private: privateKey))
 
         let signedTransaction = SignedTransaction(transaction: unsignedTx, signedBy: publicKey, signature: signature)
         let jsonEncoder = JSONEncoder()
