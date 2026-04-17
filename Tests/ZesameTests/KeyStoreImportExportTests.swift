@@ -53,7 +53,7 @@ extension Keystore {
     }
 }
 
-@Suite struct KeystoreTests {
+struct KeystoreTests {
     @Test func pbkdf2AES256GCM() throws {
         let keystore = try Keystore.makeTest()
         let decryptedPrivateKey = try keystore.decryptPrivateKey(encryptedBy: password)

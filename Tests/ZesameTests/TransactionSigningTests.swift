@@ -30,7 +30,7 @@ import Testing
 private let network: Network = .mainnet
 private let service = DefaultZilliqaService(endpoint: .testnet)
 
-@Suite struct TransactionSigningTests {
+struct TransactionSigningTests {
     @Test func transactionSigning() throws {
         // Some uninteresting Zilliqa TESTNET private key, that might contain some worthless TEST tokens.
         let privateKey = try PrivateKey(

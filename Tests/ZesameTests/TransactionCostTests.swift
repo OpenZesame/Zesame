@@ -27,7 +27,7 @@ import Foundation
 import Testing
 @testable import Zesame
 
-@Suite struct TransactionCostTests {
+struct TransactionCostTests {
     @Test func totalAmount() {
         let amount: ZilAmount = 21_000_000_000
         #expect(amount.qa == "21000000000000000000000")

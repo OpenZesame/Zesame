@@ -27,7 +27,7 @@ import Foundation
 import Testing
 @testable import Zesame
 
-@Suite struct BalanceResponseJSONTests {
+struct BalanceResponseJSONTests {
     @Test func decoding() throws {
         let data = try #require(validJSON.data(using: .utf8))
         let response = try JSONDecoder().decode(BalanceResponse.self, from: data)

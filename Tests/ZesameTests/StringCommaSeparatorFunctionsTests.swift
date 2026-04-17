@@ -27,7 +27,7 @@ import Foundation
 import Testing
 @testable import Zesame
 
-@Suite struct StringCommaSeparatorFunctionsTests {
+struct StringCommaSeparatorFunctionsTests {
     private let decSep = Locale.current.decimalSeparatorForSure
 
     @Test func doubleFormattingContainsLocaleDecimalSeparator() {

@@ -25,7 +25,7 @@
 import Testing
 @testable import Zesame
 
-@Suite struct Bech32Tests {
+struct Bech32Tests {
     @Test(arguments: zilliqaVectors)
     func zilliqaVector(_ vector: ZilliqaVector) throws {
         let expectedFullAddress = [vector.prefix, "1", vector.address, vector.checksum].joined()
@@ -48,13 +48,13 @@ import Testing
     }
 }
 
-struct ZilliqaVector: Sendable {
+struct ZilliqaVector {
     let prefix: String
     let address: String
     let checksum: String
 }
 
-struct InvalidChecksumVector: Sendable {
+struct InvalidChecksumVector {
     let bech32: String
     let error: Bech32.DecodingError
 }

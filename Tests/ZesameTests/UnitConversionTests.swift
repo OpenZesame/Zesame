@@ -26,7 +26,7 @@ import Foundation
 import Testing
 @testable import Zesame
 
-@Suite struct UnitConversionTests {
+struct UnitConversionTests {
     private let decSep = Locale.current.decimalSeparatorForSure
 
     @Test func zilToLi() {

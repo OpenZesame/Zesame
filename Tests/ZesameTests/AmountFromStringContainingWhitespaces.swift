@@ -26,7 +26,7 @@ import Foundation
 import Testing
 @testable import Zesame
 
-@Suite struct AmountFromStringContainingWhitespacesTests {
+struct AmountFromStringContainingWhitespacesTests {
     @Test func zilStringContainingWhitespaces() {
         #expect(Zil("1 234 567").qa == 1_234_567_000_000_000_000)
     }

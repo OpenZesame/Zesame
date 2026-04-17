@@ -26,7 +26,7 @@ import Foundation
 import Testing
 @testable import Zesame
 
-@Suite struct ExportKeystoreTests {
+struct ExportKeystoreTests {
     @Test func walletImport() async throws {
         let service = DefaultZilliqaService(endpoint: .testnet)
         let keyRestoration = KeyRestoration.privateKey(knownPrivateKey, encryptBy: password, kdf: .pbkdf2)

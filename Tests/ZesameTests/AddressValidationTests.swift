@@ -29,7 +29,7 @@ import Testing
 /// Some uninteresting Zilliqa TESTNET private key, containing worthless TEST tokens.
 private let privateKeyString = "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638"
 
-@Suite struct AddressValidationTests {
+struct AddressValidationTests {
     /// All four formats represent the same address
     @Test(arguments: [
         "zil1uvys5ycfm7kyqdfdq00vdnxeetfp8emtsptv94",
@@ -116,7 +116,7 @@ private let privateKeyString = "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61
     }
 }
 
-struct AddressVector: Sendable {
+struct AddressVector {
     let ethStyle: String
     let bech32: String
 }

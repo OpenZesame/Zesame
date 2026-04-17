@@ -29,19 +29,19 @@ import Testing
 
 // MARK: - Parameterized vector types
 
-struct QaCase: Sendable {
+struct QaCase {
     let qa: Qa
     let unit: Zesame.Unit
     let expected: String
 }
 
-struct LiCase: Sendable {
+struct LiCase {
     let li: Li
     let unit: Zesame.Unit
     let expected: String
 }
 
-struct ZilCase: Sendable {
+struct ZilCase {
     let zil: Zil
     let unit: Zesame.Unit
     let expected: String
@@ -189,7 +189,7 @@ private extension ZilCase {
 
 // MARK: - Tests
 
-@Suite struct ExpressibleByAmountToStringTests {
+struct ExpressibleByAmountToStringTests {
     @Test func qa() throws {
         let big = try ZilAmount(qa: "20999999999123567912432")
         let small = try ZilAmount(qa: "510231481549")
