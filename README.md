@@ -46,49 +46,55 @@ protoc --swift_opt=Visibility=Public --swift_out=. Sources/Zesame/Models/Protobu
 Add the generated file `messages.pb.swift` to `Models` folder.
 
 # Dependencies
-You will find all dependencies inside the [Package.swift](https://github.com/OpenZesame/Zesame/blob/main/Package.swift), but to mention the most important:
+All dependencies live in [Package.swift](https://github.com/OpenZesame/Zesame/blob/main/Package.swift):
 
-## EllipticCurveKit
-Zesame is dependent on the Elliptic Curve Cryptography of [EllipticCurveKit]((https://github.com/Sajjon/EllipticCurveKit)), for the generation of new wallets, restoration of existing ones, the encryption of your private keys into keystores and the signing of your transactions using [Schnorr Signatures](https://en.wikipedia.org/wiki/Schnorr_signature).
+- [K1](https://github.com/Sajjon/K1) — secp256k1 key generation, ECDSA and Schnorr signatures (backed by libsecp256k1).
+- [BigInt](https://github.com/attaswift/BigInt) — arbitrary-precision integer math used across amounts and gas.
+- [swift-protobuf](https://github.com/apple/swift-protobuf) — only for packaging signed transactions; the wire protocol itself remains JSON-RPC.
 
-## Other
-
-- [RxSwift](https://github.com/ReactiveX/RxSwift): The library uses RxSwift for async programming.
-
-- [JSONRPCKit](https://github.com/ollitapa/JSONRPCKit): For consuming the Zilliqa JSON-RPC API.
+Hashing, symmetric crypto, and keystore KDFs are provided by Apple's `CryptoKit` and `CommonCrypto`, so there is no third-party crypto dependency beyond K1.
 
 # API
-## Async-Await or Combine
-This SDK contains two implementations for each method, one that uses [Async-Await](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency#app-top) (a.k.a. "concurrency") and one implementation using [Combine](https://developer.apple.com/documentation/combine/).
+## Async/await and Combine
+The primary surface is `async`/`await` on `ZilliqaService`. A Combine bridge is exposed via `ZilliqaServiceReactive` on types that conform to `CombineCompatible` (including `DefaultZilliqaService`), returning `AnyPublisher<_, Zesame.Error>`.
 
-### Rx
+### Async/await
 ```swift
-DefaultZilliqaService.shared.rx.getBalance(for: address).subscribe(
-    onNext: { print("Balance: \($0.balance)") },
-    onError: { print("Failed to get balance, error: \($0)") }
-).disposed(by: bag)
-```
-
-### Closure
-```swift
-DefaultZilliqaService.shared.getBalance(for: address) {
-    switch $0 {
-    case .success(let balanceResponse): print("Balance: \(balanceResponse.balance)") 
-    case .failure(let error): print("Failed to get balance, error: \(error)")
-    }
+let service = DefaultZilliqaService(network: .mainnet)
+do {
+    let response = try await service.getBalance(for: address)
+    print("Balance: \(response.balance)")
+} catch {
+    print("Failed to get balance, error: \(error)")
 }
 ```
 
-## Functions
-Have a look at [ZilliqaService.swift](https://github.com/OpenZesame/Zesame/blob/main/Sources/Zesame/Services/ZilliqaService.swift) for an overview of the functions, here is a snapshot of the current functions of the reactive API (each function having a closure counterpart):
+### Combine
 ```swift
-public protocol ZilliqaServiceReactive {
-    func createNewWallet() -> Observable<Wallet>
-    func exportKeystore(from wallet: Wallet, encryptWalletBy passphrase: String) -> Observable<Keystore>
-    func importWalletFrom(keyStore: Keystore, encryptedBy passphrase: String) -> Observable<Wallet>
+service.combine.getBalance(for: address)
+    .sink(
+        receiveCompletion: { if case .failure(let error) = $0 { print("Error: \(error)") } },
+        receiveValue: { print("Balance: \($0.balance)") }
+    )
+    .store(in: &cancellables)
+```
 
-    func getBalance(for address: Address) -> Observable<BalanceResponse>
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair) -> Observable<TransactionIdentifier>
+## Functions
+See [ZilliqaService.swift](https://github.com/OpenZesame/Zesame/blob/main/Sources/Zesame/Services/ZilliqaService.swift) for the full surface. A snapshot of the async protocol:
+```swift
+public protocol ZilliqaService {
+    var apiClient: APIClient { get }
+
+    func getNetworkFromAPI() async throws -> NetworkResponse
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) async throws -> MinimumGasPriceResponse
+
+    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) async throws -> Bool
+    func createNewWallet(encryptionPassword: String, kdf: KDF) async throws -> Wallet
+    func restoreWallet(from restoration: KeyRestoration) async throws -> Wallet
+    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String, kdf: KDF) async throws -> Keystore
+
+    func getBalance(for address: LegacyAddress) async throws -> BalanceResponse
+    func send(transaction: SignedTransaction) async throws -> TransactionResponse
 }
 ```
 
@@ -96,7 +102,7 @@ public protocol ZilliqaServiceReactive {
 While developing it might be useful for you to use the [Zilliqa explorer](http://viewblock.io/zilliqa/)
 
 # Donate
-This SDK and the foundation EllipticCurveKit its built upon has been developed by the single author Alexander Cyon without paid salary in his free time - approximately **a thousand hours of work** since May 2018 ([see initial commit](https://github.com/OpenZesame/Zesame/commit/d948741f3e3d38a9962cc9a23552622a303e7ff4)). 
+This SDK has been developed by the single author Alexander Cyon without paid salary in his free time - approximately **a thousand hours of work** since May 2018 ([see initial commit](https://github.com/OpenZesame/Zesame/commit/d948741f3e3d38a9962cc9a23552622a303e7ff4)). 
 
 **Any donation would be much appreciated**:
 
