@@ -41,7 +41,7 @@ public extension ZilliqaService {
         signWith keyPair: KeyPair,
         network: Network
     ) async throws -> TransactionResponse {
-        try await send(transaction: try sign(payment: payment, using: keyPair, network: network))
+        try await send(transaction: sign(payment: payment, using: keyPair, network: network))
     }
 
     func sign(
@@ -50,7 +50,11 @@ public extension ZilliqaService {
         network: Network
     ) throws -> SignedTransaction {
         let transaction = Transaction(payment: payment, version: Version(network: network))
-        let messageData = try messageFromUnsignedTransaction(transaction, publicKey: keyPair.publicKey, hasher: SHA256())
+        let messageData = try messageFromUnsignedTransaction(
+            transaction,
+            publicKey: keyPair.publicKey,
+            hasher: SHA256()
+        )
         let signature = try sign(message: messageData, using: keyPair)
 
         assert(keyPair.publicKey.isValidSignature(signature, hashed: messageData))
