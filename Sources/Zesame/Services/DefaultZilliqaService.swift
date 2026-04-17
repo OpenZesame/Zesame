@@ -23,11 +23,9 @@
 //
 
 import Foundation
-import RxSwift
-
 import EllipticCurveKit
 
-public final class DefaultZilliqaService: ZilliqaService, ReactiveCompatible {
+public final class DefaultZilliqaService: ZilliqaService, CombineCompatible {
 
     public let apiClient: APIClient
 

@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,9 +23,8 @@
 //
 
 import Foundation
+import Combine
 import EllipticCurveKit
-
-import RxSwift
 import CryptoSwift
 
 public protocol ZilliqaService: AnyObject {
@@ -44,51 +43,36 @@ public protocol ZilliqaService: AnyObject {
 }
 
 public protocol ZilliqaServiceReactive {
+    func getNetworkFromAPI() -> AnyPublisher<NetworkResponse, Zesame.Error>
+    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) -> AnyPublisher<MinimumGasPriceResponse, Zesame.Error>
+    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) -> AnyPublisher<Bool, Zesame.Error>
+    func createNewWallet(encryptionPassword: String, kdf: KDF) -> AnyPublisher<Wallet, Zesame.Error>
+    func restoreWallet(from restoration: KeyRestoration) -> AnyPublisher<Wallet, Zesame.Error>
+    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) -> AnyPublisher<Keystore, Zesame.Error>
+    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> AnyPublisher<KeyPair, Zesame.Error>
 
-    func getNetworkFromAPI() -> Observable<NetworkResponse>
-    func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool) -> Observable<MinimumGasPriceResponse>
-    func verifyThat(encryptionPassword: String, canDecryptKeystore: Keystore) -> Observable<Bool>
-    func createNewWallet(encryptionPassword: String, kdf: KDF) -> Observable<Wallet>
-    func restoreWallet(from restoration: KeyRestoration) -> Observable<Wallet>
-    func exportKeystore(privateKey: PrivateKey, encryptWalletBy password: String) -> Observable<Keystore>
-    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> Observable<KeyPair>
+    func getBalance(for address: LegacyAddress) -> AnyPublisher<BalanceResponse, Zesame.Error>
+    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) -> AnyPublisher<TransactionResponse, Zesame.Error>
+    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> AnyPublisher<TransactionResponse, Zesame.Error>
 
-    func getBalance(for address: LegacyAddress) -> Observable<BalanceResponse>
-    func sendTransaction(for payment: Payment, keystore: Keystore, password: String, network: Network) -> Observable<TransactionResponse>
-    func sendTransaction(for payment: Payment, signWith keyPair: KeyPair, network: Network) -> Observable<TransactionResponse>
-
-    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> Observable<TransactionReceipt>
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String, polling: Polling) -> AnyPublisher<TransactionReceipt, Zesame.Error>
 }
 
 public extension ZilliqaServiceReactive {
 
-    func extractKeyPairFrom(wallet: Wallet, encryptedBy password: String) -> Observable<KeyPair> {
+    func extractKeyPairFrom(wallet: Wallet, encryptedBy password: String) -> AnyPublisher<KeyPair, Zesame.Error> {
         return extractKeyPairFrom(keystore: wallet.keystore, encryptedBy: password)
     }
 
-    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> Observable<KeyPair> {
-        return Observable.create { observer in
+    func extractKeyPairFrom(keystore: Keystore, encryptedBy password: String) -> AnyPublisher<KeyPair, Zesame.Error> {
+        Future { promise in
             background {
-                keystore.toKeypair(encryptedBy: password) {
-                    switch $0 {
-                    case .success(let keyPair):
-                        main {
-                            observer.onNext(keyPair)
-                            observer.onCompleted()
-                        }
-                    case .failure(let error):
-                        main {
-                            observer.onError(error)
-                        }
-                    }
-                }
+                keystore.toKeypair(encryptedBy: password) { promise($0) }
             }
-            return Disposables.create()
-        }
+        }.eraseToAnyPublisher()
     }
 
-    func hasNetworkReachedConsensusYetForTransactionWith(id: String) -> Observable<TransactionReceipt> {
+    func hasNetworkReachedConsensusYetForTransactionWith(id: String) -> AnyPublisher<TransactionReceipt, Zesame.Error> {
         return hasNetworkReachedConsensusYetForTransactionWith(id: id, polling: .twentyTimesLinearBackoff)
     }
-
 }
