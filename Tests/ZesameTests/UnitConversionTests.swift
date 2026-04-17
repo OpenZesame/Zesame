@@ -101,12 +101,12 @@ struct UnitConversionTests {
     }
 
     @Test func additionOfUpperboundOverflow() throws {
-        let foo: ZilAmount = try ZilAmount.max - 1
-        let bar: ZilAmount = 2
+        let foo: Amount = try Amount.max - 1
+        let bar: Amount = 2
         #expect {
             try foo + bar
         } throws: { error in
-            error is AmountError<ZilAmount>
+            error is AmountError<Amount>
         }
     }
 
@@ -117,7 +117,7 @@ struct UnitConversionTests {
     }
 
     @Test func zilAmountLiteral() {
-        let amount: ZilAmount = 15
+        let amount: Amount = 15
         #expect(amount == 15)
     }
 
@@ -128,7 +128,7 @@ struct UnitConversionTests {
     }
 
     @Test func zilAmountAndZil() {
-        let foo: ZilAmount = 123
+        let foo: Amount = 123
         let bar: Zil = 123
         #expect(foo == bar)
     }
@@ -194,14 +194,14 @@ struct UnitConversionTests {
     @Test func boundString() throws {
         let qaString = "18446744073637511711"
         #expect(
-            try ZilAmount(zil: Zil(qa: Qa(trimming: qaString)))
-                == ZilAmount(zil: Zil(qa: qaString))
+            try Amount(zil: Zil(qa: Qa(trimming: qaString)))
+                == Amount(zil: Zil(qa: qaString))
         )
         #expect(
-            try ZilAmount(zil: Zil(qa: qaString))
-                == ZilAmount(qa: qaString)
+            try Amount(zil: Zil(qa: qaString))
+                == Amount(qa: qaString)
         )
-        let amount = try ZilAmount(qa: qaString)
+        let amount = try Amount(qa: qaString)
         #expect(amount.qaString == "18446744073637511711")
     }
 
@@ -212,11 +212,11 @@ struct UnitConversionTests {
     }
 
     @Test func stringZilMaxAmount() {
-        #expect(ZilAmount.max.zilString == "21000000000")
+        #expect(Amount.max.zilString == "21000000000")
     }
 
-    @Test func zilExceedingZilAmountMaxSinceZilIsUnbound() {
-        #expect(ZilAmount.max.asZil + 1 == 21_000_000_001)
+    @Test func zilExceedingAmountMaxSinceZilIsUnbound() {
+        #expect(Amount.max.asZil + 1 == 21_000_000_001)
     }
 
     @Test func negativeAmountForZilSinceItIsUnbound() {

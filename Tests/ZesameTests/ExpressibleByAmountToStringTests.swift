@@ -191,11 +191,11 @@ private extension ZilCase {
 
 struct ExpressibleByAmountToStringTests {
     @Test func qa() throws {
-        let big = try ZilAmount(qa: "20999999999123567912432")
-        let small = try ZilAmount(qa: "510231481549")
-        let expected = try ZilAmount(qa: "20999999999633799393981")
-        let expectedPlus1 = try ZilAmount(qa: "20999999999633799393982")
-        let expectedMinus1 = try ZilAmount(qa: "20999999999633799393980")
+        let big = try Amount(qa: "20999999999123567912432")
+        let small = try Amount(qa: "510231481549")
+        let expected = try Amount(qa: "20999999999633799393981")
+        let expectedPlus1 = try Amount(qa: "20999999999633799393982")
+        let expectedMinus1 = try Amount(qa: "20999999999633799393980")
         #expect(try big + small == expected)
         #expect(try big + small < expectedPlus1)
         #expect(try big + small > expectedMinus1)
@@ -204,24 +204,24 @@ struct ExpressibleByAmountToStringTests {
     @Test func rounding() {
         let decSep = Locale.current.decimalSeparatorForSure
         #expect(
-            ZilAmount(0.1449).asString(in: .zil, roundingIfNeeded: .down, roundingNumberOfDigits: 3)
+            Amount(0.1449).asString(in: .zil, roundingIfNeeded: .down, roundingNumberOfDigits: 3)
                 == "0\(decSep)144"
         )
         #expect(
-            ZilAmount(0.1449).asString(in: .zil, roundingIfNeeded: .up, roundingNumberOfDigits: 3)
+            Amount(0.1449).asString(in: .zil, roundingIfNeeded: .up, roundingNumberOfDigits: 3)
                 == "0\(decSep)145"
         )
     }
 
-    @Test func smallZilAmountAsZilString() {
+    @Test func smallAmountAsZilString() {
         let decSep = Locale.current.decimalSeparatorForSure
-        #expect(ZilAmount(0.1).asString(in: .zil) == "0\(decSep)1")
-        #expect(ZilAmount(0.49).asString(in: .zil) == "0\(decSep)49")
-        #expect(ZilAmount(0.5).asString(in: .zil) == "0\(decSep)5")
-        #expect(ZilAmount(0.51).asString(in: .zil) == "0\(decSep)51")
-        #expect(ZilAmount(0).asString(in: .zil) == "0")
-        #expect(ZilAmount(1).asString(in: .zil) == "1")
-        #expect(ZilAmount(9).asString(in: .zil) == "9")
+        #expect(Amount(0.1).asString(in: .zil) == "0\(decSep)1")
+        #expect(Amount(0.49).asString(in: .zil) == "0\(decSep)49")
+        #expect(Amount(0.5).asString(in: .zil) == "0\(decSep)5")
+        #expect(Amount(0.51).asString(in: .zil) == "0\(decSep)51")
+        #expect(Amount(0).asString(in: .zil) == "0")
+        #expect(Amount(1).asString(in: .zil) == "1")
+        #expect(Amount(9).asString(in: .zil) == "9")
     }
 
     @Test func smallLiAsLiString() {
@@ -237,8 +237,8 @@ struct ExpressibleByAmountToStringTests {
         #expect(Li(9).asString(in: .li) == "9")
     }
 
-    @Test func maxZilAmountAsZilString() {
-        #expect(ZilAmount(21_000_000_000).asString(in: .zil) == "21000000000")
+    @Test func maxAmountAsZilString() {
+        #expect(Amount(21_000_000_000).asString(in: .zil) == "21000000000")
     }
 
     @Test func tenLiInQaAsString() {
@@ -261,7 +261,7 @@ struct ExpressibleByAmountToStringTests {
         #expect(try Zil(zil: amountString).asString(in: .zil) == amountString)
     }
 
-    @Test func decimalStringZilAmount() throws {
+    @Test func decimalStringAmount() throws {
         let decSep = Locale.current.decimalSeparatorForSure
         #expect(try Zil(zil: "0\(decSep)01").asString(in: .li) == "10000")
     }
@@ -372,10 +372,10 @@ struct ExpressibleByAmountToStringTests {
         }
     }
 
-    @Test(arguments: endsWithDecSepZilAmountInputs)
-    func decimalStringEndingWithDecimalSeparatorThrowsErrorZilAmount(_ input: String) {
+    @Test(arguments: endsWithDecSepAmountInputs)
+    func decimalStringEndingWithDecimalSeparatorThrowsErrorAmount(_ input: String) {
         #expect(throws: AmountError<Zil>.endsWithDecimalSeparator) {
-            try ZilAmount(zil: input)
+            try Amount(zil: input)
         }
     }
 
@@ -435,7 +435,7 @@ private var endsWithDecSepZilInputs: [String] {
     return ["0\(d)", "1\(d)"]
 }
 
-private var endsWithDecSepZilAmountInputs: [String] {
+private var endsWithDecSepAmountInputs: [String] {
     let d = Locale.current.decimalSeparatorForSure
     return ["0\(d)", "1\(d)"]
 }

@@ -27,7 +27,7 @@ import Foundation
 public typealias KDFParams = KDF.Parameters
 
 public extension KDF {
-    struct Parameters: Codable, Equatable {
+    struct Parameters: Codable, Hashable {
         /// OWASP 2023 recommendation for PBKDF2-SHA512
         public static let defaultIterations = 600_000
         public static let defaultDerivedKeyLength = 32

@@ -32,7 +32,7 @@ struct AmountFromStringContainingWhitespacesTests {
     }
 
     @Test func zilAmountContainingWhitespaces() {
-        #expect(ZilAmount("1 234 567").qa == 1_234_567_000_000_000_000)
+        #expect(Amount("1 234 567").qa == 1_234_567_000_000_000_000)
     }
 
     @Test func gasPriceContainingWhitespaces() throws {

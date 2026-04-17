@@ -38,7 +38,7 @@ struct BalanceResponseJSONTests {
     }
 
     @Test func encoding() throws {
-        let model = try BalanceResponse(balance: ZilAmount(qa: "18446744073637511711"), nonce: 16)
+        let model = try BalanceResponse(balance: Amount(qa: "18446744073637511711"), nonce: 16)
         let jsonEncoder = JSONEncoder()
         jsonEncoder.outputFormatting = .prettyPrinted
         let json = try jsonEncoder.encode(model)

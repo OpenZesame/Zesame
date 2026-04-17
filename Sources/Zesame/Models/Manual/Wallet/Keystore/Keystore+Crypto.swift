@@ -25,8 +25,8 @@
 import Foundation
 
 public extension Keystore {
-    struct Crypto: Codable, Equatable {
-        public struct CipherParameters: Codable, Equatable {
+    struct Crypto: Codable, Hashable {
+        public struct CipherParameters: Codable, Hashable {
             let nonceHex: String // 12 bytes (24 hex chars) - AES-GCM nonce
             let tagHex: String // 16 bytes (32 hex chars) - AES-GCM authentication tag
 

@@ -25,7 +25,7 @@
 import Foundation
 
 public typealias KDF = KeyDerivationFunction
-public enum KeyDerivationFunction: String, Codable {
+public enum KeyDerivationFunction: String, Codable, Hashable {
     public static let `default`: KDF = .pbkdf2
     case pbkdf2
 }

@@ -24,7 +24,7 @@
 
 import Foundation
 
-public struct Keystore: Codable, Equatable {
+public struct Keystore: Codable, Hashable {
     public static let minimumPasswordLength = 8
 
     public let address: LegacyAddress

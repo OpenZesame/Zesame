@@ -34,7 +34,7 @@ public extension StatusOfTransactionResponse.Receipt {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let costAsString = try container.decode(String.self, forKey: .totalGasCost)
-        totalGasCost = try ZilAmount(zil: costAsString)
+        totalGasCost = try Amount(zil: costAsString)
         isSent = try container.decode(Bool.self, forKey: .isSent)
     }
 }

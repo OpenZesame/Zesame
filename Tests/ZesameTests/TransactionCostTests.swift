@@ -29,7 +29,7 @@ import Testing
 
 struct TransactionCostTests {
     @Test func totalAmount() {
-        let amount: ZilAmount = 21_000_000_000
+        let amount: Amount = 21_000_000_000
         #expect(amount.qa == "21000000000000000000000")
     }
 
@@ -46,9 +46,9 @@ struct TransactionCostTests {
         #expect {
             try Payment.estimatedTotalCostOfTransaction(amount: 20_999_999_999, gasPrice: 1_000_000_000_001)
         } throws: { error in
-            guard let amountError = error as? AmountError<ZilAmount>,
+            guard let amountError = error as? AmountError<Amount>,
                   case let .tooLarge(max) = amountError else { return false }
-            return max == ZilAmount.max
+            return max == Amount.max
         }
     }
 
@@ -56,9 +56,9 @@ struct TransactionCostTests {
         #expect {
             try Payment.estimatedTotalCostOfTransaction(amount: "20999999999", gasPrice: "1000000000001")
         } throws: { error in
-            guard let amountError = error as? AmountError<ZilAmount>,
+            guard let amountError = error as? AmountError<Amount>,
                   case let .tooLarge(max) = amountError else { return false }
-            return max == ZilAmount.max
+            return max == Amount.max
         }
     }
 }

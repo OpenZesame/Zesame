@@ -92,7 +92,7 @@ extension HexString: Codable {
     }
 }
 
-extension HexString: Equatable {}
+extension HexString: Hashable {}
 extension HexString: ExpressibleByStringLiteral {}
 public extension HexString {
     init(stringLiteral value: String) {
