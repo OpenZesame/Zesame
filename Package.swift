@@ -13,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Sajjon/K1.git", from: "0.3.7"),
-        .package(url: "https://github.com/attaswift/BigInt.git", from: "5.2.1"),
+        .package(url: "https://github.com/attaswift/BigInt.git", from: "5.7.0"),
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.26.0"),
     ],
     targets: [
