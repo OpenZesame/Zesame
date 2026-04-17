@@ -58,8 +58,7 @@ public extension DefaultAPIClient {
     func send<T: Decodable>(method: RPCMethod) async throws -> T {
         let rpcRequest = RPCRequest(method: method)
         do {
-            var urlRequest = try rpcRequest.asURLRequest()
-            urlRequest.url = baseURL
+            let urlRequest = try rpcRequest.asURLRequest(baseURL: baseURL)
             let (data, response) = try await session.data(for: urlRequest)
             if let http = response as? HTTPURLResponse, !(200 ..< 300).contains(http.statusCode) {
                 throw Zesame.Error.api(.request(

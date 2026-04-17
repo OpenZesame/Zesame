@@ -26,6 +26,10 @@ import Foundation
 
 public struct DerivedKey {
     public let data: Data
+
+    public init(data: Data) {
+        self.data = data
+    }
 }
 
 extension DerivedKey: DataConvertible {

@@ -81,7 +81,9 @@ struct RPCMethodTests {
 struct RPCRequestTests {
     @Test func asURLRequest() throws {
         let request = RPCRequest(method: .getNetworkId)
-        let urlRequest = try request.asURLRequest()
+        let baseURL = try #require(URL(string: "https://api.zilliqa.com/"))
+        let urlRequest = try request.asURLRequest(baseURL: baseURL)
+        #expect(urlRequest.url == baseURL)
         #expect(urlRequest.httpMethod == "POST")
         #expect(urlRequest.value(forHTTPHeaderField: "Content-Type") == "application/json")
         #expect(urlRequest.httpBody != nil)

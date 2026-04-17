@@ -28,13 +28,13 @@ import Foundation
 extension String {
     func splittingIntoSubStringsOfLength(_ length: Int) -> [String] {
         guard count % length == 0 else { fatalError("bad length") }
-        var startIndex = startIndex
+        var cursor = startIndex
         var results = [Substring]()
 
-        while startIndex < endIndex {
-            let endIndex = index(startIndex, offsetBy: length, limitedBy: endIndex) ?? endIndex
-            results.append(self[startIndex ..< endIndex])
-            startIndex = endIndex
+        while cursor < endIndex {
+            let sliceEnd = index(cursor, offsetBy: length, limitedBy: endIndex) ?? endIndex
+            results.append(self[cursor ..< sliceEnd])
+            cursor = sliceEnd
         }
 
         return results.map { String($0) }

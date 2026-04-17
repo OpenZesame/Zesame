@@ -3,9 +3,10 @@
 Convert xcrun llvm-cov export JSON to xccov-compatible format for cov_table.py.
 Usage: python3 llvm_to_xccov.py <llvm_cov.json> > coverage.json
 """
-import json, os, sys
+import json, sys
 
-data = json.load(open(sys.argv[1]))
+with open(sys.argv[1]) as f:
+    data = json.load(f)
 files_data = data["data"][0]["files"]
 
 # Keep only Zesame source files (not dependencies, not generated files)

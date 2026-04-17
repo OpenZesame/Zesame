@@ -2,7 +2,7 @@
 
 # Zesame
 
-Zesame is an *unofficial* Swift SDK for Zilliqa. It is written in Swift 5.3. This SDK contains cryptographic methods allowing you to create and restore a wallet, sign and broadcast transactions. The cryptographic methods are implemented in [K1](https://github.com/Sajjon/K1) - which uses libsecp256k1. This SDK uses Zilliqas [JSON-RPC API](https://apidocs.zilliqa.com/#introduction)
+Zesame is an *unofficial* Swift SDK for Zilliqa. It uses the Swift 6.1 toolchain with Swift 5 language mode. This SDK contains cryptographic methods allowing you to create and restore a wallet, sign and broadcast transactions. The cryptographic methods are implemented in [K1](https://github.com/Sajjon/K1) - which uses libsecp256k1. This SDK uses Zilliqas [JSON-RPC API](https://apidocs.zilliqa.com/#introduction)
 
 # Getting started
 
@@ -59,7 +59,7 @@ Zesame is dependent on the Elliptic Curve Cryptography of [EllipticCurveKit]((ht
 
 # API
 ## Async-Await or Combine
-This SDK contains two implementations for each method, one that uses [Async -Await](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency#app-top)(a.k.a. "concurrency") and one implementation using [Combine](https://developer.apple.com/documentation/combine/).
+This SDK contains two implementations for each method, one that uses [Async-Await](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency#app-top) (a.k.a. "concurrency") and one implementation using [Combine](https://developer.apple.com/documentation/combine/).
 
 ### Rx
 ```swift

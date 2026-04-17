@@ -68,20 +68,12 @@ public extension RPCRequest {
 
 // MARK: - URLRequest
 
-public extension RPCRequest {
-    func asURLRequest() throws -> URLRequest {
-        var components = URLComponents()
-        components.path = "/"
-
-        guard let url = components.url else {
-            preconditionFailure("Failed to construct URL")
-        }
-
-        var urlRequest = URLRequest(url: url)
+extension RPCRequest {
+    func asURLRequest(baseURL: URL) throws -> URLRequest {
+        var urlRequest = URLRequest(url: baseURL)
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpBody = try JSONEncoder().encode(self)
-
         return urlRequest
     }
 }
