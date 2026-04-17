@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import CryptoSwift
 
 public extension Keystore {
 

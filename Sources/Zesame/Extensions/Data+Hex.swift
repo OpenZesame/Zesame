@@ -27,15 +27,23 @@ import BigInt
 
 public extension Data {
 
-    static func fromHexString(_ string: String) -> Data {
-        Data(hex: string)
+    init(hex: String) {
+        let s = hex.hasPrefix("0x") ? String(hex.dropFirst(2)) : hex
+        var result = Data()
+        var index = s.startIndex
+        while index < s.endIndex {
+            let end = s.index(index, offsetBy: 2, limitedBy: s.endIndex) ?? s.endIndex
+            if let byte = UInt8(s[index..<end], radix: 16) {
+                result.append(byte)
+            }
+            index = end
+        }
+        self = result
     }
 
-    var asHex: String {
-        toHexString()
-    }
+    static func fromHexString(_ string: String) -> Data { Data(hex: string) }
 
-    var asNumber: BigUInt {
-        BigUInt(self)
-    }
+    var asHex: String { map { String(format: "%02x", $0) }.joined() }
+
+    var asNumber: BigUInt { BigUInt(self) }
 }

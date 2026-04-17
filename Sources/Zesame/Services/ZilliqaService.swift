@@ -24,7 +24,6 @@
 
 import Foundation
 import Combine
-import CryptoSwift
 
 public protocol ZilliqaService: AnyObject {
     var apiClient: APIClient { get }

@@ -65,7 +65,7 @@ public extension Bech32Address {
         }
         
         let addressAsData = try Bech32.convertbits(data: Array(relevantInfoPart.data), fromBits: 5, toBits: 8, pad: false)
-        let hexString = try HexString(addressAsData.toHexString())
+        let hexString = try HexString(addressAsData.asHex)
         let ethStyleNotNecessarilyChecksummed = try LegacyAddress(unvalidatedHex: hexString)
         return try ethStyleNotNecessarilyChecksummed.toChecksummedLegacyAddress()
     }

@@ -13,7 +13,6 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/Sajjon/K1.git", from: "0.3.7"),
         .package(url: "https://github.com/attaswift/BigInt.git", from: "5.2.1"),
-        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.8.0")),
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.26.0"),
     ],
     targets: [
@@ -22,7 +21,6 @@ let package = Package(
             dependencies: [
                 "K1",
                 "BigInt",
-                "CryptoSwift",
                 .product(name: "SwiftProtobuf", package: "swift-protobuf"),
             ],
             exclude: ["Models/Protobuf/messages.proto"],

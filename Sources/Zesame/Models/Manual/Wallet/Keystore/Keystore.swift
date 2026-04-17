@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import CryptoSwift
 
 public struct Keystore: Codable, Equatable {
     public static let minumumPasswordLength = 8
@@ -58,7 +57,7 @@ public extension Keystore {
 
 // MARK: Initialization
 public extension Keystore {
-    init(address: LegacyAddress, crypto: Crypto, id: String? = nil, version: Int = 3) {
+    init(address: LegacyAddress, crypto: Crypto, id: String? = nil, version: Int = 4) {
         self.address = address
         self.crypto = crypto
         self.id = id ?? UUID().uuidString

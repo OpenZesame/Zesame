@@ -55,7 +55,7 @@ public extension LegacyAddress {
     }
     
     init(compressedHash: Data) throws {
-        let hexString = try HexString(compressedHash.toHexString())
+        let hexString = try HexString(compressedHash.asHex)
         let checksummed = LegacyAddress.checksummedHexstringFrom(hexString: hexString)
         try self.init(hexString: checksummed)
     }

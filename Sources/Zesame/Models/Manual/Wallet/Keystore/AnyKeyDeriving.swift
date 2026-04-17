@@ -2,17 +2,17 @@
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,25 +23,35 @@
 //
 
 import Foundation
-import CryptoSwift
+import CommonCrypto
 
 public struct AnyKeyDeriving: KeyDeriving {
-    private let kdf: KDF
     private let kdfParams: KDFParams
-    public init(kdf: KDF, kdfParams: KDFParams) {
-        self.kdf = kdf
+
+    public init(kdf: KDF = .pbkdf2, kdfParams: KDFParams) {
         self.kdfParams = kdfParams
     }
 
     public func deriveKey(password: String, done: @escaping (DerivedKey) throws -> Void) throws {
-        let data: Data
-        switch kdf {
-        case .pbkdf2:
-            data = Data(try PBKDF2(kdfParams: kdfParams, password: password).calculate())
-        case .scrypt:
-            data = Data(try Scrypt(kdfParams: kdfParams, password: password).calculate())
+        let passwordBytes = Array(password.utf8)
+        let saltBytes = Array(kdfParams.salt)
+        let keyLength = kdfParams.derivedKeyLength
+        var derivedKeyBytes = [UInt8](repeating: 0, count: keyLength)
+
+        let status = CCKeyDerivationPBKDF(
+            CCPBKDFAlgorithm(kCCPBKDF2),
+            passwordBytes, passwordBytes.count,
+            saltBytes, saltBytes.count,
+            CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA512),
+            UInt32(kdfParams.iterations),
+            &derivedKeyBytes,
+            keyLength
+        )
+        guard status == kCCSuccess else {
+            throw Zesame.Error.walletImport(
+                .keystoreError(NSError(domain: "PBKDF2", code: Int(status), userInfo: nil))
+            )
         }
-        let derivedKey = DerivedKey(data: data)
-        try done(derivedKey)
+        try done(DerivedKey(data: Data(derivedKeyBytes)))
     }
 }
