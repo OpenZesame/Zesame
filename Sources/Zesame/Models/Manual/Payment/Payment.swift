@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,58 +26,58 @@ import Foundation
 
 public struct Payment {
     public let recipient: LegacyAddress
-    public let amount: ZilAmount
+    public let amount: Amount
     public let gasLimit: GasLimit
     public let gasPrice: GasPrice
     public let nonce: Nonce
 
     public init(
         to recipient: LegacyAddress,
-        amount: ZilAmount,
+        amount: Amount,
         gasLimit: GasLimit = .defaultGasLimit,
         gasPrice: GasPrice,
         nonce: Nonce = 0
     ) throws {
-        guard gasLimit >= GasLimit.minimum else { throw Error.gasLimitTooLow(got: gasLimit, butMinIs: GasLimit.minimum) }
+        guard gasLimit >= GasLimit.minimum
+        else { throw Error.gasLimitTooLow(got: gasLimit, butMinIs: GasLimit.minimum) }
         self.recipient = recipient
         self.amount = amount
         self.gasLimit = gasLimit
         self.gasPrice = gasPrice
         self.nonce = nonce.increasedByOne()
     }
-    
+
     enum Error: Swift.Error {
         case gasLimitTooLow(got: GasLimit, butMinIs: GasLimit)
     }
-    
 }
 
 public extension Payment {
-    
-    
     static func withMinimumGasLimit(
         to recipient: LegacyAddress,
-        amount: ZilAmount,
+        amount: Amount,
         gasPrice: GasPrice,
         nonce: Nonce = 0
     ) -> Self {
         try! .init(to: recipient, amount: amount, gasLimit: GasLimit.minimum, gasPrice: gasPrice, nonce: nonce)
     }
-    
-    
+
     static func estimatedTotalTransactionFee(gasPrice: GasPrice, gasLimit: GasLimit = .defaultGasLimit) throws -> Qa {
-        return Qa(qa: Qa.Magnitude(gasLimit) * gasPrice.qa)
+        Qa(qa: Qa.Magnitude(gasLimit) * gasPrice.qa)
     }
 
-    static func estimatedTotalCostOfTransaction(amount: ZilAmount, gasPrice: GasPrice, gasLimit: GasLimit = .defaultGasLimit) throws -> ZilAmount {
-
+    static func estimatedTotalCostOfTransaction(
+        amount: Amount,
+        gasPrice: GasPrice,
+        gasLimit: GasLimit = .defaultGasLimit
+    ) throws -> Amount {
         let fee = try estimatedTotalTransactionFee(gasPrice: gasPrice, gasLimit: gasLimit)
         let amountInQa = amount.asQa
         let totalInQa: Qa = amountInQa + fee
 
-        let tooLargeError = AmountError.tooLarge(max: ZilAmount.max)
+        let tooLargeError = AmountError.tooLarge(max: Amount.max)
 
-        guard totalInQa < ZilAmount.max.asQa else {
+        guard totalInQa < Amount.max.asQa else {
             throw tooLargeError
         }
 
@@ -86,12 +86,12 @@ public extension Payment {
         // 21E9 so we lose the 1E-12 part. Thus we subtract 21E9
         // to be able to keep the 1E-12 part and compare it against
         // the transaction cost. Ugly, but it works...
-        if totalInQa == ZilAmount.max.asQa {
-            let subtractedTotalSupplyFromAmount = totalInQa - ZilAmount.max.asQa
+        if totalInQa == Amount.max.asQa {
+            let subtractedTotalSupplyFromAmount = totalInQa - Amount.max.asQa
             if (subtractedTotalSupplyFromAmount + fee) != fee {
                 throw tooLargeError
             }
         }
-        return try ZilAmount(qa: totalInQa)
+        return try Amount(qa: totalInQa)
     }
 }

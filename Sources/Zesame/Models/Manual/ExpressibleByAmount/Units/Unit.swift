@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,24 +32,24 @@ public enum Unit: Int {
 
 public extension Unit {
     var exponent: Int {
-        return rawValue
+        rawValue
     }
 
     var powerOf: String {
-        return "10^\(exponent)"
+        "10^\(exponent)"
     }
 
     var name: String {
         switch self {
-        case .zil: return "zil"
-        case .li: return "li"
-        case .qa: return "qa"
+        case .zil: "zil"
+        case .li: "li"
+        case .qa: "qa"
         }
     }
 }
 
 extension Unit: CustomStringConvertible {
     public var description: String {
-        return name
+        name
     }
 }

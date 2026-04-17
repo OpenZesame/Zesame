@@ -2,17 +2,17 @@
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,7 +26,7 @@ import Foundation
 
 public extension Locale {
     var decimalSeparatorForSure: String {
-        if let decimalSeparator = decimalSeparator {
+        if let decimalSeparator {
             return decimalSeparator
         } else {
             let nsLocale = NSLocale(localeIdentifier: identifier)
@@ -40,51 +40,49 @@ public extension ExpressibleByAmount where Self: Unbound {
     init(_ value: Magnitude) {
         self.init(qa: Self.toQa(magnitude: value))
     }
-    
+
     init(valid: Magnitude) {
         self.init(valid)
     }
 }
 
 public extension ExpressibleByAmount where Self: Unbound {
-    
     init(_ doubleValue: Double) {
         self.init(qa: Self.toQa(double: doubleValue))
     }
-    
+
     init(_ intValue: Int) {
         self.init(Magnitude(intValue))
     }
-    
+
     init(
         trimming untrimmed: String
     ) throws {
         let trimmed = try Self.trimmingAndFixingDecimalSeparator(in: untrimmed)
-        
-        if let mag = Magnitude(decimalString: trimmed) {
-            self = Self.init(mag)
+
+        if let mag = Magnitude(trimmed) {
+            self = Self(mag)
         } else if let double = Double.fromString(trimmed) {
             self.init(double)
         } else {
             throw AmountError<Self>.nonNumericString
         }
     }
-
 }
 
 public extension ExpressibleByAmount where Self: Unbound {
-    init<E>(_ other: E) where E: ExpressibleByAmount {
+    init(_ other: some ExpressibleByAmount) {
         self.init(qa: other.qa)
     }
-    
+
     init(zil: Zil) {
         self.init(zil)
     }
-    
+
     init(li: Li) {
         self.init(li)
     }
-    
+
     init(qa: Qa) {
         self.init(qa)
     }
@@ -92,15 +90,15 @@ public extension ExpressibleByAmount where Self: Unbound {
 
 public extension ExpressibleByAmount where Self: Unbound {
     init(zil zilString: String) throws {
-        self.init(zil: try Zil(trimming: zilString))
+        try self.init(zil: Zil(trimming: zilString))
     }
-    
+
     init(li liString: String) throws {
-        self.init(li: try Li(trimming: liString))
+        try self.init(li: Li(trimming: liString))
     }
-    
+
     init(qa qaString: String) throws {
-        self.init(qa: try Qa(trimming: qaString))
+        try self.init(qa: Qa(trimming: qaString))
     }
 }
 
@@ -108,25 +106,27 @@ public extension ExpressibleByAmount {
     static func trimmingAndFixingDecimalSeparator(
         in untrimmed: String
     ) throws -> String {
-        
         let whiteSpacesRemoved = untrimmed.replacingOccurrences(of: " ", with: "")
-        
+
         let decimalSeparator = Locale.current.decimalSeparatorForSure
-        let characterSetDecimalsIncludingDecimalSeparator = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: decimalSeparator))
-        
-        guard CharacterSet(charactersIn: whiteSpacesRemoved).isSubset(of: characterSetDecimalsIncludingDecimalSeparator) else {
-            for char in whiteSpacesRemoved.charactersAsStrings() {
-                if CharacterSet(charactersIn: char).isDisjoint(with: characterSetDecimalsIncludingDecimalSeparator) {
-                    throw AmountError<Self>.containsNonDecimalStringCharacter(disallowedCharacter: char)
-                }
+        let characterSetDecimalsIncludingDecimalSeparator = CharacterSet.decimalDigits
+            .union(CharacterSet(charactersIn: decimalSeparator))
+
+        guard CharacterSet(charactersIn: whiteSpacesRemoved)
+            .isSubset(of: characterSetDecimalsIncludingDecimalSeparator)
+        else {
+            for char in whiteSpacesRemoved.charactersAsStrings()
+                where CharacterSet(charactersIn: char).isDisjoint(with: characterSetDecimalsIncludingDecimalSeparator)
+            {
+                throw AmountError<Self>.containsNonDecimalStringCharacter(disallowedCharacter: char)
             }
-            fatalError("should have throwed error above")
+            fatalError("should have thrown error above")
         }
 
         guard whiteSpacesRemoved.doesNotContainMoreThanOneDecimalSeparator() else {
             throw AmountError<Self>.moreThanOneDecimalSeparator
         }
-        
+
         if whiteSpacesRemoved.hasSuffix(decimalSeparator) {
             throw AmountError<Self>.endsWithDecimalSeparator
         }
@@ -140,15 +140,15 @@ public extension ExpressibleByAmount {
 }
 
 public extension String {
-    
     func charactersAsStrings() -> [String] {
-        return map {
+        map {
             String($0)
         }
     }
 }
 
 // MARK: - ExpressibleByFloatLiteral
+
 public extension ExpressibleByAmount where Self: Unbound {
     init(floatLiteral double: Double) {
         self.init(double)
@@ -156,6 +156,7 @@ public extension ExpressibleByAmount where Self: Unbound {
 }
 
 // MARK: - ExpressibleByIntegerLiteral
+
 public extension ExpressibleByAmount where Self: Unbound {
     init(integerLiteral int: Int) {
         self.init(int)
@@ -163,6 +164,7 @@ public extension ExpressibleByAmount where Self: Unbound {
 }
 
 // MARK: - ExpressibleByStringLiteral
+
 public extension ExpressibleByAmount where Self: Unbound {
     init(stringLiteral string: String) {
         do {

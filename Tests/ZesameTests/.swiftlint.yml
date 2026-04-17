@@ -1,0 +1,27 @@
+# Per-target overrides for the test suite.
+# Inherits all rules from the root .swiftlint.yml; only overrides listed below.
+
+disabled_rules:
+  # Tests legitimately use force_cast in assert sections.
+  - force_cast
+  # XCTFail in custom helpers doesn't need a description.
+  - xctfail_message
+  # Tuples in test fixtures can exceed 2 members.
+  - large_tuple
+  # Compiler protocol inits (e.g. ExpressibleByFloatLiteral) are fine in tests.
+  - compiler_protocol_init
+
+# Test functions are intentionally longer than production functions:
+# each test has a full Arrange / Act / Assert section.
+function_body_length:
+  warning: 60
+  error: 80
+
+# Test files are naturally longer than production files.
+file_length:
+  warning: 500
+  error: 500
+
+type_body_length:
+  warning: 400
+  error: 500

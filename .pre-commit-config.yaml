@@ -1,0 +1,43 @@
+fail_fast: true
+default_install_hook_types: [pre-commit, pre-push]
+default_stages: [pre-commit]
+repos:
+    - repo: https://github.com/crate-ci/typos
+      rev: v1.45.1
+      hooks:
+          - id: typos
+            stages: [pre-commit]
+
+    - repo: https://github.com/shellcheck-py/shellcheck-py
+      rev: v0.10.0.1
+      hooks:
+          - id: shellcheck
+            args: [--severity=warning]
+            stages: [pre-commit]
+
+    - repo: local
+      hooks:
+          - id: swiftformat
+            name: SwiftFormat
+            # Skip gracefully when the binary is missing (e.g. Linux sandboxes).
+            # CI installs SwiftFormat explicitly and runs it there.
+            entry: bash -c 'command -v swiftformat >/dev/null || { echo "swiftformat not installed — skipping"; exit 0; }; swiftformat --lint .'
+            language: system
+            types: [swift]
+            pass_filenames: false
+
+          - id: swiftlint
+            name: SwiftLint
+            entry: bash -c 'command -v swiftlint >/dev/null || { echo "swiftlint not installed — skipping"; exit 0; }; swiftlint lint --force-exclude --strict'
+            language: system
+            types: [swift]
+            pass_filenames: false
+
+          - id: swift-unit-tests
+            name: Swift unit tests
+            # Run the full test suite before every push, not on every commit,
+            # because swift test is slow.
+            entry: bash -c 'swift test'
+            language: system
+            pass_filenames: false
+            stages: [pre-push]

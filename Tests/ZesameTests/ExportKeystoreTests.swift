@@ -23,72 +23,38 @@
 //
 
 import Foundation
-import XCTest
+import Testing
 @testable import Zesame
 
-class ExportKeystoreTest: XCTestCase {
-
-    func testWalletImport() {
-
+struct ExportKeystoreTests {
+    @Test func walletImport() async throws {
         let service = DefaultZilliqaService(endpoint: .testnet)
-        let expectWalletImport = expectation(description: "importing wallet from keystore json")
-        do {
-            let keyRestoration = try KeyRestoration(keyStoreJSONString: keystoreWalletJSONString, encryptedBy: password)
-            service.restoreWallet(from: keyRestoration) {
-                switch $0 {
-                case .success(let importedWallet):
-                    XCTAssertEqual(importedWallet.keystore.address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
-
-                case .failure(let error): XCTFail("Failed to export, error: \(error)")
-                }
-                expectWalletImport.fulfill()
-            }
-            waitForExpectations(timeout: 3, handler: nil)
-        } catch {
-            XCTFail("Unexpected error: \(error)")
-        }
+        let keyRestoration = KeyRestoration.privateKey(knownPrivateKey, encryptBy: password, kdf: .pbkdf2)
+        let importedWallet = try await service.restoreWallet(from: keyRestoration)
+        #expect(importedWallet.keystore.address.asString == expectedAddress)
+        #expect(importedWallet.keystore.version == 4)
     }
 
-    func testKeystoreDecoding() {
-        do {
-            let json = keystoreWalletJSONString.data(using: .utf8)!
-            let keystore = try JSONDecoder().decode(Keystore.self, from: json)
-            XCTAssertEqual(keystore.address.asString, "74c544a11795905C2c9808F9e78d8156159d32e4")
+    @Test func keystoreEncodeDecode() throws {
+        let keystore = try Keystore.from(
+            privateKey: knownPrivateKey,
+            encryptBy: password,
+            kdf: .pbkdf2,
+            kdfParams: .quickTestParameters
+        )
+        #expect(keystore.address.asString == expectedAddress)
 
-            keystore.decryptPrivateKey(password: password) {
-                XCTAssertEqual($0.asHex(), expectedPrivateKey.uppercased())
-            }
-        } catch {
-            XCTFail("Unexpected error: \(error)")
-        }
+        let jsonData = try JSONEncoder().encode(keystore)
+        let decoded = try JSONDecoder().decode(Keystore.self, from: jsonData)
+        #expect(decoded.address.asString == expectedAddress)
+        #expect(decoded.version == 4)
+
+        let key = try decoded.decryptPrivateKey(encryptedBy: password)
+        #expect(key.rawRepresentation.asHex.uppercased() == expectedPrivateKey.uppercased())
     }
 }
-
 
 private let password = "apabanan"
 private let expectedPrivateKey = "0E891B9DFF485000C7D1DC22ECF3A583CC50328684321D61947A86E57CF6C638"
-private let keystoreWalletJSONString = """
-{
-  "version" : 3,
-  "id" : "10535E93-0A9D-428D-9AEF-E7A9D0C8B68B",
-  "crypto" : {
-    "ciphertext" : "59aaba249ec0fcf68e072a33fa31d8e8041622889bc4cb39faaf10602729da4a",
-    "cipherparams" : {
-      "iv" : "9dd4cbb5bf330bcf62db9d32112859e6"
-    },
-    "kdf" : "pbkdf2",
-    "kdfparams" : {
-      "r" : 8,
-      "p" : 1,
-      "n" : 2,
-      "c" : 2,
-      "dklen" : 32,
-      "salt" : "74cdee1367621c21d9217ff7a0db1efe9625a3fd0c486e40bc02f3a5e82c45a8"
-    },
-    "mac" : "18ae9db76c5f72cabf7003d0946a95581695d9041e4c24e4aa627ed2aef52e39",
-    "cipher" : "aes-128-ctr"
-  },
-  "address" : "74c544a11795905C2c9808F9e78d8156159d32e4"
-}
-"""
-
+private let expectedAddress = "74c544a11795905C2c9808F9e78d8156159d32e4"
+private let knownPrivateKey = try! PrivateKey(rawRepresentation: Data(hex: expectedPrivateKey))

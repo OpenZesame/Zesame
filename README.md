@@ -1,6 +1,8 @@
+[![codecov](https://codecov.io/gh/OpenZesame/Zesame/graph/badge.svg?token=8QL8I270E9)](https://codecov.io/gh/OpenZesame/Zesame)
+
 # Zesame
 
-Zesame is an *unofficial* Swift SDK for Zilliqa. It is written in Swift 5.3. This SDK contains cryptographic methods allowing you to create and restore a wallet, sign and broadcast transactions. The cryptographic methods are implemented in [EllipticCurveKit](https://github.com/Sajjon/EllipticCurveKit). This SDK uses Zilliqas [JSON-RPC API](https://apidocs.zilliqa.com/#introduction)
+Zesame is an *unofficial* Swift SDK for Zilliqa. It uses the Swift 6.1 toolchain with Swift 5 language mode. This SDK contains cryptographic methods allowing you to create and restore a wallet, sign and broadcast transactions. The cryptographic methods are implemented in [K1](https://github.com/Sajjon/K1) - which uses libsecp256k1. This SDK uses Zilliqas [JSON-RPC API](https://apidocs.zilliqa.com/#introduction)
 
 # Getting started
 
@@ -56,8 +58,8 @@ Zesame is dependent on the Elliptic Curve Cryptography of [EllipticCurveKit]((ht
 - [JSONRPCKit](https://github.com/ollitapa/JSONRPCKit): For consuming the Zilliqa JSON-RPC API.
 
 # API
-## Closure or Rx
-This SDK contains two implementations for each method, one that uses [Closures](https://docs.swift.org/swift-book/LanguageGuide/Closures.html)(a.k.a. "Callbacks") and one implementation using [RxSwift Observables](https://github.com/ReactiveX/RxSwift).
+## Async-Await or Combine
+This SDK contains two implementations for each method, one that uses [Async-Await](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency#app-top) (a.k.a. "concurrency") and one implementation using [Combine](https://developer.apple.com/documentation/combine/).
 
 ### Rx
 ```swift

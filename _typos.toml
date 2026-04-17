@@ -1,0 +1,7 @@
+[files]
+extend-exclude = [
+    # Checksummed Ethereum/Zilliqa addresses contain hex substrings (Ba, BA, Ded, DED)
+    # that look like words but are legitimate checksummed hex values.
+    "Tests/ZesameTests/AddressChecksumTests.swift",
+    "Tests/ZesameTests/AddressValidationTests.swift",
+]

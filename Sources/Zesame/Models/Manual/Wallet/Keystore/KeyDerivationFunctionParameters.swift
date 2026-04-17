@@ -2,17 +2,17 @@
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,80 +23,62 @@
 //
 
 import Foundation
-import EllipticCurveKit
 
 public typealias KDFParams = KDF.Parameters
 
 public extension KDF {
-    /// Same default values for parameters used by Zilliqa Javascript SDK: https://github.com/Zilliqa/Zilliqa-JavaScript-Library/blob/dev/packages/zilliqa-js-crypto/src/keystore.ts#L77-L82
-    struct Parameters: Codable, Equatable {
-        /// "N", CPU/memory cost parameter, must be power of 2.
-        let costParameterN: Int
-        let costParameterC: Int
+    struct Parameters: Codable, Hashable {
+        /// OWASP 2023 recommendation for PBKDF2-SHA512
+        public static let defaultIterations = 600_000
+        public static let defaultDerivedKeyLength = 32
+        /// Always HMAC-SHA512; encoded in JSON for interoperability
+        static let prf = "hmac-sha512"
 
-        /// "r", blocksize
-        let blockSize: Int
+        /// PBKDF2 iteration count ("c" in JSON)
+        public let iterations: Int
+        /// Derived key length in bytes ("dklen" in JSON)
+        public let derivedKeyLength: Int
+        public let saltHex: String
 
-        /// "p"
-        let parallelizationParameter: Int
-
-        /// "dklen"
-        let lengthOfDerivedKey: Int
-
-        let saltHex: String
-        var salt: Data {
-            return Data(hex: saltHex)
+        public var salt: Data {
+            Data(hex: saltHex)
         }
 
-        init(
-            costParameterN: Int = 8192,
-            costParameterC: Int = 262144,
-            blockSize: Int = 8,
-            parallelizationParameter: Int = 1,
-            lengthOfDerivedKey: Int = 32,
+        public init(
+            iterations: Int = Self.defaultIterations,
+            derivedKeyLength: Int = Self.defaultDerivedKeyLength,
             saltHex: String? = nil
-            ) throws {
-            self.costParameterN = costParameterN
-            self.costParameterC = costParameterC
-            self.blockSize = blockSize
-            self.parallelizationParameter = parallelizationParameter
-            self.lengthOfDerivedKey = lengthOfDerivedKey
-            if let saltHex = saltHex {
-                self.saltHex = saltHex
-            } else {
-                self.saltHex = try securelyGenerateBytes(count: 32).asData.asHex
-            }
+        ) throws {
+            self.iterations = iterations
+            self.derivedKeyLength = derivedKeyLength
+            self.saltHex = try saltHex ?? securelyGenerateBytes(count: 32).asHex
         }
 
         public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            let costParameterN = try container.decode(Int.self, forKey: .costParameterN)
-            let costParameterC = try container.decode(Int.self, forKey: .costParameterC)
-            let blockSize = try container.decode(Int.self, forKey: .blockSize)
-            let parallelizationParameter = try container.decode(Int.self, forKey: .parallelizationParameter)
-            let lengthOfDerivedKey = try container.decode(Int.self, forKey: .lengthOfDerivedKey)
-            let saltHex = try container.decode(String.self, forKey: .saltHex)
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            iterations = try c.decode(Int.self, forKey: .iterations)
+            derivedKeyLength = try c.decode(Int.self, forKey: .derivedKeyLength)
+            saltHex = try c.decode(String.self, forKey: .saltHex)
+        }
 
-            try self.init(
-                costParameterN: costParameterN,
-                costParameterC: costParameterC,
-                blockSize: blockSize,
-                parallelizationParameter: parallelizationParameter,
-                lengthOfDerivedKey: lengthOfDerivedKey,
-                saltHex: saltHex)
+        public func encode(to encoder: Encoder) throws {
+            var c = encoder.container(keyedBy: CodingKeys.self)
+            try c.encode(Self.prf, forKey: .prf)
+            try c.encode(iterations, forKey: .iterations)
+            try c.encode(derivedKeyLength, forKey: .derivedKeyLength)
+            try c.encode(saltHex, forKey: .saltHex)
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case prf
+            case iterations = "c"
+            case derivedKeyLength = "dklen"
+            case saltHex = "salt"
         }
     }
 }
 
-extension KDFParams {
-    enum CodingKeys: String, CodingKey {
-        /// Should be lowercase "n", since that is what Zilliqa JS SDK uses
-        case costParameterN = "n"
-        case costParameterC = "c"
-        case blockSize = "r"
-        case parallelizationParameter = "p"
-        case lengthOfDerivedKey = "dklen"
-
-        case saltHex = "salt"
-    }
+public extension KDF.Parameters {
+    // swiftlint:disable:next force_try
+    static let `default`: Self = try! .init()
 }

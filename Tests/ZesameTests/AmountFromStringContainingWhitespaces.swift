@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,22 +23,19 @@
 //
 
 import Foundation
-import XCTest
-
+import Testing
 @testable import Zesame
 
-class AmountFromStringContainingWhitespaces: XCTestCase {
-
-
-    func testZilStringContainingWhitespaces() {
-        XCTAssertEqual(Zil("1 234 567").qa, 1_234_567_000_000_000_000)
+struct AmountFromStringContainingWhitespacesTests {
+    @Test func zilStringContainingWhitespaces() {
+        #expect(Zil("1 234 567").qa == 1_234_567_000_000_000_000)
     }
 
-    func testZilAmountContainingWhitespaces() {
-        XCTAssertEqual(ZilAmount("1 234 567").qa, 1_234_567_000_000_000_000)
+    @Test func zilAmountContainingWhitespaces() {
+        #expect(Amount("1 234 567").qa == 1_234_567_000_000_000_000)
     }
 
-    func testGasPriceContainingWhitespaces() {
-        XCTAssertEqual(try GasPrice(li: "13 456 789").qa, 13_456_789_000_000)
+    @Test func gasPriceContainingWhitespaces() throws {
+        #expect(try GasPrice(li: "13 456 789").qa == 13_456_789_000_000)
     }
 }

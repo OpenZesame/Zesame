@@ -1,18 +1,18 @@
-// 
+//
 // MIT License
 //
 // Copyright (c) 2018-2019 Open Zesame (https://github.com/OpenZesame)
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import EllipticCurveKit
 
 /// seemore: https://apidocs.zilliqa.com/#getnetworkid
 public enum Network: UInt32, Decodable {
@@ -34,23 +33,29 @@ public enum Network: UInt32, Decodable {
 extension Network {
     var baseURL: URL {
         switch self {
-        case .mainnet: return ZilliqaAPIEndpoint.mainnet.baseURL
-        case .testnet: return ZilliqaAPIEndpoint.testnet.baseURL
+        case .mainnet: ZilliqaAPIEndpoint.mainnet.baseURL
+        case .testnet: ZilliqaAPIEndpoint.testnet.baseURL
         }
     }
 }
 
-
 // MARK: - Decodable
+
 public extension Network {
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let chainIdAsString = try container.decode(String.self)
         guard let chainId = UInt32(chainIdAsString) else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unable to parse chain id string (`\(chainIdAsString)`) as integer")
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unable to parse chain id string (`\(chainIdAsString)`) as integer"
+            )
         }
         guard let network = Network(rawValue: chainId) else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Received new chain id: \(chainId), you need to add this to the enum `Network`")
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Received new chain id: \(chainId), you need to add this to the enum `Network`"
+            )
         }
         self = network
     }
@@ -58,12 +63,12 @@ public extension Network {
 
 public extension Network {
     static var `default`: Network {
-        return .mainnet
+        .mainnet
     }
 }
 
 public extension Network {
     var chainId: UInt32 {
-        return rawValue
+        rawValue
     }
 }
