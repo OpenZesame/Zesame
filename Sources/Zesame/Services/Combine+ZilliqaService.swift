@@ -114,7 +114,8 @@ public extension CombineWrapper where Base: ZilliqaService {
         return Future { promise in
             Task {
                 do {
-                    try await promise(.success(asyncCall(base)))
+                    let result = try await asyncCall(base)
+                    promise(.success(result))
                 } catch let error as Zesame.Error {
                     promise(.failure(error))
                 } catch {

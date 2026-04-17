@@ -24,13 +24,17 @@
 
 import Foundation
 
-public final class RequestIdGenerator {
+public final class RequestIdGenerator: @unchecked Sendable {
     public static let shared = RequestIdGenerator()
     private var id: Int = 0
+    private let lock = NSLock()
     private init() {}
+
     private func nextId() -> String {
-        defer { id += 1 }
-        return id.description
+        lock.withLock {
+            defer { id += 1 }
+            return id.description
+        }
     }
 
     public static func nextId() -> String {

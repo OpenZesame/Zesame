@@ -29,7 +29,7 @@ func messageFromUnsignedTransaction(
     _ tx: Transaction,
     publicKey: PublicKey,
     hasher: some HashFunction
-) -> Data {
+) throws -> Data {
     func formatCodeOrData(_ string: String) -> Data {
         string.data(using: .utf8)!
     }

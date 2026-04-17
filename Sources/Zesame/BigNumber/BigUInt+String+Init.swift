@@ -28,7 +28,7 @@ import Foundation
 extension String {
     func splittingIntoSubStringsOfLength(_ length: Int) -> [String] {
         guard count % length == 0 else { fatalError("bad length") }
-        var startIndex = startIndex
+        var startIndex = self.startIndex
         var results = [Substring]()
 
         while startIndex < endIndex {

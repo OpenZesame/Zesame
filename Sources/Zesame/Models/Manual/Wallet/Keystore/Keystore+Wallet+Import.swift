@@ -41,23 +41,27 @@ public extension Keystore {
         let derivedKey = try deriveKey(password: password)
         let symmetricKey = SymmetricKey(data: derivedKey.data)
 
+        let sealedBox: AES.GCM.SealedBox
         do {
             let gcmNonce = try AES.GCM.Nonce(data: crypto.cipherParameters.nonce)
-            let sealedBox = try AES.GCM.SealedBox(
+            sealedBox = try AES.GCM.SealedBox(
                 nonce: gcmNonce,
                 ciphertext: crypto.encryptedPrivateKey,
                 tag: crypto.cipherParameters.tag
             )
-            let plaintext = try AES.GCM.open(sealedBox, using: symmetricKey)
-            guard let privateKey = try? PrivateKey(rawRepresentation: plaintext) else {
-                throw Zesame.Error.walletImport(.badPrivateKeyHex)
-            }
-            return privateKey
-        } catch let error as Zesame.Error {
-            throw error
+        } catch {
+            throw Zesame.Error.decryptPrivateKey(error)
+        }
+        let plaintext: Data
+        do {
+            plaintext = try AES.GCM.open(sealedBox, using: symmetricKey)
         } catch {
             throw Zesame.Error.walletImport(.incorrectPassword)
         }
+        guard let privateKey = try? PrivateKey(rawRepresentation: plaintext) else {
+            throw Zesame.Error.walletImport(.badPrivateKeyHex)
+        }
+        return privateKey
     }
 }
 

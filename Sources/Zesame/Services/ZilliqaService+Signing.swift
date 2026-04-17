@@ -41,25 +41,24 @@ public extension ZilliqaService {
         signWith keyPair: KeyPair,
         network: Network
     ) async throws -> TransactionResponse {
-        try await send(transaction: sign(payment: payment, using: keyPair, network: network))
+        try await send(transaction: try sign(payment: payment, using: keyPair, network: network))
     }
 
     func sign(
         payment: Payment,
         using keyPair: KeyPair,
         network: Network
-    ) -> SignedTransaction {
+    ) throws -> SignedTransaction {
         let transaction = Transaction(payment: payment, version: Version(network: network))
-        let messageData = messageFromUnsignedTransaction(transaction, publicKey: keyPair.publicKey, hasher: SHA256())
-        let signature = sign(message: messageData, using: keyPair)
+        let messageData = try messageFromUnsignedTransaction(transaction, publicKey: keyPair.publicKey, hasher: SHA256())
+        let signature = try sign(message: messageData, using: keyPair)
 
         assert(keyPair.publicKey.isValidSignature(signature, hashed: messageData))
 
         return SignedTransaction(transaction: transaction, signedBy: keyPair.publicKey, signature: signature)
     }
 
-    func sign(message: Data, using keyPair: KeyPair) -> Signature {
-        // swiftlint:disable:next force_try
-        try! keyPair.privateKey.signature(for: message)
+    func sign(message: Data, using keyPair: KeyPair) throws -> Signature {
+        try keyPair.privateKey.signature(for: message)
     }
 }
