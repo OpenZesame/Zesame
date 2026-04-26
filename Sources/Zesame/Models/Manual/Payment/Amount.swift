@@ -27,8 +27,8 @@ import Foundation
 
 /// A bounded value of Zilliqa native currency.
 ///
-/// The bounds are fixed at the protocol total supply (21 × 10²¹ Qa = 21 billion Zil) at the lower
-/// edge and zero at the upper edge — no `Amount` instance can violate that envelope.
+/// The bounds are fixed at zero (lower edge) and the protocol total supply
+/// (21 × 10²¹ Qa = 21 billion Zil, upper edge) — no `Amount` instance can violate that envelope.
 public struct Amount: ExpressibleByAmount, Upperbound, Lowerbound, Hashable {
     /// The underlying unsigned big-integer magnitude.
     public typealias Magnitude = Zil.Magnitude

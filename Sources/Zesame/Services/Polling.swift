@@ -36,8 +36,9 @@ public struct Polling {
     /// Wait before the first poll attempt.
     public let initialDelay: Delay
 
-    /// Designated initialiser. Uses the bounded ``Count``/``Delay`` enums for type-safe defaults;
-    /// for arbitrary intervals use ``init(attempts:initialDelaySeconds:linearBackoffSeconds:)``.
+    /// Designated initialiser. Uses the bounded ``Count``/``Delay`` value types for type-safe
+    /// defaults; for arbitrary intervals use
+    /// ``init(attempts:initialDelaySeconds:linearBackoffSeconds:)``.
     public init(
         _ count: Count,
         backoff: Backoff,
@@ -50,7 +51,7 @@ public struct Polling {
 
     /// Free-form initialiser accepting arbitrary attempt counts and waits in whole seconds.
     /// Internally maps onto a synthetic `Count`/`Delay` whose `rawValue` is the supplied integer.
-    /// Use this when the bounded enums don't cover your desired schedule.
+    /// Use this when the named ``Count``/``Delay`` constants don't cover your desired schedule.
     ///
     /// - Parameters:
     ///   - attempts: Total number of attempts; must be `>= 1`.
@@ -88,15 +89,18 @@ public extension Polling {
         case linearIncrement(of: Delay)
     }
 
-    /// A wait duration, in whole seconds. The named cases cover the common schedules; use
-    /// ``init(rawSeconds:)`` for arbitrary intervals.
+    /// A wait duration, in whole seconds. The named statics cover the common schedules; use
+    /// ``init(rawSeconds:)`` for arbitrary intervals. Negative values are rejected — pollers
+    /// pass `Delay.rawValue` straight to `Task.sleep`, which would otherwise interpret a negative
+    /// value as zero and silently disable back-off.
     struct Delay: Equatable {
         /// The wait, in seconds.
         public let rawValue: Int
 
-        /// Wraps an arbitrary positive integer as a `Delay`. Prefer the named statics
-        /// (``oneSecond``, ``twoSeconds``, …) where they fit.
+        /// Wraps a non-negative integer as a `Delay`. Prefer the named statics
+        /// (``oneSecond``, ``twoSeconds``, …) where they fit. Traps on negative input.
         public init(rawSeconds seconds: Int) {
+            precondition(seconds >= 0, "Polling.Delay rawSeconds must be >= 0, got \(seconds)")
             rawValue = seconds
         }
 
@@ -109,15 +113,17 @@ public extension Polling {
         public static let twentySeconds = Delay(rawSeconds: 20)
     }
 
-    /// An attempt count. The named cases cover common schedules; use ``init(rawSeconds:)`` for
+    /// An attempt count. The named statics cover common schedules; use ``init(rawSeconds:)`` for
     /// arbitrary counts. (The label `rawSeconds` is reused for symmetry with ``Delay``; it's
-    /// just a wrapped `Int`.)
+    /// just a wrapped `Int`.) Values < 1 are rejected — a polling schedule with zero attempts
+    /// would loop forever or terminate immediately, neither of which is useful.
     struct Count: Equatable {
         /// Total attempts.
         public let rawValue: Int
 
-        /// Wraps an arbitrary positive integer as a `Count`.
+        /// Wraps a positive integer as a `Count`. Traps on input below 1.
         public init(rawSeconds value: Int) {
+            precondition(value >= 1, "Polling.Count rawSeconds must be >= 1, got \(value)")
             rawValue = value
         }
 

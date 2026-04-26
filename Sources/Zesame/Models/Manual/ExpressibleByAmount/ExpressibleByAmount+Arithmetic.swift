@@ -61,8 +61,9 @@ public extension ExpressibleByAmount where Self: Bound {
 }
 
 public extension ExpressibleByAmount where Self: Unbound {
-    /// Subtraction on unbounded amounts. Cannot throw, but underflows in the underlying
-    /// `BigInt` will trap.
+    /// Subtraction on unbounded amounts. Cannot throw; the result is computed in `BigInt`, which
+    /// is signed and arbitrary-precision, so a "negative" result is permitted at the type level.
+    /// Bounded conformers (e.g. ``Amount``) re-validate via their own throwing operators.
     static func - (
         lhs: Self,
         rhs: Self

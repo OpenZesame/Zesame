@@ -137,7 +137,7 @@ public extension CombineWrapper where Base: ZilliqaService {
         let base = base
         let box = TaskBox()
         return Future<R, Zesame.Error> { promise in
-            box.task = Task {
+            box.set(Task {
                 do {
                     let result = try await asyncCall(base)
                     promise(.success(result))
@@ -146,18 +146,31 @@ public extension CombineWrapper where Base: ZilliqaService {
                 } catch {
                     promise(.failure(.api(.request(error))))
                 }
-            }
+            })
         }
-        .handleEvents(receiveCancel: { box.task?.cancel() })
+        .handleEvents(receiveCancel: { box.cancel() })
         .eraseToAnyPublisher()
     }
 }
 
 /// Reference-typed holder that lets the captured `Future` and its `handleEvents(receiveCancel:)`
-/// closure share access to the same `Task`. Marked `@unchecked Sendable` because the only mutator
-/// is the `Future` factory closure, which Combine guarantees runs to completion before the
-/// cancel closure can read it.
+/// closure share access to the same `Task`.
+///
+/// All access to ``task`` is serialised through ``lock`` because Combine doesn't guarantee that
+/// the `Future` factory closure and the `receiveCancel` handler run on the same thread, and the
+/// receive-cancel can fire mid-assignment from a different scheduler. The `@unchecked Sendable`
+/// is honest here only because the lock makes it so.
 final class TaskBox: @unchecked Sendable {
-    /// The in-flight task driving the bridged async call. `nil` until the `Future` is subscribed.
-    var task: Task<Void, Never>?
+    private let lock = NSLock()
+    private var task: Task<Void, Never>?
+
+    /// Stores the in-flight task. Called once, from the `Future` factory closure.
+    func set(_ task: Task<Void, Never>) {
+        lock.withLock { self.task = task }
+    }
+
+    /// Cancels the stored task, if any. Safe to call from any thread.
+    func cancel() {
+        lock.withLock { task?.cancel() }
+    }
 }
