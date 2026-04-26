@@ -54,38 +54,13 @@ public struct HexString {
 }
 
 public extension HexString {
-    /// Checksums a Zilliqa address, implementation is based on Javascript library:
-    /// https://github.com/Zilliqa/Zilliqa-JavaScript-Library/blob/9368fb34a0d443797adc1ecbcb9728db9ce75e97/packages/zilliqa-js-crypto/src/util.ts#L76-L96
-    ///
-    /// The casing of each letter is determined by individual bits of the SHA-256 of the lowercase
-    /// address, mirroring EIP-55 in spirit but using a different bit selection schedule. Traps
-    /// for inputs that aren't valid 20-byte addresses — call sites must pre-validate.
+    /// Checksums a Zilliqa address. Delegates to ``LegacyAddress/checksummedHexstringFrom(hexString:)``
+    /// so there's only one implementation of the algorithm. Traps for inputs that aren't valid
+    /// 20-byte addresses — call sites must pre-validate.
     var checksummed: LegacyAddress {
-        let string = value
-
-        var hasher = SHA256()
-        hasher.update(data: hexString.asData)
-        let hash = hasher.finalize()
-        let numberFromHash = BigUInt(Data(hash))
-
-        var checksummedString = ""
-        for (i, character) in string.enumerated() {
-            let string = String(character)
-            let characterIsLetter = CharacterSet.letters.isSuperset(of: CharacterSet(charactersIn: string))
-            guard characterIsLetter else {
-                checksummedString += string
-                continue
-            }
-            let andOperand = BigUInt(2).power(255 - 6 * i)
-            let shouldUppercase = (numberFromHash & andOperand) >= 1
-            checksummedString += shouldUppercase ? string.uppercased() : string.lowercased()
-        }
-
-        guard
-            let checksummedHexString = try? HexString(checksummedString),
-            let checksummedAddress = try? LegacyAddress(hexString: checksummedHexString)
-        else {
-            fatalError("Incorrect implementation")
+        let checksummedHexString = LegacyAddress.checksummedHexstringFrom(hexString: self)
+        guard let checksummedAddress = try? LegacyAddress(hexString: checksummedHexString) else {
+            fatalError("Incorrect implementation: checksummed hex string did not validate")
         }
         return checksummedAddress
     }

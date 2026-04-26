@@ -30,14 +30,29 @@ public extension StatusOfTransactionResponse.Receipt {
     enum CodingKeys: String, CodingKey {
         case totalGasCost = "cumulative_gas"
         case isSent = "success"
+        case errors
+        case exceptions
     }
 
     /// Custom decoder. The node returns `cumulative_gas` as a string, which is parsed via
-    /// ``Amount/init(zil:)``.
+    /// ``Amount/init(zil:)``. `errors` / `exceptions` may be absent for non-contract transactions
+    /// — both default to empty.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let costAsString = try container.decode(String.self, forKey: .totalGasCost)
         totalGasCost = try Amount(zil: costAsString)
         isSent = try container.decode(Bool.self, forKey: .isSent)
+        errors = (try? container.decode([String: [Int]].self, forKey: .errors)) ?? [:]
+        exceptions = (try? container.decode(
+            [StatusOfTransactionResponse.TransactionException].self,
+            forKey: .exceptions
+        )) ?? []
+    }
+
+    /// `true` when the receipt indicates a permanent failure: the validator reported errors
+    /// and/or contract execution raised exceptions. Distinguishes from "still pending"
+    /// (`!isSent && errors.isEmpty && exceptions.isEmpty`).
+    var isPermanentlyFailed: Bool {
+        !isSent && (!errors.isEmpty || !exceptions.isEmpty)
     }
 }

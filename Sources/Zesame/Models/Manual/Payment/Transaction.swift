@@ -26,7 +26,11 @@ import Foundation
 
 /// Internal representation of a transaction prior to signing — a ``Payment`` plus the wire
 /// ``Version`` and optional Scilla `code`/`data` payloads for contract calls.
-public struct Transaction {
+///
+/// `internal` because external callers shouldn't construct unsigned transactions directly; the
+/// signing path inside ``ZilliqaService`` builds these from ``Payment`` and immediately wraps
+/// them in a ``SignedTransaction`` for broadcast.
+struct Transaction {
     /// Packed chain id + transaction version.
     let version: Version
     /// The transfer being made.

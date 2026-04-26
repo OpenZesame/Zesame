@@ -41,9 +41,18 @@ extension Wallet: Encodable {
 
 extension Wallet: Decodable {
     /// Decodes a wallet, expecting both the keystore and address fields present.
+    ///
+    /// Validates that the top-level address matches the address embedded in the keystore. A
+    /// mismatch indicates a tampered or hand-edited JSON and surfaces as
+    /// ``Zesame/Error/walletImport(_:)`` (`.walletAddressMismatch`).
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        keystore = try container.decode(Keystore.self, forKey: .keystore)
-        address = try container.decode(LegacyAddress.self, forKey: .address)
+        let keystore = try container.decode(Keystore.self, forKey: .keystore)
+        let address = try container.decode(LegacyAddress.self, forKey: .address)
+        guard address == keystore.address else {
+            throw Zesame.Error.walletImport(.walletAddressMismatch)
+        }
+        self.keystore = keystore
+        self.address = address
     }
 }

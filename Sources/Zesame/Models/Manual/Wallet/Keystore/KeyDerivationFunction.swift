@@ -37,6 +37,9 @@ public enum KeyDerivationFunction: String, Codable, Hashable {
 }
 
 public extension KDF {
-    /// Default ``KDFParams`` (OWASP-recommended iteration count, fresh random salt).
-    static let defaultParameters: KDFParams = .default
+    /// Default ``KDFParams`` (OWASP-recommended iteration count, fresh random salt). Computed
+    /// per-call so each keystore gets a unique salt — see ``KDFParams/default``.
+    static var defaultParameters: KDFParams {
+        .default
+    }
 }

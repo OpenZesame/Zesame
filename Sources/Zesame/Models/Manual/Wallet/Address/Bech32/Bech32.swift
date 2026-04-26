@@ -36,7 +36,11 @@ public extension Bech32 {
         for i in data {
             ret.append(charsetForEncoding[Int(i)])
         }
-        return String(data: ret, encoding: .utf8) ?? ""
+        // The mapped bytes are always ASCII (Bech32 alphabet), so UTF-8 decoding cannot fail.
+        guard let s = String(data: ret, encoding: .utf8) else {
+            preconditionFailure("Bech32 alphabet bytes failed UTF-8 decode — impossible by construction")
+        }
+        return s
     }
 
     /// Decodes a string string into a `Bech32Address`

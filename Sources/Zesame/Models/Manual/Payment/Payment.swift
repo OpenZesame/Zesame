@@ -42,6 +42,11 @@ public struct Payment {
 
     /// Validates the gas limit and pre-increments the nonce.
     ///
+    /// `nonce` is the **current** on-chain nonce (the value `GetBalance` returns); the stored
+    /// nonce is `nonce + 1`, which is what the network expects for the next transaction. If you
+    /// already know the exact next nonce, use ``init(to:amount:gasLimit:gasPrice:nextNonce:)``
+    /// instead — implicit increment is a footgun that's caused off-by-one errors in the past.
+    ///
     /// - Throws: ``Payment/Error/gasLimitTooLow`` when `gasLimit < GasLimit.minimum`.
     public init(
         to recipient: LegacyAddress,
@@ -50,13 +55,34 @@ public struct Payment {
         gasPrice: GasPrice,
         nonce: Nonce = 0
     ) throws {
+        try self.init(
+            to: recipient,
+            amount: amount,
+            gasLimit: gasLimit,
+            gasPrice: gasPrice,
+            nextNonce: nonce.increasedByOne()
+        )
+    }
+
+    /// Like ``init(to:amount:gasLimit:gasPrice:nonce:)`` but takes the **exact** nonce to embed
+    /// in the transaction. No implicit increment — passing `nextNonce: 5` produces a transaction
+    /// signed with `nonce = 5`. Prefer this overload when the nonce is already known.
+    ///
+    /// - Throws: ``Payment/Error/gasLimitTooLow`` when `gasLimit < GasLimit.minimum`.
+    public init(
+        to recipient: LegacyAddress,
+        amount: Amount,
+        gasLimit: GasLimit = .defaultGasLimit,
+        gasPrice: GasPrice,
+        nextNonce: Nonce
+    ) throws {
         guard gasLimit >= GasLimit.minimum
         else { throw Error.gasLimitTooLow(got: gasLimit, butMinIs: GasLimit.minimum) }
         self.recipient = recipient
         self.amount = amount
         self.gasLimit = gasLimit
         self.gasPrice = gasPrice
-        self.nonce = nonce.increasedByOne()
+        nonce = nextNonce
     }
 
     /// Construction-time validation errors.

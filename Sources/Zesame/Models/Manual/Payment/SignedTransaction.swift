@@ -50,7 +50,11 @@ extension SignedTransaction: Encodable {
     }
 
     /// Custom encoder that flattens the nested ``Transaction`` / ``Payment`` structure into the
-    /// flat object the JSON-RPC API expects, and checksums the recipient address along the way.
+    /// flat object the JSON-RPC API expects.
+    ///
+    /// The recipient is rendered in its checksummed (mixed-case) hex form, matching what the
+    /// Zilliqa JSON-RPC API accepts. `Payment`'s ``LegacyAddress`` is by construction already
+    /// checksummed, so we read its hex representation directly without re-checksumming.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
@@ -59,8 +63,7 @@ extension SignedTransaction: Encodable {
 
         try container.encode(tx.version, forKey: .version)
         try container.encode(p.nonce.nonce, forKey: .nonce)
-        let addressChecksummed = try p.recipient.toChecksummedLegacyAddress()
-        try container.encode(addressChecksummed.hexString.value, forKey: .toAddr)
+        try container.encode(p.recipient.hexString.value, forKey: .toAddr)
         try container.encode(publicKeyCompressed, forKey: .pubKey)
 
         try container.encode(p.amount, forKey: .amount)

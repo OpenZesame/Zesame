@@ -49,6 +49,9 @@ func messageFromUnsignedTransaction(
     let protoTransaction = ProtoTransactionCoreInfo.with {
         $0.version = tx.version.value
         $0.nonce = tx.payment.nonce.nonce
+        // The recipient address is hex-decoded into raw bytes; casing is irrelevant for
+        // `Data(hex:)`. Lowercased here only to match the canonical wire form documented for the
+        // Zilliqa reference signer.
         $0.toaddr = Data(hex: tx.payment.recipient.asString.lowercased())
         $0.senderpubkey = publicKey.compressedRepresentation.asByteArray
         $0.amount = tx.payment.amount.as16BytesLongArray
@@ -62,7 +65,7 @@ func messageFromUnsignedTransaction(
         }
     }
 
-    let serialized = try! protoTransaction.serializedData()
+    let serialized = try protoTransaction.serializedData()
     var hashFunction = hasher
     hashFunction.update(data: serialized)
     return Data(hashFunction.finalize())
@@ -99,9 +102,16 @@ private extension ExpressibleByAmount {
     }
 
     /// The amount as a 16-byte (uint128) protobuf ``ByteArray`` — the wire layout the network
-    /// expects for `amount` and `gasPrice` fields.
+    /// expects for `amount` and `gasPrice` fields. Traps if the magnitude requires more than 16
+    /// bytes; that's only possible if `GasPrice.maxInQa` (or a similar bound) has been raised
+    /// past `2^128`, which the network would reject anyway, so refuse to sign.
     var as16BytesLongArray: ByteArray {
-        asData(minByteCount: 16).asByteArray
+        let bytes = asData(minByteCount: 16)
+        precondition(
+            bytes.count == 16,
+            "Amount/gasPrice magnitude exceeds 16 bytes (uint128) — would produce a transaction the network will reject"
+        )
+        return bytes.asByteArray
     }
 }
 

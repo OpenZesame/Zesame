@@ -71,30 +71,23 @@ public extension ExpressibleByAmount where Self: Bound {
 public extension Double {
     /// Locale-tolerant `Double` parsing.
     ///
-    /// Tries the C-locale `Double(_:)` first; on failure, falls back to walking every available
-    /// `Locale` until one accepts the string. Slow but bullet-proof for user input that may use
-    /// a foreign decimal separator.
+    /// Tries (in order) the C-locale `Double(_:)`, then `Locale.current`, then `en_US_POSIX`.
+    /// Walking every available locale (≈700) was a UI-perceptible cost on amount fields that
+    /// re-parse on every keystroke; the curated list covers the realistic decimal-separator
+    /// shapes (`.` and `,`).
     static func fromString(_ string: String) -> Double? {
-        func doubleFromAnyLocaleOfTheAvailableLocales(numberString: String) -> Double? {
-            func doubleFromStringUsingLocale(_ locale: Locale) -> Double? {
-                let formatter = NumberFormatter()
-                formatter.locale = locale
-                return formatter.number(from: numberString)?.doubleValue
-            }
-
-            for localeIdentifier in Locale.availableIdentifiers {
-                let locale = Locale(identifier: localeIdentifier)
-                if let double = doubleFromStringUsingLocale(locale) {
-                    return double
-                }
-            }
-            return nil
+        if let direct = Double(string) {
+            return direct
         }
-        if let doubleWithoutFormatter = Double(string) {
-            return doubleWithoutFormatter
-        } else {
-            return doubleFromAnyLocaleOfTheAvailableLocales(numberString: string)
+        let locales: [Locale] = [.current, Locale(identifier: "en_US_POSIX")]
+        for locale in locales {
+            let formatter = NumberFormatter()
+            formatter.locale = locale
+            if let value = formatter.number(from: string)?.doubleValue {
+                return value
+            }
         }
+        return nil
     }
 }
 

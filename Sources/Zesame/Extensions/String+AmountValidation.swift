@@ -42,8 +42,7 @@ extension String {
             fatalError("invalid string")
         } else {
             assert(components.count == 2)
-            let decimalStringPart = components.last!
-            return decimalStringPart.components(separatedBy: "0").count
+            return components.last!.count
         }
     }
 

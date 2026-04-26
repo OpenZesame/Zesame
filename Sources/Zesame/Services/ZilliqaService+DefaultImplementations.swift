@@ -24,12 +24,6 @@
 
 import Foundation
 
-/// `true` when running under XCTest. Used to avoid the slow scrypt re-encryption pass during
-/// keystore imports in tests.
-var isRunningTests: Bool {
-    ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-}
-
 public extension ZilliqaService {
     /// Default verification: attempts a full keystore decrypt and reports success/failure.
     func verifyThat(
@@ -53,19 +47,33 @@ public extension ZilliqaService {
         return try await restoreWallet(from: .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf))
     }
 
+    /// Default implementation of the protocol requirement: re-encrypts non-default-KDF keystores
+    /// to the default KDF. Forwards to ``restoreWallet(from:reencryptToDefaultKDF:)`` with
+    /// `reencryptToDefaultKDF: true`.
+    func restoreWallet(from restoration: KeyRestoration) async throws -> Wallet {
+        try await restoreWallet(from: restoration, reencryptToDefaultKDF: true)
+    }
+
     /// Materialises a wallet from a ``KeyRestoration``.
     ///
     /// When importing an existing keystore that uses a non-default KDF, the keystore is silently
-    /// re-encrypted with the default KDF — except in tests, where the slow scrypt round-trip is
-    /// skipped via ``isRunningTests``.
-    func restoreWallet(from restoration: KeyRestoration) async throws -> Wallet {
+    /// re-encrypted with the default KDF unless `reencryptToDefaultKDF` is set to `false`. Tests
+    /// pass `false` to skip the slow scrypt round-trip; production callers should keep the
+    /// default `true` so that imported wallets converge on the strongest available KDF.
+    func restoreWallet(
+        from restoration: KeyRestoration,
+        reencryptToDefaultKDF: Bool
+    ) async throws -> Wallet {
         switch restoration {
         case let .keystore(keystore, password):
             let privateKey = try keystore.decryptPrivateKey(encryptedBy: password)
-            if keystore.crypto.kdf == KDF.default || isRunningTests {
+            if keystore.crypto.kdf == KDF.default || !reencryptToDefaultKDF {
                 return Wallet(keystore: keystore)
             } else {
-                return try await restoreWallet(from: .privateKey(privateKey, encryptBy: password, kdf: .default))
+                return try await restoreWallet(
+                    from: .privateKey(privateKey, encryptBy: password, kdf: .default),
+                    reencryptToDefaultKDF: reencryptToDefaultKDF
+                )
             }
         case let .privateKey(privateKey, newPassword, kdf):
             let keystore = try Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf)

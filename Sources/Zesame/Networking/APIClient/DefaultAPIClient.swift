@@ -26,14 +26,29 @@ import Foundation
 
 /// `URLSession`-backed implementation of ``APIClient``. POSTs JSON-RPC envelopes to ``baseURL``.
 public final class DefaultAPIClient: APIClient {
+    /// Default per-request timeout (30 s) — overrides the `URLSession` default of 60 s, which is
+    /// too long for an interactive wallet UI.
+    public static let defaultRequestTimeout: TimeInterval = 30
+
+    /// Default whole-resource timeout (60 s) — overrides the `URLSession` default of 7 days.
+    public static let defaultResourceTimeout: TimeInterval = 60
+
     private let session: URLSession
     /// The JSON-RPC endpoint URL all requests are POSTed to.
     public let baseURL: URL
 
-    /// Creates a client that targets `baseURL` using a default-configured `URLSession`.
-    public init(baseURL: URL) {
+    /// Creates a client that targets `baseURL` using a `URLSession` configured with the supplied
+    /// timeouts. The defaults bound interactive UI hangs.
+    public init(
+        baseURL: URL,
+        requestTimeout: TimeInterval = DefaultAPIClient.defaultRequestTimeout,
+        resourceTimeout: TimeInterval = DefaultAPIClient.defaultResourceTimeout
+    ) {
         self.baseURL = baseURL
-        session = URLSession(configuration: .default)
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = requestTimeout
+        config.timeoutIntervalForResource = resourceTimeout
+        session = URLSession(configuration: config)
     }
 }
 

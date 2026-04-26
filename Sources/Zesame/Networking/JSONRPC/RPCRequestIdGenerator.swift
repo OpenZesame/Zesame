@@ -31,8 +31,10 @@ public final class RequestIdGenerator: @unchecked Sendable {
     /// echoed back in the response, so a single counter for the whole process is sufficient.
     public static let shared = RequestIdGenerator()
 
-    /// Monotonic counter. Mutated only under ``lock``.
-    private var id: Int = 0
+    /// Monotonic counter. Mutated only under ``lock``. Wraps on overflow (`&+ 1`) so a long-lived
+    /// process never traps; collisions are harmless because JSON-RPC `id` only needs to round-trip
+    /// within a single request/response pair.
+    private var id: UInt64 = 0
 
     /// Mutex guarding ``id``.
     private let lock = NSLock()
@@ -40,10 +42,10 @@ public final class RequestIdGenerator: @unchecked Sendable {
     /// Singleton; initialiser is private to prevent additional counters.
     private init() {}
 
-    /// Returns the current ``id`` and post-increments under ``lock``.
+    /// Returns the current ``id`` and post-increments under ``lock`` with wrapping arithmetic.
     private func nextId() -> String {
         lock.withLock {
-            defer { id += 1 }
+            defer { id = id &+ 1 }
             return id.description
         }
     }

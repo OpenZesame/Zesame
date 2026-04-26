@@ -28,8 +28,12 @@ public extension ZilliqaService {
     /// Polls `GetTransaction` until a finalised receipt is available or the budget is exhausted.
     ///
     /// Sleeps before each request (so the first hit is delayed by ``Polling/initialDelay``), then
-    /// applies the back-off function between attempts. Throws ``Error/API/timeout`` after
-    /// `polling.count` unsuccessful attempts.
+    /// applies the back-off function between attempts. Behaviour:
+    /// - mined successfully → returns ``TransactionReceipt``.
+    /// - permanently rejected (validator errors / contract exceptions) → throws
+    ///   ``Error/API/transactionRejected(errors:exceptions:)`` immediately, without burning the
+    ///   remaining retry budget.
+    /// - still pending after `polling.count` attempts → throws ``Error/API/timeout``.
     func hasNetworkReachedConsensusYetForTransactionWith(
         id: String,
         polling: Polling
@@ -42,6 +46,12 @@ public extension ZilliqaService {
             let response: StatusOfTransactionResponse = try await apiClient.send(method: .getTransaction(id))
             if let receipt = TransactionReceipt(for: id, pollResponse: response) {
                 return receipt
+            }
+            if response.receipt.isPermanentlyFailed {
+                throw Zesame.Error.api(.transactionRejected(
+                    errors: response.receipt.errors,
+                    exceptions: response.receipt.exceptions
+                ))
             }
             retriesLeft -= 1
             delayInSeconds = polling.backoff.add(to: delayInSeconds)

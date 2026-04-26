@@ -22,16 +22,26 @@
 // SOFTWARE.
 //
 
+import CryptoKit
 import Foundation
 
 /// The output of a key derivation function (e.g. `scrypt`, `pbkdf2`).
 ///
 /// A `DerivedKey` is the symmetric key obtained by stretching a passphrase through a KDF; it is
 /// then split (typically halves) to encrypt the wallet private key and to compute the keystore
-/// MAC. Treat it as sensitive material — do not log or persist it outside of memory.
+/// MAC. Treat it as sensitive material — do not log or persist it outside of memory. Prefer
+/// ``symmetricKey`` over the raw ``data`` accessor at use sites that immediately feed CryptoKit:
+/// `SymmetricKey` zeroes its backing storage on deinit on Apple platforms.
 public struct DerivedKey {
-    /// The raw derived bytes.
+    /// The raw derived bytes. Kept `public` for backward compatibility — new code should reach
+    /// for ``symmetricKey`` instead, which keeps the bytes inside CryptoKit's locked-down
+    /// `SymmetricKey` allocation rather than a plain `Data` heap buffer.
     public let data: Data
+
+    /// CryptoKit-friendly view onto the same bytes. Useful at AES.GCM / HMAC call sites.
+    public var symmetricKey: SymmetricKey {
+        SymmetricKey(data: data)
+    }
 
     /// Wraps already-derived bytes. The caller is responsible for ensuring the bytes were produced
     /// by an appropriately-tuned KDF.

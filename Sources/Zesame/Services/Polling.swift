@@ -36,7 +36,8 @@ public struct Polling {
     /// Wait before the first poll attempt.
     public let initialDelay: Delay
 
-    /// Designated initialiser.
+    /// Designated initialiser. Uses the bounded ``Count``/``Delay`` enums for type-safe defaults;
+    /// for arbitrary intervals use ``init(attempts:initialDelaySeconds:linearBackoffSeconds:)``.
     public init(
         _ count: Count,
         backoff: Backoff,
@@ -45,6 +46,28 @@ public struct Polling {
         self.count = count
         self.backoff = backoff
         self.initialDelay = initialDelay
+    }
+
+    /// Free-form initialiser accepting arbitrary attempt counts and waits in whole seconds.
+    /// Internally maps onto a synthetic `Count`/`Delay` whose `rawValue` is the supplied integer.
+    /// Use this when the bounded enums don't cover your desired schedule.
+    ///
+    /// - Parameters:
+    ///   - attempts: Total number of attempts; must be `>= 1`.
+    ///   - initialDelaySeconds: Seconds to wait before the first poll; must be `>= 0`.
+    ///   - linearBackoffSeconds: Seconds to add between consecutive attempts (linear back-off);
+    ///     must be `>= 0`.
+    public init(
+        attempts: Int,
+        initialDelaySeconds: Int,
+        linearBackoffSeconds: Int
+    ) {
+        precondition(attempts >= 1, "Polling.attempts must be >= 1, got \(attempts)")
+        precondition(initialDelaySeconds >= 0, "initialDelaySeconds must be >= 0, got \(initialDelaySeconds)")
+        precondition(linearBackoffSeconds >= 0, "linearBackoffSeconds must be >= 0, got \(linearBackoffSeconds)")
+        count = Count(rawSeconds: attempts)
+        initialDelay = Delay(rawSeconds: initialDelaySeconds)
+        backoff = .linearIncrement(of: Delay(rawSeconds: linearBackoffSeconds))
     }
 }
 
@@ -65,25 +88,45 @@ public extension Polling {
         case linearIncrement(of: Delay)
     }
 
-    /// A bounded set of supported wait durations, expressed in whole seconds.
-    enum Delay: Int {
-        case oneSecond = 1
-        case twoSeconds = 2
-        case threeSeconds = 3
-        case fiveSeconds = 5
-        case sevenSeconds = 7
-        case tenSeconds = 10
-        case twentySeconds = 20
+    /// A wait duration, in whole seconds. The named cases cover the common schedules; use
+    /// ``init(rawSeconds:)`` for arbitrary intervals.
+    struct Delay: Equatable {
+        /// The wait, in seconds.
+        public let rawValue: Int
+
+        /// Wraps an arbitrary positive integer as a `Delay`. Prefer the named statics
+        /// (``oneSecond``, ``twoSeconds``, …) where they fit.
+        public init(rawSeconds seconds: Int) {
+            rawValue = seconds
+        }
+
+        public static let oneSecond = Delay(rawSeconds: 1)
+        public static let twoSeconds = Delay(rawSeconds: 2)
+        public static let threeSeconds = Delay(rawSeconds: 3)
+        public static let fiveSeconds = Delay(rawSeconds: 5)
+        public static let sevenSeconds = Delay(rawSeconds: 7)
+        public static let tenSeconds = Delay(rawSeconds: 10)
+        public static let twentySeconds = Delay(rawSeconds: 20)
     }
 
-    /// A bounded set of attempt counts, useful for keeping pollers from looping forever.
-    enum Count: Int {
-        case once = 1
-        case twice = 2
-        case threeTimes = 3
-        case fiveTimes = 5
-        case tenTimes = 10
-        case twentyTimes = 20
+    /// An attempt count. The named cases cover common schedules; use ``init(rawSeconds:)`` for
+    /// arbitrary counts. (The label `rawSeconds` is reused for symmetry with ``Delay``; it's
+    /// just a wrapped `Int`.)
+    struct Count: Equatable {
+        /// Total attempts.
+        public let rawValue: Int
+
+        /// Wraps an arbitrary positive integer as a `Count`.
+        public init(rawSeconds value: Int) {
+            rawValue = value
+        }
+
+        public static let once = Count(rawSeconds: 1)
+        public static let twice = Count(rawSeconds: 2)
+        public static let threeTimes = Count(rawSeconds: 3)
+        public static let fiveTimes = Count(rawSeconds: 5)
+        public static let tenTimes = Count(rawSeconds: 10)
+        public static let twentyTimes = Count(rawSeconds: 20)
     }
 }
 

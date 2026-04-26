@@ -300,9 +300,20 @@ struct UnitPowerOfTests {
     }
 }
 
-struct IsRunningTestsTests {
-    @Test func isRunningTestsReturnsFalseUnderSwiftTest() {
-        #expect(!isRunningTests)
+struct KDFParamsDefaultUniquenessTests {
+    /// Regression: ``KDFParams.default`` was a `static let`, so every keystore created without
+    /// explicit kdfParams reused one process-wide salt. It's now a computed property — each
+    /// access must produce a freshly-generated salt.
+    @Test func defaultProducesFreshSaltPerAccess() {
+        let a = KDFParams.default
+        let b = KDFParams.default
+        #expect(a.saltHex != b.saltHex)
+    }
+
+    @Test func kdfDefaultParametersForwardsToFreshDefault() {
+        let a = KDF.defaultParameters
+        let b = KDF.defaultParameters
+        #expect(a.saltHex != b.saltHex)
     }
 }
 

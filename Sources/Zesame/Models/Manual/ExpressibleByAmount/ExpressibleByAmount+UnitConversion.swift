@@ -56,7 +56,11 @@ extension ExpressibleByAmount {
         guard qa <= BigInt(Double.greatestFiniteMagnitude) else {
             fatalError("Too big amount")
         }
-        let qaFittingInDecimal = Decimal(string: "\(qa)", locale: Locale.current)!
+        // `"\(qa)"` is the BigInt's locale-independent decimal description, so parse it without
+        // a locale (which on exotic locales could otherwise fail the digit-class check).
+        guard let qaFittingInDecimal = Decimal(string: "\(qa)") else {
+            fatalError("BigInt description \"\(qa)\" failed locale-free Decimal parse — unreachable")
+        }
 
         let exponentDiff = Qa.unit.exponent - targetUnit.exponent
 

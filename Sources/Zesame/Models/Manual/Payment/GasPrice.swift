@@ -46,27 +46,46 @@ public struct GasPrice: ExpressibleByAmount, AdjustableUpperbound, AdjustableLow
     /// which will update this.
     ///
     public static let minInQaDefault: Magnitude = 100_000_000_000
-    /// Active minimum gas price (in Qa). Updates here propagate to validation across new
-    /// ``GasPrice`` values. Setting it above ``maxInQa`` traps.
-    public static var minInQa = minInQaDefault {
-        willSet {
-            guard newValue <= maxInQa else {
-                fatalError(
-                    "Cannot set minInQa to greater than maxInQa, max: \(maxInQa), new min: \(newValue) (old: \(minInQa)"
-                )
+
+    /// By default GasPrice has an upperbound of 100 Zil, this can be changed.
+    public static let maxInQaDefault: Magnitude = 100_000_000_000_000
+
+    /// Lock guarding ``_minInQa`` and ``_maxInQa``. The bounds are read on every ``GasPrice``
+    /// validation and may be written from arbitrary task contexts (e.g. when refreshing the
+    /// cached network minimum from `DefaultZilliqaService.getMinimumGasPrice`), so unsynchronised
+    /// access would tear the read or race the willSet invariant.
+    private static let boundsLock = NSLock()
+    private nonisolated(unsafe) static var _minInQa: Magnitude = minInQaDefault
+    private nonisolated(unsafe) static var _maxInQa: Magnitude = maxInQaDefault
+
+    /// Active minimum gas price (in Qa). Setting it above ``maxInQa`` traps. Reads and writes are
+    /// serialised through ``boundsLock``.
+    public static var minInQa: Magnitude {
+        get { boundsLock.withLock { _minInQa } }
+        set {
+            boundsLock.withLock {
+                guard newValue <= _maxInQa else {
+                    fatalError(
+                        "Cannot set minInQa to greater than maxInQa, max: \(_maxInQa), new min: \(newValue) (old: \(_minInQa))"
+                    )
+                }
+                _minInQa = newValue
             }
         }
     }
 
-    /// By default GasPrice has an upperbound of 100 Zil, this can be changed.
-    public static let maxInQaDefault: Magnitude = 100_000_000_000_000
-    /// Active maximum gas price (in Qa). Setting it below ``minInQa`` traps.
-    public static var maxInQa = maxInQaDefault {
-        willSet {
-            guard newValue >= minInQa else {
-                fatalError(
-                    "Cannot set maxInQa to less than minInQa, min: \(minInQa), new max: \(newValue) (old: \(maxInQa)"
-                )
+    /// Active maximum gas price (in Qa). Setting it below ``minInQa`` traps. Reads and writes are
+    /// serialised through ``boundsLock``.
+    public static var maxInQa: Magnitude {
+        get { boundsLock.withLock { _maxInQa } }
+        set {
+            boundsLock.withLock {
+                guard newValue >= _minInQa else {
+                    fatalError(
+                        "Cannot set maxInQa to less than minInQa, min: \(_minInQa), new max: \(newValue) (old: \(_maxInQa))"
+                    )
+                }
+                _maxInQa = newValue
             }
         }
     }

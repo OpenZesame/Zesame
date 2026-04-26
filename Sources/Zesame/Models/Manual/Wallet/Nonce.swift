@@ -46,9 +46,12 @@ public extension Nonce {
 
 extension Nonce: ExpressibleByIntegerLiteral {
     /// Allows `Nonce`s to be written as integer literals.
+    ///
+    /// Negative literals trap with a clear precondition message rather than relying on the
+    /// `UInt64(_: Int)` arithmetic trap, which is opaque at the call site.
     public init(integerLiteral value: Int) {
-        let nonce = UInt64(value)
-        self.init(nonce)
+        precondition(value >= 0, "Nonce literal must be non-negative, got \(value)")
+        self.init(UInt64(value))
     }
 }
 

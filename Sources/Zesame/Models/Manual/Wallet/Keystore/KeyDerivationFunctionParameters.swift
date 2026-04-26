@@ -92,7 +92,13 @@ public extension KDF {
 }
 
 public extension KDF.Parameters {
-    // swiftlint:disable:next force_try
-    /// Default parameters: OWASP iteration count and a freshly-generated 32-byte salt.
-    static let `default`: Self = try! .init()
+    /// Default parameters: OWASP iteration count and a **freshly-generated** 32-byte salt.
+    ///
+    /// Implemented as a computed property (not `static let`) so each access produces a unique
+    /// salt. Caching the value would reuse one salt across every keystore in the process,
+    /// defeating the purpose of salting against parallel/rainbow-table attacks.
+    static var `default`: Self {
+        // swiftlint:disable:next force_try
+        try! .init()
+    }
 }

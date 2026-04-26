@@ -48,6 +48,13 @@ public extension Error {
         case request(Swift.Error)
         /// The polling budget was exhausted before the network reached consensus.
         case timeout
+        /// While polling, the node reported the transaction as permanently rejected. Carries the
+        /// validator errors and contract exceptions so the caller can surface them to the user
+        /// instead of waiting for the timeout.
+        case transactionRejected(
+            errors: [String: [Int]],
+            exceptions: [StatusOfTransactionResponse.TransactionException]
+        )
     }
 
     /// Specific reasons a keystore/private-key import can fail.
@@ -56,10 +63,16 @@ public extension Error {
         case badAddress
         /// The supplied private-key hex string is not valid hex / not the expected length.
         case badPrivateKeyHex
+        /// The supplied private-key bytes were valid hex but rejected by the secp256k1 layer
+        /// (e.g. zero key, key ≥ curve order). Carries the underlying error for diagnostics.
+        case invalidPrivateKey(Swift.Error)
         /// The keystore JSON could not be decoded as a UTF-8 string.
         case jsonStringDecoding
         /// `JSONDecoder` rejected the keystore payload.
         case jsonDecoding(Swift.DecodingError)
+        /// The decoded `Wallet`'s top-level address doesn't match the address embedded in the
+        /// keystore — indicates a tampered or hand-edited JSON.
+        case walletAddressMismatch
         /// The keystore is well-formed but the password is wrong (MAC mismatch).
         case incorrectPassword
         /// Other keystore-level failure surfaced from the keystore subsystem.
