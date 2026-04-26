@@ -54,7 +54,7 @@ struct EncodableDictionaryTests {
 struct DataConvertibleTests {
     @Test func hexStringBytesAndAsHex() {
         let hex: HexString = "deadbeef"
-        #expect(hex.bytes == [0xDE, 0xAD, 0xBE, 0xEF])
+        #expect(Array(hex.asData) == [0xDE, 0xAD, 0xBE, 0xEF])
         #expect(hex.asHex == "deadbeef")
     }
 
@@ -62,11 +62,6 @@ struct DataConvertibleTests {
         let bytes: [UInt8] = [0x01, 0x02, 0x03]
         let data = bytes.asData
         #expect(data == Data([0x01, 0x02, 0x03]))
-    }
-
-    @Test func uInt8ArrayAsHex() {
-        let bytes: [UInt8] = [0x0A, 0xB0]
-        #expect(bytes.asHex == "0ab0")
     }
 }
 

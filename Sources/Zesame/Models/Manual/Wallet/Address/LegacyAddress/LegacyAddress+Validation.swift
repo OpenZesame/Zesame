@@ -47,10 +47,9 @@ public extension LegacyAddress {
     static func checksummedHexstringFrom(hexString: HexStringConvertible) -> HexString {
         let string = hexString.asString
         var hasher = SHA256()
-        let hashInput = Data.fromHexString(string)
-        hasher.update(data: hashInput)
+        hasher.update(data: Data(hex: string))
         let hash = Data(hasher.finalize())
-        let numberFromHash = hash.asNumber
+        let numberFromHash = BigUInt(hash)
 
         var checksummedString = ""
         for (i, character) in string.enumerated() {

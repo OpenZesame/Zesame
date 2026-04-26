@@ -22,7 +22,6 @@
 // SOFTWARE.
 //
 
-import BigInt
 import Foundation
 
 public extension Data {
@@ -60,18 +59,11 @@ public extension Data {
         self = result
     }
 
-    /// Convenience static form of ``init(hex:)`` for fluent call sites; traps on invalid input.
-    static func fromHexString(_ string: String) -> Data {
-        Data(hex: string)
-    }
-
     /// The bytes as a lowercase hexadecimal string (no `0x` prefix).
+    ///
+    /// Foundation/CryptoKit don't ship a hex encoder for `Data`, so this is a small bespoke
+    /// helper. (Apple has Base64 round-trips on `Data`, but no hex equivalent.)
     var asHex: String {
         map { String(format: "%02x", $0) }.joined()
-    }
-
-    /// Interprets the bytes as a big-endian arbitrary-precision unsigned integer.
-    var asNumber: BigUInt {
-        BigUInt(self)
     }
 }

@@ -87,7 +87,7 @@ public extension Bech32Address {
             toBits: 8,
             pad: false
         )
-        let hexString = try HexString(addressAsData.asHex)
+        let hexString = try HexString(Data(addressAsData).asHex)
         let ethStyleNotNecessarilyChecksummed = try LegacyAddress(unvalidatedHex: hexString)
         return try ethStyleNotNecessarilyChecksummed.toChecksummedLegacyAddress()
     }
