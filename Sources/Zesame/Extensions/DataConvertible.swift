@@ -24,25 +24,35 @@
 
 import Foundation
 
+/// A type that has a canonical byte representation.
+///
+/// Conformers expose their value as `Data`, which gives free `bytes` and `asHex` projections.
+/// Cryptographic primitives in this library (keys, addresses, signatures) conform so they can be
+/// used uniformly wherever a byte sequence is required.
 public protocol DataConvertible {
+    /// The canonical byte representation of the value.
     var asData: Data { get }
 }
 
 public extension DataConvertible {
+    /// The value as a `[UInt8]` byte array.
     var bytes: [UInt8] {
         Array(asData)
     }
 
+    /// The value as a lowercase hexadecimal string (no `0x` prefix).
     var asHex: String {
         asData.asHex
     }
 }
 
 public extension [UInt8] {
+    /// The bytes wrapped in a `Data` value.
     var asData: Data {
         Data(self)
     }
 
+    /// The bytes encoded as a lowercase hexadecimal string (no `0x` prefix).
     var asHex: String {
         map { String(format: "%02x", $0) }.joined()
     }

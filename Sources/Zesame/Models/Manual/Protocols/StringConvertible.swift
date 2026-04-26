@@ -24,18 +24,26 @@
 
 import Foundation
 
+/// A type whose canonical representation is a `String`. Conformers automatically gain a sensible
+/// `description` and string-equality semantics.
 public protocol StringConvertible: CustomStringConvertible {
+    /// Canonical string representation.
     var asString: String { get }
 }
 
 public extension StringConvertible {
+    /// Defaults `description` to ``asString`` so debug logs render the canonical form.
     var description: String {
         asString
     }
 }
 
 public extension Equatable where Self: StringConvertible {
-    static func == (lhs: Self, rhs: Self) -> Bool {
+    /// `Equatable` implementation for `StringConvertible` types: equality on the canonical form.
+    static func == (
+        lhs: Self,
+        rhs: Self
+    ) -> Bool {
         lhs.asString == rhs.asString
     }
 }

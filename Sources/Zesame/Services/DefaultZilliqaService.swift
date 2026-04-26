@@ -24,33 +24,44 @@
 
 import Foundation
 
+/// Concrete ``ZilliqaService`` backed by an ``APIClient``. Also conforms to
+/// ``CombineCompatible``, which exposes a `.combine` projection bridging the async API to
+/// publishers.
 public final class DefaultZilliqaService: ZilliqaService, CombineCompatible {
+    /// The JSON-RPC client used for outbound calls.
     public let apiClient: APIClient
 
+    /// Designated initialiser. Inject any ``APIClient`` (real or stubbed) to control the transport.
     public init(apiClient: APIClient) {
         self.apiClient = apiClient
     }
 }
 
 public extension DefaultZilliqaService {
+    /// Convenience initialiser pointing at the canonical endpoint for a named ``Network``.
     convenience init(network: Network) {
         self.init(apiClient: DefaultAPIClient(baseURL: network.baseURL))
     }
 
+    /// Convenience initialiser for an arbitrary ``ZilliqaAPIEndpoint``.
     convenience init(endpoint: ZilliqaAPIEndpoint) {
         self.init(apiClient: DefaultAPIClient(endpoint: endpoint))
     }
 }
 
 public extension DefaultZilliqaService {
+    /// Issues `GetNetworkId` against the connected node.
     func getNetworkFromAPI() async throws -> NetworkResponse {
         try await apiClient.send(method: .getNetworkId)
     }
 
+    /// Issues `GetBalance` for the given address.
     func getBalance(for address: LegacyAddress) async throws -> BalanceResponse {
         try await apiClient.send(method: .getBalance(address))
     }
 
+    /// Issues `GetMinimumGasPrice` and optionally updates the cached client-side minimum so
+    /// subsequent ``GasPrice`` validation reflects current network conditions.
     func getMinimumGasPrice(alsoUpdateLocallyCachedMinimum: Bool = true) async throws -> MinimumGasPriceResponse {
         let response: MinimumGasPriceResponse = try await apiClient.send(method: .getMinimumGasPrice)
         if alsoUpdateLocallyCachedMinimum {
@@ -59,6 +70,7 @@ public extension DefaultZilliqaService {
         return response
     }
 
+    /// Issues `CreateTransaction` to broadcast `transaction`.
     func send(transaction: SignedTransaction) async throws -> TransactionResponse {
         try await apiClient.send(method: .createTransaction(transaction))
     }

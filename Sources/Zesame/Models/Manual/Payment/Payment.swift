@@ -24,13 +24,25 @@
 
 import Foundation
 
+/// User-facing description of a transfer: recipient, amount, gas, and nonce.
+///
+/// The nonce supplied at construction time is the *current* on-chain nonce; ``Payment`` stores
+/// `nonce + 1`, which is what the network expects for the next transaction.
 public struct Payment {
+    /// Receiver of the transfer.
     public let recipient: LegacyAddress
+    /// Amount of Zil to send.
     public let amount: Amount
+    /// Gas units the sender is willing to spend.
     public let gasLimit: GasLimit
+    /// Price per gas unit (in Qa).
     public let gasPrice: GasPrice
+    /// Transaction nonce, already incremented to the value the network expects.
     public let nonce: Nonce
 
+    /// Validates the gas limit and pre-increments the nonce.
+    ///
+    /// - Throws: ``Payment/Error/gasLimitTooLow`` when `gasLimit < GasLimit.minimum`.
     public init(
         to recipient: LegacyAddress,
         amount: Amount,
@@ -47,12 +59,17 @@ public struct Payment {
         self.nonce = nonce.increasedByOne()
     }
 
+    /// Construction-time validation errors.
     enum Error: Swift.Error {
+        /// The supplied gas limit is below the network minimum.
         case gasLimitTooLow(got: GasLimit, butMinIs: GasLimit)
     }
 }
 
 public extension Payment {
+    /// Convenience constructor pinning ``gasLimit`` to ``GasLimit/minimum`` — the cheapest payment
+    /// the network will accept. Force-tries because the only way this can throw is gas-limit
+    /// validation, which is satisfied by construction here.
     static func withMinimumGasLimit(
         to recipient: LegacyAddress,
         amount: Amount,
@@ -62,10 +79,17 @@ public extension Payment {
         try! .init(to: recipient, amount: amount, gasLimit: GasLimit.minimum, gasPrice: gasPrice, nonce: nonce)
     }
 
-    static func estimatedTotalTransactionFee(gasPrice: GasPrice, gasLimit: GasLimit = .defaultGasLimit) throws -> Qa {
+    /// Total fee budget for a transaction in Qa: `gasLimit × gasPrice`.
+    static func estimatedTotalTransactionFee(
+        gasPrice: GasPrice,
+        gasLimit: GasLimit = .defaultGasLimit
+    ) throws -> Qa {
         Qa(qa: Qa.Magnitude(gasLimit) * gasPrice.qa)
     }
 
+    /// Sum of `amount` and the estimated transaction fee, validated against total supply.
+    ///
+    /// - Throws: ``AmountError/tooLarge`` if the result would exceed ``Amount/max``.
     static func estimatedTotalCostOfTransaction(
         amount: Amount,
         gasPrice: GasPrice,

@@ -24,11 +24,17 @@
 
 import Foundation
 
+/// Result body of `GetTransaction`. Used during polling to determine whether a transaction has
+/// reached consensus.
 public struct StatusOfTransactionResponse: Decodable {
+    /// The receipt portion that callers actually inspect.
     public struct Receipt {
+        /// Total gas consumed by the transaction (in Zil).
         public let totalGasCost: Amount
+        /// `true` once the network has accepted the transaction.
         public let isSent: Bool
     }
 
+    /// Receipt populated by the node when the transaction has been processed.
     public let receipt: Receipt
 }

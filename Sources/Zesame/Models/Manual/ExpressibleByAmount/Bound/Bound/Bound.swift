@@ -24,21 +24,28 @@
 
 import Foundation
 
+/// Marker protocol for amount types that enforce a value range. Throwing initialisers signal that
+/// inputs outside the range surface as ``AmountError`` rather than trapping.
 public protocol Bound {
+    /// The underlying numeric magnitude (always ``BigInt`` in practice).
     associatedtype Magnitude: Comparable & Numeric
 
-    /// "Designated" init, check bounds
+    /// "Designated" init, check bounds.
     init(qa: Magnitude) throws
 
-    /// Most important "convenience" init
+    /// Most important "convenience" init: interprets `value` in the type's natural unit.
     init(_ value: Magnitude) throws
 
-    /// Various convenience inits
+    /// Convenience init from a `Double` interpreted in the type's natural unit.
     init(_ doubleValue: Double) throws
+
+    /// Convenience init from an `Int` interpreted in the type's natural unit.
     init(_ intValue: Int) throws
 }
 
 public extension Bound where Self: AdjustableLowerbound, Self: AdjustableUpperbound {
+    /// Resets both the lower and upper bounds to their factory defaults. Useful for tests that
+    /// have temporarily adjusted ``GasPrice/minInQa`` etc.
     static func restoreDefaultBounds() {
         restoreDefaultMin()
         restoreDefaultMax()

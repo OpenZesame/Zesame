@@ -26,10 +26,21 @@ import CryptoKit
 import Foundation
 
 public extension Keystore {
+    /// Decrypts the keystore and wraps the result in a ``KeyPair``.
     func toKeypair(encryptedBy password: String) throws -> KeyPair {
         try KeyPair(private: decryptPrivateKey(encryptedBy: password))
     }
 
+    /// Runs the keystore decryption pipeline: KDF, AES-GCM open, raw-key parse.
+    ///
+    /// - Throws:
+    ///   - ``Zesame/Error/keystorePasswordTooShort(provided:minimum:)`` when the password is below
+    ///     ``minimumPasswordLength``.
+    ///   - ``Zesame/Error/decryptPrivateKey(_:)`` when the AES-GCM nonce/tag are malformed.
+    ///   - ``Zesame/Error/walletImport(_:)`` (`.incorrectPassword`) when the AES-GCM tag doesn't
+    ///     verify (indistinguishable from "wrong password").
+    ///   - ``Zesame/Error/walletImport(_:)`` (`.badPrivateKeyHex`) when the plaintext isn't a
+    ///     valid private key (corrupted keystore).
     func decryptPrivateKey(encryptedBy password: String) throws -> PrivateKey {
         guard password.count >= Keystore.minimumPasswordLength else {
             throw Zesame.Error.keystorePasswordTooShort(
@@ -66,6 +77,9 @@ public extension Keystore {
 }
 
 public extension Keystore.Crypto {
+    /// Encrypts `privateKey` under `derivedKey` (AES-256-GCM) and packs the ciphertext, nonce,
+    /// and tag into a ``Crypto`` payload along with the KDF parameters needed to reverse the
+    /// process at decrypt time.
     init(
         derivedKey: DerivedKey,
         privateKey: PrivateKey,

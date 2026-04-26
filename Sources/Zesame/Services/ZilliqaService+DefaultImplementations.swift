@@ -24,12 +24,18 @@
 
 import Foundation
 
+/// `true` when running under XCTest. Used to avoid the slow scrypt re-encryption pass during
+/// keystore imports in tests.
 var isRunningTests: Bool {
     ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
 }
 
 public extension ZilliqaService {
-    func verifyThat(encryptionPassword: String, canDecryptKeystore keystore: Keystore) async throws -> Bool {
+    /// Default verification: attempts a full keystore decrypt and reports success/failure.
+    func verifyThat(
+        encryptionPassword: String,
+        canDecryptKeystore keystore: Keystore
+    ) async throws -> Bool {
         do {
             _ = try keystore.decryptPrivateKey(encryptedBy: encryptionPassword)
             return true
@@ -38,11 +44,20 @@ public extension ZilliqaService {
         }
     }
 
-    func createNewWallet(encryptionPassword: String, kdf: KDF = .default) async throws -> Wallet {
+    /// Generates a fresh secp256k1 ``PrivateKey`` and immediately wraps it in a keystore.
+    func createNewWallet(
+        encryptionPassword: String,
+        kdf: KDF = .default
+    ) async throws -> Wallet {
         let privateKey = PrivateKey()
         return try await restoreWallet(from: .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf))
     }
 
+    /// Materialises a wallet from a ``KeyRestoration``.
+    ///
+    /// When importing an existing keystore that uses a non-default KDF, the keystore is silently
+    /// re-encrypted with the default KDF — except in tests, where the slow scrypt round-trip is
+    /// skipped via ``isRunningTests``.
     func restoreWallet(from restoration: KeyRestoration) async throws -> Wallet {
         switch restoration {
         case let .keystore(keystore, password):
@@ -58,6 +73,7 @@ public extension ZilliqaService {
         }
     }
 
+    /// Encrypts `privateKey` into a fresh ``Keystore`` using `password` and `kdf`.
     func exportKeystore(
         privateKey: PrivateKey,
         encryptWalletBy password: String,

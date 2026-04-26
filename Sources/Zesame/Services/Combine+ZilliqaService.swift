@@ -27,16 +27,28 @@ import Foundation
 
 // MARK: - CombineCompatible
 
+/// Marker protocol granting a `.combine` projection to reference types.
+///
+/// Conforming a class to ``CombineCompatible`` lets call sites write `service.combine.foo()` to
+/// reach the publisher-flavoured surface without polluting the underlying type with Combine
+/// machinery.
 public protocol CombineCompatible: AnyObject {}
 
 public extension CombineCompatible {
+    /// The Combine projection of this instance.
     var combine: CombineWrapper<Self> {
         CombineWrapper(self)
     }
 }
 
+/// A type-erased namespace that wraps a base instance and hangs publisher-returning methods off
+/// it via conditional conformances.
 public struct CombineWrapper<Base> {
+    /// The underlying value being wrapped.
     public let base: Base
+
+    /// `fileprivate` so that ``CombineWrapper`` instances can only be created via the
+    /// ``CombineCompatible/combine`` projection.
     fileprivate init(_ base: Base) {
         self.base = base
     }
@@ -44,6 +56,8 @@ public struct CombineWrapper<Base> {
 
 // MARK: - ZilliqaServiceReactive conformance
 
+/// When the wrapped value is a ``ZilliqaService``, the Combine projection automatically conforms
+/// to ``ZilliqaServiceReactive``.
 extension CombineWrapper: ZilliqaServiceReactive where Base: ZilliqaService {}
 
 public extension CombineWrapper where Base: ZilliqaService {
@@ -71,7 +85,10 @@ public extension CombineWrapper where Base: ZilliqaService {
         callAsync { try await $0.verifyThat(encryptionPassword: encryptionPassword, canDecryptKeystore: keystore) }
     }
 
-    func createNewWallet(encryptionPassword: String, kdf: KDF = .default) -> AnyPublisher<Wallet, Zesame.Error> {
+    func createNewWallet(
+        encryptionPassword: String,
+        kdf: KDF = .default
+    ) -> AnyPublisher<Wallet, Zesame.Error> {
         callAsync { try await $0.createNewWallet(encryptionPassword: encryptionPassword, kdf: kdf) }
     }
 
@@ -109,7 +126,14 @@ public extension CombineWrapper where Base: ZilliqaService {
         callAsync { try await $0.sendTransaction(for: payment, signWith: keyPair, network: network) }
     }
 
-    private func callAsync<R>(_ asyncCall: @escaping (Base) async throws -> R) -> AnyPublisher<R, Zesame.Error> {
+    /// Bridges an async-throwing call into a `Future`-backed publisher whose failure is normalised
+    /// to ``Zesame/Error``.
+    ///
+    /// Subscriber cancellation propagates to the underlying `Task`, so subscribers tearing down a
+    /// pipeline mid-flight don't leak the in-flight network call.
+    private func callAsync<R>(
+        _ asyncCall: @escaping (Base) async throws -> R
+    ) -> AnyPublisher<R, Zesame.Error> {
         let base = base
         let box = TaskBox()
         return Future<R, Zesame.Error> { promise in
@@ -129,6 +153,11 @@ public extension CombineWrapper where Base: ZilliqaService {
     }
 }
 
+/// Reference-typed holder that lets the captured `Future` and its `handleEvents(receiveCancel:)`
+/// closure share access to the same `Task`. Marked `@unchecked Sendable` because the only mutator
+/// is the `Future` factory closure, which Combine guarantees runs to completion before the
+/// cancel closure can read it.
 final class TaskBox: @unchecked Sendable {
+    /// The in-flight task driving the bridged async call. `nil` until the `Future` is subscribed.
     var task: Task<Void, Never>?
 }

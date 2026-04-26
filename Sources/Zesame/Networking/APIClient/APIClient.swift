@@ -22,6 +22,10 @@
 // SOFTWARE.
 //
 
+/// Abstraction over the JSON-RPC transport. Tests inject stubs; production uses
+/// ``DefaultAPIClient`` over `URLSession`.
 public protocol APIClient {
+    /// Encodes the given ``RPCMethod`` as a JSON-RPC 2.0 request, sends it, and decodes the result
+    /// as `T`. Throws ``Zesame/Error/api(_:)`` on transport, HTTP, or RPC-level failure.
     func send<T: Decodable>(method: RPCMethod) async throws -> T
 }

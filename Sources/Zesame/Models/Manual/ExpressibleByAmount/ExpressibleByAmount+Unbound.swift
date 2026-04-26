@@ -25,6 +25,9 @@
 import Foundation
 
 public extension Locale {
+    /// Returns the locale's decimal separator, falling back to `NSLocale` if `Locale` reports
+    /// `nil`. (`Locale.current.decimalSeparator` can be `nil` on some Linux locales — this
+    /// keeps amount parsing locale-correct everywhere.)
     var decimalSeparatorForSure: String {
         if let decimalSeparator {
             return decimalSeparator
@@ -41,20 +44,25 @@ public extension ExpressibleByAmount where Self: Unbound {
         self.init(qa: Self.toQa(magnitude: value))
     }
 
+    /// Same as ``init(_:)`` for unbound types — `valid` is only meaningful for bounded amounts.
     init(valid: Magnitude) {
         self.init(valid)
     }
 }
 
 public extension ExpressibleByAmount where Self: Unbound {
+    /// Constructs from a `Double` interpreted in this type's unit.
     init(_ doubleValue: Double) {
         self.init(qa: Self.toQa(double: doubleValue))
     }
 
+    /// Constructs from an `Int` interpreted in this type's unit.
     init(_ intValue: Int) {
         self.init(Magnitude(intValue))
     }
 
+    /// Parses `untrimmed` as an amount in this type's unit, accepting whitespace and either `.`
+    /// or `,` as a decimal separator.
     init(
         trimming untrimmed: String
     ) throws {
@@ -71,38 +79,48 @@ public extension ExpressibleByAmount where Self: Unbound {
 }
 
 public extension ExpressibleByAmount where Self: Unbound {
+    /// Reinterprets another amount in this type's unit (preserves the underlying Qa magnitude).
     init(_ other: some ExpressibleByAmount) {
         self.init(qa: other.qa)
     }
 
+    /// Reinterprets a ``Zil`` value as `Self`.
     init(zil: Zil) {
         self.init(zil)
     }
 
+    /// Reinterprets a ``Li`` value as `Self`.
     init(li: Li) {
         self.init(li)
     }
 
+    /// Reinterprets a ``Qa`` value as `Self`.
     init(qa: Qa) {
         self.init(qa)
     }
 }
 
 public extension ExpressibleByAmount where Self: Unbound {
+    /// Parses `zilString` as Zil and reinterprets the result as `Self`.
     init(zil zilString: String) throws {
         try self.init(zil: Zil(trimming: zilString))
     }
 
+    /// Parses `liString` as Li and reinterprets the result as `Self`.
     init(li liString: String) throws {
         try self.init(li: Li(trimming: liString))
     }
 
+    /// Parses `qaString` as Qa and reinterprets the result as `Self`.
     init(qa qaString: String) throws {
         try self.init(qa: Qa(trimming: qaString))
     }
 }
 
 public extension ExpressibleByAmount {
+    /// Strips whitespace, normalises the decimal separator, and validates the input shape against
+    /// the unit's precision before returning the cleaned-up string. Throws an ``AmountError`` for
+    /// each specific malformation kind.
     static func trimmingAndFixingDecimalSeparator(
         in untrimmed: String
     ) throws -> String {
@@ -140,6 +158,8 @@ public extension ExpressibleByAmount {
 }
 
 public extension String {
+    /// The string's characters as one-character `String` values. Useful for set-style operations
+    /// over arbitrary scalars.
     func charactersAsStrings() -> [String] {
         map {
             String($0)
@@ -150,6 +170,7 @@ public extension String {
 // MARK: - ExpressibleByFloatLiteral
 
 public extension ExpressibleByAmount where Self: Unbound {
+    /// Allows `Self` to be written as a float literal — interpreted in this type's unit.
     init(floatLiteral double: Double) {
         self.init(double)
     }
@@ -158,6 +179,7 @@ public extension ExpressibleByAmount where Self: Unbound {
 // MARK: - ExpressibleByIntegerLiteral
 
 public extension ExpressibleByAmount where Self: Unbound {
+    /// Allows `Self` to be written as an integer literal — interpreted in this type's unit.
     init(integerLiteral int: Int) {
         self.init(int)
     }
@@ -166,6 +188,8 @@ public extension ExpressibleByAmount where Self: Unbound {
 // MARK: - ExpressibleByStringLiteral
 
 public extension ExpressibleByAmount where Self: Unbound {
+    /// Allows `Self` to be written as a string literal. Traps on parse errors — call
+    /// ``init(trimming:)`` for non-literal input.
     init(stringLiteral string: String) {
         do {
             try self = Self(trimming: string)

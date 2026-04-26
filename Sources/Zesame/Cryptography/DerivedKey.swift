@@ -24,15 +24,24 @@
 
 import Foundation
 
+/// The output of a key derivation function (e.g. `scrypt`, `pbkdf2`).
+///
+/// A `DerivedKey` is the symmetric key obtained by stretching a passphrase through a KDF; it is
+/// then split (typically halves) to encrypt the wallet private key and to compute the keystore
+/// MAC. Treat it as sensitive material — do not log or persist it outside of memory.
 public struct DerivedKey {
+    /// The raw derived bytes.
     public let data: Data
 
+    /// Wraps already-derived bytes. The caller is responsible for ensuring the bytes were produced
+    /// by an appropriately-tuned KDF.
     public init(data: Data) {
         self.data = data
     }
 }
 
 extension DerivedKey: DataConvertible {
+    /// The derived key bytes, exposed for ``DataConvertible`` conformance.
     public var asData: Data {
         data
     }

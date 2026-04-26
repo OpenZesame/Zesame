@@ -24,12 +24,23 @@
 
 import Foundation
 
+/// Thread-safe monotonic generator for JSON-RPC request `id` values. Marked
+/// `@unchecked Sendable` because all mutable state is guarded by `NSLock`.
 public final class RequestIdGenerator: @unchecked Sendable {
+    /// Process-wide singleton. The Zilliqa JSON-RPC API only requires that a request's `id` be
+    /// echoed back in the response, so a single counter for the whole process is sufficient.
     public static let shared = RequestIdGenerator()
+
+    /// Monotonic counter. Mutated only under ``lock``.
     private var id: Int = 0
+
+    /// Mutex guarding ``id``.
     private let lock = NSLock()
+
+    /// Singleton; initialiser is private to prevent additional counters.
     private init() {}
 
+    /// Returns the current ``id`` and post-increments under ``lock``.
     private func nextId() -> String {
         lock.withLock {
             defer { id += 1 }
@@ -37,6 +48,7 @@ public final class RequestIdGenerator: @unchecked Sendable {
         }
     }
 
+    /// Returns the next sequential id as a decimal string (`"0"`, `"1"`, …).
     public static func nextId() -> String {
         shared.nextId()
     }

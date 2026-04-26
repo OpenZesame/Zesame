@@ -41,39 +41,57 @@ public protocol ExpressibleByAmount:
     ExpressibleByStringLiteral
     where Magnitude == BigInt
 {
+    /// The arbitrary-precision integer used to back the value (always ``BigInt``).
     associatedtype Magnitude
 
-    // These are the two most important properties of the `ExpressibleByAmount` protocol,
-    // the unit in which the value - the magnitude is measured.
+    /// The conforming type's natural unit (Zil, Li, or Qa). Determines how the type renders and
+    /// how literals are interpreted.
     static var unit: Unit { get }
+    /// Canonical magnitude in Qa, the smallest unit. All arithmetic and comparisons reduce to this.
     var qa: Magnitude { get }
 
-    /// "Designated" initializer
+    /// "Designated" initializer.
+    ///
+    /// Passes through validation — for ``Bound`` conformers this traps on out-of-bounds input,
+    /// matching the spelling at literal-construction sites.
     init(valid: Magnitude)
 
-    // Convenience translations
+    /// The amount expressed in Li.
     var asLi: Li { get }
+    /// The amount expressed in Zil.
     var asZil: Zil { get }
+    /// The amount expressed in Qa.
     var asQa: Qa { get }
 
+    /// Validates a raw Qa magnitude against the conforming type's bounds. The default
+    /// implementations are provided by the `Bound`/`Unbound` extensions.
     static func validate(value: Magnitude) throws -> Magnitude
 
-    // Convenience initializers
+    /// Parses an amount string in this type's unit.
     init(trimming: String) throws
+    /// Reinterprets another amount in this type's unit.
     init(_ other: some ExpressibleByAmount) throws
+    /// Reinterprets a ``Zil`` value as `Self`.
     init(zil: Zil) throws
+    /// Reinterprets a ``Li`` value as `Self`.
     init(li: Li) throws
+    /// Reinterprets a ``Qa`` value as `Self`.
     init(qa: Qa) throws
+    /// Parses a Zil-denominated string and reinterprets the result as `Self`.
     init(zil: String) throws
+    /// Parses a Li-denominated string and reinterprets the result as `Self`.
     init(li: String) throws
+    /// Parses a Qa-denominated string and reinterprets the result as `Self`.
     init(qa: String) throws
 }
 
 public extension ExpressibleByAmount {
+    /// Instance-level access to the static ``unit`` requirement.
     var unit: Unit {
         Self.unit
     }
 
+    /// String describing the unit's power of ten relative to Qa (`"10^12"`, `"10^6"`, `"10^0"`).
     static var powerOf: String {
         unit.powerOf
     }

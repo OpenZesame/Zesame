@@ -26,6 +26,11 @@ import BigInt
 import Foundation
 
 extension String {
+    /// Splits the string into consecutive substrings of `length` characters.
+    ///
+    /// - Parameter length: The fixed chunk length. The receiver's `count` must be evenly divisible
+    ///   by `length`; otherwise this traps.
+    /// - Returns: The chunks in order, as `String` values.
     func splittingIntoSubStringsOfLength(_ length: Int) -> [String] {
         guard count % length == 0 else { fatalError("bad length") }
         var cursor = startIndex
@@ -44,6 +49,10 @@ extension String {
 // MARK: - From String
 
 public extension BigUInt {
+    /// Parses a textual integer, auto-detecting hexadecimal (`"0x"`-prefixed) versus decimal input.
+    ///
+    /// - Parameter string: A decimal string, or a hex string with a leading `"0x"`.
+    /// - Returns: `nil` if the string is not a valid integer in the inferred radix.
     init?(string: String) {
         if string.starts(with: "0x") {
             self.init(String(string.dropFirst(2)), radix: 16)

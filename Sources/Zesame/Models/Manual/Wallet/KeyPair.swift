@@ -25,22 +25,31 @@
 import Foundation
 import K1
 
+/// Schnorr-secp256k1 private key, as required by Zilliqa's signing scheme.
 public typealias PrivateKey = K1.Schnorr.PrivateKey
+/// Schnorr-secp256k1 public key.
 public typealias PublicKey = K1.Schnorr.PublicKey
+/// Schnorr-secp256k1 signature.
 public typealias Signature = K1.Schnorr.Signature
 
+/// A pair of secp256k1 keys for Schnorr signing. Only the private key is stored — the public key
+/// is derived on demand.
 public struct KeyPair {
+    /// The private signing key. Treat as sensitive material.
     public let privateKey: PrivateKey
+    /// The corresponding public key, derived from ``privateKey``.
     public var publicKey: PublicKey {
         privateKey.publicKey
     }
 
+    /// Wraps an existing private key.
     public init(private privateKey: PrivateKey) {
         self.privateKey = privateKey
     }
 }
 
 extension K1.Schnorr.PublicKey: @retroactive CustomStringConvertible {
+    /// Public keys render as their lowercase hex compressed representation.
     public var description: String {
         compressedRepresentation.asHex
     }

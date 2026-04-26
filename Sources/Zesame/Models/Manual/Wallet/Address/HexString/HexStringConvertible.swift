@@ -24,13 +24,17 @@
 
 import Foundation
 
+/// A type that has a canonical hex-string representation. Inherits ``DataConvertible`` and
+/// ``StringConvertible`` so conformers automatically render correctly in either context.
 public protocol HexStringConvertible: DataConvertible, StringConvertible {
+    /// Canonical ``HexString`` representation of the value.
     var hexString: HexString { get }
 }
 
 // MARK: - DataConvertible
 
 public extension HexStringConvertible {
+    /// Defaults to the bytes of ``hexString``.
     var asData: Data {
         hexString.asData
     }
@@ -39,6 +43,7 @@ public extension HexStringConvertible {
 // MARK: - StringConvertible
 
 public extension HexStringConvertible {
+    /// Defaults to the textual form of ``hexString``.
     var asString: String {
         hexString.value
     }
@@ -47,12 +52,16 @@ public extension HexStringConvertible {
 // MARK: - Convenience
 
 public extension HexStringConvertible {
+    /// Number of hex characters in the value (twice the byte count).
     var length: Int {
         hexString.length
     }
 }
 
 /// We dont want to mark `AddressConvertible` as `Equatable` since that puts "`Self` requirements" on it.
-public func == (lhs: HexStringConvertible, rhs: HexStringConvertible) -> Bool {
+public func == (
+    lhs: HexStringConvertible,
+    rhs: HexStringConvertible
+) -> Bool {
     lhs.asString == rhs.asString
 }

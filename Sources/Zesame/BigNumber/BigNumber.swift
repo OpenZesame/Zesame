@@ -24,5 +24,9 @@
 
 import BigInt
 
+/// An arbitrary-precision unsigned integer used for cryptographic and on-chain numeric values
+/// (balances, gas, nonces) where 64-bit native integers would overflow.
 public typealias BigNumber = BigUInt
+
+/// Alias for ``BigNumber``, kept for call sites that read more naturally as `Number`.
 public typealias Number = BigUInt

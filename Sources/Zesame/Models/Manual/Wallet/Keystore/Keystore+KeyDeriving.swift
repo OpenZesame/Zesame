@@ -25,6 +25,8 @@
 import Foundation
 
 extension Keystore: KeyDeriving {
+    /// Derives the symmetric key associated with this keystore by re-running the embedded KDF
+    /// with the user-supplied password.
     public func deriveKey(password: String) throws -> DerivedKey {
         try AnyKeyDeriving(kdf: crypto.kdf, kdfParams: crypto.keyDerivationFunctionParameters)
             .deriveKey(password: password)

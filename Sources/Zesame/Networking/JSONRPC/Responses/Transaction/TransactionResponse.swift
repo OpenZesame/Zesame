@@ -24,10 +24,15 @@
 
 import Foundation
 
+/// Result body of `CreateTransaction`. Returned immediately after broadcast — the network has not
+/// necessarily reached consensus yet; use ``TransactionReceipt`` for confirmation.
 public struct TransactionResponse: Decodable {
+    /// Free-form status string from the node (typically `"Non-contract txn, sent to shard"`).
     public let info: String
+    /// Hex-encoded transaction id usable for `GetTransaction` lookups.
     public let transactionIdentifier: String
 
+    /// JSON wire keys; the Zilliqa API uses PascalCase here.
     public enum CodingKeys: String, CodingKey {
         case transactionIdentifier = "TranID"
         case info = "Info"

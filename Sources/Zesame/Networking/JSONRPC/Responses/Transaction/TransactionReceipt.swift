@@ -26,16 +26,27 @@ import Foundation
 
 /// The receipt for a transaction that the network has reached consensus for.
 public struct TransactionReceipt {
+    /// Hex-encoded transaction id this receipt belongs to.
     public let transactionId: String
+    /// Total gas consumed (in Zil).
     public let totalGasCost: Amount
-    public init(id: String, totalGasCost: Amount) {
+    /// Designated initialiser.
+    public init(
+        id: String,
+        totalGasCost: Amount
+    ) {
         transactionId = id
         self.totalGasCost = totalGasCost
     }
 }
 
 public extension TransactionReceipt {
-    init?(for id: String, pollResponse: StatusOfTransactionResponse) {
+    /// Distils a `GetTransaction` response into a receipt, returning `nil` while the network has
+    /// not yet accepted the transaction (so polling can continue).
+    init?(
+        for id: String,
+        pollResponse: StatusOfTransactionResponse
+    ) {
         guard pollResponse.receipt.isSent else { return nil }
         self.init(id: id, totalGasCost: pollResponse.receipt.totalGasCost)
     }

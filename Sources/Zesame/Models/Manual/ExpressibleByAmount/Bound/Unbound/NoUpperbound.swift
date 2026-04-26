@@ -24,7 +24,17 @@
 
 import Foundation
 
+/// Marker protocol for amount types that have no upper bound. Non-throwing `+` and `*` are part
+/// of the contract.
 public protocol NoUpperbound {
-    static func + (lhs: Self, rhs: Self) -> Self
-    static func * (lhs: Self, rhs: Self) -> Self
+    /// Non-throwing addition (no upper bound to violate).
+    static func + (
+        lhs: Self,
+        rhs: Self
+    ) -> Self
+    /// Non-throwing multiplication (no upper bound to violate).
+    static func * (
+        lhs: Self,
+        rhs: Self
+    ) -> Self
 }

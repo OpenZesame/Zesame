@@ -25,6 +25,14 @@
 import Foundation
 import Security
 
+/// Generates `count` cryptographically-secure random bytes using the platform CSPRNG
+/// (`SecRandomCopyBytes`).
+///
+/// Used for keystore IVs, salts, and similar non-deterministic material. Throws an `NSError` in
+/// the `Zesame.SecureRandom` domain (with the OSStatus code) if the underlying call fails — which
+/// in practice indicates a serious system fault, not a recoverable error.
+///
+/// - Parameter count: Number of random bytes to produce.
 func securelyGenerateBytes(count: Int) throws -> Data {
     var bytes = [UInt8](repeating: 0, count: count)
     let status = SecRandomCopyBytes(kSecRandomDefault, count, &bytes)

@@ -24,12 +24,21 @@
 
 import Foundation
 
+/// Validation errors thrown by ``ExpressibleByAmount`` initialisers, parameterised over the
+/// concrete amount type so the failing bound is reported in the right unit.
 public enum AmountError<E: ExpressibleByAmount>: Swift.Error, Equatable {
+    /// The value is below the type's lower bound. Carries the offending bound for diagnostics.
     case tooSmall(min: E)
+    /// The value is above the type's upper bound.
     case tooLarge(max: E)
+    /// The string parser couldn't extract a number at all.
     case nonNumericString
+    /// The string ends with a stray decimal separator (e.g. `"1.2."`).
     case endsWithDecimalSeparator
+    /// The string contains a character that's neither a digit nor the decimal separator.
     case containsNonDecimalStringCharacter(disallowedCharacter: String)
+    /// More than one `.`/`,` was found.
     case moreThanOneDecimalSeparator
+    /// More fractional digits than the unit can represent without losing precision.
     case tooManyDecimalPlaces
 }

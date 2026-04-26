@@ -39,6 +39,10 @@ public extension Data {
         self = data
     }
 
+    /// Failable counterpart to ``init(hex:)`` that accepts untrusted input.
+    ///
+    /// Behaves identically (optional `0x` prefix, odd-length left-padding) but returns `nil` on
+    /// any non-hex character instead of trapping.
     init?(validatingHex hex: String) {
         var s = hex.hasPrefix("0x") ? String(hex.dropFirst(2)) : hex
         if !s.count.isMultiple(of: 2) {
@@ -56,14 +60,17 @@ public extension Data {
         self = result
     }
 
+    /// Convenience static form of ``init(hex:)`` for fluent call sites; traps on invalid input.
     static func fromHexString(_ string: String) -> Data {
         Data(hex: string)
     }
 
+    /// The bytes as a lowercase hexadecimal string (no `0x` prefix).
     var asHex: String {
         map { String(format: "%02x", $0) }.joined()
     }
 
+    /// Interprets the bytes as a big-endian arbitrary-precision unsigned integer.
     var asNumber: BigUInt {
         BigUInt(self)
     }

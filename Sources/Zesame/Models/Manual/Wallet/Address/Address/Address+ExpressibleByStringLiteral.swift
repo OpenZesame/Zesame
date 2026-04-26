@@ -27,6 +27,8 @@ import Foundation
 // MARK: - ExpressibleByStringLiteral
 
 public extension Address {
+    /// Allows ``Address`` to be written as a string literal. Traps if neither the Bech32 nor the
+    /// legacy parser accepts the literal.
     init(stringLiteral value: String) {
         do {
             try self.init(string: value)

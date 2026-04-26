@@ -24,26 +24,45 @@
 
 import Foundation
 
+/// The single error type surfaced by Zesame's public API.
+///
+/// Underlying transport errors are wrapped via ``Error/API`` so callers can pattern-match on the
+/// failure category without reaching for `NSError` codes.
 public enum Error: Swift.Error {
+    /// Failure from the JSON-RPC transport (request error or timeout).
     case api(API)
+    /// The supplied keystore password is shorter than ``Keystore`` requires.
     case keystorePasswordTooShort(provided: Int, minimum: Int)
+    /// Wallet/keystore import failed; see ``Error/WalletImport`` for the specific cause.
     case walletImport(WalletImport)
+    /// Encrypting a private key into a keystore failed.
     case keystoreExport(Swift.Error)
+    /// Decrypting the keystore's private key failed (typically wrong password or corrupt MAC).
     case decryptPrivateKey(Swift.Error)
 }
 
 public extension Error {
+    /// Failures originating from the JSON-RPC transport layer.
     enum API: Swift.Error {
+        /// Wrapped underlying error (URL/network/serialisation).
         case request(Swift.Error)
+        /// The polling budget was exhausted before the network reached consensus.
         case timeout
     }
 
+    /// Specific reasons a keystore/private-key import can fail.
     enum WalletImport: Swift.Error {
+        /// The address embedded in the keystore is malformed.
         case badAddress
+        /// The supplied private-key hex string is not valid hex / not the expected length.
         case badPrivateKeyHex
+        /// The keystore JSON could not be decoded as a UTF-8 string.
         case jsonStringDecoding
+        /// `JSONDecoder` rejected the keystore payload.
         case jsonDecoding(Swift.DecodingError)
+        /// The keystore is well-formed but the password is wrong (MAC mismatch).
         case incorrectPassword
+        /// Other keystore-level failure surfaced from the keystore subsystem.
         case keystoreError(Swift.Error)
     }
 }

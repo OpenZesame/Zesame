@@ -24,12 +24,16 @@
 
 import Foundation
 
+/// Canonical JSON-RPC endpoints maintained by Zilliqa for each public network.
 public enum ZilliqaAPIEndpoint: String {
+    /// Mainnet endpoint.
     case mainnet = "https://api.zilliqa.com"
+    /// Public testnet endpoint.
     case testnet = "https://dev-api.zilliqa.com"
 }
 
 public extension ZilliqaAPIEndpoint {
+    /// The endpoint's URL. Traps if the hard-coded literal somehow fails to parse.
     var baseURL: URL {
         guard let url = URL(string: rawValue) else {
             fatalError("Incorrect implementation should be able to construct url")

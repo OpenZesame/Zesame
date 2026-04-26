@@ -24,13 +24,25 @@
 
 import Foundation
 
+/// JSON-RPC 2.0 request envelope. Values of this type encode straight to the wire format the node
+/// expects: `{ "id": …, "method": …, "params": [ … ], "jsonrpc": "2.0" }`.
 public struct RPCRequest: Encodable {
+    /// The RPC method name, e.g. `"GetBalance"`.
     public let rpcMethod: String
+    /// Type-erased closure that knows how to encode the method's parameters into the keyed
+    /// container. `nil` for parameter-less methods like `GetNetworkId`.
     private let _encodeValue: RPCMethod.EncodeValue<CodingKeys>?
+    /// The unique request id (decimal string from ``RequestIdGenerator``).
     public let requestId: String
+    /// JSON-RPC protocol version. Always `"2.0"`.
     public let version = "2.0"
 
-    public init(rpcMethod: String, encodeValue: RPCMethod.EncodeValue<CodingKeys>?) {
+    /// Designated initialiser. Captures `encodeValue` lazily so that parameter encoding happens at
+    /// `encode(to:)` time, not at construction.
+    public init(
+        rpcMethod: String,
+        encodeValue: RPCMethod.EncodeValue<CodingKeys>?
+    ) {
         self.rpcMethod = rpcMethod
         _encodeValue = encodeValue
         requestId = RequestIdGenerator.nextId()
@@ -40,6 +52,8 @@ public struct RPCRequest: Encodable {
 // MARK: - Convenience Init
 
 public extension RPCRequest {
+    /// Convenience initialiser that pulls the method name and parameter-encoder from
+    /// ``RPCMethod``.
     init(method: RPCMethod) {
         self.init(rpcMethod: method.method, encodeValue: method.encodeValue(key: .parameters))
     }
@@ -48,6 +62,7 @@ public extension RPCRequest {
 // MARK: - Encodable
 
 public extension RPCRequest {
+    /// JSON wire-format keys.
     enum CodingKeys: String, CodingKey {
         case requestId = "id"
         case rpcMethod = "method"
@@ -55,6 +70,8 @@ public extension RPCRequest {
         case version = "jsonrpc"
     }
 
+    /// Custom encoder that delegates parameter writing to the captured ``EncodeValue`` closure when
+    /// present.
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(requestId, forKey: .requestId)
@@ -69,6 +86,8 @@ public extension RPCRequest {
 // MARK: - URLRequest
 
 extension RPCRequest {
+    /// Renders the request as a `POST` `URLRequest` with the JSON body and `application/json`
+    /// content type.
     func asURLRequest(baseURL: URL) throws -> URLRequest {
         var urlRequest = URLRequest(url: baseURL)
         urlRequest.httpMethod = "POST"

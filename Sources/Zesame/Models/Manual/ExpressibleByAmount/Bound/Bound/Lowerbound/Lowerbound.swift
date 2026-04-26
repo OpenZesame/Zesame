@@ -24,13 +24,23 @@
 
 import Foundation
 
+/// A bounded amount type that has a minimum value. Throwing `-` is part of the contract — it may
+/// surface ``AmountError/tooSmall`` when the result drops below ``minInQa``.
 public protocol Lowerbound: Bound {
+    /// Minimum allowed Qa magnitude.
     static var minInQa: Magnitude { get }
+    /// Sentinel ``Self`` value at the lower bound.
     static var min: Self { get }
-    static func - (lhs: Self, rhs: Self) throws -> Self
+    /// Throwing subtraction; may produce ``AmountError/tooSmall``.
+    static func - (
+        lhs: Self,
+        rhs: Self
+    ) throws -> Self
 }
 
 public extension Lowerbound where Self: ExpressibleByAmount {
+    /// Default sentinel for the lower bound. Force-tries because the value is, by definition,
+    /// in-bounds.
     static var min: Self {
         try! Self(qa: minInQa)
     }

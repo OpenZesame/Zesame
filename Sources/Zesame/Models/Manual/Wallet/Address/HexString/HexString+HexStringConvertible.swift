@@ -27,6 +27,7 @@ import Foundation
 extension HexString: HexStringConvertible {}
 
 public extension HexString {
+    /// A ``HexString`` is its own canonical hex form.
     var hexString: HexString {
         self
     }

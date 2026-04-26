@@ -22,10 +22,17 @@
 // SOFTWARE.
 //
 
+/// Top-level wallet type pairing a ``Keystore`` with the address it controls.
+///
+/// Holding the address alongside the keystore lets callers display "which wallet is this?"
+/// without paying the cost of a keystore decryption.
 public struct Wallet {
+    /// Encrypted-private-key payload.
     public let keystore: Keystore
+    /// The legacy hex address derived from the keystore's underlying private key.
     public let address: LegacyAddress
 
+    /// Wraps a ``Keystore`` and caches its address for convenience.
     public init(keystore: Keystore) {
         self.keystore = keystore
         address = keystore.address

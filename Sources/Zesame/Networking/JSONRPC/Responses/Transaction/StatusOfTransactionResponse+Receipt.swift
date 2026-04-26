@@ -26,11 +26,14 @@ import Foundation
 
 extension StatusOfTransactionResponse.Receipt: Decodable {}
 public extension StatusOfTransactionResponse.Receipt {
+    /// JSON wire keys for the receipt object.
     enum CodingKeys: String, CodingKey {
         case totalGasCost = "cumulative_gas"
         case isSent = "success"
     }
 
+    /// Custom decoder. The node returns `cumulative_gas` as a string, which is parsed via
+    /// ``Amount/init(zil:)``.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let costAsString = try container.decode(String.self, forKey: .totalGasCost)

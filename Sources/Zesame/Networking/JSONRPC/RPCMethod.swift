@@ -26,18 +26,28 @@ import Foundation
 
 /// JSONRPC method according to [Zilliqa API docs][1]
 ///
+/// Each case carries the strongly-typed parameters that ``encodeValue(key:)`` knows how to
+/// serialise into a JSON-RPC `params` array.
+///
 /// [1]: https://apidocs.zilliqa.com/#introduction
 public enum RPCMethod {
+    /// `GetBalance` for a legacy (hex) address.
     case getBalance(LegacyAddress)
+    /// `CreateTransaction`, broadcasting a signed transaction.
     case createTransaction(SignedTransaction)
+    /// `GetTransaction`, looking up a transaction by id.
     case getTransaction(TransactionId)
+    /// `GetNetworkId`, no parameters.
     case getNetworkId
+    /// `GetMinimumGasPrice`, no parameters.
     case getMinimumGasPrice
 }
 
 public extension RPCMethod {
+    /// Closure type that encodes a method's parameter into a keyed container under `key`.
     typealias EncodeValue<K: CodingKey> = (inout KeyedEncodingContainer<K>) throws -> Void
 
+    /// Wire-level method name as expected by the Zilliqa JSON-RPC API.
     var method: String {
         switch self {
         case .getBalance: "GetBalance"
@@ -48,6 +58,10 @@ public extension RPCMethod {
         }
     }
 
+    /// Returns an encoder closure for the method's parameter, or `nil` for parameter-less methods.
+    ///
+    /// The Zilliqa JSON-RPC dialect always wraps parameters in an array — encoding a bare object
+    /// triggers `INVALID_JSON_REQUEST`.
     func encodeValue<K: CodingKey>(key: K) -> EncodeValue<K>? {
         func innerEncode(_ value: some Encodable) -> EncodeValue<K> {
             { keyedEncodingContainer in
@@ -67,4 +81,5 @@ public extension RPCMethod {
     }
 }
 
+/// Hex-encoded transaction hash returned by `CreateTransaction` and accepted by `GetTransaction`.
 public typealias TransactionId = String

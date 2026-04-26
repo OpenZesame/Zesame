@@ -25,6 +25,11 @@
 import Foundation
 
 public extension ZilliqaService {
+    /// Polls `GetTransaction` until a finalised receipt is available or the budget is exhausted.
+    ///
+    /// Sleeps before each request (so the first hit is delayed by ``Polling/initialDelay``), then
+    /// applies the back-off function between attempts. Throws ``Error/API/timeout`` after
+    /// `polling.count` unsuccessful attempts.
     func hasNetworkReachedConsensusYetForTransactionWith(
         id: String,
         polling: Polling

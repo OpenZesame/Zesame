@@ -24,13 +24,19 @@
 
 import Foundation
 
+/// An upper bound whose value can be adjusted at runtime. Used by ``GasPrice``, where the
+/// network's accepted maximum may shift over time.
 public protocol AdjustableUpperbound: Upperbound {
+    /// Factory-default upper bound, restored by ``restoreDefaultMax()``.
     static var maxInQaDefault: Magnitude { get }
+    /// Mutable active upper bound.
     static var maxInQa: Magnitude { get set }
+    /// Resets ``maxInQa`` to ``maxInQaDefault``.
     static func restoreDefaultMax()
 }
 
 public extension AdjustableUpperbound {
+    /// Default implementation of ``restoreDefaultMax()``.
     static func restoreDefaultMax() {
         maxInQa = maxInQaDefault
     }

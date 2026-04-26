@@ -25,11 +25,19 @@
 import Foundation
 
 public extension ExpressibleByAmount {
-    static func == (lhs: Self, rhs: Self) -> Bool {
+    /// Two amounts of the same type are equal when their canonical Qa magnitudes are equal.
+    static func == (
+        lhs: Self,
+        rhs: Self
+    ) -> Bool {
         lhs.qa == rhs.qa
     }
 
-    static func < (lhs: Self, rhs: Self) -> Bool {
+    /// Ordering is defined on the canonical Qa magnitude.
+    static func < (
+        lhs: Self,
+        rhs: Self
+    ) -> Bool {
         lhs.qa < rhs.qa
     }
 }

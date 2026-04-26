@@ -24,10 +24,13 @@
 
 import Foundation
 
+/// Maximum gas units a transaction is allowed to consume, modelled as a plain `Int`.
 public typealias GasLimit = Int
 public extension GasLimit {
+    /// Default gas limit applied when callers don't supply one (``minimum``).
     static var defaultGasLimit: Self = .minimum
 
+    /// Minimum gas limit accepted by the network for a non-contract transaction.
     static var minimum: Self {
         50
     }

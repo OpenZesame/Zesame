@@ -24,17 +24,21 @@
 
 import Foundation
 
+/// Successful JSON-RPC envelope: just the `result` field, with the rest of the envelope ignored.
 public struct RPCResponseSuccess<ResultFromResponse: Decodable>: Decodable {
+    /// The decoded result payload.
     public let result: ResultFromResponse
 }
 
 // MARK: - Decodable
 
 public extension RPCResponseSuccess {
+    /// JSON keys for the success envelope.
     enum CodingKeys: String, CodingKey {
         case result
     }
 
+    /// Decodes only the `result` field and ignores the rest of the envelope.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         result = try container.decode(ResultFromResponse.self, forKey: .result)

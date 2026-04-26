@@ -24,14 +24,20 @@
 
 import Foundation
 
+/// Either a successful JSON-RPC result of type `ResultFromResponse` or an error envelope.
 public enum RPCResponse<ResultFromResponse: Decodable>: Decodable {
+    /// Successfully-decoded result body.
     case rpcSuccess(ResultFromResponse)
+    /// An error envelope or a decoding failure of either branch.
     case rpcError(Swift.Error)
 }
 
 // MARK: - Decodable
 
 public extension RPCResponse {
+    /// Tries to decode the success envelope first; on failure falls back to ``RPCError``; if
+    /// *that* also fails, the decoder error itself is captured so the caller never has to deal
+    /// with a thrown value at this layer.
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         do {

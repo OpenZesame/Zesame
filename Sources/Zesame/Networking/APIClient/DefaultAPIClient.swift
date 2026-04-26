@@ -24,10 +24,13 @@
 
 import Foundation
 
+/// `URLSession`-backed implementation of ``APIClient``. POSTs JSON-RPC envelopes to ``baseURL``.
 public final class DefaultAPIClient: APIClient {
     private let session: URLSession
+    /// The JSON-RPC endpoint URL all requests are POSTed to.
     public let baseURL: URL
 
+    /// Creates a client that targets `baseURL` using a default-configured `URLSession`.
     public init(baseURL: URL) {
         self.baseURL = baseURL
         session = URLSession(configuration: .default)
@@ -35,6 +38,7 @@ public final class DefaultAPIClient: APIClient {
 }
 
 public extension DefaultAPIClient {
+    /// Convenience initialiser that pulls the URL out of a known ``ZilliqaAPIEndpoint``.
     convenience init(endpoint: ZilliqaAPIEndpoint) {
         self.init(baseURL: endpoint.baseURL)
     }
@@ -43,9 +47,16 @@ public extension DefaultAPIClient {
 // MARK: - APIClient
 
 public extension DefaultAPIClient {
+    /// HTTP-level failures that don't reach the JSON-RPC body decoder.
     enum HTTPError: Swift.Error, CustomStringConvertible {
+        /// The response status code was outside `200..<300`.
+        ///
+        /// - Parameters:
+        ///   - code: The HTTP status returned by the server.
+        ///   - body: The raw response body (helpful when the node returns a plain-text 5xx page).
         case unacceptableStatusCode(code: Int, body: Data)
 
+        /// Human-readable rendering, including the response body when UTF-8 decodable.
         public var description: String {
             switch self {
             case let .unacceptableStatusCode(code, body):
@@ -55,6 +66,8 @@ public extension DefaultAPIClient {
         }
     }
 
+    /// POSTs the encoded ``RPCMethod`` to ``baseURL``, validates the HTTP status, and decodes the
+    /// result. All failures are normalised to ``Zesame/Error/api(_:)``.
     func send<T: Decodable>(method: RPCMethod) async throws -> T {
         let rpcRequest = RPCRequest(method: method)
         do {

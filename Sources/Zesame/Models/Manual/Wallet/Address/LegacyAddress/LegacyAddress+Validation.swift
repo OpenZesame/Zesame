@@ -29,6 +29,7 @@ import Foundation
 // MARK: - Validation
 
 public extension LegacyAddress {
+    /// `true` if `hexString` is a valid 20-byte address that already carries the correct casing.
     static func isChecksummed(hexString: HexStringConvertible) -> Bool {
         guard
             hexString.isValidLegacyAddressButNotNecessarilyChecksummed,
@@ -40,6 +41,9 @@ public extension LegacyAddress {
 
     /// Checksums a Zilliqa address, implementation is based on Javascript library:
     /// https://github.com/Zilliqa/Zilliqa-JavaScript-Library/blob/9368fb34a0d443797adc1ecbcb9728db9ce75e97/packages/zilliqa-js-crypto/src/util.ts#L76-L96
+    ///
+    /// Computes the canonical mixed-case rendering of `hexString` so the result can be compared
+    /// against an arbitrary input to detect typos.
     static func checksummedHexstringFrom(hexString: HexStringConvertible) -> HexString {
         let string = hexString.asString
         var hasher = SHA256()

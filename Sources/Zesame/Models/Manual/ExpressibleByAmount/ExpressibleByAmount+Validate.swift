@@ -25,6 +25,7 @@
 import Foundation
 
 public extension ExpressibleByAmount where Self: Upperbound, Self: Lowerbound {
+    /// Validates against both bounds; throws ``AmountError/tooSmall`` or ``AmountError/tooLarge``.
     static func validate(value: Magnitude) throws -> Magnitude {
         try AnyLowerbound(self).throwErrorIfNotWithinBounds(value)
         try AnyUpperbound(self).throwErrorIfNotWithinBounds(value)
@@ -33,6 +34,7 @@ public extension ExpressibleByAmount where Self: Upperbound, Self: Lowerbound {
 }
 
 public extension ExpressibleByAmount where Self: Upperbound & NoLowerbound {
+    /// Validates against the upper bound only.
     static func validate(value: Magnitude) throws -> Magnitude {
         try AnyUpperbound(self).throwErrorIfNotWithinBounds(value)
         return value
@@ -40,6 +42,7 @@ public extension ExpressibleByAmount where Self: Upperbound & NoLowerbound {
 }
 
 public extension ExpressibleByAmount where Self: Lowerbound, Self: NoUpperbound {
+    /// Validates against the lower bound only.
     static func validate(value: Magnitude) throws -> Magnitude {
         try AnyLowerbound(self).throwErrorIfNotWithinBounds(value)
         return value
@@ -47,6 +50,7 @@ public extension ExpressibleByAmount where Self: Lowerbound, Self: NoUpperbound 
 }
 
 public extension ExpressibleByAmount where Self: Unbound {
+    /// No-op validation: unbounded types accept any magnitude.
     static func validate(value: Magnitude) throws -> Magnitude {
         value
     }

@@ -24,12 +24,24 @@
 
 import Foundation
 
+/// Describes how aggressively to poll for a transaction receipt.
+///
+/// A `Polling` value bounds *how many* attempts are made (``count``), *how long to wait* before
+/// the first attempt (``initialDelay``), and *how the wait grows* between attempts (``backoff``).
 public struct Polling {
+    /// Maximum number of poll attempts.
     public let count: Count
+    /// How the wait between successive polls grows.
     public let backoff: Backoff
+    /// Wait before the first poll attempt.
     public let initialDelay: Delay
 
-    public init(_ count: Count, backoff: Backoff, initialDelay: Delay) {
+    /// Designated initialiser.
+    public init(
+        _ count: Count,
+        backoff: Backoff,
+        initialDelay: Delay
+    ) {
         self.count = count
         self.backoff = backoff
         self.initialDelay = initialDelay
@@ -37,6 +49,8 @@ public struct Polling {
 }
 
 public extension Polling {
+    /// A pragmatic default: 20 attempts, +2 s of linear back-off, with a 1 s warm-up. The total
+    /// budget is roughly 7 minutes, which comfortably covers a single Zilliqa epoch.
     static var twentyTimesLinearBackoff: Polling {
         Polling(
             .twentyTimes,
@@ -45,10 +59,13 @@ public extension Polling {
         )
     }
 
+    /// How the per-attempt wait grows between polls.
     enum Backoff {
+        /// Each attempt waits an additional fixed ``Delay`` longer than the previous one.
         case linearIncrement(of: Delay)
     }
 
+    /// A bounded set of supported wait durations, expressed in whole seconds.
     enum Delay: Int {
         case oneSecond = 1
         case twoSeconds = 2
@@ -59,6 +76,7 @@ public extension Polling {
         case twentySeconds = 20
     }
 
+    /// A bounded set of attempt counts, useful for keeping pollers from looping forever.
     enum Count: Int {
         case once = 1
         case twice = 2
@@ -70,6 +88,7 @@ public extension Polling {
 }
 
 extension Polling.Backoff {
+    /// Applies the back-off function to the previous wait, returning the next wait in seconds.
     func add(to delayInSeconds: Int) -> Int {
         switch self {
         case let .linearIncrement(delayIncrement):
