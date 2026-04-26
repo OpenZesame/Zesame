@@ -49,8 +49,7 @@ public extension Keystore {
             )
         }
 
-        let derivedKey = try deriveKey(password: password)
-        let symmetricKey = SymmetricKey(data: derivedKey.data)
+        let symmetricKey = try deriveKey(password: password)
 
         let sealedBox: AES.GCM.SealedBox
         do {
@@ -81,13 +80,12 @@ public extension Keystore.Crypto {
     /// and tag into a ``Crypto`` payload along with the KDF parameters needed to reverse the
     /// process at decrypt time.
     init(
-        derivedKey: DerivedKey,
+        derivedKey: SymmetricKey,
         privateKey: PrivateKey,
         kdf: KDF,
         parameters: KDFParams
     ) throws {
-        let symmetricKey = SymmetricKey(data: derivedKey.data)
-        let sealedBox = try AES.GCM.seal(privateKey.rawRepresentation, using: symmetricKey)
+        let sealedBox = try AES.GCM.seal(privateKey.rawRepresentation, using: derivedKey)
         let nonce = Data(sealedBox.nonce)
         let tag = sealedBox.tag
         let ciphertext = sealedBox.ciphertext

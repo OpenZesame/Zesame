@@ -128,21 +128,6 @@ struct KeyRestorationTests {
     }
 }
 
-struct DerivedKeyTests {
-    @Test func asData() {
-        let data = Data([0x01, 0x02, 0x03])
-        let key = DerivedKey(data: data)
-        #expect(key.asData == data)
-    }
-
-    @Test func inheritsDataConvertibleExtensions() {
-        let data = Data([0xDE, 0xAD])
-        let key = DerivedKey(data: data)
-        #expect(key.bytes == [0xDE, 0xAD])
-        #expect(key.asHex == "dead")
-    }
-}
-
 struct KeyPairTests {
     @Test func publicKeyFromPrivateKey() {
         let keyPair = KeyPair(private: testPrivateKey)

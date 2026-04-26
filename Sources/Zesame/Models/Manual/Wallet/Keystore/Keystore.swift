@@ -22,6 +22,7 @@
 // SOFTWARE.
 //
 
+import CryptoKit
 import Foundation
 
 /// JSON-encoded password-protected wallet.
@@ -86,10 +87,10 @@ public extension Keystore {
         self.version = version
     }
 
-    /// Builds a keystore by encrypting `privateKey` with a previously-computed ``DerivedKey``,
+    /// Builds a keystore by encrypting `privateKey` with a previously-computed ``SymmetricKey``,
     /// embedding the matching ``KDFParams`` for later decryption.
     init(
-        from derivedKey: DerivedKey,
+        from derivedKey: SymmetricKey,
         privateKey: PrivateKey,
         kdf: KDF,
         parameters: KDFParams

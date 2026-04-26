@@ -23,6 +23,7 @@
 //
 
 import CommonCrypto
+import CryptoKit
 import Foundation
 
 /// PBKDF2-HMAC-SHA512 key deriver. Currently the only supported KDF — the `kdf` parameter is
@@ -39,11 +40,11 @@ public struct AnyKeyDeriving: KeyDeriving {
         self.kdfParams = kdfParams
     }
 
-    /// Stretches `password` into a ``DerivedKey`` via PBKDF2-HMAC-SHA512 using the configured
+    /// Stretches `password` into a ``SymmetricKey`` via PBKDF2-HMAC-SHA512 using the configured
     /// salt, iteration count, and output length.
     ///
     /// - Throws: ``Zesame/Error/walletImport(_:)`` (`.keystoreError`) on any CommonCrypto failure.
-    public func deriveKey(password: String) throws -> DerivedKey {
+    public func deriveKey(password: String) throws -> SymmetricKey {
         let passwordBytes = Array(password.utf8)
         let saltBytes = Array(kdfParams.salt)
         let keyLength = kdfParams.derivedKeyLength
@@ -63,6 +64,6 @@ public struct AnyKeyDeriving: KeyDeriving {
                 .keystoreError(NSError(domain: "PBKDF2", code: Int(status), userInfo: nil))
             )
         }
-        return DerivedKey(data: Data(derivedKeyBytes))
+        return SymmetricKey(data: Data(derivedKeyBytes))
     }
 }

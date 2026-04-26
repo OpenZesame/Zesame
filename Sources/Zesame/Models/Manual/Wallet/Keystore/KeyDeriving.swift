@@ -22,10 +22,14 @@
 // SOFTWARE.
 //
 
+import CryptoKit
 import Foundation
 
 /// A type that knows how to derive a symmetric key from a password using a specific KDF.
 public protocol KeyDeriving {
     /// Derives the keystore's symmetric key from `password`. Throws on KDF-level errors.
-    func deriveKey(password: String) throws -> DerivedKey
+    ///
+    /// Returns a CryptoKit ``SymmetricKey`` directly so the derived bytes live inside CryptoKit's
+    /// locked-down allocation rather than a plain `Data` heap buffer.
+    func deriveKey(password: String) throws -> SymmetricKey
 }
