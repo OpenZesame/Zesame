@@ -82,18 +82,19 @@ public extension DefaultAPIClient {
     }
 
     /// POSTs the encoded ``RPCMethod`` to ``baseURL``, validates the HTTP status, and decodes the
-    /// result. All failures are normalised to ``Zesame/Error/api(_:)``.
-    func send<T: Decodable>(method: RPCMethod) async throws -> T {
-        let rpcRequest = RPCRequest(method: method)
+    /// result as the method's bound ``RPCMethod/Response`` type. All failures are normalised to
+    /// ``Zesame/Error/api(_:)``.
+    func send<Response: Decodable>(method: RPCMethod<Response>) async throws -> Response {
+        let rpcRequest = RPCRequest(method)
         do {
-            let urlRequest = try rpcRequest.asURLRequest(baseURL: baseURL)
+            let urlRequest = try Self.urlRequest(for: rpcRequest, baseURL: baseURL)
             let (data, response) = try await session.data(for: urlRequest)
             if let http = response as? HTTPURLResponse, !(200 ..< 300).contains(http.statusCode) {
                 throw Zesame.Error.api(.request(
                     HTTPError.unacceptableStatusCode(code: http.statusCode, body: data)
                 ))
             }
-            let rpcResponse = try JSONDecoder().decode(RPCResponse<T>.self, from: data)
+            let rpcResponse = try JSONDecoder().decode(RPCResponse<Response>.self, from: data)
             switch rpcResponse {
             case let .rpcError(rpcError):
                 throw Zesame.Error.api(.request(rpcError))
@@ -105,5 +106,19 @@ public extension DefaultAPIClient {
         } catch {
             throw Zesame.Error.api(.request(error))
         }
+    }
+
+    /// Renders an ``RPCRequest`` as a `POST` `URLRequest` with a JSON body and the standard
+    /// `application/json` content type. Internal helper kept on the client to keep the JSON-RPC
+    /// envelope transport-agnostic.
+    private static func urlRequest(
+        for rpcRequest: RPCRequest,
+        baseURL: URL
+    ) throws -> URLRequest {
+        var urlRequest = URLRequest(url: baseURL)
+        urlRequest.httpMethod = "POST"
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpBody = try JSONEncoder().encode(rpcRequest)
+        return urlRequest
     }
 }

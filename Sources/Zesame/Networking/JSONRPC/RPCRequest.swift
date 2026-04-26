@@ -24,38 +24,39 @@
 
 import Foundation
 
-/// JSON-RPC 2.0 request envelope. Values of this type encode straight to the wire format the node
-/// expects: `{ "id": …, "method": …, "params": [ … ], "jsonrpc": "2.0" }`.
+/// JSON-RPC 2.0 request envelope. Encodes to the wire format
+/// `{ "id": …, "method": …, "params": …, "jsonrpc": "2.0" }`.
+///
+/// The envelope is transport-agnostic — `URLRequest` construction lives in the API client, not
+/// here. This is a plain value type that knows how to encode itself as JSON.
 public struct RPCRequest: Encodable {
-    /// The RPC method name, e.g. `"GetBalance"`.
-    public let rpcMethod: String
-    /// Type-erased closure that knows how to encode the method's parameters into the keyed
-    /// container. `nil` for parameter-less methods like `GetNetworkId`.
-    private let _encodeValue: RPCMethod.EncodeValue<CodingKeys>?
-    /// The unique request id (decimal string from ``RequestIdGenerator``).
+    /// The unique request id (decimal string from ``RequestIdGenerator``). The JSON-RPC 2.0 spec
+    /// allows string, number, or null; we use strings for simplicity.
     public let requestId: String
+
+    /// The wire-level method name.
+    public let method: String
+
+    /// Parameter shape (none / positional / named).
+    public let params: RPCParams
+
     /// JSON-RPC protocol version. Always `"2.0"`.
     public let version = "2.0"
 
-    /// Designated initialiser. Captures `encodeValue` lazily so that parameter encoding happens at
-    /// `encode(to:)` time, not at construction.
+    /// Designated initialiser. Auto-allocates an id from ``RequestIdGenerator``.
     public init(
-        rpcMethod: String,
-        encodeValue: RPCMethod.EncodeValue<CodingKeys>?
+        method: String,
+        params: RPCParams = .none
     ) {
-        self.rpcMethod = rpcMethod
-        _encodeValue = encodeValue
         requestId = RequestIdGenerator.nextId()
+        self.method = method
+        self.params = params
     }
-}
 
-// MARK: - Convenience Init
-
-public extension RPCRequest {
-    /// Convenience initialiser that pulls the method name and parameter-encoder from
-    /// ``RPCMethod``.
-    init(method: RPCMethod) {
-        self.init(rpcMethod: method.method, encodeValue: method.encodeValue(key: .parameters))
+    /// Convenience that pulls name + params from an ``RPCMethod``. Erases the response type
+    /// because the response shape is the API client's concern, not the envelope's.
+    public init(_ rpcMethod: RPCMethod<some Decodable>) {
+        self.init(method: rpcMethod.name, params: rpcMethod.params)
     }
 }
 
@@ -65,34 +66,17 @@ public extension RPCRequest {
     /// JSON wire-format keys.
     enum CodingKeys: String, CodingKey {
         case requestId = "id"
-        case rpcMethod = "method"
-        case parameters = "params"
+        case method
+        case params
         case version = "jsonrpc"
     }
 
-    /// Custom encoder that delegates parameter writing to the captured ``EncodeValue`` closure when
-    /// present.
+    /// Custom encoder so we can omit the `params` field entirely for ``RPCParams/none``.
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(requestId, forKey: .requestId)
-        try container.encode(rpcMethod, forKey: .rpcMethod)
-        if let encodeValue = _encodeValue {
-            try encodeValue(&container)
-        }
+        try container.encode(method, forKey: .method)
+        try params.encode(into: &container, forKey: .params)
         try container.encode(version, forKey: .version)
-    }
-}
-
-// MARK: - URLRequest
-
-extension RPCRequest {
-    /// Renders the request as a `POST` `URLRequest` with the JSON body and `application/json`
-    /// content type.
-    func asURLRequest(baseURL: URL) throws -> URLRequest {
-        var urlRequest = URLRequest(url: baseURL)
-        urlRequest.httpMethod = "POST"
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.httpBody = try JSONEncoder().encode(self)
-        return urlRequest
     }
 }

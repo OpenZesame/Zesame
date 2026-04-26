@@ -22,14 +22,19 @@
 // SOFTWARE.
 //
 
-/// Abstraction over the JSON-RPC transport. Tests inject stubs; production uses
-/// ``DefaultAPIClient`` over `URLSession`.
-public protocol APIClient {
-    /// Encodes `method` as a JSON-RPC 2.0 request, sends it, and decodes the result as the
-    /// method's bound `Response` type. Throws ``Zesame/Error/api(_:)`` on transport, HTTP, or
-    /// RPC-level failure.
-    ///
-    /// The return type is inferred from the ``RPCMethod`` binding; call sites don't need to
-    /// annotate it.
-    func send<Response: Decodable>(method: RPCMethod<Response>) async throws -> Response
+import Foundation
+
+/// Type-erased `Encodable` wrapper. Lets ``RPCParams`` carry heterogeneous parameter values
+/// (`[any Encodable]` / `[String: any Encodable]`) through `KeyedEncodingContainer`, which only
+/// accepts concrete `T: Encodable` not the existential.
+struct AnyEncodable: Encodable {
+    private let _encode: (Encoder) throws -> Void
+
+    init(_ value: any Encodable) {
+        _encode = { encoder in try value.encode(to: encoder) }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        try _encode(encoder)
+    }
 }

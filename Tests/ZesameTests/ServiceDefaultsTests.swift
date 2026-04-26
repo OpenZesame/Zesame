@@ -13,11 +13,11 @@ private let testPass = "apabanan"
 private enum MockError: Swift.Error { case typeMismatch }
 
 private struct MockAPIClient: APIClient {
-    let handler: @Sendable (RPCMethod) async throws -> any Decodable
+    let handler: @Sendable (String) async throws -> any Decodable
 
-    func send<T: Decodable>(method: RPCMethod) async throws -> T {
-        let result = try await handler(method)
-        guard let typed = result as? T else {
+    func send<Response: Decodable>(method: RPCMethod<Response>) async throws -> Response {
+        let result = try await handler(method.name)
+        guard let typed = result as? Response else {
             throw Zesame.Error.api(.request(MockError.typeMismatch))
         }
         return typed
