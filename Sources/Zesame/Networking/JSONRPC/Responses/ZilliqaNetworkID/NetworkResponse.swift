@@ -24,9 +24,12 @@
 
 import Foundation
 
+/// Result body of `GetNetworkId`, decoded as the bare network id string returned by the node.
 public struct NetworkResponse: Decodable {
+    /// The identified ``Network``.
     public let network: Network
 
+    /// Decodes the network id from a single bare string JSON value.
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         network = try container.decode(Network.self)

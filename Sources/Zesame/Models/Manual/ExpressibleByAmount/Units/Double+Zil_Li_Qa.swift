@@ -27,18 +27,21 @@ import Foundation
 // MARK: - Magnitude
 
 public extension Zil.Magnitude {
+    /// Wraps the magnitude as a ``Zil`` (interpreted in the Zil unit).
     var zil: Zil {
         Zil(self)
     }
 }
 
 public extension Li.Magnitude {
+    /// Wraps the magnitude as a ``Li``.
     var li: Li {
         Li(self)
     }
 }
 
 public extension Qa.Magnitude {
+    /// Wraps the magnitude as a ``Qa``.
     var qa: Qa {
         Qa(self)
     }
@@ -47,18 +50,21 @@ public extension Qa.Magnitude {
 // MARK: Integer
 
 public extension Int {
+    /// `n.zil` — `Int` interpreted as a quantity of Zil.
     var zil: Zil {
         Zil(self)
     }
 }
 
 public extension Int {
+    /// `n.li` — `Int` interpreted as a quantity of Li.
     var li: Li {
         Li(self)
     }
 }
 
 public extension Int {
+    /// `n.qa` — `Int` interpreted as a quantity of Qa.
     var qa: Qa {
         Qa(self)
     }

@@ -32,7 +32,11 @@ public struct LegacyAddress: AddressChecksummedConvertible, HexStringConvertible
     /// `F510333720c5Dd3c3C08bC8e085e8c981ce74691`
     public let checksummed: HexString
 
-    /// AddressChecksummedConvertible init
+    /// AddressChecksummedConvertible init.
+    ///
+    /// - Throws: ``Address/Error/notChecksummed`` if `hexString` is the right shape but the
+    ///   case-folding doesn't match Zilliqa's checksum scheme. Use ``init(unvalidatedHex:)`` for
+    ///   inputs that may not yet be checksummed.
     public init(hexString: HexStringConvertible) throws {
         guard LegacyAddress.isChecksummed(hexString: hexString) else {
             throw Address.Error.notChecksummed
@@ -44,6 +48,7 @@ public struct LegacyAddress: AddressChecksummedConvertible, HexStringConvertible
 // MARK: AddressChecksummedConvertible
 
 public extension LegacyAddress {
+    /// `LegacyAddress` is its own checksummed form.
     func toChecksummedLegacyAddress() throws -> LegacyAddress {
         self
     }
@@ -52,16 +57,20 @@ public extension LegacyAddress {
 // MARK: - Convenience Initializers
 
 public extension LegacyAddress {
+    /// Parses a hex string, accepting an optional `0x` prefix.
     init(string: String) throws {
         try self.init(hexString: HexString(string))
     }
 
+    /// Builds a checksummed address from a 20-byte hash. Internally re-checksums the bytes so the
+    /// canonical mixed-case form is produced.
     init(compressedHash: Data) throws {
         let hexString = try HexString(compressedHash.asHex)
         let checksummed = LegacyAddress.checksummedHexstringFrom(hexString: hexString)
         try self.init(hexString: checksummed)
     }
 
+    /// Derives the address from a public key: `address = last 20 bytes of SHA-256(compressedPubKey)`.
     init(publicKey: PublicKey) {
         do {
             // Zilliqa address = last 20 bytes of SHA256(compressedPublicKey)
@@ -76,10 +85,12 @@ public extension LegacyAddress {
         }
     }
 
+    /// Convenience wrapper that pulls the public key out of a key pair.
     init(keyPair: KeyPair) {
         self.init(publicKey: keyPair.publicKey)
     }
 
+    /// Convenience wrapper that derives the public key from a private key first.
     init(privateKey: PrivateKey) {
         self.init(publicKey: privateKey.publicKey)
     }
@@ -88,6 +99,7 @@ public extension LegacyAddress {
 // MARK: - HexStringConvertible
 
 public extension LegacyAddress {
+    /// The canonical hex form (which is, by construction, the checksummed value).
     var hexString: HexString {
         checksummed
     }
@@ -96,6 +108,8 @@ public extension LegacyAddress {
 // Not necessarily checksummed
 
 public extension LegacyAddress {
+    /// Validates that `hexString` has the right length to be a legacy address. Does *not* check
+    /// the casing — use ``isChecksummed(hexString:)`` for that.
     static func isValidLegacyAddressButNotNecessarilyChecksummed(hexString: HexStringConvertible) throws {
         let length = hexString.length
         let expected = Address.Style.ethereum.expectedLength
@@ -110,7 +124,10 @@ public extension LegacyAddress {
         // is valid
     }
 
-    /// AddressChecksummedConvertible init
+    /// AddressChecksummedConvertible init.
+    ///
+    /// Validates only the length — re-applies Zilliqa's checksum case-folding, so any well-shaped
+    /// hex (regardless of casing) round-trips into a canonical ``LegacyAddress``.
     init(unvalidatedHex hexString: HexStringConvertible) throws {
         try LegacyAddress.isValidLegacyAddressButNotNecessarilyChecksummed(hexString: hexString)
         let checksummedHexString = LegacyAddress.checksummedHexstringFrom(hexString: hexString)

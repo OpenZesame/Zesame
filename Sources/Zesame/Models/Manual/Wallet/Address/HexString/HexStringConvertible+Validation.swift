@@ -25,6 +25,8 @@
 import Foundation
 
 public extension HexStringConvertible {
+    /// `true` if the hex looks structurally like a Zilliqa legacy address (right length, all
+    /// hex), regardless of whether the casing matches the EIP-55-style checksum.
     var isValidLegacyAddressButNotNecessarilyChecksummed: Bool {
         do {
             try LegacyAddress.isValidLegacyAddressButNotNecessarilyChecksummed(hexString: self)

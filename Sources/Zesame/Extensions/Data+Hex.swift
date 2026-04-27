@@ -22,7 +22,6 @@
 // SOFTWARE.
 //
 
-import BigInt
 import Foundation
 
 public extension Data {
@@ -39,6 +38,10 @@ public extension Data {
         self = data
     }
 
+    /// Failable counterpart to ``init(hex:)`` that accepts untrusted input.
+    ///
+    /// Behaves identically (optional `0x` prefix, odd-length left-padding) but returns `nil` on
+    /// any non-hex character instead of trapping.
     init?(validatingHex hex: String) {
         var s = hex.hasPrefix("0x") ? String(hex.dropFirst(2)) : hex
         if !s.count.isMultiple(of: 2) {
@@ -56,15 +59,11 @@ public extension Data {
         self = result
     }
 
-    static func fromHexString(_ string: String) -> Data {
-        Data(hex: string)
-    }
-
+    /// The bytes as a lowercase hexadecimal string (no `0x` prefix).
+    ///
+    /// Foundation/CryptoKit don't ship a hex encoder for `Data`, so this is a small bespoke
+    /// helper. (Apple has Base64 round-trips on `Data`, but no hex equivalent.)
     var asHex: String {
         map { String(format: "%02x", $0) }.joined()
-    }
-
-    var asNumber: BigUInt {
-        BigUInt(self)
     }
 }

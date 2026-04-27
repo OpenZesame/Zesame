@@ -30,6 +30,8 @@ public extension ExpressibleByAmount where Self: Bound {
         try self.init(qa: Self.toQa(magnitude: value))
     }
 
+    /// Bypasses error handling for inputs that are statically known to validate. Traps on
+    /// out-of-bounds input — only use for compile-time-known constants.
     init(valid: Magnitude) {
         do {
             try self.init(valid)
@@ -40,14 +42,17 @@ public extension ExpressibleByAmount where Self: Bound {
 }
 
 public extension ExpressibleByAmount where Self: Bound {
+    /// Constructs from a `Double` interpreted in this type's unit.
     init(_ doubleValue: Double) throws {
         try self.init(qa: Self.toQa(double: doubleValue))
     }
 
+    /// Constructs from an `Int` interpreted in this type's unit.
     init(_ intValue: Int) throws {
         try self.init(Magnitude(intValue))
     }
 
+    /// Parses `untrimmed` as an amount in this type's unit, applying bound validation.
     init(
         trimming untrimmed: String
     ) throws {
@@ -64,57 +69,62 @@ public extension ExpressibleByAmount where Self: Bound {
 }
 
 public extension Double {
+    /// Locale-tolerant `Double` parsing.
+    ///
+    /// Tries (in order) the C-locale `Double(_:)`, then `Locale.current`, then `en_US_POSIX`.
+    /// Walking every available locale (≈700) was a UI-perceptible cost on amount fields that
+    /// re-parse on every keystroke; the curated list covers the realistic decimal-separator
+    /// shapes (`.` and `,`).
     static func fromString(_ string: String) -> Double? {
-        func doubleFromAnyLocaleOfTheAvailableLocales(numberString: String) -> Double? {
-            func doubleFromStringUsingLocale(_ locale: Locale) -> Double? {
-                let formatter = NumberFormatter()
-                formatter.locale = locale
-                return formatter.number(from: numberString)?.doubleValue
-            }
-
-            for localeIdentifier in Locale.availableIdentifiers {
-                let locale = Locale(identifier: localeIdentifier)
-                if let double = doubleFromStringUsingLocale(locale) {
-                    return double
-                }
-            }
-            return nil
+        if let direct = Double(string) {
+            return direct
         }
-        if let doubleWithoutFormatter = Double(string) {
-            return doubleWithoutFormatter
-        } else {
-            return doubleFromAnyLocaleOfTheAvailableLocales(numberString: string)
+        let locales: [Locale] = [.current, Locale(identifier: "en_US_POSIX")]
+        for locale in locales {
+            let formatter = NumberFormatter()
+            formatter.locale = locale
+            if let value = formatter.number(from: string)?.doubleValue {
+                return value
+            }
         }
+        return nil
     }
 }
 
 public extension ExpressibleByAmount where Self: Bound {
+    /// Reinterprets another amount in this type's unit, validated against `Self`'s bounds.
     init(_ other: some ExpressibleByAmount) throws {
         try self.init(qa: other.qa)
     }
 
+    /// Validated reinterpretation of a Zil amount.
     init(zil: Zil) throws {
         try self.init(zil)
     }
 
+    /// Validated reinterpretation of a Li amount.
     init(li: Li) throws {
         try self.init(li)
     }
 
+    /// Validated reinterpretation of a Qa amount.
     init(qa: Qa) throws {
         try self.init(qa)
     }
 }
 
 public extension ExpressibleByAmount where Self: Bound {
+    /// Parses a Zil-denominated string with bounds-validation.
     init(zil zilString: String) throws {
         try self.init(zil: Zil(trimming: zilString))
     }
 
+    /// Parses a Li-denominated string with bounds-validation.
     init(li liString: String) throws {
         try self.init(li: Li(trimming: liString))
     }
 
+    /// Parses a Qa-denominated string with bounds-validation.
     init(qa qaString: String) throws {
         try self.init(qa: Qa(trimming: qaString))
     }
@@ -123,6 +133,7 @@ public extension ExpressibleByAmount where Self: Bound {
 // MARK: - ExpressibleByFloatLiteral
 
 public extension ExpressibleByAmount where Self: Bound {
+    /// Float literal; traps on out-of-bounds values.
     init(floatLiteral double: Double) {
         do {
             try self.init(double)
@@ -135,6 +146,7 @@ public extension ExpressibleByAmount where Self: Bound {
 // MARK: - ExpressibleByIntegerLiteral
 
 public extension ExpressibleByAmount where Self: Bound {
+    /// Integer literal; traps on out-of-bounds values.
     init(integerLiteral int: Int) {
         do {
             try self.init(int)
@@ -147,6 +159,7 @@ public extension ExpressibleByAmount where Self: Bound {
 // MARK: - ExpressibleByStringLiteral
 
 public extension ExpressibleByAmount where Self: Bound {
+    /// String literal; traps on parse or out-of-bounds errors.
     init(stringLiteral string: String) {
         do {
             try self = Self(trimming: string)

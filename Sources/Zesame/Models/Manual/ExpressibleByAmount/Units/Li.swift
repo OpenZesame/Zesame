@@ -25,11 +25,16 @@
 import BigInt
 import Foundation
 
+/// Zilliqa's `Li` unit — 10⁻⁶ Zil (= 10⁶ Qa). Unbounded; useful as an intermediate unit for fees.
 public struct Li: ExpressibleByAmount, Unbound {
+    /// Underlying big-integer magnitude.
     public typealias Magnitude = BigInt
+    /// Canonical unit — Li.
     public static let unit: Unit = .li
+    /// Value in Qa.
     public let qa: Magnitude
 
+    /// Wraps a Qa-denominated magnitude.
     public init(qa: Magnitude) {
         self.qa = qa
     }

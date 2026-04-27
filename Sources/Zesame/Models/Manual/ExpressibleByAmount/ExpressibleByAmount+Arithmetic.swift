@@ -25,53 +25,106 @@
 import Foundation
 
 public extension ExpressibleByAmount where Self: Bound {
-    private static func qaFrom(_ lhs: Self, _ rhs: Self, calc: (Magnitude, Magnitude) -> Magnitude) throws -> Self {
+    private static func qaFrom(
+        _ lhs: Self,
+        _ rhs: Self,
+        calc: (Magnitude, Magnitude) -> Magnitude
+    ) throws -> Self {
         try Self(qa: calc(lhs.qa, rhs.qa))
     }
 
-    static func + (lhs: Self, rhs: Self) throws -> Self {
+    /// Throwing addition for bounded amounts — the result is re-validated against the type's
+    /// bounds and may throw ``AmountError/tooLarge``.
+    static func + (
+        lhs: Self,
+        rhs: Self
+    ) throws -> Self {
         try qaFrom(lhs, rhs) { $0 + $1 }
     }
 
-    static func * (lhs: Self, rhs: Self) throws -> Self {
+    /// Throwing multiplication for bounded amounts.
+    static func * (
+        lhs: Self,
+        rhs: Self
+    ) throws -> Self {
         try qaFrom(lhs, rhs) { $0 * $1 }
     }
 
-    static func - (lhs: Self, rhs: Self) throws -> Self {
+    /// Throwing subtraction for bounded amounts — the result is re-validated and may throw
+    /// ``AmountError/tooSmall`` for negative results on non-negative-bounded types.
+    static func - (
+        lhs: Self,
+        rhs: Self
+    ) throws -> Self {
         try qaFrom(lhs, rhs) { $0 - $1 }
     }
 }
 
 public extension ExpressibleByAmount where Self: Unbound {
-    static func - (lhs: Self, rhs: Self) -> Self {
+    /// Subtraction on unbounded amounts. Cannot throw; the result is computed in `BigInt`, which
+    /// is signed and arbitrary-precision, so a "negative" result is permitted at the type level.
+    /// Bounded conformers (e.g. ``Amount``) re-validate via their own throwing operators.
+    static func - (
+        lhs: Self,
+        rhs: Self
+    ) -> Self {
         qaFrom(lhs, rhs) { $0 - $1 }
     }
 
-    private static func qaFrom(_ lhs: Self, _ rhs: Self, calc: (Magnitude, Magnitude) -> Magnitude) -> Self {
+    /// Helper that lifts a Qa-magnitude binary operation back into `Self`.
+    private static func qaFrom(
+        _ lhs: Self,
+        _ rhs: Self,
+        calc: (Magnitude, Magnitude) -> Magnitude
+    ) -> Self {
         Self(qa: calc(lhs.qa, rhs.qa))
     }
 
-    static func + (lhs: Self, rhs: Self) -> Self {
+    /// Addition on unbounded amounts.
+    static func + (
+        lhs: Self,
+        rhs: Self
+    ) -> Self {
         Self(qa: lhs.qa + rhs.qa)
     }
 
-    static func * (lhs: Self, rhs: Self) -> Self {
+    /// Multiplication on unbounded amounts.
+    static func * (
+        lhs: Self,
+        rhs: Self
+    ) -> Self {
         Self(qa: lhs.qa * rhs.qa)
     }
 }
 
-public func + <A: ExpressibleByAmount & Bound>(lhs: A, rhs: some ExpressibleByAmount) throws -> A {
+/// Heterogeneous addition — `lhs` defines the result type, `rhs` is reduced to Qa first.
+public func + <A: ExpressibleByAmount & Bound>(
+    lhs: A,
+    rhs: some ExpressibleByAmount
+) throws -> A {
     try A(qa: lhs.qa + rhs.qa)
 }
 
-public func + <A: ExpressibleByAmount & Unbound>(lhs: A, rhs: some ExpressibleByAmount) -> A {
+/// Heterogeneous addition for unbounded result types — see the bounded overload.
+public func + <A: ExpressibleByAmount & Unbound>(
+    lhs: A,
+    rhs: some ExpressibleByAmount
+) -> A {
     A(qa: lhs.qa + rhs.qa)
 }
 
-public func - <A: ExpressibleByAmount & Bound>(lhs: A, rhs: some ExpressibleByAmount) throws -> A {
+/// Heterogeneous subtraction — `lhs` defines the result type, `rhs` is reduced to Qa first.
+public func - <A: ExpressibleByAmount & Bound>(
+    lhs: A,
+    rhs: some ExpressibleByAmount
+) throws -> A {
     try A(qa: lhs.qa - rhs.qa)
 }
 
-public func - <A: ExpressibleByAmount & Unbound>(lhs: A, rhs: some ExpressibleByAmount) -> A {
+/// Heterogeneous subtraction for unbounded result types.
+public func - <A: ExpressibleByAmount & Unbound>(
+    lhs: A,
+    rhs: some ExpressibleByAmount
+) -> A {
     A(qa: lhs.qa - rhs.qa)
 }

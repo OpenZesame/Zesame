@@ -24,47 +24,35 @@
 
 import Foundation
 
-/// JSONRPC method according to [Zilliqa API docs][1]
+/// A binding from a JSON-RPC method name + parameters to its expected `Response` type.
 ///
-/// [1]: https://apidocs.zilliqa.com/#introduction
-public enum RPCMethod {
-    case getBalance(LegacyAddress)
-    case createTransaction(SignedTransaction)
-    case getTransaction(TransactionId)
-    case getNetworkId
-    case getMinimumGasPrice
-}
+/// `RPCMethod` is generic and open-ended: clients add new methods by writing static factories in
+/// constrained extensions, not by editing this library. Carrying the response type as a
+/// type parameter lets ``APIClient/send(method:)`` infer the return type at the call site —
+/// `let balance = try await apiClient.send(method: .getBalance(addr))` resolves to
+/// `BalanceResponse` without an explicit annotation.
+///
+/// Example — adding a new method in client code:
+/// ```swift
+/// extension RPCMethod where Response == MyBlockResponse {
+///     static func getBlock(_ height: Int) -> Self {
+///         RPCMethod(name: "GetBlock", params: .positional(height))
+///     }
+/// }
+/// ```
+public struct RPCMethod<Response: Decodable> {
+    /// Wire-level method name as the server expects it.
+    public let name: String
 
-public extension RPCMethod {
-    typealias EncodeValue<K: CodingKey> = (inout KeyedEncodingContainer<K>) throws -> Void
+    /// Parameters to send with the call.
+    public let params: RPCParams
 
-    var method: String {
-        switch self {
-        case .getBalance: "GetBalance"
-        case .createTransaction: "CreateTransaction"
-        case .getTransaction: "GetTransaction"
-        case .getNetworkId: "GetNetworkId"
-        case .getMinimumGasPrice: "GetMinimumGasPrice"
-        }
-    }
-
-    func encodeValue<K: CodingKey>(key: K) -> EncodeValue<K>? {
-        func innerEncode(_ value: some Encodable) -> EncodeValue<K> {
-            { keyedEncodingContainer in
-                // DO OBSERVE THE ARRAY! `[]`. We MUST put the encodable in an array, since that is how RPC
-                // works. Otherwise we will get `INVALID_JSON_REQUEST`
-                try keyedEncodingContainer.encode([value], forKey: key)
-            }
-        }
-
-        switch self {
-        case let .getBalance(address): return innerEncode(address)
-        case let .createTransaction(signedTransaction): return innerEncode(signedTransaction)
-        case let .getTransaction(txId): return innerEncode(txId)
-        case .getNetworkId: return nil
-        case .getMinimumGasPrice: return nil
-        }
+    /// Designated initialiser.
+    public init(
+        name: String,
+        params: RPCParams = .none
+    ) {
+        self.name = name
+        self.params = params
     }
 }
-
-public typealias TransactionId = String

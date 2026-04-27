@@ -25,10 +25,18 @@
 import BigInt
 import Foundation
 
+/// Gas price (per gas unit) for a Zilliqa transaction. Stored in Qa, the smallest unit.
+///
+/// `GasPrice` carries adjustable lower/upper bounds so that the locally-known minimum can be
+/// refreshed from the network (see ``DefaultZilliqaService/getMinimumGasPrice(alsoUpdateLocallyCachedMinimum:)``)
+/// without re-deploying the library.
 public struct GasPrice: ExpressibleByAmount, AdjustableUpperbound, AdjustableLowerbound {
+    /// The underlying unsigned big-integer magnitude.
     public typealias Magnitude = Qa.Magnitude
+    /// Canonical unit for this type — Qa.
     public static let unit: Unit = .qa
 
+    /// The price in Qa.
     public let qa: Magnitude
 
     /// By default we set gasPrice of 0.1 Zil (= 100_000 Li = 100_000_000_000 Qa), preparing for
@@ -38,28 +46,51 @@ public struct GasPrice: ExpressibleByAmount, AdjustableUpperbound, AdjustableLow
     /// which will update this.
     ///
     public static let minInQaDefault: Magnitude = 100_000_000_000
-    public static var minInQa = minInQaDefault {
-        willSet {
-            guard newValue <= maxInQa else {
-                fatalError(
-                    "Cannot set minInQa to greater than maxInQa, max: \(maxInQa), new min: \(newValue) (old: \(minInQa)"
-                )
-            }
-        }
-    }
 
     /// By default GasPrice has an upperbound of 100 Zil, this can be changed.
     public static let maxInQaDefault: Magnitude = 100_000_000_000_000
-    public static var maxInQa = maxInQaDefault {
-        willSet {
-            guard newValue >= minInQa else {
-                fatalError(
-                    "Cannot set maxInQa to less than minInQa, min: \(minInQa), new max: \(newValue) (old: \(maxInQa)"
-                )
+
+    /// Lock guarding ``_minInQa`` and ``_maxInQa``. The bounds are read on every ``GasPrice``
+    /// validation and may be written from arbitrary task contexts (e.g. when refreshing the
+    /// cached network minimum from `DefaultZilliqaService.getMinimumGasPrice`), so unsynchronised
+    /// access would tear the read or race the willSet invariant.
+    private static let boundsLock = NSLock()
+    private nonisolated(unsafe) static var _minInQa: Magnitude = minInQaDefault
+    private nonisolated(unsafe) static var _maxInQa: Magnitude = maxInQaDefault
+
+    /// Active minimum gas price (in Qa). Setting it above ``maxInQa`` traps. Reads and writes are
+    /// serialised through ``boundsLock``.
+    public static var minInQa: Magnitude {
+        get { boundsLock.withLock { _minInQa } }
+        set {
+            boundsLock.withLock {
+                guard newValue <= _maxInQa else {
+                    fatalError(
+                        "Cannot set minInQa to greater than maxInQa, max: \(_maxInQa), new min: \(newValue) (old: \(_minInQa))"
+                    )
+                }
+                _minInQa = newValue
             }
         }
     }
 
+    /// Active maximum gas price (in Qa). Setting it below ``minInQa`` traps. Reads and writes are
+    /// serialised through ``boundsLock``.
+    public static var maxInQa: Magnitude {
+        get { boundsLock.withLock { _maxInQa } }
+        set {
+            boundsLock.withLock {
+                guard newValue >= _minInQa else {
+                    fatalError(
+                        "Cannot set maxInQa to less than minInQa, min: \(_minInQa), new max: \(newValue) (old: \(_maxInQa))"
+                    )
+                }
+                _maxInQa = newValue
+            }
+        }
+    }
+
+    /// Creates a `GasPrice` after validating that `qa` lies within ``minInQa``…``maxInQa``.
     public init(qa: Magnitude) throws {
         self.qa = try GasPrice.validate(value: qa)
     }

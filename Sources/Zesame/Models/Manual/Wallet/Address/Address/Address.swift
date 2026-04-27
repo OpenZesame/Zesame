@@ -24,17 +24,24 @@
 
 import Foundation
 
+/// Either form of a Zilliqa address. Equality compares the canonical legacy form so a Bech32
+/// `Address` and a `LegacyAddress` for the same account compare equal.
 public enum Address:
     AddressChecksummedConvertible,
     StringConvertible,
     Hashable,
     ExpressibleByStringLiteral
 {
+    /// Checksummed legacy hex address.
     case legacy(LegacyAddress)
+    /// Bech32 address (`zil1…` / `tzil1…`).
     case bech32(Bech32Address)
 }
 
 public extension Address {
+    /// Tries Bech32 first, then falls back to legacy hex parsing. The fallback only triggers when
+    /// the input is *also* well-formed hex, so unrelated garbage surfaces the original
+    /// Bech32 error.
     init(string: String) throws {
         do {
             self = try .bech32(Bech32Address(bech32String: string))
@@ -57,6 +64,7 @@ public extension Address {
 // MARK: - AddressChecksummedConvertible
 
 public extension Address {
+    /// Reduces either case to its canonical legacy hex form.
     func toChecksummedLegacyAddress() throws -> LegacyAddress {
         switch self {
         case let .bech32(bech32): try bech32.toChecksummedLegacyAddress()
@@ -68,6 +76,7 @@ public extension Address {
 // MARK: - StringConvertible
 
 public extension Address {
+    /// Renders in whichever form the address was constructed in (legacy hex or bech32).
     var asString: String {
         switch self {
         case let .bech32(bech32): bech32.asString
@@ -77,7 +86,11 @@ public extension Address {
 }
 
 public extension Address {
-    static func == (lhs: Address, rhs: Address) -> Bool {
+    /// Equality on the canonical legacy form. Treats a malformed reduction as inequality.
+    static func == (
+        lhs: Address,
+        rhs: Address
+    ) -> Bool {
         do {
             return try lhs.toChecksummedLegacyAddress() == rhs.toChecksummedLegacyAddress()
         } catch {

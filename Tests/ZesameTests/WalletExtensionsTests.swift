@@ -21,6 +21,25 @@ struct WalletCodableTests {
         let wallet = Wallet(keystore: keystore)
         #expect(wallet.address == keystore.address)
     }
+
+    /// Regression: a tampered JSON whose top-level `address` differs from `keystore.address`
+    /// must surface ``Zesame.Error.walletImport(.walletAddressMismatch)`` instead of being
+    /// silently accepted.
+    @Test func decodeRejectsAddressKeystoreMismatch() throws {
+        let keystore = try Keystore.makeTest()
+        let other = "F510333720c5Dd3c3C08bC8e085e8c981ce74691"
+        let json: [String: Any] = try [
+            "keystore": keystore.toJson(),
+            "address": other,
+        ]
+        let data = try JSONSerialization.data(withJSONObject: json)
+        do {
+            _ = try JSONDecoder().decode(Wallet.self, from: data)
+            Issue.record("Expected walletAddressMismatch")
+        } catch Zesame.Error.walletImport(.walletAddressMismatch) {
+            // expected
+        }
+    }
 }
 
 struct WalletDescriptionTests {
@@ -106,21 +125,6 @@ struct KeyRestorationTests {
         #expect(throws: (any Swift.Error).self) {
             _ = try KeyRestoration(keyStoreJSONString: badJSON, encryptedBy: testPassword)
         }
-    }
-}
-
-struct DerivedKeyTests {
-    @Test func asData() {
-        let data = Data([0x01, 0x02, 0x03])
-        let key = DerivedKey(data: data)
-        #expect(key.asData == data)
-    }
-
-    @Test func inheritsDataConvertibleExtensions() {
-        let data = Data([0xDE, 0xAD])
-        let key = DerivedKey(data: data)
-        #expect(key.bytes == [0xDE, 0xAD])
-        #expect(key.asHex == "dead")
     }
 }
 

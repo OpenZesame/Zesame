@@ -24,26 +24,50 @@
 
 import Foundation
 
-public func == (lhs: some ExpressibleByAmount, rhs: some ExpressibleByAmount) -> Bool {
+/// Heterogeneous equality. Compares the canonical Qa magnitudes regardless of unit.
+public func == (
+    lhs: some ExpressibleByAmount,
+    rhs: some ExpressibleByAmount
+) -> Bool {
     lhs.qa == rhs.qa
 }
 
-public func <= (lhs: some ExpressibleByAmount, rhs: some ExpressibleByAmount) -> Bool {
+/// Heterogeneous less-than-or-equal on canonical Qa magnitudes.
+public func <= (
+    lhs: some ExpressibleByAmount,
+    rhs: some ExpressibleByAmount
+) -> Bool {
     lhs.qa <= rhs.qa
 }
 
-public func >= (lhs: some ExpressibleByAmount, rhs: some ExpressibleByAmount) -> Bool {
+/// Heterogeneous greater-than-or-equal on canonical Qa magnitudes.
+public func >= (
+    lhs: some ExpressibleByAmount,
+    rhs: some ExpressibleByAmount
+) -> Bool {
     lhs.qa >= rhs.qa
 }
 
-public func != (lhs: some ExpressibleByAmount, rhs: some ExpressibleByAmount) -> Bool {
+/// Heterogeneous inequality on canonical Qa magnitudes.
+public func != (
+    lhs: some ExpressibleByAmount,
+    rhs: some ExpressibleByAmount
+) -> Bool {
     lhs.qa != rhs.qa
 }
 
-public func > (lhs: some ExpressibleByAmount, rhs: some ExpressibleByAmount) -> Bool {
+/// Heterogeneous greater-than on canonical Qa magnitudes.
+public func > (
+    lhs: some ExpressibleByAmount,
+    rhs: some ExpressibleByAmount
+) -> Bool {
     lhs.qa > rhs.qa
 }
 
-public func < (lhs: some ExpressibleByAmount, rhs: some ExpressibleByAmount) -> Bool {
+/// Heterogeneous less-than on canonical Qa magnitudes.
+public func < (
+    lhs: some ExpressibleByAmount,
+    rhs: some ExpressibleByAmount
+) -> Bool {
     lhs.qa < rhs.qa
 }

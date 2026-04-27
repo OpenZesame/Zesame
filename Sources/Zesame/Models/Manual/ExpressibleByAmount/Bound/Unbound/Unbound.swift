@@ -24,21 +24,31 @@
 
 import Foundation
 
+/// Marker protocol for amount types that accept *any* value. ``Zil``, ``Li``, ``Qa`` are unbound
+/// since they're meant for free-form arithmetic; ``Amount`` is bound because it must respect
+/// total supply.
 public protocol Unbound: NoLowerbound & NoUpperbound {
+    /// Underlying numeric magnitude.
     associatedtype Magnitude: Comparable & Numeric
 
-    /// "Designated" init, check bounds
+    /// "Designated" init: stores the raw Qa magnitude unchanged.
     init(qa: Magnitude)
 
-    /// Most important "convenience" init
+    /// Most important "convenience" init: interprets `value` in the type's natural unit.
     init(_ value: Magnitude)
 
-    /// Various convenience inits
+    /// Convenience init from a `Double` interpreted in the type's natural unit.
     init(_ doubleValue: Double)
+
+    /// Convenience init from an `Int` interpreted in the type's natural unit.
     init(_ intValue: Int)
 
+    /// Reinterprets another amount's Qa magnitude in this type's unit.
     init(_ other: some ExpressibleByAmount)
+    /// Reinterprets a ``Zil`` value as `Self`.
     init(zil: Zil)
+    /// Reinterprets a ``Li`` value as `Self`.
     init(li: Li)
+    /// Reinterprets a ``Qa`` value as `Self`.
     init(qa: Qa)
 }

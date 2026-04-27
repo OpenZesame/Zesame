@@ -36,6 +36,7 @@ struct StringCommaSeparatorFunctionsTests {
     }
 
     @Test func stringDecimalPlaces() {
+        let decSep = Locale.current.decimalSeparatorForSure
         #expect("1".countDecimalPlaces() == 0)
         #expect("1337".countDecimalPlaces() == 0)
         #expect("0".countDecimalPlaces() == 0)
@@ -43,6 +44,12 @@ struct StringCommaSeparatorFunctionsTests {
         #expect(Double(0.01).asString(maxFractionDigits: 9).countDecimalPlaces() == 2)
         #expect(Double(0.001).asString(maxFractionDigits: 9).countDecimalPlaces() == 3)
         #expect(Double(0.0001).asString(maxFractionDigits: 9).countDecimalPlaces() == 4)
+        // Regression: previous formula "components(separatedBy: \"0\").count" returned 1 for any
+        // non-zero-containing fraction, silently underreporting decimal places.
+        #expect("1\(decSep)23".countDecimalPlaces() == 2)
+        #expect("1\(decSep)5".countDecimalPlaces() == 1)
+        #expect("1\(decSep)234567".countDecimalPlaces() == 6)
+        #expect("1\(decSep)234567890123".countDecimalPlaces() == 12)
     }
 
     @Test func stringContainMoreThanOneSeparator() {

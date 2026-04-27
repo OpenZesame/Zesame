@@ -25,24 +25,23 @@
 import Foundation
 
 extension String {
+    /// Counts the number of fractional digits after the decimal separator.
+    ///
+    /// Treats both `.` and `,` as the separator (normalised to the current locale). Returns 0
+    /// for strings without a separator. Callers must pre-validate that the input contains at
+    /// most one separator (via ``doesNotContainMoreThanOneDecimalSeparator()``); the parse below
+    /// returns the count of digits after the *first* separator and ignores anything else.
     func countDecimalPlaces() -> Int {
-        let decimalSeparator = Locale.current.decimalSeparatorForSure
-
         guard containsDecimalSeparator() else { return 0 }
-
-        let components = replacingIncorrectDecimalSeparatorIfNeeded().components(separatedBy: decimalSeparator)
-
-        if components.count < 2 { // strange case, should have been covered by `guard containsDecimalSeparator`
-            return 0 // integer => 0 decimal places
-        } else if components.count > 2 { // contains double separator, not a valid number at all
-            fatalError("invalid string")
-        } else {
-            assert(components.count == 2)
-            let decimalStringPart = components.last!
-            return decimalStringPart.components(separatedBy: "0").count
-        }
+        let decimalSeparator = Locale.current.decimalSeparatorForSure
+        let normalised = replacingIncorrectDecimalSeparatorIfNeeded()
+        guard let fractional = normalised.components(separatedBy: decimalSeparator).dropFirst().first
+        else { return 0 }
+        return fractional.count
     }
 
+    /// Returns `true` when at most one decimal separator is present (zero or one), regardless of
+    /// whether `.` or `,` was used.
     func doesNotContainMoreThanOneDecimalSeparator() -> Bool {
         let decimalSeparator = Locale.current.decimalSeparatorForSure
 
@@ -52,6 +51,8 @@ extension String {
         return true
     }
 
+    /// Normalises both `.` and `,` to the current locale's decimal separator so that
+    /// downstream parsing is locale-correct.
     func replacingIncorrectDecimalSeparatorIfNeeded() -> String {
         let decimalSeparator = Locale.current.decimalSeparatorForSure
 
@@ -60,6 +61,13 @@ extension String {
     }
 }
 
+/// Formats an `NSDecimalNumber` using the user's locale-specific decimal separator.
+///
+/// - Parameters:
+///   - nsDecimalNumber: The value to format.
+///   - maxFractionDigits: Upper bound on fractional digits (extra digits are rounded away).
+///   - minFractionDigits: Optional lower bound; when `nil`, the formatter chooses the minimum.
+/// - Returns: The formatted string, or `nil` if `NumberFormatter` cannot render the value.
 func asStringUsingLocalizedDecimalSeparator(
     nsDecimalNumber: NSDecimalNumber,
     maxFractionDigits: Int,
@@ -76,6 +84,7 @@ func asStringUsingLocalizedDecimalSeparator(
 }
 
 private extension String {
+    /// `true` if the string contains the current locale's decimal separator.
     func containsDecimalSeparator() -> Bool {
         contains(Locale.current.decimalSeparatorForSure)
     }

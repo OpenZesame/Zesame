@@ -24,16 +24,17 @@
 
 import Foundation
 
-public struct DerivedKey {
-    public let data: Data
+/// Type-erased `Encodable` wrapper. Lets ``RPCParams`` carry heterogeneous parameter values
+/// (`[any Encodable]` / `[String: any Encodable]`) through `KeyedEncodingContainer`, which only
+/// accepts concrete `T: Encodable` not the existential.
+struct AnyEncodable: Encodable {
+    private let _encode: (Encoder) throws -> Void
 
-    public init(data: Data) {
-        self.data = data
+    init(_ value: any Encodable) {
+        _encode = { encoder in try value.encode(to: encoder) }
     }
-}
 
-extension DerivedKey: DataConvertible {
-    public var asData: Data {
-        data
+    func encode(to encoder: Encoder) throws {
+        try _encode(encoder)
     }
 }

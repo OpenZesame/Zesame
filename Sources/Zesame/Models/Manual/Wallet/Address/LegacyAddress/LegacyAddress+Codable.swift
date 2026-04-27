@@ -25,6 +25,7 @@
 import Foundation
 
 extension LegacyAddress: Encodable {
+    /// Encodes as a single bare hex string JSON value (with checksum casing preserved).
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(asString)
@@ -32,6 +33,8 @@ extension LegacyAddress: Encodable {
 }
 
 extension LegacyAddress: Decodable {
+    /// Decodes from a single bare hex string JSON value. Throws if the casing isn't correctly
+    /// checksummed.
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let hexString = try container.decode(String.self)

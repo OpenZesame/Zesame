@@ -27,9 +27,14 @@ import Foundation
 // MARK: - Validation
 
 public extension Address {
+    /// Which address-encoding family a length check is being applied against.
     enum Style: Equatable {
-        case bech32, ethereum
+        /// Bech32 form (`zil1…`).
+        case bech32
+        /// Legacy hex form (`F510…`).
+        case ethereum
 
+        /// Expected character count for this style.
         var expectedLength: Int {
             switch self {
             case .bech32: 32 // excluding prefix, delimiter and checksum
@@ -38,11 +43,17 @@ public extension Address {
         }
     }
 
+    /// Reasons a string can fail to parse as an ``Address``.
     enum Error: Swift.Error, Equatable {
+        /// Wrong character count for the given encoding style.
         case incorrectLength(expectedLength: Int, forStyle: Style, butGot: Int)
+        /// Bech32 data part contained no payload bytes.
         case bech32DataEmpty
+        /// Input contained non-hex characters.
         case notHexadecimal
+        /// Input wasn't recognised as Bech32 — wraps the underlying decoder error.
         case invalidBech32Address(bechError: Bech32.DecodingError)
+        /// Hex shape is correct but the case-folding doesn't match Zilliqa's checksum.
         case notChecksummed
     }
 }

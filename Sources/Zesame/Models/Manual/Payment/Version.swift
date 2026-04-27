@@ -24,14 +24,22 @@
 
 import Foundation
 
+/// The Zilliqa transaction `version` field, packing chain id (high 16 bits) and transaction
+/// version (low 16 bits) into a single 32-bit value.
 public struct Version {
+    /// The packed 32-bit version value as it appears on the wire.
     public let value: UInt32
 
+    /// Wraps an already-packed value.
     public init(value: UInt32) {
         self.value = value
     }
 
-    public init(network: Network, transactionVersion: UInt32 = 1) {
+    /// Packs `network.chainId` and `transactionVersion` into the wire format.
+    public init(
+        network: Network,
+        transactionVersion: UInt32 = 1
+    ) {
         self.init(value: network.chainId << 16 + transactionVersion)
     }
 }
@@ -39,6 +47,7 @@ public struct Version {
 extension Version: Equatable {}
 extension Version: ExpressibleByIntegerLiteral {}
 public extension Version {
+    /// Allows `let v: Version = 65537` style literals.
     init(integerLiteral value: UInt32) {
         self.init(value: value)
     }
@@ -47,6 +56,7 @@ public extension Version {
 // MARK: - Encodable
 
 extension Version: Encodable {
+    /// Encodes as a single bare `UInt32` JSON value.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(value)
@@ -56,6 +66,7 @@ extension Version: Encodable {
 // MARK: - Decodable
 
 extension Version: Decodable {
+    /// Decodes from a single bare `UInt32` JSON value.
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let version = try container.decode(UInt32.self)

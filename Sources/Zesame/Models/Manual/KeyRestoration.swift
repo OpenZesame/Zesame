@@ -24,32 +24,76 @@
 
 import Foundation
 
+/// The starting point for restoring a wallet — either a raw private key (which will be encrypted
+/// into a new keystore) or an existing keystore (with the password to decrypt it).
 public enum KeyRestoration {
+    /// A raw private key to be wrapped in a fresh keystore using `encryptBy`/`kdf`.
     case privateKey(PrivateKey, encryptBy: String, kdf: KDF)
+    /// An existing keystore plus the password that unlocks it.
     case keystore(Keystore, password: String)
 }
 
 public extension KeyRestoration {
-    init(privateKeyHexString: String, encryptBy newPassword: String, kdf: KDF = .default) throws {
-        guard
-            let privateKeyData = Data(validatingHex: privateKeyHexString),
-            let privateKey = try? PrivateKey(rawRepresentation: privateKeyData)
-        else {
+    /// Builds a ``KeyRestoration/privateKey(_:encryptBy:kdf:)`` from a hex-encoded private key.
+    ///
+    /// - Throws:
+    ///   - ``Zesame/Error/walletImport(_:)`` (`.badPrivateKeyHex`) if the string is not valid
+    ///     hexadecimal.
+    ///   - ``Zesame/Error/walletImport(_:)`` (`.invalidPrivateKey`) if the bytes are valid hex
+    ///     but rejected by the secp256k1 layer; the underlying K1 error is preserved.
+    init(
+        privateKeyHexString: String,
+        encryptBy newPassword: String,
+        kdf: KDF = .default
+    ) throws {
+        guard let privateKeyData = Data(validatingHex: privateKeyHexString) else {
             throw Error.walletImport(.badPrivateKeyHex)
+        }
+        let privateKey: PrivateKey
+        do {
+            privateKey = try PrivateKey(rawRepresentation: privateKeyData)
+        } catch {
+            throw Error.walletImport(.invalidPrivateKey(error))
         }
         self = .privateKey(privateKey, encryptBy: newPassword, kdf: kdf)
     }
 
-    init(keyStoreJSON: Data, encryptedBy password: String) throws {
+    /// Builds a ``KeyRestoration/keystore(_:password:)`` from raw keystore JSON.
+    ///
+    /// - Throws:
+    ///   - ``Zesame/Error/walletImport(_:)`` (`.jsonDecoding`) if `JSONDecoder` rejects the
+    ///     payload as malformed.
+    ///   - ``Zesame/Error/walletImport(_:)`` (`.keystoreError`) for any other decoder/keystore
+    ///     failure (e.g. a `Foundation` non-`DecodingError` thrown on Linux).
+    init(
+        keyStoreJSON: Data,
+        encryptedBy password: String
+    ) throws {
         do {
             let keystore = try JSONDecoder().decode(Keystore.self, from: keyStoreJSON)
             self = .keystore(keystore, password: password)
         } catch let error as Swift.DecodingError {
             throw Error.walletImport(.jsonDecoding(error))
-        } catch { fatalError("incorrect implementation, error: \(error)") }
+        } catch let error as Zesame.Error {
+            // coverage:exclude-start
+            // The keystore decoder doesn't surface `Zesame.Error` directly today; this branch is
+            // forward-compat in case a future decoder rethrows one verbatim.
+            throw error
+            // coverage:exclude-end
+        } catch {
+            throw Error.walletImport(.keystoreError(error))
+        }
     }
 
-    init(keyStoreJSONString: String, encodedBy encoding: String.Encoding = .utf8, encryptedBy password: String) throws {
+    /// Convenience overload that re-encodes a JSON string into bytes first.
+    ///
+    /// - Throws: ``Zesame/Error/walletImport(_:)`` (`.jsonStringDecoding`) if the string is not
+    ///   representable in `encoding`.
+    init(
+        keyStoreJSONString: String,
+        encodedBy encoding: String.Encoding = .utf8,
+        encryptedBy password: String
+    ) throws {
         guard let json = keyStoreJSONString.data(using: encoding) else {
             throw Error.walletImport(.jsonStringDecoding)
         }

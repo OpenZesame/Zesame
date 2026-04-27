@@ -24,6 +24,12 @@
 
 import Foundation
 
+/// A type that can be rendered into Zilliqa's checksummed legacy-hex address form.
+///
+/// Conforming types either *are* a checksummed legacy address, or carry enough information
+/// (e.g. a public key, a bech32 address) to reconstruct one.
 public protocol AddressChecksummedConvertible {
+    /// Returns the checksummed legacy-hex form of this address. Throws if the underlying value
+    /// can't be coerced into a valid 20-byte address.
     func toChecksummedLegacyAddress() throws -> LegacyAddress
 }

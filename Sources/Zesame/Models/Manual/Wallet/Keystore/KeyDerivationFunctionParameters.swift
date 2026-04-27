@@ -24,12 +24,16 @@
 
 import Foundation
 
+/// Convenience alias for ``KDF/Parameters``.
 public typealias KDFParams = KDF.Parameters
 
 public extension KDF {
+    /// PBKDF2 parameters — iteration count, output length, and salt — embedded in keystores so
+    /// they can be re-derived at decrypt time.
     struct Parameters: Codable, Hashable {
         /// OWASP 2023 recommendation for PBKDF2-SHA512
         public static let defaultIterations = 600_000
+        /// Default derived-key length in bytes (32 bytes = 256-bit AES key).
         public static let defaultDerivedKeyLength = 32
         /// Always HMAC-SHA512; encoded in JSON for interoperability
         static let prf = "hmac-sha512"
@@ -38,12 +42,16 @@ public extension KDF {
         public let iterations: Int
         /// Derived key length in bytes ("dklen" in JSON)
         public let derivedKeyLength: Int
+        /// Hex-encoded salt.
         public let saltHex: String
 
+        /// Decoded salt bytes.
         public var salt: Data {
             Data(hex: saltHex)
         }
 
+        /// Designated initialiser. If `saltHex` is `nil`, a fresh 32-byte salt is generated via
+        /// the platform CSPRNG.
         public init(
             iterations: Int = Self.defaultIterations,
             derivedKeyLength: Int = Self.defaultDerivedKeyLength,
@@ -54,6 +62,8 @@ public extension KDF {
             self.saltHex = try saltHex ?? securelyGenerateBytes(count: 32).asHex
         }
 
+        /// Decodes from JSON. The `prf` field on the wire is informational only — this
+        /// implementation always uses HMAC-SHA512.
         public init(from decoder: Decoder) throws {
             let c = try decoder.container(keyedBy: CodingKeys.self)
             iterations = try c.decode(Int.self, forKey: .iterations)
@@ -61,6 +71,8 @@ public extension KDF {
             saltHex = try c.decode(String.self, forKey: .saltHex)
         }
 
+        /// Encodes to JSON, including the constant `prf` field for cross-implementation
+        /// interoperability.
         public func encode(to encoder: Encoder) throws {
             var c = encoder.container(keyedBy: CodingKeys.self)
             try c.encode(Self.prf, forKey: .prf)
@@ -69,6 +81,7 @@ public extension KDF {
             try c.encode(saltHex, forKey: .saltHex)
         }
 
+        /// JSON wire keys.
         enum CodingKeys: String, CodingKey {
             case prf
             case iterations = "c"
@@ -79,6 +92,13 @@ public extension KDF {
 }
 
 public extension KDF.Parameters {
-    // swiftlint:disable:next force_try
-    static let `default`: Self = try! .init()
+    /// Default parameters: OWASP iteration count and a **freshly-generated** 32-byte salt.
+    ///
+    /// Implemented as a computed property (not `static let`) so each access produces a unique
+    /// salt. Caching the value would reuse one salt across every keystore in the process,
+    /// defeating the purpose of salting against parallel/rainbow-table attacks.
+    static var `default`: Self {
+        // swiftlint:disable:next force_try
+        try! .init()
+    }
 }

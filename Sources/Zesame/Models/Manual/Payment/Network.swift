@@ -24,13 +24,18 @@
 
 import Foundation
 
+/// Identifies a Zilliqa network. The raw value is the network's chain id.
+///
 /// seemore: https://apidocs.zilliqa.com/#getnetworkid
 public enum Network: UInt32, Decodable {
+    /// The production network.
     case mainnet = 1
+    /// Public test network used for development.
     case testnet = 333
 }
 
 extension Network {
+    /// Canonical JSON-RPC endpoint URL for this network.
     var baseURL: URL {
         switch self {
         case .mainnet: ZilliqaAPIEndpoint.mainnet.baseURL
@@ -42,6 +47,8 @@ extension Network {
 // MARK: - Decodable
 
 public extension Network {
+    /// Decodes from the string-encoded chain id returned by `GetNetworkId`. Throws a
+    /// `dataCorrupted` error if the string isn't an integer or isn't a known network.
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let chainIdAsString = try container.decode(String.self)
@@ -62,12 +69,14 @@ public extension Network {
 }
 
 public extension Network {
+    /// Default network used when a caller doesn't specify (mainnet).
     static var `default`: Network {
         .mainnet
     }
 }
 
 public extension Network {
+    /// Numeric chain id, equal to the enum's raw value.
     var chainId: UInt32 {
         rawValue
     }

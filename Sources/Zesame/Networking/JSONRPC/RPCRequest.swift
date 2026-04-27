@@ -24,56 +24,59 @@
 
 import Foundation
 
+/// JSON-RPC 2.0 request envelope. Encodes to the wire format
+/// `{ "id": …, "method": …, "params": …, "jsonrpc": "2.0" }`.
+///
+/// The envelope is transport-agnostic — `URLRequest` construction lives in the API client, not
+/// here. This is a plain value type that knows how to encode itself as JSON.
 public struct RPCRequest: Encodable {
-    public let rpcMethod: String
-    private let _encodeValue: RPCMethod.EncodeValue<CodingKeys>?
+    /// The unique request id (decimal string from ``RequestIdGenerator``). The JSON-RPC 2.0 spec
+    /// allows string, number, or null; we use strings for simplicity.
     public let requestId: String
+
+    /// The wire-level method name.
+    public let method: String
+
+    /// Parameter shape (none / positional / named).
+    public let params: RPCParams
+
+    /// JSON-RPC protocol version. Always `"2.0"`.
     public let version = "2.0"
 
-    public init(rpcMethod: String, encodeValue: RPCMethod.EncodeValue<CodingKeys>?) {
-        self.rpcMethod = rpcMethod
-        _encodeValue = encodeValue
+    /// Designated initialiser. Auto-allocates an id from ``RequestIdGenerator``.
+    public init(
+        method: String,
+        params: RPCParams = .none
+    ) {
         requestId = RequestIdGenerator.nextId()
+        self.method = method
+        self.params = params
     }
-}
 
-// MARK: - Convenience Init
-
-public extension RPCRequest {
-    init(method: RPCMethod) {
-        self.init(rpcMethod: method.method, encodeValue: method.encodeValue(key: .parameters))
+    /// Convenience that pulls name + params from an ``RPCMethod``. Erases the response type
+    /// because the response shape is the API client's concern, not the envelope's.
+    public init(_ rpcMethod: RPCMethod<some Decodable>) {
+        self.init(method: rpcMethod.name, params: rpcMethod.params)
     }
 }
 
 // MARK: - Encodable
 
 public extension RPCRequest {
+    /// JSON wire-format keys.
     enum CodingKeys: String, CodingKey {
         case requestId = "id"
-        case rpcMethod = "method"
-        case parameters = "params"
+        case method
+        case params
         case version = "jsonrpc"
     }
 
+    /// Custom encoder so we can omit the `params` field entirely for ``RPCParams/none``.
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(requestId, forKey: .requestId)
-        try container.encode(rpcMethod, forKey: .rpcMethod)
-        if let encodeValue = _encodeValue {
-            try encodeValue(&container)
-        }
+        try container.encode(method, forKey: .method)
+        try params.encode(into: &container, forKey: .params)
         try container.encode(version, forKey: .version)
-    }
-}
-
-// MARK: - URLRequest
-
-extension RPCRequest {
-    func asURLRequest(baseURL: URL) throws -> URLRequest {
-        var urlRequest = URLRequest(url: baseURL)
-        urlRequest.httpMethod = "POST"
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.httpBody = try JSONEncoder().encode(self)
-        return urlRequest
     }
 }

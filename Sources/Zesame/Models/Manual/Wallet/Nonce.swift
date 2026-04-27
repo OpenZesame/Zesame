@@ -24,23 +24,34 @@
 
 import Foundation
 
+/// Account nonce — the count of mined transactions originated by an account.
+///
+/// The Zilliqa network expects each new transaction to use `current_nonce + 1`. ``Nonce`` wraps
+/// the raw `UInt64` to keep that semantic distinct in the type system.
 public struct Nonce {
+    /// The wrapped nonce value.
     public let nonce: UInt64
+    /// Wraps a raw `UInt64`, defaulting to zero (the nonce of a brand-new account).
     public init(_ nonce: UInt64 = 0) {
         self.nonce = nonce
     }
 }
 
 public extension Nonce {
+    /// Returns a copy with `nonce + 1` — the value the next outgoing transaction should carry.
     func increasedByOne() -> Nonce {
         Nonce(nonce + 1)
     }
 }
 
 extension Nonce: ExpressibleByIntegerLiteral {
+    /// Allows `Nonce`s to be written as integer literals.
+    ///
+    /// Negative literals trap with a clear precondition message rather than relying on the
+    /// `UInt64(_: Int)` arithmetic trap, which is opaque at the call site.
     public init(integerLiteral value: Int) {
-        let nonce = UInt64(value)
-        self.init(nonce)
+        precondition(value >= 0, "Nonce literal must be non-negative, got \(value)")
+        self.init(UInt64(value))
     }
 }
 

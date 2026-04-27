@@ -25,6 +25,11 @@
 import Foundation
 
 public extension Keystore {
+    /// Builds a fresh ``Keystore`` for `privateKey` by deriving a symmetric key from `password`
+    /// (with `kdf`/`kdfParams`) and AES-GCM-encrypting the private key under it.
+    ///
+    /// - Throws: ``Zesame/Error/keystorePasswordTooShort(provided:minimum:)`` if the password is
+    ///   shorter than ``minimumPasswordLength``; KDF or AES errors otherwise.
     static func from(
         privateKey: PrivateKey,
         encryptBy password: String,

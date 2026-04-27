@@ -15,8 +15,8 @@ opt_in_rules:
   - multiline_parameters
 
 multiline_parameters:
-  # Allow all params on one line; only flag inconsistently-wrapped signatures.
-  allows_single_line: true
+  # Forbid single-line declarations with 2+ parameters; each parameter must be on its own line.
+  allows_single_line: false
 
 # SwiftFormat's --commas always adds trailing commas in multi-line collections;
 # require them here so both tools agree.

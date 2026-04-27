@@ -25,42 +25,35 @@
 import BigInt
 import Foundation
 
-extension Double {
-    var asStringWithoutTrailingZeros: String {
-        var formatted = String(describing: NSNumber(value: self).decimalValue)
-        let decimalSeparator = Locale.current.decimalSeparator ?? "."
-        guard formatted.contains(decimalSeparator) else {
-            return formatted
-        }
-        while formatted.last == "0" {
-            formatted = String(formatted.dropLast())
-        }
-
-        if String(formatted.last!) == decimalSeparator {
-            formatted = String(formatted.dropLast())
-        }
-
-        return formatted
-    }
-}
-
 public extension ExpressibleByAmount {
+    /// Debug-friendly form: Qa magnitude alongside the value in Zil.
     var debugDescription: String {
         "\(qa) qa (\(asString(in: .zil, roundingIfNeeded: nil)) Zils)"
     }
 
+    /// The value rendered in Zil.
     var zilString: String {
         asString(in: .zil)
     }
 
+    /// The value rendered in Li.
     var liString: String {
         asString(in: .li)
     }
 
+    /// The value rendered in Qa (no decimal places — Qa is the base unit).
     var qaString: String {
         String(qa)
     }
 
+    /// Renders the amount as a localised string in `targetUnit`.
+    ///
+    /// - Parameters:
+    ///   - targetUnit: The unit to render in.
+    ///   - roundingIfNeeded: Optional rounding mode applied only when rendering in the same unit
+    ///     this value was constructed in.
+    ///   - roundingNumberOfDigits: Number of digits to round to when `roundingIfNeeded` is set.
+    ///   - minFractionDigits: Minimum digits after the decimal separator (e.g. for `1.50`).
     func asString(
         in targetUnit: Unit,
         roundingIfNeeded: NSDecimalNumber.RoundingMode? = nil,

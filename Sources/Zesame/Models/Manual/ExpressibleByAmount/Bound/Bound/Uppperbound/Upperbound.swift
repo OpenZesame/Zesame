@@ -24,14 +24,28 @@
 
 import Foundation
 
+/// A bounded amount type that has a maximum value. Throwing `+`/`*` are part of the contract —
+/// they may surface ``AmountError/tooLarge`` when the result exceeds ``maxInQa``.
 public protocol Upperbound: Bound {
+    /// Maximum allowed Qa magnitude.
     static var maxInQa: Magnitude { get }
+    /// Sentinel ``Self`` value at the upper bound.
     static var max: Self { get }
-    static func + (lhs: Self, rhs: Self) throws -> Self
-    static func * (lhs: Self, rhs: Self) throws -> Self
+    /// Throwing addition; may produce ``AmountError/tooLarge``.
+    static func + (
+        lhs: Self,
+        rhs: Self
+    ) throws -> Self
+    /// Throwing multiplication; may produce ``AmountError/tooLarge``.
+    static func * (
+        lhs: Self,
+        rhs: Self
+    ) throws -> Self
 }
 
 public extension Upperbound where Self: ExpressibleByAmount {
+    /// Default sentinel for the upper bound. Force-tries because the value is, by definition,
+    /// in-bounds.
     static var max: Self {
         try! Self(qa: maxInQa)
     }

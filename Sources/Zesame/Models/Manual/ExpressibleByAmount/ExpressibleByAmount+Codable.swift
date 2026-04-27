@@ -27,6 +27,8 @@ import Foundation
 // MARK: - Encodable
 
 public extension ExpressibleByAmount {
+    /// Encodes the amount as its Qa-denominated string representation. The wire format is a
+    /// string rather than a number to preserve full BigInt precision through JSON.
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(qaString)
@@ -36,6 +38,7 @@ public extension ExpressibleByAmount {
 // MARK: - Decodable
 
 public extension ExpressibleByAmount {
+    /// Decodes the amount from a Qa-denominated single string JSON value.
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let qaString = try container.decode(String.self)

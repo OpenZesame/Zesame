@@ -24,13 +24,19 @@
 
 import Foundation
 
+/// A lower bound whose value can be adjusted at runtime. Used by ``GasPrice`` so the
+/// network-supplied minimum can be reflected without a redeploy.
 public protocol AdjustableLowerbound: Lowerbound {
+    /// Factory-default lower bound.
     static var minInQaDefault: Magnitude { get }
+    /// Mutable active lower bound.
     static var minInQa: Magnitude { get set }
+    /// Resets ``minInQa`` to ``minInQaDefault``.
     static func restoreDefaultMin()
 }
 
 public extension AdjustableLowerbound {
+    /// Default implementation of ``restoreDefaultMin()``.
     static func restoreDefaultMin() {
         minInQa = minInQaDefault
     }

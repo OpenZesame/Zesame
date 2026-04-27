@@ -24,12 +24,19 @@
 
 import Foundation
 
+/// A transaction together with its signature and signer's public key, ready for broadcast via
+/// `CreateTransaction`. The signature and pubkey are stored as upper-cased hex to match what the
+/// node expects on the wire.
 public struct SignedTransaction {
     private let signature: String
     private let transaction: Transaction
     private let publicKeyCompressed: String
 
-    init(transaction: Transaction, signedBy publicKey: PublicKey, signature: Signature) {
+    init(
+        transaction: Transaction,
+        signedBy publicKey: PublicKey,
+        signature: Signature
+    ) {
         self.transaction = transaction
         publicKeyCompressed = publicKey.compressedRepresentation.asHex.uppercased()
         self.signature = signature.rawRepresentation.asHex.uppercased()
@@ -37,10 +44,17 @@ public struct SignedTransaction {
 }
 
 extension SignedTransaction: Encodable {
+    /// JSON wire keys for the `CreateTransaction` payload.
     enum CodingKeys: String, CodingKey {
         case version, toAddr, nonce, pubKey, amount, gasPrice, gasLimit, code, data, signature
     }
 
+    /// Custom encoder that flattens the nested ``Transaction`` / ``Payment`` structure into the
+    /// flat object the JSON-RPC API expects.
+    ///
+    /// The recipient is rendered in its checksummed (mixed-case) hex form, matching what the
+    /// Zilliqa JSON-RPC API accepts. `Payment`'s ``LegacyAddress`` is by construction already
+    /// checksummed, so we read its hex representation directly without re-checksumming.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
@@ -49,8 +63,7 @@ extension SignedTransaction: Encodable {
 
         try container.encode(tx.version, forKey: .version)
         try container.encode(p.nonce.nonce, forKey: .nonce)
-        let addressChecksummed = try p.recipient.toChecksummedLegacyAddress()
-        try container.encode(addressChecksummed.hexString.value, forKey: .toAddr)
+        try container.encode(p.recipient.hexString.value, forKey: .toAddr)
         try container.encode(publicKeyCompressed, forKey: .pubKey)
 
         try container.encode(p.amount, forKey: .amount)

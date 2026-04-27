@@ -24,10 +24,19 @@
 
 import Foundation
 
+/// Maximum gas units a transaction is allowed to consume, modelled as a plain `Int`.
+///
+/// Negative or sub-minimum values are caught at the ``Payment`` validation boundary
+/// (``Payment/init(to:amount:gasLimit:gasPrice:nonce:)`` throws
+/// ``Payment/Error/gasLimitTooLow``), so the typealias remains a thin `Int` for ergonomic call
+/// sites. A future hardening pass could replace this with a validated newtype to enforce the
+/// invariant in the type system itself.
 public typealias GasLimit = Int
 public extension GasLimit {
+    /// Default gas limit applied when callers don't supply one (``minimum``).
     static var defaultGasLimit: Self = .minimum
 
+    /// Minimum gas limit accepted by the network for a non-contract transaction.
     static var minimum: Self {
         50
     }

@@ -21,45 +21,59 @@ struct RPCRequestIdGeneratorTests {
 struct RPCMethodTests {
     @Test func methodNames() throws {
         let address = try LegacyAddress(string: "1234567890123456789012345678901234567890")
-        #expect(RPCMethod.getBalance(address).method == "GetBalance")
-        #expect(RPCMethod.getNetworkId.method == "GetNetworkId")
-        #expect(RPCMethod.getMinimumGasPrice.method == "GetMinimumGasPrice")
+        #expect(RPCMethod.getBalance(address).name == "GetBalance")
+        #expect(RPCMethod.getNetworkId.name == "GetNetworkId")
+        #expect(RPCMethod.getMinimumGasPrice.name == "GetMinimumGasPrice")
         let txId = "someTxId"
-        #expect(RPCMethod.getTransaction(txId).method == "GetTransaction")
+        #expect(RPCMethod.getTransaction(txId).name == "GetTransaction")
     }
 
     @Test func methodWithNoParams() {
-        let getNetwork = RPCMethod.getNetworkId
-        let encodeValue = getNetwork.encodeValue(key: RPCRequest.CodingKeys.parameters)
-        #expect(encodeValue == nil)
-
-        let getGasPrice = RPCMethod.getMinimumGasPrice
-        let encodeValue2 = getGasPrice.encodeValue(key: RPCRequest.CodingKeys.parameters)
-        #expect(encodeValue2 == nil)
+        if case .none = RPCMethod.getNetworkId.params {
+            // expected
+        } else {
+            Issue.record("Expected RPCParams.none for getNetworkId")
+        }
+        if case .none = RPCMethod.getMinimumGasPrice.params {
+            // expected
+        } else {
+            Issue.record("Expected RPCParams.none for getMinimumGasPrice")
+        }
     }
 
     @Test func methodWithParams() throws {
         let address = try LegacyAddress(string: "1234567890123456789012345678901234567890")
-        let getBalance = RPCMethod.getBalance(address)
-        let encodeValue = getBalance.encodeValue(key: RPCRequest.CodingKeys.parameters)
-        #expect(encodeValue != nil)
+        if case let .positional(values) = RPCMethod.getBalance(address).params {
+            #expect(values.count == 1)
+        } else {
+            Issue.record("Expected positional params for getBalance")
+        }
 
-        let txId = "abc123"
-        let getTx = RPCMethod.getTransaction(txId)
-        let encodeValue2 = getTx.encodeValue(key: RPCRequest.CodingKeys.parameters)
-        #expect(encodeValue2 != nil)
+        if case let .positional(values) = RPCMethod.getTransaction("abc123").params {
+            #expect(values.count == 1)
+        } else {
+            Issue.record("Expected positional params for getTransaction")
+        }
+    }
+
+    @Test func openExtensibility() {
+        // The whole point of the redesign: clients add methods in their own modules without
+        // editing this library.
+        struct DummyResponse: Decodable, Equatable {}
+        let custom = RPCMethod<DummyResponse>(name: "Custom", params: .positional([42]))
+        #expect(custom.name == "Custom")
     }
 
     @Test func encodeGetBalanceRequest() throws {
         let address = try LegacyAddress(string: "1234567890123456789012345678901234567890")
-        let request = RPCRequest(method: .getBalance(address))
-        #expect(request.rpcMethod == "GetBalance")
+        let request = RPCRequest(.getBalance(address))
+        #expect(request.method == "GetBalance")
         #expect(request.version == "2.0")
         #expect(!request.requestId.isEmpty)
     }
 
     @Test func encodeGetNetworkIdRequest() throws {
-        let request = RPCRequest(method: .getNetworkId)
+        let request = RPCRequest(.getNetworkId)
         let data = try JSONEncoder().encode(request)
         let json = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
         #expect(json["method"] as? String == "GetNetworkId")
@@ -69,29 +83,34 @@ struct RPCMethodTests {
     }
 
     @Test func encodeGetTransactionRequest() throws {
-        let request = RPCRequest(method: .getTransaction("tx123"))
+        let request = RPCRequest(.getTransaction("tx123"))
         let data = try JSONEncoder().encode(request)
         let json = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
         #expect(json["method"] as? String == "GetTransaction")
         let params = json["params"] as? [String]
         #expect(params?.first == "tx123")
     }
+
+    @Test func encodeNamedParams() throws {
+        // RPCParams.named is part of the generic core even though Zilliqa doesn't use it.
+        let request = RPCRequest(method: "GenericCall", params: .named(["height": 42, "verbose": true]))
+        let data = try JSONEncoder().encode(request)
+        let json = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        let params = try #require(json["params"] as? [String: Any])
+        #expect(params["height"] as? Int == 42)
+        #expect(params["verbose"] as? Bool == true)
+    }
 }
 
 struct RPCRequestTests {
-    @Test func asURLRequest() throws {
-        let request = RPCRequest(method: .getNetworkId)
-        let baseURL = try #require(URL(string: "https://api.zilliqa.com/"))
-        let urlRequest = try request.asURLRequest(baseURL: baseURL)
-        #expect(urlRequest.url == baseURL)
-        #expect(urlRequest.httpMethod == "POST")
-        #expect(urlRequest.value(forHTTPHeaderField: "Content-Type") == "application/json")
-        #expect(urlRequest.httpBody != nil)
+    @Test func versionFieldIsAlwaysTwoZero() {
+        let request = RPCRequest(.getNetworkId)
+        #expect(request.version == "2.0")
     }
 
-    @Test func customInitEncodeValue() {
-        let request = RPCRequest(rpcMethod: "GetBalance", encodeValue: nil)
-        #expect(request.rpcMethod == "GetBalance")
+    @Test func directMethodNameInit() {
+        let request = RPCRequest(method: "GetBalance", params: .none)
+        #expect(request.method == "GetBalance")
         #expect(request.version == "2.0")
     }
 }

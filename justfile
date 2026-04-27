@@ -39,6 +39,13 @@ cov: _run-cov
 cov-detailed: _run-cov
     @python3 scripts/cov_detailed.py {{test_bin}} {{profdata}} {{cov_json}}
 
+# ── Protobuf ──────────────────────────────────────────────────────────────────
+
+# Regenerate every `*.pb.swift` next to its `*.proto` source under Sources/.
+# Requires `brew install swift-protobuf` (provides protoc + protoc-gen-swift).
+proto-regen:
+    @bash scripts/regen_protos.sh
+
 # ── Formatting ────────────────────────────────────────────────────────────────
 
 # Auto-format all Swift sources in-place; silently skips any tool not installed.
@@ -55,6 +62,6 @@ _run-cov:
     xcrun llvm-cov export \
         {{test_bin}} \
         -instr-profile {{profdata}} \
-        -ignore-filename-regex "(Tests|checkouts|debug/|release/)" \
+        -ignore-filename-regex "(Tests|checkouts|debug/|release/|messages\.pb\.swift)" \
         > {{result_dir}}/llvm_cov.json
     @python3 scripts/llvm_to_xccov.py {{result_dir}}/llvm_cov.json > {{cov_json}}

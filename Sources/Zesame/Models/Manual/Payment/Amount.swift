@@ -25,16 +25,26 @@
 import BigInt
 import Foundation
 
+/// A bounded value of Zilliqa native currency.
+///
+/// The bounds are fixed at zero (lower edge) and the protocol total supply
+/// (21 × 10²¹ Qa = 21 billion Zil, upper edge) — no `Amount` instance can violate that envelope.
 public struct Amount: ExpressibleByAmount, Upperbound, Lowerbound, Hashable {
+    /// The underlying unsigned big-integer magnitude.
     public typealias Magnitude = Zil.Magnitude
 
+    /// Canonical unit for this type — Zil.
     public static let unit: Unit = .zil
 
+    /// Lower bound in Qa: zero.
     public static let minInQa: Zil.Magnitude = 0
+    /// Upper bound in Qa: total supply (21 billion Zil).
     public static let maxInQa: Zil.Magnitude = "21000000000000000000000"
 
+    /// The amount in Qa.
     public let qa: Magnitude
 
+    /// Creates an `Amount` after validating that `qa` lies within the supply bounds.
     public init(qa: Magnitude) throws {
         self.qa = try Amount.validate(value: qa)
     }

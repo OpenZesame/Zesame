@@ -26,24 +26,28 @@ import BigInt
 import Foundation
 
 extension ExpressibleByAmount {
+    /// Scales a magnitude expressed in `Self.unit` up to Qa.
     static func toQa(magnitude: Magnitude) -> Magnitude {
         let exponentDiff = abs(Unit.qa.exponent - Self.unit.exponent)
         let powerFactor = BigInt(10).power(exponentDiff)
         return magnitude * powerFactor
     }
 
+    /// `Double` overload of ``toQa(magnitude:)``.
     static func toQa(double: Double) -> Magnitude {
         express(double: double, in: .qa)
     }
 }
 
 extension Double {
+    /// `true` when the value has no fractional part (e.g. `2.0` → `true`, `2.5` → `false`).
     var isInteger: Bool {
         floor(self) == ceil(self)
     }
 }
 
 extension ExpressibleByAmount {
+    /// Renders the amount as a `Decimal` in `targetUnit`, optionally applying rounding.
     func decimalValue(
         in targetUnit: Unit,
         rounding: NSDecimalNumber.RoundingMode?,
@@ -52,7 +56,11 @@ extension ExpressibleByAmount {
         guard qa <= BigInt(Double.greatestFiniteMagnitude) else {
             fatalError("Too big amount")
         }
-        let qaFittingInDecimal = Decimal(string: "\(qa)", locale: Locale.current)!
+        // `"\(qa)"` is the BigInt's locale-independent decimal description, so parse it without
+        // a locale (which on exotic locales could otherwise fail the digit-class check).
+        guard let qaFittingInDecimal = Decimal(string: "\(qa)") else {
+            fatalError("BigInt description \"\(qa)\" failed locale-free Decimal parse — unreachable")
+        }
 
         let exponentDiff = Qa.unit.exponent - targetUnit.exponent
 
@@ -83,7 +91,13 @@ extension ExpressibleByAmount {
 
 /// Unit conversion
 public extension ExpressibleByAmount {
-    static func express(double: Double, in targetUnit: Unit) -> Magnitude {
+    /// Re-expresses `double` (interpreted in this type's unit) as a magnitude in `targetUnit`.
+    /// Uses multiplication or division (never both) to avoid the precision loss of a single
+    /// `pow(10, …)` divide.
+    static func express(
+        double: Double,
+        in targetUnit: Unit
+    ) -> Magnitude {
         let exponentDiff = abs(targetUnit.exponent - unit.exponent)
         let powerFactor = pow(10, Double(exponentDiff))
         // Instead of doing input / pow(10, Double(unit.exponent - Self.unit.exponent))
@@ -98,14 +112,17 @@ public extension ExpressibleByAmount {
         return Magnitude(value)
     }
 
+    /// The amount expressed as ``Zil``.
     var asZil: Zil {
         Zil(qa: qa)
     }
 
+    /// The amount expressed as ``Li``.
     var asLi: Li {
         Li(qa: qa)
     }
 
+    /// The amount expressed as ``Qa``.
     var asQa: Qa {
         Qa(qa: qa)
     }

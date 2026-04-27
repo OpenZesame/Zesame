@@ -27,16 +27,28 @@ import Foundation
 
 // MARK: - CombineCompatible
 
+/// Marker protocol granting a `.combine` projection to reference types.
+///
+/// Conforming a class to ``CombineCompatible`` lets call sites write `service.combine.foo()` to
+/// reach the publisher-flavoured surface without polluting the underlying type with Combine
+/// machinery.
 public protocol CombineCompatible: AnyObject {}
 
 public extension CombineCompatible {
+    /// The Combine projection of this instance.
     var combine: CombineWrapper<Self> {
         CombineWrapper(self)
     }
 }
 
+/// A type-erased namespace that wraps a base instance and hangs publisher-returning methods off
+/// it via conditional conformances.
 public struct CombineWrapper<Base> {
+    /// The underlying value being wrapped.
     public let base: Base
+
+    /// `fileprivate` so that ``CombineWrapper`` instances can only be created via the
+    /// ``CombineCompatible/combine`` projection.
     fileprivate init(_ base: Base) {
         self.base = base
     }
@@ -44,6 +56,8 @@ public struct CombineWrapper<Base> {
 
 // MARK: - ZilliqaServiceReactive conformance
 
+/// When the wrapped value is a ``ZilliqaService``, the Combine projection automatically conforms
+/// to ``ZilliqaServiceReactive``.
 extension CombineWrapper: ZilliqaServiceReactive where Base: ZilliqaService {}
 
 public extension CombineWrapper where Base: ZilliqaService {
@@ -71,7 +85,10 @@ public extension CombineWrapper where Base: ZilliqaService {
         callAsync { try await $0.verifyThat(encryptionPassword: encryptionPassword, canDecryptKeystore: keystore) }
     }
 
-    func createNewWallet(encryptionPassword: String, kdf: KDF = .default) -> AnyPublisher<Wallet, Zesame.Error> {
+    func createNewWallet(
+        encryptionPassword: String,
+        kdf: KDF = .default
+    ) -> AnyPublisher<Wallet, Zesame.Error> {
         callAsync { try await $0.createNewWallet(encryptionPassword: encryptionPassword, kdf: kdf) }
     }
 
@@ -109,11 +126,18 @@ public extension CombineWrapper where Base: ZilliqaService {
         callAsync { try await $0.sendTransaction(for: payment, signWith: keyPair, network: network) }
     }
 
-    private func callAsync<R>(_ asyncCall: @escaping (Base) async throws -> R) -> AnyPublisher<R, Zesame.Error> {
+    /// Bridges an async-throwing call into a `Future`-backed publisher whose failure is normalised
+    /// to ``Zesame/Error``.
+    ///
+    /// Subscriber cancellation propagates to the underlying `Task`, so subscribers tearing down a
+    /// pipeline mid-flight don't leak the in-flight network call.
+    private func callAsync<R>(
+        _ asyncCall: @escaping (Base) async throws -> R
+    ) -> AnyPublisher<R, Zesame.Error> {
         let base = base
         let box = TaskBox()
         return Future<R, Zesame.Error> { promise in
-            box.task = Task {
+            box.set(Task {
                 do {
                     let result = try await asyncCall(base)
                     promise(.success(result))
@@ -122,13 +146,31 @@ public extension CombineWrapper where Base: ZilliqaService {
                 } catch {
                     promise(.failure(.api(.request(error))))
                 }
-            }
+            })
         }
-        .handleEvents(receiveCancel: { box.task?.cancel() })
+        .handleEvents(receiveCancel: { box.cancel() })
         .eraseToAnyPublisher()
     }
 }
 
+/// Reference-typed holder that lets the captured `Future` and its `handleEvents(receiveCancel:)`
+/// closure share access to the same `Task`.
+///
+/// All access to ``task`` is serialised through ``lock`` because Combine doesn't guarantee that
+/// the `Future` factory closure and the `receiveCancel` handler run on the same thread, and the
+/// receive-cancel can fire mid-assignment from a different scheduler. The `@unchecked Sendable`
+/// is honest here only because the lock makes it so.
 final class TaskBox: @unchecked Sendable {
-    var task: Task<Void, Never>?
+    private let lock = NSLock()
+    private var task: Task<Void, Never>?
+
+    /// Stores the in-flight task. Called once, from the `Future` factory closure.
+    func set(_ task: Task<Void, Never>) {
+        lock.withLock { self.task = task }
+    }
+
+    /// Cancels the stored task, if any. Safe to call from any thread.
+    func cancel() {
+        lock.withLock { task?.cancel() }
+    }
 }

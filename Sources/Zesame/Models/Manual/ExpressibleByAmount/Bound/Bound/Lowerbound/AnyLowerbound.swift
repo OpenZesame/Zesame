@@ -24,8 +24,10 @@
 
 import Foundation
 
+/// Type-erased lower-bound check, mirroring ``AnyUpperbound``.
 public struct AnyLowerbound {
     private let _withinBounds: (Any) throws -> Void
+    /// Builds a bound checker for a ``Lowerbound`` type.
     init<L>(_: L.Type) where L: ExpressibleByAmount & Lowerbound {
         _withinBounds = {
             guard let value = $0 as? L.Magnitude else {
@@ -38,12 +40,7 @@ public struct AnyLowerbound {
         }
     }
 
-    init(_: (some ExpressibleByAmount & NoLowerbound).Type) {
-        _withinBounds = { _ in
-            // no lower bound, do not throw, just return
-        }
-    }
-
+    /// Validates `value` against the captured lower bound.
     public func throwErrorIfNotWithinBounds(_ value: Any) throws {
         try _withinBounds(value)
     }

@@ -54,7 +54,7 @@ struct EncodableDictionaryTests {
 struct DataConvertibleTests {
     @Test func hexStringBytesAndAsHex() {
         let hex: HexString = "deadbeef"
-        #expect(hex.bytes == [0xDE, 0xAD, 0xBE, 0xEF])
+        #expect(Array(hex.asData) == [0xDE, 0xAD, 0xBE, 0xEF])
         #expect(hex.asHex == "deadbeef")
     }
 
@@ -62,11 +62,6 @@ struct DataConvertibleTests {
         let bytes: [UInt8] = [0x01, 0x02, 0x03]
         let data = bytes.asData
         #expect(data == Data([0x01, 0x02, 0x03]))
-    }
-
-    @Test func uInt8ArrayAsHex() {
-        let bytes: [UInt8] = [0x0A, 0xB0]
-        #expect(bytes.asHex == "0ab0")
     }
 }
 
@@ -251,21 +246,6 @@ struct HexStringChecksummedTests {
     }
 }
 
-struct DoubleAsStringTests {
-    @Test func noDecimalSeparatorReturnsAsIs() {
-        // String with no decimal separator → returned unchanged
-        let result = Double(1.0).asStringWithoutTrailingZeros
-        #expect(!result.contains("."))
-    }
-
-    @Test func trailingZerosStripped() {
-        // Build a Double that when formatted has trailing zeros.
-        // 1.5 → "1.5" (no trailing zeros, already minimal)
-        let result = Double(1.5).asStringWithoutTrailingZeros
-        #expect(result == "1.5")
-    }
-}
-
 struct UnitConversionTests2 {
     @Test func asZil() throws {
         let amount = try Amount(qa: "1000000000000")
@@ -300,9 +280,20 @@ struct UnitPowerOfTests {
     }
 }
 
-struct IsRunningTestsTests {
-    @Test func isRunningTestsReturnsFalseUnderSwiftTest() {
-        #expect(!isRunningTests)
+struct KDFParamsDefaultUniquenessTests {
+    /// Regression: ``KDFParams.default`` was a `static let`, so every keystore created without
+    /// explicit kdfParams reused one process-wide salt. It's now a computed property — each
+    /// access must produce a freshly-generated salt.
+    @Test func defaultProducesFreshSaltPerAccess() {
+        let a = KDFParams.default
+        let b = KDFParams.default
+        #expect(a.saltHex != b.saltHex)
+    }
+
+    @Test func kdfDefaultParametersForwardsToFreshDefault() {
+        let a = KDF.defaultParameters
+        let b = KDF.defaultParameters
+        #expect(a.saltHex != b.saltHex)
     }
 }
 

@@ -26,23 +26,32 @@ import Foundation
 
 // Found: https://github.com/0xDEADP00L/Bech32/blob/master/Sources/Bech32.swift
 
-/// Bech32 checksum implementation
+/// Bech32 checksum implementation. Used as a namespace; the type itself is uninstantiable.
 public enum Bech32 {}
 
 public extension Bech32 {
+    /// Encodes raw 5-bit-grouped bytes as their Bech32 character form.
     static func dataToString(data: Data) -> String {
         var ret = Data()
         for i in data {
             ret.append(charsetForEncoding[Int(i)])
         }
-        return String(data: ret, encoding: .utf8) ?? ""
+        // The mapped bytes are always ASCII (Bech32 alphabet), so UTF-8 decoding cannot fail.
+        guard let s = String(data: ret, encoding: .utf8) else {
+            preconditionFailure("Bech32 alphabet bytes failed UTF-8 decode — impossible by construction")
+        }
+        return s
     }
 
     /// Decodes a string string into a `Bech32Address`
     static func decode(_ str: String) throws -> Bech32Address {
+        // coverage:exclude-start
+        // Swift `String` is internally Unicode; `data(using: .utf8)` never returns nil for a
+        // regular `String` value. Kept as a defensive guard.
         guard let strBytes = str.data(using: .utf8) else {
             throw DecodingError.nonUTF8String
         }
+        // coverage:exclude-end
         guard strBytes.count <= 90 else {
             throw DecodingError.stringLengthExceeded
         }
@@ -103,7 +112,12 @@ public extension Bech32 {
     }
 
     /// Create checksum
-    static func createChecksum(humanReadablePart: String, values: Data) -> Data {
+    ///
+    /// Computes the 6-symbol Bech32 checksum for the given HRP + value bytes.
+    static func createChecksum(
+        humanReadablePart: String,
+        values: Data
+    ) -> Data {
         var enc = expandHumanReadablePart(humanReadablePart)
         enc.append(values)
         enc.append(Data(repeating: 0x00, count: 6))
@@ -115,14 +129,28 @@ public extension Bech32 {
         return ret
     }
 
-    static func convertbits(data: [UInt8], fromBits: Int, toBits: Int, pad: Bool) throws -> [UInt8] {
+    /// Re-groups `data`'s bits from `fromBits` to `toBits` per element. Bech32 needs `8 → 5` for
+    /// encoding and `5 → 8` for decoding; `pad` controls whether trailing leftover bits are
+    /// padded out to a full chunk.
+    static func convertbits(
+        data: [UInt8],
+        fromBits: Int,
+        toBits: Int,
+        pad: Bool
+    ) throws -> [UInt8] {
         var acc = Int()
         var bits = UInt8()
         let maxv = (1 << toBits) - 1
 
         let converted: [[Int]] = try data.map { value in
             if value < 0 || UInt8(Int(value) >> fromBits) != 0 {
+                // coverage:exclude-start
+                // `value` is `UInt8` so `< 0` is impossible. The shift check `value >> fromBits`
+                // can only be non-zero if the caller passes a value wider than `fromBits` —
+                // which our two call sites (`8 → 5` from raw bytes; `5 → 8` from already-
+                // alphabet-validated values) never do. Defensive guard.
                 throw Bech32.DecodingError.invalidCharacter
+                // coverage:exclude-end
             }
 
             acc = (acc << fromBits) | Int(value)
@@ -141,7 +169,12 @@ public extension Bech32 {
         let padding = pad && bits > UInt8() ? [acc << (toBits - Int(bits)) & maxv] : []
 
         if !pad, bits >= UInt8(fromBits) || acc << (toBits - Int(bits)) & maxv > Int() {
+            // coverage:exclude-start
+            // Triggered only with `pad: false` AND leftover bits after the regrouping. Both
+            // call sites here (20-byte payload `8 → 5` and 32-symbol payload `5 → 8`) divide
+            // evenly, so no leftover bits ever appear. Defensive guard.
             throw Bech32.DecodingError.invalidCase
+            // coverage:exclude-end
         }
 
         return ((converted.flatMap(\.self)) + padding).map { UInt8($0) }
@@ -151,6 +184,7 @@ public extension Bech32 {
 public extension Bech32 {
     /// Bech32 checksum delimiter
     static let checksumMarker = "1"
+    /// Bech32 alphabet (32 characters, in the canonical order specified by BIP-173).
     static let alphabetString = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
 }
 
@@ -201,7 +235,10 @@ private extension Bech32 {
     }
 
     /// Verify checksum
-    static func verifyChecksum(humanReadablePart: String, checksum: Data) -> Bool {
+    static func verifyChecksum(
+        humanReadablePart: String,
+        checksum: Data
+    ) -> Bool {
         var data = expandHumanReadablePart(humanReadablePart)
         data.append(checksum)
         return polymod(data) == 1
@@ -209,18 +246,30 @@ private extension Bech32 {
 }
 
 public extension Bech32 {
+    /// Failures that can be reported by ``Bech32/decode(_:)``. Cases are grouped roughly by
+    /// "shape" failures (length/charset/case) versus "checksum failed".
     enum DecodingError: LocalizedError {
+        /// The input bytes are not valid UTF-8.
         case nonUTF8String
+        /// One of the bytes lies outside the printable ASCII range.
         case nonPrintableCharacter
+        /// The string mixes upper and lower case (Bech32 forbids this).
         case invalidCase
+        /// The checksum delimiter (`1`) was not found.
         case noChecksumMarker
+        /// The human-readable prefix is empty.
         case incorrectHumanReadablePartSize
+        /// The checksum portion is shorter than 6 characters.
         case incorrectChecksumSize
+        /// The input is longer than the 90-character Bech32 limit.
         case stringLengthExceeded
 
+        /// A character outside the Bech32 alphabet was encountered.
         case invalidCharacter
+        /// The checksum failed to verify.
         case checksumMismatch
 
+        /// Human-readable description for `LocalizedError` consumers.
         public var errorDescription: String? {
             switch self {
             case .checksumMismatch:

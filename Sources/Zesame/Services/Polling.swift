@@ -24,19 +24,57 @@
 
 import Foundation
 
+/// Describes how aggressively to poll for a transaction receipt.
+///
+/// A `Polling` value bounds *how many* attempts are made (``count``), *how long to wait* before
+/// the first attempt (``initialDelay``), and *how the wait grows* between attempts (``backoff``).
 public struct Polling {
+    /// Maximum number of poll attempts.
     public let count: Count
+    /// How the wait between successive polls grows.
     public let backoff: Backoff
+    /// Wait before the first poll attempt.
     public let initialDelay: Delay
 
-    public init(_ count: Count, backoff: Backoff, initialDelay: Delay) {
+    /// Designated initialiser. Uses the bounded ``Count``/``Delay`` value types for type-safe
+    /// defaults; for arbitrary intervals use
+    /// ``init(attempts:initialDelaySeconds:linearBackoffSeconds:)``.
+    public init(
+        _ count: Count,
+        backoff: Backoff,
+        initialDelay: Delay
+    ) {
         self.count = count
         self.backoff = backoff
         self.initialDelay = initialDelay
     }
+
+    /// Free-form initialiser accepting arbitrary attempt counts and waits in whole seconds.
+    /// Internally maps onto a synthetic `Count`/`Delay` whose `rawValue` is the supplied integer.
+    /// Use this when the named ``Count``/``Delay`` constants don't cover your desired schedule.
+    ///
+    /// - Parameters:
+    ///   - attempts: Total number of attempts; must be `>= 1`.
+    ///   - initialDelaySeconds: Seconds to wait before the first poll; must be `>= 0`.
+    ///   - linearBackoffSeconds: Seconds to add between consecutive attempts (linear back-off);
+    ///     must be `>= 0`.
+    public init(
+        attempts: Int,
+        initialDelaySeconds: Int,
+        linearBackoffSeconds: Int
+    ) {
+        precondition(attempts >= 1, "Polling.attempts must be >= 1, got \(attempts)")
+        precondition(initialDelaySeconds >= 0, "initialDelaySeconds must be >= 0, got \(initialDelaySeconds)")
+        precondition(linearBackoffSeconds >= 0, "linearBackoffSeconds must be >= 0, got \(linearBackoffSeconds)")
+        count = Count(rawSeconds: attempts)
+        initialDelay = Delay(rawSeconds: initialDelaySeconds)
+        backoff = .linearIncrement(of: Delay(rawSeconds: linearBackoffSeconds))
+    }
 }
 
 public extension Polling {
+    /// A pragmatic default: 20 attempts, +2 s of linear back-off, with a 1 s warm-up. The total
+    /// budget is roughly 7 minutes, which comfortably covers a single Zilliqa epoch.
     static var twentyTimesLinearBackoff: Polling {
         Polling(
             .twentyTimes,
@@ -45,31 +83,61 @@ public extension Polling {
         )
     }
 
+    /// How the per-attempt wait grows between polls.
     enum Backoff {
+        /// Each attempt waits an additional fixed ``Delay`` longer than the previous one.
         case linearIncrement(of: Delay)
     }
 
-    enum Delay: Int {
-        case oneSecond = 1
-        case twoSeconds = 2
-        case threeSeconds = 3
-        case fiveSeconds = 5
-        case sevenSeconds = 7
-        case tenSeconds = 10
-        case twentySeconds = 20
+    /// A wait duration, in whole seconds. The named statics cover the common schedules; use
+    /// ``init(rawSeconds:)`` for arbitrary intervals. Negative values are rejected — pollers
+    /// pass `Delay.rawValue` straight to `Task.sleep`, which would otherwise interpret a negative
+    /// value as zero and silently disable back-off.
+    struct Delay: Equatable {
+        /// The wait, in seconds.
+        public let rawValue: Int
+
+        /// Wraps a non-negative integer as a `Delay`. Prefer the named statics
+        /// (``oneSecond``, ``twoSeconds``, …) where they fit. Traps on negative input.
+        public init(rawSeconds seconds: Int) {
+            precondition(seconds >= 0, "Polling.Delay rawSeconds must be >= 0, got \(seconds)")
+            rawValue = seconds
+        }
+
+        public static let oneSecond = Delay(rawSeconds: 1)
+        public static let twoSeconds = Delay(rawSeconds: 2)
+        public static let threeSeconds = Delay(rawSeconds: 3)
+        public static let fiveSeconds = Delay(rawSeconds: 5)
+        public static let sevenSeconds = Delay(rawSeconds: 7)
+        public static let tenSeconds = Delay(rawSeconds: 10)
+        public static let twentySeconds = Delay(rawSeconds: 20)
     }
 
-    enum Count: Int {
-        case once = 1
-        case twice = 2
-        case threeTimes = 3
-        case fiveTimes = 5
-        case tenTimes = 10
-        case twentyTimes = 20
+    /// An attempt count. The named statics cover common schedules; use ``init(rawSeconds:)`` for
+    /// arbitrary counts. (The label `rawSeconds` is reused for symmetry with ``Delay``; it's
+    /// just a wrapped `Int`.) Values < 1 are rejected — a polling schedule with zero attempts
+    /// would loop forever or terminate immediately, neither of which is useful.
+    struct Count: Equatable {
+        /// Total attempts.
+        public let rawValue: Int
+
+        /// Wraps a positive integer as a `Count`. Traps on input below 1.
+        public init(rawSeconds value: Int) {
+            precondition(value >= 1, "Polling.Count rawSeconds must be >= 1, got \(value)")
+            rawValue = value
+        }
+
+        public static let once = Count(rawSeconds: 1)
+        public static let twice = Count(rawSeconds: 2)
+        public static let threeTimes = Count(rawSeconds: 3)
+        public static let fiveTimes = Count(rawSeconds: 5)
+        public static let tenTimes = Count(rawSeconds: 10)
+        public static let twentyTimes = Count(rawSeconds: 20)
     }
 }
 
 extension Polling.Backoff {
+    /// Applies the back-off function to the previous wait, returning the next wait in seconds.
     func add(to delayInSeconds: Int) -> Int {
         switch self {
         case let .linearIncrement(delayIncrement):

@@ -24,6 +24,12 @@
 
 import Foundation
 
+/// Marker protocol for amount types that have no lower bound. The non-throwing `-` operator is
+/// part of the contract — subtraction can't fail because there's nothing to validate against.
 public protocol NoLowerbound {
-    static func - (lhs: Self, rhs: Self) -> Self
+    /// Non-throwing subtraction (no lower bound to violate).
+    static func - (
+        lhs: Self,
+        rhs: Self
+    ) -> Self
 }

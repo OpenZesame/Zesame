@@ -25,6 +25,7 @@
 import Foundation
 
 public extension Wallet {
+    /// Decrypts the wrapped keystore and returns the contained ``KeyPair``.
     func decrypt(password: String) throws -> KeyPair {
         try keystore.toKeypair(encryptedBy: password)
     }

@@ -24,11 +24,35 @@
 
 import Foundation
 
+/// Result body of `GetTransaction`. Used during polling to determine whether a transaction has
+/// reached consensus.
 public struct StatusOfTransactionResponse: Decodable {
+    /// The receipt portion that callers actually inspect.
     public struct Receipt {
+        /// Total gas consumed by the transaction (in Zil).
         public let totalGasCost: Amount
+        /// `true` once the network has accepted the transaction.
         public let isSent: Bool
+        /// Validator-reported errors keyed by shard. Non-empty means the transaction was
+        /// permanently rejected — pollers should stop and surface the failure.
+        public let errors: [String: [Int]]
+        /// Scilla VM exceptions keyed by shard. Non-empty means contract execution failed.
+        public let exceptions: [TransactionException]
     }
 
+    /// Receipt populated by the node when the transaction has been processed.
     public let receipt: Receipt
+
+    /// Single Scilla exception entry from the receipt's `exceptions` array.
+    public struct TransactionException: Decodable, Equatable {
+        /// Source-line of the exception in the contract code.
+        public let line: Int?
+        /// Human-readable exception message.
+        public let message: String
+
+        /// JSON wire keys.
+        public enum CodingKeys: String, CodingKey {
+            case line, message
+        }
+    }
 }

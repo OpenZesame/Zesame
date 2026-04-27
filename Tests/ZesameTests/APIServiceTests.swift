@@ -8,11 +8,13 @@ import Testing
 private enum APITestError: Swift.Error { case typeMismatch }
 
 private struct MockAPIClient: APIClient {
-    let handler: @Sendable (RPCMethod) async throws -> any Decodable
+    /// Handler is keyed on the wire-level method name; it returns a type-erased decoded value
+    /// that ``send(method:)`` then downcasts to the call site's expected `Response`.
+    let handler: @Sendable (String) async throws -> any Decodable
 
-    func send<T: Decodable>(method: RPCMethod) async throws -> T {
-        let result = try await handler(method)
-        guard let typed = result as? T else {
+    func send<Response: Decodable>(method: RPCMethod<Response>) async throws -> Response {
+        let result = try await handler(method.name)
+        guard let typed = result as? Response else {
             throw Zesame.Error.api(.request(APITestError.typeMismatch))
         }
         return typed
@@ -20,7 +22,7 @@ private struct MockAPIClient: APIClient {
 }
 
 private func makeService(
-    handler: @escaping @Sendable (RPCMethod) async throws -> any Decodable
+    handler: @escaping @Sendable (String) async throws -> any Decodable
 ) -> DefaultZilliqaService {
     DefaultZilliqaService(apiClient: MockAPIClient(handler: handler))
 }

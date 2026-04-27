@@ -24,17 +24,45 @@
 
 import Foundation
 
+/// `URLSession`-backed implementation of ``APIClient``. POSTs JSON-RPC envelopes to ``baseURL``.
 public final class DefaultAPIClient: APIClient {
+    /// Default per-request timeout (30 s) — overrides the `URLSession` default of 60 s, which is
+    /// too long for an interactive wallet UI.
+    public static let defaultRequestTimeout: TimeInterval = 30
+
+    /// Default whole-resource timeout (60 s) — overrides the `URLSession` default of 7 days.
+    public static let defaultResourceTimeout: TimeInterval = 60
+
     private let session: URLSession
+    /// The JSON-RPC endpoint URL all requests are POSTed to.
     public let baseURL: URL
 
-    public init(baseURL: URL) {
+    /// Creates a client that targets `baseURL` using a `URLSession` configured with the supplied
+    /// timeouts. The defaults bound interactive UI hangs.
+    public convenience init(
+        baseURL: URL,
+        requestTimeout: TimeInterval = DefaultAPIClient.defaultRequestTimeout,
+        resourceTimeout: TimeInterval = DefaultAPIClient.defaultResourceTimeout
+    ) {
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = requestTimeout
+        config.timeoutIntervalForResource = resourceTimeout
+        self.init(baseURL: baseURL, session: URLSession(configuration: config))
+    }
+
+    /// Designated initialiser for tests / advanced callers that need to inject a custom
+    /// `URLSession` (e.g. one with stubbed `URLProtocol` classes).
+    public init(
+        baseURL: URL,
+        session: URLSession
+    ) {
         self.baseURL = baseURL
-        session = URLSession(configuration: .default)
+        self.session = session
     }
 }
 
 public extension DefaultAPIClient {
+    /// Convenience initialiser that pulls the URL out of a known ``ZilliqaAPIEndpoint``.
     convenience init(endpoint: ZilliqaAPIEndpoint) {
         self.init(baseURL: endpoint.baseURL)
     }
@@ -43,9 +71,16 @@ public extension DefaultAPIClient {
 // MARK: - APIClient
 
 public extension DefaultAPIClient {
+    /// HTTP-level failures that don't reach the JSON-RPC body decoder.
     enum HTTPError: Swift.Error, CustomStringConvertible {
+        /// The response status code was outside `200..<300`.
+        ///
+        /// - Parameters:
+        ///   - code: The HTTP status returned by the server.
+        ///   - body: The raw response body (helpful when the node returns a plain-text 5xx page).
         case unacceptableStatusCode(code: Int, body: Data)
 
+        /// Human-readable rendering, including the response body when UTF-8 decodable.
         public var description: String {
             switch self {
             case let .unacceptableStatusCode(code, body):
@@ -55,17 +90,20 @@ public extension DefaultAPIClient {
         }
     }
 
-    func send<T: Decodable>(method: RPCMethod) async throws -> T {
-        let rpcRequest = RPCRequest(method: method)
+    /// POSTs the encoded ``RPCMethod`` to ``baseURL``, validates the HTTP status, and decodes the
+    /// result as the method's bound ``RPCMethod/Response`` type. All failures are normalised to
+    /// ``Zesame/Error/api(_:)``.
+    func send<Response: Decodable>(method: RPCMethod<Response>) async throws -> Response {
+        let rpcRequest = RPCRequest(method)
         do {
-            let urlRequest = try rpcRequest.asURLRequest(baseURL: baseURL)
+            let urlRequest = try Self.urlRequest(for: rpcRequest, baseURL: baseURL)
             let (data, response) = try await session.data(for: urlRequest)
             if let http = response as? HTTPURLResponse, !(200 ..< 300).contains(http.statusCode) {
                 throw Zesame.Error.api(.request(
                     HTTPError.unacceptableStatusCode(code: http.statusCode, body: data)
                 ))
             }
-            let rpcResponse = try JSONDecoder().decode(RPCResponse<T>.self, from: data)
+            let rpcResponse = try JSONDecoder().decode(RPCResponse<Response>.self, from: data)
             switch rpcResponse {
             case let .rpcError(rpcError):
                 throw Zesame.Error.api(.request(rpcError))
@@ -77,5 +115,19 @@ public extension DefaultAPIClient {
         } catch {
             throw Zesame.Error.api(.request(error))
         }
+    }
+
+    /// Renders an ``RPCRequest`` as a `POST` `URLRequest` with a JSON body and the standard
+    /// `application/json` content type. Internal helper kept on the client to keep the JSON-RPC
+    /// envelope transport-agnostic.
+    private static func urlRequest(
+        for rpcRequest: RPCRequest,
+        baseURL: URL
+    ) throws -> URLRequest {
+        var urlRequest = URLRequest(url: baseURL)
+        urlRequest.httpMethod = "POST"
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpBody = try JSONEncoder().encode(rpcRequest)
+        return urlRequest
     }
 }

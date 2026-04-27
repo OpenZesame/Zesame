@@ -25,11 +25,17 @@
 import BigInt
 import Foundation
 
+/// Zilliqa's `Qa` unit — the smallest indivisible unit (10⁻¹² Zil). Used everywhere internally as
+/// the canonical magnitude.
 public struct Qa: ExpressibleByAmount, Unbound {
+    /// Underlying big-integer magnitude.
     public typealias Magnitude = BigInt
+    /// Canonical unit — Qa.
     public static let unit: Unit = .qa
+    /// Value in Qa (here equal to the magnitude itself).
     public let qa: Magnitude
 
+    /// Wraps a Qa-denominated magnitude.
     public init(qa: Magnitude) {
         self.qa = qa
     }

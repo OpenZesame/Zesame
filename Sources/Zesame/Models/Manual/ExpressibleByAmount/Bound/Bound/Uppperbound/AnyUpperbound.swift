@@ -24,8 +24,11 @@
 
 import Foundation
 
+/// Type-erased upper-bound check. Captures the bounded type's ``Upperbound/maxInQa`` in a closure
+/// so callers can validate magnitudes without making the surrounding type generic.
 public struct AnyUpperbound {
     private let _withinBounds: (Any) throws -> Void
+    /// Builds a bound checker for an ``Upperbound`` type.
     init<L>(_: L.Type) where L: ExpressibleByAmount & Upperbound {
         _withinBounds = {
             guard let value = $0 as? L.Magnitude else {
@@ -38,12 +41,7 @@ public struct AnyUpperbound {
         }
     }
 
-    init(_: (some ExpressibleByAmount & NoUpperbound).Type) {
-        _withinBounds = { _ in
-            // no upper bound, do not throw, just return
-        }
-    }
-
+    /// Validates `value` against the captured upper bound.
     public func throwErrorIfNotWithinBounds(_ value: Any) throws {
         try _withinBounds(value)
     }

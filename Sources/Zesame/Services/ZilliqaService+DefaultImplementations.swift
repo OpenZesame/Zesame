@@ -24,12 +24,12 @@
 
 import Foundation
 
-var isRunningTests: Bool {
-    ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-}
-
 public extension ZilliqaService {
-    func verifyThat(encryptionPassword: String, canDecryptKeystore keystore: Keystore) async throws -> Bool {
+    /// Default verification: attempts a full keystore decrypt and reports success/failure.
+    func verifyThat(
+        encryptionPassword: String,
+        canDecryptKeystore keystore: Keystore
+    ) async throws -> Bool {
         do {
             _ = try keystore.decryptPrivateKey(encryptedBy: encryptionPassword)
             return true
@@ -38,26 +38,49 @@ public extension ZilliqaService {
         }
     }
 
-    func createNewWallet(encryptionPassword: String, kdf: KDF = .default) async throws -> Wallet {
+    /// Generates a fresh secp256k1 ``PrivateKey`` and immediately wraps it in a keystore.
+    func createNewWallet(
+        encryptionPassword: String,
+        kdf: KDF = .default
+    ) async throws -> Wallet {
         let privateKey = PrivateKey()
         return try await restoreWallet(from: .privateKey(privateKey, encryptBy: encryptionPassword, kdf: kdf))
     }
 
+    /// Default implementation of the protocol requirement: re-encrypts non-default-KDF keystores
+    /// to the default KDF. Forwards to ``restoreWallet(from:reencryptToDefaultKDF:)`` with
+    /// `reencryptToDefaultKDF: true`.
     func restoreWallet(from restoration: KeyRestoration) async throws -> Wallet {
+        try await restoreWallet(from: restoration, reencryptToDefaultKDF: true)
+    }
+
+    /// Materialises a wallet from a ``KeyRestoration``.
+    ///
+    /// For the `.keystore` case the supplied password is used to **validate** that the keystore
+    /// is decryptable — propagating ``Zesame/Error/walletImport(_:)`` (`.incorrectPassword`)
+    /// when it isn't, rather than silently returning an unusable wallet.
+    ///
+    /// `reencryptToDefaultKDF` is reserved for forward-compatibility: when a second `KDF` case
+    /// is introduced, an imported keystore using the non-default variant will be transparently
+    /// re-encrypted with the default. With only `.pbkdf2` in the enum today the flag has no
+    /// observable effect on the returned wallet, but validation always runs.
+    func restoreWallet(
+        from restoration: KeyRestoration,
+        reencryptToDefaultKDF _: Bool
+    ) async throws -> Wallet {
         switch restoration {
         case let .keystore(keystore, password):
-            let privateKey = try keystore.decryptPrivateKey(encryptedBy: password)
-            if keystore.crypto.kdf == KDF.default || isRunningTests {
-                return Wallet(keystore: keystore)
-            } else {
-                return try await restoreWallet(from: .privateKey(privateKey, encryptBy: password, kdf: .default))
-            }
+            // Decrypt once to confirm the password unlocks the keystore. Throws on mismatch;
+            // the result is intentionally discarded — only the keystore is exposed externally.
+            _ = try keystore.decryptPrivateKey(encryptedBy: password)
+            return Wallet(keystore: keystore)
         case let .privateKey(privateKey, newPassword, kdf):
             let keystore = try Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf)
             return Wallet(keystore: keystore)
         }
     }
 
+    /// Encrypts `privateKey` into a fresh ``Keystore`` using `password` and `kdf`.
     func exportKeystore(
         privateKey: PrivateKey,
         encryptWalletBy password: String,

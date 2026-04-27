@@ -25,6 +25,11 @@
 import Foundation
 
 extension Encodable {
+    /// Round-trips the value through `JSONEncoder` / `JSONSerialization` to produce a loosely-typed
+    /// dictionary suitable for JSON-RPC `params` payloads.
+    ///
+    /// - Throws: `EncodingError.invalidValue` if the value's JSON representation is not a top-level
+    ///   object, or any error from `JSONEncoder`.
     func asDictionary() throws -> [String: Any] {
         let data = try JSONEncoder().encode(self)
         guard let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]

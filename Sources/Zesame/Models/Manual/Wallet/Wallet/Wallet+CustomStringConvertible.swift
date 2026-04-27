@@ -26,6 +26,8 @@ import Foundation
 
 extension Wallet: CustomStringConvertible {}
 public extension Wallet {
+    /// Renders only the address — the keystore body is intentionally omitted to avoid leaking
+    /// encrypted material into log lines.
     var description: String {
         "Wallet(address: '\(address)')"
     }

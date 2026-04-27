@@ -25,11 +25,17 @@
 import BigInt
 import Foundation
 
+/// Zilliqa's display unit — 1 Zil = 10⁶ Li = 10¹² Qa. Unbounded; ``Amount`` is the bounded
+/// counterpart used for amounts that must respect total supply.
 public struct Zil: ExpressibleByAmount, Unbound {
+    /// Underlying big-integer magnitude.
     public typealias Magnitude = BigInt
+    /// Canonical unit — Zil.
     public static let unit: Unit = .zil
+    /// Value in Qa.
     public let qa: Magnitude
 
+    /// Wraps a Qa-denominated magnitude.
     public init(qa: Magnitude) {
         self.qa = qa
     }

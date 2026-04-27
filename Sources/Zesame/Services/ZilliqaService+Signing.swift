@@ -26,6 +26,7 @@ import CryptoKit
 import Foundation
 
 public extension ZilliqaService {
+    /// Decrypts the keystore with `password`, then signs and broadcasts the payment.
     func sendTransaction(
         for payment: Payment,
         keystore: Keystore,
@@ -36,6 +37,7 @@ public extension ZilliqaService {
         return try await sendTransaction(for: payment, signWith: keyPair, network: network)
     }
 
+    /// Signs `payment` with `keyPair` and broadcasts the resulting transaction.
     func sendTransaction(
         for payment: Payment,
         signWith keyPair: KeyPair,
@@ -44,6 +46,11 @@ public extension ZilliqaService {
         try await send(transaction: sign(payment: payment, using: keyPair, network: network))
     }
 
+    /// Builds the canonical protobuf message for `payment`, signs its SHA-256 digest with the
+    /// private key, and returns a ``SignedTransaction`` ready for broadcast.
+    ///
+    /// The function asserts that the produced signature verifies against the public key — a
+    /// programmer-error tripwire, not a runtime check.
     func sign(
         payment: Payment,
         using keyPair: KeyPair,
@@ -62,7 +69,11 @@ public extension ZilliqaService {
         return SignedTransaction(transaction: transaction, signedBy: keyPair.publicKey, signature: signature)
     }
 
-    func sign(message: Data, using keyPair: KeyPair) throws -> Signature {
+    /// Signs an arbitrary message digest with the key pair's private key (Schnorr over secp256k1).
+    func sign(
+        message: Data,
+        using keyPair: KeyPair
+    ) throws -> Signature {
         try keyPair.privateKey.signature(for: message)
     }
 }

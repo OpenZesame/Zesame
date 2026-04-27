@@ -24,12 +24,22 @@
 
 import Foundation
 
+/// Short alias for ``KeyDerivationFunction`` used throughout the public API.
 public typealias KDF = KeyDerivationFunction
+
+/// Supported key-derivation functions. PBKDF2 (HMAC-SHA512) is currently the only option; the
+/// enum exists so future KDFs (Argon2, scrypt) can be added without API breakage.
 public enum KeyDerivationFunction: String, Codable, Hashable {
+    /// The default KDF (PBKDF2-HMAC-SHA512).
     public static let `default`: KDF = .pbkdf2
+    /// PBKDF2-HMAC-SHA512.
     case pbkdf2
 }
 
 public extension KDF {
-    static let defaultParameters: KDFParams = .default
+    /// Default ``KDFParams`` (OWASP-recommended iteration count, fresh random salt). Computed
+    /// per-call so each keystore gets a unique salt — see ``KDFParams/default``.
+    static var defaultParameters: KDFParams {
+        .default
+    }
 }
