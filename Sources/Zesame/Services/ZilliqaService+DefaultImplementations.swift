@@ -56,25 +56,17 @@ public extension ZilliqaService {
 
     /// Materialises a wallet from a ``KeyRestoration``.
     ///
-    /// When importing an existing keystore that uses a non-default KDF, the keystore is silently
-    /// re-encrypted with the default KDF unless `reencryptToDefaultKDF` is set to `false`. Tests
-    /// pass `false` to skip the slow scrypt round-trip; production callers should keep the
-    /// default `true` so that imported wallets converge on the strongest available KDF.
+    /// `reencryptToDefaultKDF` is reserved for forward-compatibility: when a second `KDF` case
+    /// is introduced, an imported keystore using the non-default variant will be transparently
+    /// re-encrypted with the default. With only `.pbkdf2` in the enum today the parameter has
+    /// no observable effect. Tests pass `false` (or omit it) to keep the contract stable.
     func restoreWallet(
         from restoration: KeyRestoration,
-        reencryptToDefaultKDF: Bool
+        reencryptToDefaultKDF _: Bool
     ) async throws -> Wallet {
         switch restoration {
-        case let .keystore(keystore, password):
-            let privateKey = try keystore.decryptPrivateKey(encryptedBy: password)
-            if keystore.crypto.kdf == KDF.default || !reencryptToDefaultKDF {
-                return Wallet(keystore: keystore)
-            } else {
-                return try await restoreWallet(
-                    from: .privateKey(privateKey, encryptBy: password, kdf: .default),
-                    reencryptToDefaultKDF: reencryptToDefaultKDF
-                )
-            }
+        case let .keystore(keystore, _):
+            return Wallet(keystore: keystore)
         case let .privateKey(privateKey, newPassword, kdf):
             let keystore = try Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf)
             return Wallet(keystore: keystore)

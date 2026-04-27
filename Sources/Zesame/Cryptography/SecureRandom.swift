@@ -25,6 +25,20 @@
 import Foundation
 import Security
 
+/// Closure shape for a CSPRNG byte filler. Mirrors `SecRandomCopyBytes`'s contract: writes
+/// `count` bytes into `bytes` and returns an OSStatus. Tests inject a failing variant to
+/// exercise the error path; production keeps the default ``defaultRandomBytesProvider``.
+typealias RandomBytesProvider = (
+    _ count: Int,
+    _ bytes: UnsafeMutablePointer<UInt8>
+) -> Int32
+
+/// Default provider — calls `SecRandomCopyBytes` against the platform CSPRNG. On Apple
+/// platforms with valid arguments this never fails in practice.
+let defaultRandomBytesProvider: RandomBytesProvider = { count, bytes in
+    SecRandomCopyBytes(kSecRandomDefault, count, bytes)
+}
+
 /// Generates `count` cryptographically-secure random bytes using the platform CSPRNG
 /// (`SecRandomCopyBytes`).
 ///
@@ -32,10 +46,16 @@ import Security
 /// the `Zesame.SecureRandom` domain (with the OSStatus code) if the underlying call fails — which
 /// in practice indicates a serious system fault, not a recoverable error.
 ///
-/// - Parameter count: Number of random bytes to produce.
-func securelyGenerateBytes(count: Int) throws -> Data {
+/// - Parameters:
+///   - count: Number of random bytes to produce.
+///   - provider: Override the byte source. Tests pass a failing closure to exercise the
+///     error branch; production code should leave this at its default.
+func securelyGenerateBytes(
+    count: Int,
+    provider: RandomBytesProvider = defaultRandomBytesProvider
+) throws -> Data {
     var bytes = [UInt8](repeating: 0, count: count)
-    let status = SecRandomCopyBytes(kSecRandomDefault, count, &bytes)
+    let status = provider(count, &bytes)
     guard status == errSecSuccess else {
         throw NSError(domain: "Zesame.SecureRandom", code: Int(status))
     }

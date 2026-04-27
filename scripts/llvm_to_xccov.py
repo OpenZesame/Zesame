@@ -19,17 +19,38 @@ import sys
 
 TRAP_PATTERNS = re.compile(r"^(\s*)(?:.*?\b)?(fatalError|preconditionFailure|precondition)\s*\(")
 
+# Region-style markers for genuinely unreachable code that isn't a trap call (e.g. defensive
+# branches kept for forward-compatibility). Place `// coverage:exclude-start` and
+# `// coverage:exclude-end` on lines flanking the block to skip from the metric.
+EXCLUDE_START_MARKER = re.compile(r"//\s*coverage:exclude-start\b")
+EXCLUDE_END_MARKER = re.compile(r"//\s*coverage:exclude-end\b")
+
 
 def trap_line_numbers(filepath: str) -> set:
     """Return 1-indexed line numbers covering trap calls, including continuation lines of
     multi-line invocations and trailing closing braces of the enclosing block when those braces
-    can't be reached without first executing the trap."""
+    can't be reached without first executing the trap. Also honours
+    `// coverage:exclude-start` / `// coverage:exclude-end` region markers."""
     if not os.path.exists(filepath):
         return set()
     with open(filepath) as fh:
         lines = fh.readlines()
 
     traps: set[int] = set()
+
+    # Region-style exclusions first.
+    in_region = False
+    for idx, line in enumerate(lines):
+        if EXCLUDE_START_MARKER.search(line):
+            in_region = True
+            traps.add(idx + 1)
+            continue
+        if EXCLUDE_END_MARKER.search(line):
+            in_region = False
+            traps.add(idx + 1)
+            continue
+        if in_region:
+            traps.add(idx + 1)
     i = 0
     while i < len(lines):
         match = TRAP_PATTERNS.match(lines[i])

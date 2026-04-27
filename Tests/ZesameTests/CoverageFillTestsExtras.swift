@@ -357,6 +357,22 @@ struct Bech32AddressStringLiteralTests {
     }
 }
 
+// MARK: - SecureRandom failure path via injected provider
+
+struct SecureRandomFailureTests {
+    @Test func failingProviderSurfacesNSError() {
+        let failingProvider: RandomBytesProvider = { _, _ in -50 } // errSecParam
+        #expect(throws: NSError.self) {
+            _ = try securelyGenerateBytes(count: 32, provider: failingProvider)
+        }
+    }
+
+    @Test func defaultProviderSucceeds() throws {
+        let bytes = try securelyGenerateBytes(count: 16)
+        #expect(bytes.count == 16)
+    }
+}
+
 // MARK: - Combine + ZilliqaService non-Zesame error wrapping
 
 private struct ThrowingPBKDF2Error: Swift.Error {}
