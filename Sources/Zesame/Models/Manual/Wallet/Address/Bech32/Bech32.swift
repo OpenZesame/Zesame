@@ -45,9 +45,13 @@ public extension Bech32 {
 
     /// Decodes a string string into a `Bech32Address`
     static func decode(_ str: String) throws -> Bech32Address {
+        // coverage:exclude-start
+        // Swift `String` is internally Unicode; `data(using: .utf8)` never returns nil for a
+        // regular `String` value. Kept as a defensive guard.
         guard let strBytes = str.data(using: .utf8) else {
             throw DecodingError.nonUTF8String
         }
+        // coverage:exclude-end
         guard strBytes.count <= 90 else {
             throw DecodingError.stringLengthExceeded
         }
@@ -140,7 +144,13 @@ public extension Bech32 {
 
         let converted: [[Int]] = try data.map { value in
             if value < 0 || UInt8(Int(value) >> fromBits) != 0 {
+                // coverage:exclude-start
+                // `value` is `UInt8` so `< 0` is impossible. The shift check `value >> fromBits`
+                // can only be non-zero if the caller passes a value wider than `fromBits` —
+                // which our two call sites (`8 → 5` from raw bytes; `5 → 8` from already-
+                // alphabet-validated values) never do. Defensive guard.
                 throw Bech32.DecodingError.invalidCharacter
+                // coverage:exclude-end
             }
 
             acc = (acc << fromBits) | Int(value)
@@ -159,7 +169,12 @@ public extension Bech32 {
         let padding = pad && bits > UInt8() ? [acc << (toBits - Int(bits)) & maxv] : []
 
         if !pad, bits >= UInt8(fromBits) || acc << (toBits - Int(bits)) & maxv > Int() {
+            // coverage:exclude-start
+            // Triggered only with `pad: false` AND leftover bits after the regrouping. Both
+            // call sites here (20-byte payload `8 → 5` and 32-symbol payload `5 → 8`) divide
+            // evenly, so no leftover bits ever appear. Defensive guard.
             throw Bech32.DecodingError.invalidCase
+            // coverage:exclude-end
         }
 
         return ((converted.flatMap(\.self)) + padding).map { UInt8($0) }

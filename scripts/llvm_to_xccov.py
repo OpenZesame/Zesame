@@ -28,9 +28,11 @@ EXCLUDE_END_MARKER = re.compile(r"//\s*coverage:exclude-end\b")
 
 def trap_line_numbers(filepath: str) -> set:
     """Return 1-indexed line numbers covering trap calls, including continuation lines of
-    multi-line invocations and trailing closing braces of the enclosing block when those braces
-    can't be reached without first executing the trap. Also honours
-    `// coverage:exclude-start` / `// coverage:exclude-end` region markers."""
+    multi-line invocations. Honours `// coverage:exclude-start` / `// coverage:exclude-end`
+    region markers.
+
+    Does NOT include surrounding control-flow lines (`else {`, closing `}`) — those are
+    structurally reachable on the success path and confuse line-coverage accounting."""
     if not os.path.exists(filepath):
         return set()
     with open(filepath) as fh:
@@ -38,7 +40,6 @@ def trap_line_numbers(filepath: str) -> set:
 
     traps: set[int] = set()
 
-    # Region-style exclusions first.
     in_region = False
     for idx, line in enumerate(lines):
         if EXCLUDE_START_MARKER.search(line):
@@ -51,6 +52,7 @@ def trap_line_numbers(filepath: str) -> set:
             continue
         if in_region:
             traps.add(idx + 1)
+
     i = 0
     while i < len(lines):
         match = TRAP_PATTERNS.match(lines[i])
@@ -59,13 +61,14 @@ def trap_line_numbers(filepath: str) -> set:
             continue
         indent = match.group(1)
         traps.add(i + 1)
-        # If the immediately preceding line opens a control flow that exists only to enter this
-        # trap (e.g. `} else {`, `guard ... else {`), mark that line too.
+        # llvm-cov places the region-entry segment for `else { TRAP }` on the line where the
+        # `else {` opens, not on the trap call itself. The line's only segment has count 0 on
+        # the success path, so it shows as uncovered even though the `else` keyword itself is
+        # reached. Treat the opening line as part of the trap region.
         if i > 0:
             prev_stripped = lines[i - 1].rstrip()
             if prev_stripped.endswith("else {") or prev_stripped.endswith("} else {"):
                 traps.add(i)
-        # If the call closes on the same line, we're done with the call itself.
         if lines[i].rstrip().endswith(")"):
             j = i
         else:
@@ -78,9 +81,8 @@ def trap_line_numbers(filepath: str) -> set:
                 if stripped.startswith(")") and lines[j].startswith(indent + ")"):
                     break
                 j += 1
-
-        # Now sweep trailing closing braces — `}` lines at outer indents — that follow the trap
-        # without intervening executable code. Stop at the first non-`}` non-blank line.
+        # Trailing `}` lines that follow the trap with no intervening executable code are part
+        # of the unreachable region.
         k = j + 1
         while k < len(lines):
             stripped = lines[k].strip()
@@ -99,11 +101,8 @@ def trap_line_numbers(filepath: str) -> set:
 def adjust_summary(file_entry):
     """Return (effective_count, effective_covered) after excluding trap lines.
 
-    We approximate: every trap line we identify in the source is treated as one executable line
-    that should not contribute to coverage. Some of those lines (string-literal continuations
-    inside `fatalError(\\n  "msg"\\n)`) aren't counted as separate region entries by llvm-cov,
-    but they ARE counted in `summary.lines.count` line-by-line, so subtracting the full trap
-    set keeps the metric honest.
+    Subtracts the full trap set from `count`, and the subset that llvm-cov reports as covered
+    from `covered`. Floors `new_count` at `new_covered` so we never report > 100%.
     """
     s = file_entry["summary"]["lines"]
     count, covered = s["count"], s["covered"]
@@ -111,11 +110,12 @@ def adjust_summary(file_entry):
     if not traps:
         return count, covered
 
-    # Lines llvm-cov saw at least one segment for that were executed.
-    covered_lines = {seg[0] for seg in file_entry.get("segments", []) if seg[2] > 0}
+    line_counts: dict[int, int] = {}
+    for seg in file_entry.get("segments", []):
+        line_counts[seg[0]] = line_counts.get(seg[0], 0) + seg[2]
 
     excl_count = len(traps)
-    excl_covered = len(traps & covered_lines)
+    excl_covered = sum(1 for ln in traps if line_counts.get(ln, 0) > 0)
     new_count = max(count - excl_count, covered - excl_covered)
     new_covered = covered - excl_covered
     return new_count, new_covered
