@@ -39,16 +39,25 @@ public final class DefaultAPIClient: APIClient {
 
     /// Creates a client that targets `baseURL` using a `URLSession` configured with the supplied
     /// timeouts. The defaults bound interactive UI hangs.
-    public init(
+    public convenience init(
         baseURL: URL,
         requestTimeout: TimeInterval = DefaultAPIClient.defaultRequestTimeout,
         resourceTimeout: TimeInterval = DefaultAPIClient.defaultResourceTimeout
     ) {
-        self.baseURL = baseURL
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = requestTimeout
         config.timeoutIntervalForResource = resourceTimeout
-        session = URLSession(configuration: config)
+        self.init(baseURL: baseURL, session: URLSession(configuration: config))
+    }
+
+    /// Designated initialiser for tests / advanced callers that need to inject a custom
+    /// `URLSession` (e.g. one with stubbed `URLProtocol` classes).
+    public init(
+        baseURL: URL,
+        session: URLSession
+    ) {
+        self.baseURL = baseURL
+        self.session = session
     }
 }
 

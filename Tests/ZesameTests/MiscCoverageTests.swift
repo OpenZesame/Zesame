@@ -246,21 +246,6 @@ struct HexStringChecksummedTests {
     }
 }
 
-struct DoubleAsStringTests {
-    @Test func noDecimalSeparatorReturnsAsIs() {
-        // String with no decimal separator → returned unchanged
-        let result = Double(1.0).asStringWithoutTrailingZeros
-        #expect(!result.contains("."))
-    }
-
-    @Test func trailingZerosStripped() {
-        // Build a Double that when formatted has trailing zeros.
-        // 1.5 → "1.5" (no trailing zeros, already minimal)
-        let result = Double(1.5).asStringWithoutTrailingZeros
-        #expect(result == "1.5")
-    }
-}
-
 struct UnitConversionTests2 {
     @Test func asZil() throws {
         let amount = try Amount(qa: "1000000000000")

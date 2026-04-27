@@ -96,11 +96,6 @@ private extension ExpressibleByAmount {
         qa.asData(minByteCount: minByteCount)
     }
 
-    /// The amount wrapped in a protobuf ``ByteArray``.
-    var asByteArray: ByteArray {
-        asData().asByteArray
-    }
-
     /// The amount as a 16-byte (uint128) protobuf ``ByteArray`` — the wire layout the network
     /// expects for `amount` and `gasPrice` fields. Traps if the magnitude requires more than 16
     /// bytes; that's only possible if `GasPrice.maxInQa` (or a similar bound) has been raised

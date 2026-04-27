@@ -40,13 +40,6 @@ public struct AnyLowerbound {
         }
     }
 
-    /// Builds a no-op checker for ``NoLowerbound`` types.
-    init(_: (some ExpressibleByAmount & NoLowerbound).Type) {
-        _withinBounds = { _ in
-            // no lower bound, do not throw, just return
-        }
-    }
-
     /// Validates `value` against the captured lower bound.
     public func throwErrorIfNotWithinBounds(_ value: Any) throws {
         try _withinBounds(value)

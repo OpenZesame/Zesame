@@ -55,6 +55,6 @@ _run-cov:
     xcrun llvm-cov export \
         {{test_bin}} \
         -instr-profile {{profdata}} \
-        -ignore-filename-regex "(Tests|checkouts|debug/|release/)" \
+        -ignore-filename-regex "(Tests|checkouts|debug/|release/|messages\.pb\.swift)" \
         > {{result_dir}}/llvm_cov.json
     @python3 scripts/llvm_to_xccov.py {{result_dir}}/llvm_cov.json > {{cov_json}}

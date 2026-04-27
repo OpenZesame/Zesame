@@ -41,13 +41,6 @@ public struct AnyUpperbound {
         }
     }
 
-    /// Builds a no-op checker for ``NoUpperbound`` types.
-    init(_: (some ExpressibleByAmount & NoUpperbound).Type) {
-        _withinBounds = { _ in
-            // no upper bound, do not throw, just return
-        }
-    }
-
     /// Validates `value` against the captured upper bound.
     public func throwErrorIfNotWithinBounds(_ value: Any) throws {
         try _withinBounds(value)

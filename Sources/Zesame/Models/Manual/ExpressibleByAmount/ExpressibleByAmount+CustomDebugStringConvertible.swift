@@ -25,27 +25,6 @@
 import BigInt
 import Foundation
 
-extension Double {
-    /// The decimal-formatted form of the value with trailing zeros (and a hanging decimal
-    /// separator) trimmed off — used to render `Double`-derived amount strings cleanly.
-    var asStringWithoutTrailingZeros: String {
-        var formatted = String(describing: NSNumber(value: self).decimalValue)
-        let decimalSeparator = Locale.current.decimalSeparator ?? "."
-        guard formatted.contains(decimalSeparator) else {
-            return formatted
-        }
-        while formatted.last == "0" {
-            formatted = String(formatted.dropLast())
-        }
-
-        if String(formatted.last!) == decimalSeparator {
-            formatted = String(formatted.dropLast())
-        }
-
-        return formatted
-    }
-}
-
 public extension ExpressibleByAmount {
     /// Debug-friendly form: Qa magnitude alongside the value in Zil.
     var debugDescription: String {
