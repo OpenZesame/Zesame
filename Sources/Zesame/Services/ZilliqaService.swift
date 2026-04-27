@@ -155,7 +155,11 @@ public extension ZilliqaServiceReactive {
             } catch let error as Zesame.Error {
                 promise(.failure(error))
             } catch {
+                // coverage:exclude-start
+                // `keystore.toKeypair(encryptedBy:)` only throws `Zesame.Error` variants;
+                // this generic catch is forward-compat for future error types.
                 promise(.failure(.api(.request(error))))
+                // coverage:exclude-end
             }
         }.eraseToAnyPublisher()
     }

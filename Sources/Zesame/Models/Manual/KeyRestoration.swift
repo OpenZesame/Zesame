@@ -75,7 +75,11 @@ public extension KeyRestoration {
         } catch let error as Swift.DecodingError {
             throw Error.walletImport(.jsonDecoding(error))
         } catch let error as Zesame.Error {
+            // coverage:exclude-start
+            // The keystore decoder doesn't surface `Zesame.Error` directly today; this branch is
+            // forward-compat in case a future decoder rethrows one verbatim.
             throw error
+            // coverage:exclude-end
         } catch {
             throw Error.walletImport(.keystoreError(error))
         }

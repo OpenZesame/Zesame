@@ -27,23 +27,17 @@ import Foundation
 extension String {
     /// Counts the number of fractional digits after the decimal separator.
     ///
-    /// Treats both `.` and `,` as the separator (normalised to the current locale). Traps if the
-    /// string contains more than one separator, since that indicates a malformed amount.
+    /// Treats both `.` and `,` as the separator (normalised to the current locale). Returns 0
+    /// for strings without a separator. Callers must pre-validate that the input contains at
+    /// most one separator (via ``doesNotContainMoreThanOneDecimalSeparator()``); the parse below
+    /// returns the count of digits after the *first* separator and ignores anything else.
     func countDecimalPlaces() -> Int {
-        let decimalSeparator = Locale.current.decimalSeparatorForSure
-
         guard containsDecimalSeparator() else { return 0 }
-
-        let components = replacingIncorrectDecimalSeparatorIfNeeded().components(separatedBy: decimalSeparator)
-
-        if components.count < 2 { // strange case, should have been covered by `guard containsDecimalSeparator`
-            return 0 // integer => 0 decimal places
-        } else if components.count > 2 { // contains double separator, not a valid number at all
-            fatalError("invalid string")
-        } else {
-            assert(components.count == 2)
-            return components.last!.count
-        }
+        let decimalSeparator = Locale.current.decimalSeparatorForSure
+        let normalised = replacingIncorrectDecimalSeparatorIfNeeded()
+        guard let fractional = normalised.components(separatedBy: decimalSeparator).dropFirst().first
+        else { return 0 }
+        return fractional.count
     }
 
     /// Returns `true` when at most one decimal separator is present (zero or one), regardless of

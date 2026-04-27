@@ -124,23 +124,8 @@ public extension Payment {
         let fee = try estimatedTotalTransactionFee(gasPrice: gasPrice, gasLimit: gasLimit)
         let amountInQa = amount.asQa
         let totalInQa: Qa = amountInQa + fee
-
-        let tooLargeError = AmountError.tooLarge(max: Amount.max)
-
         guard totalInQa < Amount.max.asQa else {
-            throw tooLargeError
-        }
-
-        // Ugly trick to handle problem of small fees and big amounts.
-        // When adding 1E-12 to 21E9 the `Double` rounds down to
-        // 21E9 so we lose the 1E-12 part. Thus we subtract 21E9
-        // to be able to keep the 1E-12 part and compare it against
-        // the transaction cost. Ugly, but it works...
-        if totalInQa == Amount.max.asQa {
-            let subtractedTotalSupplyFromAmount = totalInQa - Amount.max.asQa
-            if (subtractedTotalSupplyFromAmount + fee) != fee {
-                throw tooLargeError
-            }
+            throw AmountError.tooLarge(max: Amount.max)
         }
         return try Amount(qa: totalInQa)
     }

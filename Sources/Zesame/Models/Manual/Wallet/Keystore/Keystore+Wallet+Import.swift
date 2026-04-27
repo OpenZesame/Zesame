@@ -60,7 +60,13 @@ public extension Keystore {
                 tag: crypto.cipherParameters.tag
             )
         } catch {
+            // coverage:exclude-start
+            // `Keystore.Crypto`'s designated initialiser enforces 12-byte nonce / 16-byte tag /
+            // any-length ciphertext, all of which AES.GCM.Nonce + SealedBox accept. Reaching
+            // here would require a `Crypto` value that bypassed validation — not possible via
+            // public API.
             throw Zesame.Error.decryptPrivateKey(error)
+            // coverage:exclude-end
         }
         let plaintext: Data
         do {

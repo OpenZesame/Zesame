@@ -357,6 +357,51 @@ struct Bech32AddressStringLiteralTests {
     }
 }
 
+// MARK: - Keystore decrypts plaintext that isn't a valid private key
+
+struct KeystoreInvalidPlaintextTests {
+    /// Encrypts 32 zero-bytes (not a valid secp256k1 private key — the curve excludes 0) using
+    /// the *real* PBKDF2-derived key for a known password, so AES.GCM.open succeeds at decrypt
+    /// time and the K1 layer is the one that rejects the plaintext. Hits the
+    /// `.badPrivateKeyHex` branch in `decryptPrivateKey`.
+    @Test func decryptedPlaintextRejectedByPrivateKey() throws {
+        let password = "apabanan"
+        let kdfParams = try KDFParams(
+            iterations: 1, // fast path — production uses 600_000
+            derivedKeyLength: 32
+        )
+        let derivedKey = try AnyKeyDeriving(kdf: .pbkdf2, kdfParams: kdfParams)
+            .deriveKey(password: password)
+        let zeroBytes = Data(repeating: 0, count: 32)
+        let sealedBox = try AES.GCM.seal(zeroBytes, using: derivedKey)
+        let cipherParams = Keystore.Crypto.CipherParameters(
+            nonce: Data(sealedBox.nonce),
+            tag: sealedBox.tag
+        )
+        let crypto = try Keystore.Crypto(
+            cipherParameters: cipherParams,
+            encryptedPrivateKeyHex: sealedBox.ciphertext.asHex,
+            kdf: .pbkdf2,
+            kdfParams: kdfParams
+        )
+        let address = try LegacyAddress(string: "1234567890123456789012345678901234567890")
+        let keystore = Keystore(address: address, crypto: crypto)
+        #expect(throws: Zesame.Error.self) {
+            _ = try keystore.decryptPrivateKey(encryptedBy: password)
+        }
+    }
+}
+
+// MARK: - ExpressibleByAmount+Unbound: empty-string nonNumeric throw
+
+struct UnboundEmptyStringTrimmingTests {
+    @Test func zilTrimmingEmptyStringThrowsNonNumeric() {
+        #expect(throws: AmountError<Zil>.self) {
+            _ = try Zil(trimming: "")
+        }
+    }
+}
+
 // MARK: - SecureRandom failure path via injected provider
 
 struct SecureRandomFailureTests {
