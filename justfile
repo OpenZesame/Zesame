@@ -39,6 +39,13 @@ cov: _run-cov
 cov-detailed: _run-cov
     @python3 scripts/cov_detailed.py {{test_bin}} {{profdata}} {{cov_json}}
 
+# ── Protobuf ──────────────────────────────────────────────────────────────────
+
+# Regenerate every `*.pb.swift` next to its `*.proto` source under Sources/.
+# Requires `brew install swift-protobuf` (provides protoc + protoc-gen-swift).
+proto-regen:
+    @bash scripts/regen_protos.sh
+
 # ── Formatting ────────────────────────────────────────────────────────────────
 
 # Auto-format all Swift sources in-place; silently skips any tool not installed.
