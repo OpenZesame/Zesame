@@ -56,16 +56,23 @@ public extension ZilliqaService {
 
     /// Materialises a wallet from a ``KeyRestoration``.
     ///
+    /// For the `.keystore` case the supplied password is used to **validate** that the keystore
+    /// is decryptable — propagating ``Zesame/Error/walletImport(_:)`` (`.incorrectPassword`)
+    /// when it isn't, rather than silently returning an unusable wallet.
+    ///
     /// `reencryptToDefaultKDF` is reserved for forward-compatibility: when a second `KDF` case
     /// is introduced, an imported keystore using the non-default variant will be transparently
-    /// re-encrypted with the default. With only `.pbkdf2` in the enum today the parameter has
-    /// no observable effect. Tests pass `false` (or omit it) to keep the contract stable.
+    /// re-encrypted with the default. With only `.pbkdf2` in the enum today the flag has no
+    /// observable effect on the returned wallet, but validation always runs.
     func restoreWallet(
         from restoration: KeyRestoration,
         reencryptToDefaultKDF _: Bool
     ) async throws -> Wallet {
         switch restoration {
-        case let .keystore(keystore, _):
+        case let .keystore(keystore, password):
+            // Decrypt once to confirm the password unlocks the keystore. Throws on mismatch;
+            // the result is intentionally discarded — only the keystore is exposed externally.
+            _ = try keystore.decryptPrivateKey(encryptedBy: password)
             return Wallet(keystore: keystore)
         case let .privateKey(privateKey, newPassword, kdf):
             let keystore = try Keystore.from(privateKey: privateKey, encryptBy: newPassword, kdf: kdf)
