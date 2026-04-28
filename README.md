@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/OpenZesame/Zesame/graph/badge.svg?token=8QL8I270E9)](https://codecov.io/gh/OpenZesame/Zesame)
+[![codecov](https://codecov.io/gh/Sajjon/Zesame/graph/badge.svg?token=g4LTYEkoLu)](https://codecov.io/gh/Sajjon/Zesame)
 
 # Zesame
 
