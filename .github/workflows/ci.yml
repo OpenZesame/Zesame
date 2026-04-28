@@ -11,34 +11,44 @@ concurrency:
   cancel-in-progress: true
 
 # ── Jobs ──────────────────────────────────────────────────────────────────────
+#
+# Each lint / type / formatting / test concern is its own job so that GitHub's
+# PR overview surfaces one row per concern instead of a single "CI" entry.
+# `needs:` chains them so they execute serially (no parallelism), matching the
+# previous single-job behaviour from the contributor's perspective.
 
 jobs:
 
-  ci:
-    name: CI
+  typos:
+    name: Typos
     runs-on: macos-15
-    env:
-      SWIFTLINT_VERSION: "0.63.2"
-
     steps:
       - uses: actions/checkout@v4
-
-      # ── 1. Typos ────────────────────────────────────────────────────────────
       - name: Install typos
         run: brew install typos-cli
-
       - name: Check for typos
         run: typos
 
-      # ── 2. SwiftFormat ──────────────────────────────────────────────────────
+  swiftformat:
+    name: SwiftFormat
+    needs: typos
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
       - name: Install SwiftFormat
         run: brew install swiftformat
-
       - name: Check formatting
         # --lint exits non-zero if any file would be reformatted, without writing changes.
         run: swiftformat --lint .
 
-      # ── 3. SwiftLint ────────────────────────────────────────────────────────
+  swiftlint:
+    name: SwiftLint
+    needs: swiftformat
+    runs-on: macos-15
+    env:
+      SWIFTLINT_VERSION: "0.63.2"
+    steps:
+      - uses: actions/checkout@v4
       - name: Install SwiftLint ${{ env.SWIFTLINT_VERSION }}
         run: |
           curl -fsSL \
@@ -46,22 +56,24 @@ jobs:
             -o /tmp/swiftlint.pkg
           sudo installer -pkg /tmp/swiftlint.pkg -target /
           swiftlint version
-
       - name: Lint
         # github-actions-logging emits ::error / ::warning annotations
         # that appear inline in the PR diff view.
         run: swiftlint lint --force-exclude --strict --reporter github-actions-logging
 
-      # ── 4. Build & Test ─────────────────────────────────────────────────────
+  test:
+    name: Build & Test
+    needs: swiftlint
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
       - name: Resolve Xcode build version
         run: echo "XCODE_BUILD=$(xcodebuild -version | tail -1 | awk '{print $NF}')" >> "$GITHUB_ENV"
-
       - name: Cache SPM packages
         uses: actions/cache@v4
         with:
           path: .build
           key: spm-${{ runner.os }}-xcode-${{ env.XCODE_BUILD }}-${{ hashFiles('**/Package.resolved') }}
           restore-keys: spm-${{ runner.os }}-xcode-${{ env.XCODE_BUILD }}-
-
       - name: Build & test
         run: swift test
