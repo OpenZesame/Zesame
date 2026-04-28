@@ -63,5 +63,30 @@ jobs:
           key: spm-${{ runner.os }}-xcode-${{ env.XCODE_BUILD }}-${{ hashFiles('**/Package.resolved') }}
           restore-keys: spm-${{ runner.os }}-xcode-${{ env.XCODE_BUILD }}-
 
-      - name: Build & test
-        run: swift test
+      - name: Build & test with coverage
+        run: swift test --enable-code-coverage
+
+      # ── 5. Coverage upload ─────────────────────────────────────────────────
+      # SPM packages don't produce an xcresult bundle, so we go straight from
+      # llvm-cov to lcov format — which Codecov ingests natively.
+      - name: Export coverage as lcov
+        run: |
+          PROFDATA=$(find .build -name 'default.profdata' | head -1)
+          TEST_BIN=$(find .build -name '*PackageTests.xctest' -print -quit)/Contents/MacOS/$(basename "$(find .build -name '*PackageTests.xctest' -print -quit)" .xctest)
+          mkdir -p .build
+          xcrun llvm-cov export \
+            -format=lcov \
+            -instr-profile "$PROFDATA" \
+            "$TEST_BIN" \
+            -ignore-filename-regex '(Tests|checkouts|debug/|release/|messages\.pb\.swift)' \
+            > .build/coverage.lcov
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: .build/coverage.lcov
+          slug: OpenZesame/Zesame
+          # CODECOV_TOKEN must be added to the repo's Actions secrets.
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          verbose: true
