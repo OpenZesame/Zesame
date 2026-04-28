@@ -46,7 +46,7 @@ protoc --swift_opt=Visibility=Public --swift_out=. Sources/Zesame/Models/Protobu
 Add the generated file `messages.pb.swift` to `Models` folder.
 
 # Dependencies
-All dependencies live in [Package.swift](https://github.com/OpenZesame/Zesame/blob/main/Package.swift):
+All dependencies live in [Package.swift](https://github.com/Sajjon/Zesame/blob/main/Package.swift):
 
 - [K1](https://github.com/Sajjon/K1) — secp256k1 key generation, ECDSA and Schnorr signatures (backed by libsecp256k1).
 - [BigInt](https://github.com/attaswift/BigInt) — arbitrary-precision integer math used across amounts and gas.
@@ -80,7 +80,7 @@ service.combine.getBalance(for: address)
 ```
 
 ## Functions
-See [ZilliqaService.swift](https://github.com/OpenZesame/Zesame/blob/main/Sources/Zesame/Services/ZilliqaService.swift) for the full surface. A snapshot of the async protocol:
+See [ZilliqaService.swift](https://github.com/Sajjon/Zesame/blob/main/Sources/Zesame/Services/ZilliqaService.swift) for the full surface. A snapshot of the async protocol:
 ```swift
 public protocol ZilliqaService {
     var apiClient: APIClient { get }
@@ -102,7 +102,7 @@ public protocol ZilliqaService {
 While developing it might be useful for you to use the [Zilliqa explorer](http://viewblock.io/zilliqa/)
 
 # Donate
-This SDK has been developed by the single author Alexander Cyon without paid salary in his free time - approximately **a thousand hours of work** since May 2018 ([see initial commit](https://github.com/OpenZesame/Zesame/commit/d948741f3e3d38a9962cc9a23552622a303e7ff4)). 
+This SDK has been developed by the single author Alexander Cyon without paid salary in his free time - approximately **a thousand hours of work** since May 2018 ([see initial commit](https://github.com/Sajjon/Zesame/commit/d948741f3e3d38a9962cc9a23552622a303e7ff4)). 
 
 **Any donation would be much appreciated**:
 

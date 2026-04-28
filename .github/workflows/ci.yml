@@ -85,7 +85,7 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           files: .build/coverage.lcov
-          slug: OpenZesame/Zesame
+          slug: Sajjon/Zesame
           # CODECOV_TOKEN must be added to the repo's Actions secrets.
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
